@@ -1,33 +1,30 @@
-bindhosts
+# bindhosts
 
-writable /system/etc/hosts via mount --bind
+Systemless hosts for Apatch, KernelSU and Magisk
 
-(🕊️ AdAway compatible ✅)
-  
-  1.4.2 - 1.5.6
-   - custom rules, modifiable sources, blacklist and whitelist support
-   - optimizations and check for other downloaders
-   - detect user changes, fix localhost bug
-   - leverage skip mount, migrate to compat
-   - Adaway coexistence handling
-   - fixups: whitelist processing, rare update failures
-   - /data/adb/bindhosts migration  
+Fully standalone, self-updating.
 
-  1.6.0 ~ 1.6.3
-   - webui on supported managers - KOWX712
-   - small fixups
-    
-Hiding: 
+## Features
+- Action button control
+- WebUI control
+- Both Adaway coexistence (on certain modes)
+- Injection and redirect modes (znhr, hfr, open_redirect)
 
-  - APatch - questionable hiding, use [standalone](https://github.com/backslashxx/bindhosts/tree/standalone) instead
+## Supported Root Managers
+- [APatch](https://github.com/bmax121/APatch)
+- [KernelSU](https://github.com/tiann/KernelSU)
+- [Magisk](https://github.com/topjohnwu/Magisk) + [KsuWebUI](https://github.com/5ec1cff/KsuWebUIStandalone)
 
-  - KernelSU - [SuSFS](https://gitlab.com/simonpunk/susfs4ksu), or [source-modification](https://github.com/tiann/KernelSU/commit/2b2b0733d7c57324b742c017c302fc2c411fe0eb), or use [standalone](https://github.com/backslashxx/bindhosts/tree/standalone)
+## Operating Modes
+- Read [bindhosts operation modes](https://github.com/backslashxx/bindhosts/blob/master/Documentation/modes.md).
 
-  - Magisk - Denylist, Shamiko
+## Hiding
+- read modes.md for now, will add later
 
+## Links
+Download [here](https://raw.githubusercontent.com/backslashxx/bindhosts/master/module.zip)
 
-  
-[Download](https://raw.githubusercontent.com/backslashxx/bindhosts/compat/module.zip)
+## Help and Support
+Report [here](https://github.com/backslashxx/bindhosts/issues) if you encounter any issues.
 
-[report for any issues](https://github.com/backslashxx/bindhosts/issues)
-
+[Pull requests](https://github.com/backslashxx/bindhosts/pulls) are always welcome.
