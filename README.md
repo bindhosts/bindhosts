@@ -24,6 +24,8 @@ Fully standalone, self-updating.
 ## Links
 Download [here](https://raw.githubusercontent.com/backslashxx/bindhosts/master/module.zip)
 
+For OLD COMPAT version [here](https://raw.githubusercontent.com/backslashxx/bindhosts/compat/module.zip)
+
 ## Help and Support
 Report [here](https://github.com/backslashxx/bindhosts/issues) if you encounter any issues.
 
