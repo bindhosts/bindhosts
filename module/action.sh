@@ -111,9 +111,9 @@ adblock() {
 		echo "" >> $folder/temphosts
 	done
 	# localhost
-	printf "127.0.0.1 localhost\n::1 localhost\n" > $folder/temphosts2
+	printf "127.0.0.1 localhost\n::1 localhost\n" > $target_hostsfile
 	# always restore user's custom rules
-	grep -v "#" $PERSISTENT_DIR/custom.txt >> $folder/temphosts2
+	grep -v "#" $PERSISTENT_DIR/custom.txt >> $target_hostsfile
 	# blacklist.txt
 	for i in $(grep -v "#" $PERSISTENT_DIR/blacklist.txt ); do echo "0.0.0.0 $i" >> $folder/temphosts; done
 	# whitelist.txt
@@ -123,13 +123,9 @@ adblock() {
 	# optimization thanks to Earnestly from #bash on libera, TIL something 
 	# sed strip out everything with #, double space to single space, replace all 127.0.0.1 to 0.0.0.0
 	# then sort uniq, then grep out whitelist.txt from it
-	sed '/#/d; s/  / /g; /^$/d; s/127.0.0.1/0.0.0.0/' $folder/temphosts | sort -u | grep -Fxvf $folder/tempwhitelist >> $folder/temphosts2
+	sed '/#/d; s/  / /g; /^$/d; s/127.0.0.1/0.0.0.0/' $folder/temphosts | sort -u | grep -Fxvf $folder/tempwhitelist >> $target_hostsfile
 	# mark it, will be read by service.sh to deduce
-	echo "# bindhosts v$versionCode" >> $folder/temphosts2
-	# run dos2unix to remove weird line break
-	dos2unix $folder/temphosts2
-	# finally parse hosts into /system/etc
-	cat $folder/temphosts2 >$target_hostsfile
+	echo "# bindhosts v$versionCode" >> $target_hostsfile
 }
 
 reset() {
@@ -157,7 +153,7 @@ run() {
 	# ready for reset again
 	(cd $PERSISTENT_DIR ; (cat blacklist.txt custom.txt sources.txt whitelist.txt ; date +%F) | md5sum | cut -f1 -d " " > $PERSISTENT_DIR/bindhosts_state )
 	# cleanup
-	rm -f $folder/temphosts* $folder/tempwhitelist
+	rm -f $folder/temphosts $folder/tempwhitelist
 	sleep 1
 }
 
