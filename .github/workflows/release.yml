@@ -44,8 +44,11 @@ jobs:
     - name: Compressing files
       run: |
         echo "Compressing files..."
-        cd module/
-        zip -r "${{ env.ZIP_NAME }}" *
+        sudo apt install -y minify
+        cd module/webroot/
+        for i in $(ls); do mv $i orig.$i ; minify orig.$i > $i ; rm orig.$i ;done
+        cd ../
+        zip -r9 "${{ env.ZIP_NAME }}" *
         mv *.zip ../
         echo "Created zip file: ${{ env.ZIP_NAME }}"
 
