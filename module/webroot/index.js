@@ -9,6 +9,7 @@ const filePaths = {
 
 let clickCount = 0;
 let timeout;
+let clickTimeout;
 let developerOption = false;
 let disableTimeout;
 
@@ -228,9 +229,17 @@ document.getElementById("mode-btn").addEventListener("click", async () => {
 document.getElementById("status-box").addEventListener("click", async () => {
     clickCount++;
 
+    // Reset the timeout on each click to prevent automatic reset if user keeps clicking
+    clearTimeout(clickTimeout);
+
+    // Set a new timeout to reset the count after a 2-second delay (adjust if needed)
+    clickTimeout = setTimeout(() => {
+        clickCount = 0;
+    }, 2000); // 2 seconds
+
     // Only handle after 5 clicks
     if (clickCount === 5) {
-        // Reset click count
+        // Reset click count after 5 clicks
         clickCount = 0;
 
         // Only handle if developer option is not enabled yet
