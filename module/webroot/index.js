@@ -249,7 +249,7 @@ document.getElementById("status-box").addEventListener("click", async () => {
             if (fileExists.trim() === "exists") {
                 developerOption = true;
                 showPrompt("Developer option enabled", true);
-                openOverlay(document.getElementById("mode-menu"));
+                
                 // Set a timeout to automatically disable developer option after 20 seconds
                 disableTimeout = setTimeout(() => {
                     developerOption = false;
@@ -260,7 +260,7 @@ document.getElementById("status-box").addEventListener("click", async () => {
                     await execCommand("> /data/adb/bindhosts/mode_override.sh");
                     developerOption = true;
                     showPrompt("Developer option enabled", true);
-                    openOverlay(document.getElementById("mode-menu"));
+                    
                     // Set a timeout to automatically disable developer option after 20 seconds
                     disableTimeout = setTimeout(() => {
                         developerOption = false;
