@@ -205,7 +205,7 @@ async function executeActionScript() {
 }
 
 // Open mode menu with developer option logic
-document.getElementById("status-box").addEventListener("click", async () => {
+document.getElementById("mode-btn").addEventListener("click", async () => {
     if (developerOption) {
         await updateModeSelection();
         openOverlay(document.getElementById("mode-menu"));
