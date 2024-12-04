@@ -7,6 +7,7 @@ const filePaths = {
     whitelist: `${basePath}/whitelist.txt`,
 };
 
+let clickCount = 0;
 let timeout;
 let developerOption = false;
 let disableTimeout;
@@ -224,23 +225,19 @@ document.getElementById("mode-btn").addEventListener("click", async () => {
     }
 });
 
-document.getElementById("mode-btn").addEventListener("dblclick", async () => {
-    // Only handle double tap if developer option is not enabled yet
-    if (!developerOption) {
-        const fileExists = await execCommand("[ -f /data/adb/bindhosts/mode_override.sh ] && echo 'exists' || echo 'not-exists'");
-        
-        if (fileExists.trim() === "exists") {
-            developerOption = true;
-            showPrompt("Developer option enabled", true);
-            openOverlay(document.getElementById("mode-menu"));
-            // Set a timeout to automatically disable developer option after 20 seconds
-            disableTimeout = setTimeout(() => {
-                developerOption = false;
-                showPrompt("Developer option disabled", false);
-            }, 20000); // 20 seconds
-        } else {
-            try {
-                await execCommand("> /data/adb/bindhosts/mode_override.sh");
+document.getElementById("status-box").addEventListener("click", async () => {
+    clickCount++;
+
+    // Only handle after 5 clicks
+    if (clickCount === 5) {
+        // Reset click count
+        clickCount = 0;
+
+        // Only handle if developer option is not enabled yet
+        if (!developerOption) {
+            const fileExists = await execCommand("[ -f /data/adb/bindhosts/mode_override.sh ] && echo 'exists' || echo 'not-exists'");
+            
+            if (fileExists.trim() === "exists") {
                 developerOption = true;
                 showPrompt("Developer option enabled", true);
                 openOverlay(document.getElementById("mode-menu"));
@@ -249,9 +246,21 @@ document.getElementById("mode-btn").addEventListener("dblclick", async () => {
                     developerOption = false;
                     showPrompt("Developer option disabled", false);
                 }, 20000); // 20 seconds
-            } catch (error) {
-                console.error("Error enabling developer option:", error);
-                showPrompt("Error enabling developer option", false);
+            } else {
+                try {
+                    await execCommand("> /data/adb/bindhosts/mode_override.sh");
+                    developerOption = true;
+                    showPrompt("Developer option enabled", true);
+                    openOverlay(document.getElementById("mode-menu"));
+                    // Set a timeout to automatically disable developer option after 20 seconds
+                    disableTimeout = setTimeout(() => {
+                        developerOption = false;
+                        showPrompt("Developer option disabled", false);
+                    }, 20000); // 20 seconds
+                } catch (error) {
+                    console.error("Error enabling developer option:", error);
+                    showPrompt("Error enabling developer option", false);
+                }
             }
         }
     }
