@@ -7,8 +7,9 @@ const filePaths = {
     whitelist: `${basePath}/whitelist.txt`,
 };
 
+let timeout;
 let developerOption = false;
-let clickCount = 0;
+let disableTimeout;
 
 // Function to read a file and display its content in the UI
 async function loadFile(fileType) {
@@ -206,33 +207,54 @@ async function executeActionScript() {
 
 // Open mode menu with developer option logic
 document.getElementById("mode-btn").addEventListener("click", async () => {
+    // Clear any previous timeout for double tap detection
+    clearTimeout(timeout);
+
     if (developerOption) {
-        await updateModeSelection();
+        // If developer option is enabled, single tap opens mode-menu
         openOverlay(document.getElementById("mode-menu"));
-        return;
+    } else {
+        // Single tap opens weblink if developer option is not enabled
+        timeout = setTimeout(() => {
+            // Check if this is a single tap (no double tap occurred)
+            if (!developerOption) {
+                window.open("https://github.com/backslashxx/bindhosts/blob/master/Documentation/modes.md#bindhosts-operating-modes", "_blank");
+            }
+        }, 300); // Wait 300ms to distinguish single tap from double tap
     }
-    const fileExists = await execCommand("[ -f /data/adb/bindhosts/mode_override.sh ] && echo 'exists' || echo 'not-exists'");
-    if (fileExists.trim() === "exists") {
-        developerOption = true;
-        await updateModeSelection();
-        openOverlay(document.getElementById("mode-menu"));
-        return;
-    }
-    clickCount++;
-    if (clickCount >= 5) {
-        try {
-            await execCommand("> /data/adb/bindhosts/mode_override.sh");
+});
+
+document.getElementById("mode-btn").addEventListener("dblclick", async () => {
+    // Only handle double tap if developer option is not enabled yet
+    if (!developerOption) {
+        const fileExists = await execCommand("[ -f /data/adb/bindhosts/mode_override.sh ] && echo 'exists' || echo 'not-exists'");
+        
+        if (fileExists.trim() === "exists") {
             developerOption = true;
             showPrompt("Developer option enabled", true);
             openOverlay(document.getElementById("mode-menu"));
-        } catch (error) {
-            console.error("Error enabling developer option:", error);
-            showPrompt("Error enabling developer option", false);
+            // Set a timeout to automatically disable developer option after 20 seconds
+            disableTimeout = setTimeout(() => {
+                developerOption = false;
+                showPrompt("Developer option disabled", false);
+            }, 20000); // 20 seconds
+        } else {
+            try {
+                await execCommand("> /data/adb/bindhosts/mode_override.sh");
+                developerOption = true;
+                showPrompt("Developer option enabled", true);
+                openOverlay(document.getElementById("mode-menu"));
+                // Set a timeout to automatically disable developer option after 20 seconds
+                disableTimeout = setTimeout(() => {
+                    developerOption = false;
+                    showPrompt("Developer option disabled", false);
+                }, 20000); // 20 seconds
+            } catch (error) {
+                console.error("Error enabling developer option:", error);
+                showPrompt("Error enabling developer option", false);
+            }
         }
     }
-    setTimeout(() => {
-        clickCount = 0;
-    }, 2000);
 });
 
 
