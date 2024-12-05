@@ -207,74 +207,50 @@ async function executeActionScript() {
     }
 }
 
-// Open mode menu with developer option logic
-document.getElementById("mode-btn").addEventListener("click", async () => {
-    // Clear any previous timeout for double tap detection
-    clearTimeout(timeout);
+// Funtion to determine state of developer option
+async function checkDevOption() {
+    const filePath = "/data/adb/bindhosts/mode_override.sh";
+    const fileExists = await execCommand(`[ -f ${filePath} ] && echo 'exists' || echo 'not-exists'`);
 
+    if (fileExists.trim() === "exists") {
+        developerOption = true;
+    }
+}
+
+// Determine mode button behavior of mode button depends on developer option
+document.getElementById("mode-btn").addEventListener("click", async () => {
+    await checkDevOption();
     if (developerOption) {
-        // If developer option is enabled, single tap opens mode-menu
         openOverlay(document.getElementById("mode-menu"));
     } else {
-        // Single tap opens weblink if developer option is not enabled
-        timeout = setTimeout(() => {
-            // Check if this is a single tap (no double tap occurred)
-            if (!developerOption) {
-                window.open("https://github.com/backslashxx/bindhosts/blob/master/Documentation/modes.md#bindhosts-operating-modes", "_blank");
-            }
-        }, 300); // Wait 300ms to distinguish single tap from double tap
+        window.open("https://github.com/backslashxx/bindhosts/blob/master/Documentation/modes.md#bindhosts-operating-modes", "_blank");
     }
 });
 
+// Event listener to enable developer option
 document.getElementById("status-box").addEventListener("click", async () => {
     clickCount++;
-
-    // Reset the timeout on each click to prevent automatic reset if user keeps clicking
     clearTimeout(clickTimeout);
 
-    // Set a new timeout to reset the count after a 2-second delay (adjust if needed)
     clickTimeout = setTimeout(() => {
         clickCount = 0;
-    }, 2000); // 2 seconds
-
-    // Only handle after 5 clicks
+    }, 2000);
     if (clickCount === 5) {
-        // Reset click count after 5 clicks
         clickCount = 0;
-
-        // Only handle if developer option is not enabled yet
+        await checkDevOption();
         if (!developerOption) {
-            const fileExists = await execCommand("[ -f /data/adb/bindhosts/mode_override.sh ] && echo 'exists' || echo 'not-exists'");
-            
-            if (fileExists.trim() === "exists") {
+            try {
                 developerOption = true;
                 showPrompt("Developer option enabled", true);
-                
-                // Set a timeout to automatically disable developer option after 20 seconds
-                disableTimeout = setTimeout(() => {
-                    developerOption = false;
-                    showPrompt("Developer option disabled", false);
-                }, 20000); // 20 seconds
-            } else {
-                try {
-                    await execCommand("> /data/adb/bindhosts/mode_override.sh");
-                    developerOption = true;
-                    showPrompt("Developer option enabled", true);
-                    
-                    // Set a timeout to automatically disable developer option after 20 seconds
-                    disableTimeout = setTimeout(() => {
-                        developerOption = false;
-                        showPrompt("Developer option disabled", false);
-                    }, 20000); // 20 seconds
-                } catch (error) {
-                    console.error("Error enabling developer option:", error);
-                    showPrompt("Error enabling developer option", false);
-                }
+            } catch (error) {
+                console.error("Error enabling developer option:", error);
+                showPrompt("Error enabling developer option", false);
             }
+        } else {
+            showPrompt("Developer option already enabled", true);
         }
     }
 });
-
 
 // Save mode option
 async function saveModeSelection(mode) {
