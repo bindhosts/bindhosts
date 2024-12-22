@@ -15,9 +15,6 @@ echo "[+] bindhosts v$versionCode"
 echo "[%] bindhosts.sh"
 echo "[%] standalone hosts-based-adblocking implementation"
 
-find_rwdir
-echo "[ ] rwdir: $rwdir"
-
 [ -f $MODDIR/disable ] && {
 	echo "[*] not running since module has been disabled"
 	string="description=status: disabled ❌ | $(date)"
@@ -46,7 +43,7 @@ helper_mode=""
 # and have them fall to * but im gonna leave it 
 # here for clarity
 case $operating_mode in
-	0) if command -v ksud >/dev/null 2>&1 || command -v apd >/dev/null 2>&1 ; then adaway_warn ; fi ;;
+	0) if [ -f /data/adb/ksu/bin/ksud ] || [ -f /data/adb/ap/bin/apd ]; then adaway_warn ; fi ;;
 	1) true ;;
 	2) true ;;
 	3) target_hostsfile="/data/adb/hosts" ; helper_mode="| hosts_file_redirect 💉" ; adaway_warn ;;
@@ -57,6 +54,9 @@ case $operating_mode in
 	8) target_hostsfile="/system/etc/hosts" ;;
 	*) true ;; # catch invalid modes
 esac
+
+find_rwdir
+echo "[%] mode: $operating_mode | rwdir: $rwdir "
 
 # check hosts file if writable, if not, warn and exit
 if [ ! -w $target_hostsfile ] ; then
@@ -160,11 +160,11 @@ _is_valid_cron_arg() { # return value: 0 = true, 1 = false
 
 		delimiter=""
 		# To split complex arg in the order from , > / > -
-		if (echo "$valid_cron_arg" | grep -q "\,"); then
+		if (echo "$valid_cron_arg" | grep -q "\," > /dev/null 2>&1 ); then
 			delimiter=","
-		elif (echo "$valid_cron_arg" | grep -q "\/"); then
+		elif (echo "$valid_cron_arg" | grep -q "\/" > /dev/null 2>&1 ); then
 			delimiter="/"
-		elif (echo "$valid_cron_arg" | grep -q "\-"); then
+		elif (echo "$valid_cron_arg" | grep -q "\-" > /dev/null 2>&1 ); then
 			delimiter="-"
 		else
 			# End check if arg does not contain , / or -
@@ -258,6 +258,7 @@ custom_cron() {
 		# shoutout to native test and holmes
 		echo "[!] futile cronjob" 
 		echo "[!] syntax: --custom-cron \"0 2 * * *\" " 
+		echo "[!] syntax: --custom-cron \"@hourly\" " 
 		exit 0
 	fi
 	# run crond
@@ -273,7 +274,7 @@ enable_cron() {
 	# run crond
 	run_crond
 	# add entry
-	echo "0 4 * * * sh $MODDIR/bindhosts.sh --force-update > $rwdir/bindhosts_cron.log 2>&1 &" | busybox crontab -c $PERSISTENT_DIR/crontabs -
+	echo "0 10 * * * sh $MODDIR/bindhosts.sh --force-update > $rwdir/bindhosts_cron.log 2>&1 &" | busybox crontab -c $PERSISTENT_DIR/crontabs -
 	echo "[>] $(head -n1 $PERSISTENT_DIR/crontabs/root) " 
 	echo "[+] crontab entry added!"
 }
@@ -463,12 +464,12 @@ tcpdump () {
 show_help () {
 	echo "usage:"
 	printf " --action \t\tsimulate action.sh\n"
-	printf " --tcpdump \t\tsniff dns requests via tcpdump (experimental)\n"
+	printf " --tcpdump \t\tsniff dns requests via tcpdump\n"
 	printf " --force-update \tforce an update\n" 
 	printf " --force-reset \t\tforce a reset\n" 
-	printf " --custom-cron \t\tcustom schedule, syntax: \"0 2 * * *\" \n"
+	printf " --custom-cron \t\tcustom update schedule\n"
 	printf "\t\t\tif you do NOT know this, use --enable-cron\n"
-	printf " --enable-cron \t\tenables scheduled updates (4AM daily)\n"
+	printf " --enable-cron \t\tenables scheduled updates (10AM daily)\n"
 	printf " --disable-cron \tdisables scheduled updates\n"
 	printf " --help \t\tdisplays this message\n"
 }

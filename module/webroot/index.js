@@ -61,7 +61,7 @@ async function loadFile(fileType) {
 // Function to check if running in Magisk
 async function checkMagisk() {
     try {
-        const magiskEnv = await execCommand(`command -v magisk >/dev/null 2>&1 && echo "OK"`);
+        const magiskEnv = await execCommand(`[ -f /data/adb/magisk/magisk ] && echo "OK"`);
         if (magiskEnv.trim() === "OK") {
             console.log("Running under magisk environment, displaying element.");
             actionRedirectContainer.style.display = "flex";
@@ -143,7 +143,7 @@ async function checkCronStatus() {
 // Function to get the status from module.prop and update the status in the WebUI
 async function updateStatusFromModuleProp() {
     try {
-        const command = "grep '^description=' /data/adb/modules/bindhosts/module.prop | cut -d'=' -f2";
+        const command = "grep '^description=' /data/adb/modules/bindhosts/module.prop | sed 's/description=status: //'";
         const description = await execCommand(command);
         updateStatus(description.trim());
     } catch (error) {
