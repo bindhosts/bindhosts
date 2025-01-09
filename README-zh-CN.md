@@ -38,4 +38,4 @@
 
 如果遇到问题请在 [这里](https://github.com/backslashxx/bindhosts/issues) 提交你的 issues
 
-我们始终欢迎你们来提交[请求](https://github.com/backslashxx/bindhosts/pulls)
+我们始终欢迎你们来提交 [请求](https://github.com/backslashxx/bindhosts/pulls)
