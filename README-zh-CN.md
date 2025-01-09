@@ -34,7 +34,7 @@
 - [查看更多来源(开放源代码许可) ](Documentation/sources.md)
 - [本地化引导](Documentation/localize.md)
 
-## Help and Support
+## 帮助与支持
 
 如果遇到问题请在 [这里](https://github.com/backslashxx/bindhosts/issues) 提交你的 issues
 
