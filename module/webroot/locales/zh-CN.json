@@ -9,7 +9,7 @@
         "unwritable": "hosts 无法写入，需要修复",
         "reset": "Hosts 已重置",
         "disabled": "模块已禁用",
-        "adaway": "请先在 Adaway 重置 hosts", # 暂时搁置
+        "adaway": "请先在 Adaway 重置 hosts",
         "dev_opt": "开发者模式已启用",
         "dev_opt_true": "您已处于开发者模式",
         "dev_opt_fail": "开发者模式启用失败",
