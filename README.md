@@ -1,4 +1,4 @@
-**English** | [简体中文](https://github.com/backslashxx/bindhosts/blob/master/README-zh-CN.md)
+**English** | [简体中文](https://github.com/backslashxx/bindhosts/blob/master/README_zh-CN.md)
 
 # bindhosts
 
