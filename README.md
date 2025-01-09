@@ -1,4 +1,5 @@
-[简体中文](https://github.com/xiangfa-test/bindhosts/blob/master/README-zh-CN.md)
+**English** | [简体中文](https://github.com/backslashxx/bindhosts/blob/master/README-zh-CN.md)
+
 # bindhosts
 
 Systemless hosts for APatch, KernelSU and Magisk

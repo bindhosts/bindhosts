@@ -1,9 +1,11 @@
-[English](https://github.com/xiangfa-test/bindhosts/blob/master/README.md)
+[English](https://github.com/backslashxx/bindhosts/blob/master/README.md) | **简体中文**
+
 # bindhosts
 
 适用于APatch、KernelSU 和 Magisk 的可视化 Systemless hosts
 
 无依赖(前置)，可自我更新
+
 ## 特点
 
 - WebUi 和执行(action)按钮
@@ -11,9 +13,9 @@
 - 通过 Manager mount、bind mount 和 OverlayFS 实现的 Systemless host
 - 所用重定向方法：ZN-hostsredirect、hosts_file_redirect open_redirect
 
- ## 支持的 Root 管理器
+## 支持的 Root 管理器
 
- - [APatch](https://github.com/bmax121/APatch) 
+- [APatch](https://github.com/bmax121/APatch) 
 - [KernelSU](https://github.com/tiann/KernelSU)
 - [Magisk](https://github.com/topjohnwu/Magisk)  <sup>([没有WebUI](https://github.com/topjohnwu/Magisk/issues/8609#event-15568590949)👀)</sup>
 
