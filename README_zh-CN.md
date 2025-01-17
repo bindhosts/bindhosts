@@ -26,9 +26,9 @@
 
 ## 另请参阅
 
-- [使用手册](Documentation/usage.md)
-- [隐藏指南](Documentation/hiding.md)
-- [运行模式](Documentation/modes.md)
+- [使用手册](Documentation/usage_zh-CN.md)
+- [隐藏指南](Documentation/hiding_zh-CN.md)
+- [运行模式](Documentation/modes_zh-CN.md)
 
 ## 链接
 
