@@ -330,13 +330,20 @@ adblock() {
 			echo "[x] sources.txt needs correction 💢"
 			return
 			}
-        # download routine start!
-	for url in $(sed '/#/d' $PERSISTENT_DIR/sources.txt | grep http) ; do 
-		echo "[>] fetching $url"
-		(download "$url" >> $rwdir/temphosts || echo "[x] failed downloading $url") &
-	done
-	# wait until all download jobs done
-	wait
+        # If UPDATESTATUS is false and "yes" exists in disable/update.txt, skip download routine
+        if [ "$UPDATESTATUS" != true ] && grep -q "yes" "$PERSISTENT_DIR/disable/update.txt"; then
+            echo "[>] Auto-Fetching disabled, On --force-update -> hosts will be renewed"
+            return
+        fi
+
+        # Download routine start!
+        for url in $(sed '/#/d' $PERSISTENT_DIR/sources.txt | grep http); do
+            echo "[>] fetching $url"
+            (download "$url" >> $rwdir/temphosts || echo "[x] failed downloading $url") &
+        done
+
+        # Wait for all background downloads to finish before proceeding
+        wait
 	# if temphosts is empty
 	# its either user did something
 	# or inaccessible urls / no internet
@@ -346,10 +353,20 @@ adblock() {
 		# strip first two lines since thats just localhost
 		tail -n +3 $target_hostsfile > $rwdir/temphosts
 		}
+        # Save the downloaded URLs to custom*.txt if "yes" exists in disable/update.txt
+        if grep -q "yes" "$PERSISTENT_DIR/disable/update.txt"; then
+            cp "$rwdir/temphosts" "$PERSISTENT_DIR/customtemphosts.txt"
+            rm "$rwdir/temphosts"
+            echo "[+] auto fetch disabled"
+        fi
 	# localhost
 	printf "127.0.0.1 localhost\n::1 localhost\n" > $target_hostsfile
-	# always restore user's custom rules
-	sed '/#/d' $PERSISTENT_DIR/custom*.txt >> $target_hostsfile
+        # If "yes" exists in disable/update.txt, append customtemphosts.txt to target_hostsfile
+        if grep -q "yes" "$PERSISTENT_DIR/disable/update.txt"; then
+            cat "$PERSISTENT_DIR/customtemphosts.txt" >> "$target_hostsfile"
+        fi
+        # Append custom rules to target_hostsfile, excluding comments and skipping customtemphosts.txt
+        sed '/#/d' "$PERSISTENT_DIR/custom*.txt" | grep -vFf "$PERSISTENT_DIR/customtemphosts.txt" >> "$target_hostsfile"
 	# blacklist.txt
 	for i in $(sed '/#/d' $PERSISTENT_DIR/blacklist.txt ); do echo "0.0.0.0 $i" >> $rwdir/temphosts; done
 	# whitelist.txt
@@ -381,6 +398,24 @@ reset() {
 }
 
 run() {
+        echo "[+] checking fetch opt in & opt out"
+        # Define the ignore flag (you can set this dynamically from outside or by passing a parameter)
+        UPDATESTATUS=false  # Default behavior is to check for "yes" in disable/update.txt
+
+        # Check if the script is called with a flag to ignore the "yes" check
+        for arg in "$@"; do
+            case $arg in
+                -update)
+                    UPDATESTATUS=true
+                    ;;
+                *)
+                    # Ignore other arguments
+                    ;;
+            esac
+        done
+
+        # Export the variable if needed in other functions
+        export UPDATESTATUS
 	adblock
 	# store these as variables
 	# this way we dont do the grepping twice
@@ -466,6 +501,36 @@ hosts_lastmod () {
 	echo "[+] Last update at: $(date -r $target_hostsfile)"
 }
 
+update () {
+run -update
+}
+
+disable_fetching() {
+    # Define the path for the file and directory
+    local disable_file="$PERSISTENT_DIR/disable/update.txt"
+    local disable_dir="$PERSISTENT_DIR/disable"
+    
+    # Check if the disable file exists
+    if [ -f "$disable_file" ]; then
+        # If the file exists, it means fetching is disabled, so remove the file and the directory to enable it again
+        rm "$disable_file"
+        
+        # Remove the directory if it's empty
+        if [ ! "$(ls -A "$disable_dir")" ]; then
+            rmdir "$disable_dir"
+        fi
+        
+        echo "Fetching is now enabled."
+    else
+        # Otherwise, disable fetching by creating the file and the directory
+        mkdir -p "$disable_dir"
+        echo "yes" > "$disable_file"
+        
+        echo "Fetching is now disabled."
+        run -update
+    fi
+}
+
 show_help () {
 	echo "[%] $( grep '^description=' $MODDIR/module.prop | sed 's/description=//' )"
 	echo "usage:"
@@ -477,6 +542,9 @@ show_help () {
 	printf "\t\t\tif you do NOT know this, use --enable-cron\n"
 	printf " --enable-cron \t\tenables scheduled updates (10AM daily)\n"
 	printf " --disable-cron \tdisables scheduled updates\n"
+        printf " --disable-fetching \tdisables auto-fetching\n"
+        printf "\t\t\talong with --disable-fetching, --enable-cron [Recom.]\n"
+        printf "\t\t\telse please --force-update, timely\n"
 	printf " --help \t\tdisplays this message\n"
 }
 
@@ -484,11 +552,12 @@ show_help () {
 case "$1" in 
 	--action) action; exit ;;
 	--tcpdump) tcpdump; exit ;;
-	--force-update) run; exit ;;
+	--force-update) update; exit ;;
 	--force-reset) reset; exit ;;
 	--custom-cron) custom_cron "$@"; exit ;;
 	--enable-cron) enable_cron; exit ;;
 	--disable-cron) disable_cron; exit ;;
+        --disable-fetching) disable_fetching; exit;;
 	--toggle-updatejson) toggle_updatejson; exit ;;
 	--hosts-lastmod) hosts_lastmod; exit ;;
 	--help|*) show_help; exit ;;
