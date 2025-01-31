@@ -335,6 +335,7 @@ adblock() {
 	for url in $(sed '/#/d' $PERSISTENT_DIR/sources.txt | grep http) ; do 
 		echo "[>] fetching $url"
 		download "$url" >> "$rwdir/temphosts" || echo "[x] failed downloading $url"
+		echo "" >> "$rwdir/temphosts"
 	done
 	# if temphosts is empty
 	# its either user did something
