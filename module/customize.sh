@@ -51,8 +51,8 @@ pm path me.itejo443.bindhosts > /dev/null 2>&1 || {
 mkdir -p "$MODPATH/system/etc"
 
 # set permissions to bindhosts.sh
-susfs_clone_perm "$MODPATH/bindhosts.sh" /bin/sh
-susfs_clone_perm "$MODPATH/bindhosts-app.sh" /bin/sh
+busybox chmod +x "$MODPATH/bindhosts.sh"
+busybox chmod +x "$MODPATH/bindhosts-app.sh"
 
 # symlink bindhosts to manager path
 # for ez termux usage
@@ -108,6 +108,6 @@ grep -qv "#" "$MODPATH/system/etc/hosts" > /dev/null 2>&1 || {
 	}
 
 # set permissions always
-susfs_clone_perm "$MODPATH/system/etc/hosts" /system/etc/hosts
+hosts_set_perm "$MODPATH/system/etc/hosts"
 
 # EOF

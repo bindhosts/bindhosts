@@ -10,7 +10,7 @@ if [ ! -f $MODDIR/system/etc/hosts ]; then
 	cat /system/etc/hosts > $MODDIR/system/etc/hosts
 	printf "127.0.0.1 localhost\n::1 localhost\n" >> "$MODPATH/system/etc/hosts"
 fi
-susfs_clone_perm "$MODDIR/system/etc/hosts" /system/etc/hosts
+hosts_set_perm "$MODDIR/system/etc/hosts"
 
 # detect operating operating_modes
 
