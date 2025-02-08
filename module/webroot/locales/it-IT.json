@@ -1,0 +1,72 @@
+{
+    "language": "Italiano",
+    "status": {
+        "title": "Stato"
+    },
+    "global": {
+        "executing": "Script in esecuzione...",
+        "execute_error": "Errore esecuzione script action:",
+        "unwritable": "File host non scrivibile, necessita correzione",
+        "reset": "Reset file hosts!",
+        "disabled": "Il modulo è stato disabilitato",
+        "adaway": "Resetta hosts in Adaway prima di continuare",
+        "dev_opt": "Opzione sviluppatore abilitata",
+        "dev_opt_true": "Opzione sviluppatore già abilitata",
+        "dev_opt_fail": "Errore durante l'abilitazione dell'opzione sviluppatore",
+        "reboot": "Riavvia per rendere effettivo, tocca per riavviare"
+    },
+    "control_panel": {
+        "title": "Panello di Controllo",
+        "language": "Lingua",
+        "bad_translation": "Traduzione Pessima",
+        "add_language": "Aggiungi una Lingua",
+        "get_tiles": "Ottieni QS Tile",
+        "installing": "Installazione...",
+        "installed": "Installato, abilitare il privilegio SU per l'app bindhosts",
+        "download_fail": "Impossibile scaricare, controlla la tua connessione Internet",
+        "install_fail": "Impossibile installare, installare manualmente da /sdcard/Download/bindhosts-app",
+        "module_update": "Aggiornamento Modulo",
+        "update_true": "Aggiornamento modulo abilitato",
+        "update_false": "Aggiornamento modulo disattivato",
+        "action_redirect": "Reindirizzamento Azione",
+        "action_prompt_true": "Abilitato reindirizzamento azione Magisk WebUI",
+        "action_prompt_false": "Disabilitato reindirizzamento azione Magisk WebUI",
+        "update_hosts_daily": "Aggiornamento Hosts Quotidiano",
+        "cron_true": "Aggiunta voce Crontab",
+        "cron_false": "Rimossa vice Crontab"
+    },
+    "custom": {
+        "title": "Regole Personalizzate",
+        "guide1": "Aggiungi qui i reindirizzamenti personalizzati",
+        "example": "Esempio:",
+        "warning": "ATTENZIONE: le regole personalizzate vengono caricate sia durante l'esecuzione che durante il reset!",
+        "prompt_fail": "è già nella regola personalizzata"
+    },
+    "source": {
+        "title": "Fonti",
+        "guide1": "Fonti lista nera",
+        "guide2": "Set regole personalizzate",
+        "format": "Formato:",
+        "example": "Esempio:",
+        "source_page": "Altre Fonti",
+        "prompt_fail": "è già nella fonte"
+    },
+    "blacklist": {
+        "title": "Blacklist",
+        "guide1": "Tutto ciò che aggiungi qui verrà inserito nella blacklist",
+        "example": "Esempio:",
+        "prompt_fail": "è già nella blacklist"
+    },
+    "whitelist": {
+        "title": "Whitelist",
+        "guide1": "Tutto ciò che aggiungi qui non verrà inserito nella blacklist",
+        "example": "Esempio:",
+        "prompt_fail": "è già nella whitelist"
+    },
+    "mode": {
+        "button": "Modalità",
+        "title": "Modalità di funzionamento",
+        "detail": "Saperne di più",
+        "reset": "Reset (auto)"
+    }
+}
