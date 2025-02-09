@@ -1,0 +1,72 @@
+{
+    "language": "Türkçe",
+    "status": {
+        "title": "Durum"
+    },
+    "global": {
+        "executing": "Komut dosyası çalışıyor...",
+        "execute_error": "Eylem komut dosyası çalıştırılırken hata oluştu.",
+        "unwritable": "Hosts dosyasına yazılamıyor, düzeltilmesi gerekiyor",
+        "reset": "Hosts dosyası sıfırlandı!",
+        "disabled": "Modül devre dışı bırakıldı",
+        "adaway": "Devam etmeden önce Adaway'deki hosts'u sıfırlayın",
+        "dev_opt": "Geliştirici seçeneği etkinleştirildi",
+        "dev_opt_true": "Geliştirici seçeneği zaten etkin",
+        "dev_opt_fail": "Geliştirici seçeneği etkinleştirilirken hata oluştu",
+        "reboot": "Etkili olması için yeniden başlatın, yeniden başlatmak için dokunun"
+    },
+    "control_panel": {
+        "title": "Kontrol Paneli",
+        "language": "Dil",
+        "bad_translation": "Kötü Çeviri",
+        "add_language": "Bir Dil Ekle",
+        "get_tiles": "Hızlı Ayarlar (QS) Kutucuğu Ekle/Al",
+        "installing": "Yükleniyor...",
+        "installed": "Yüklendi, lütfen bindhosts uygulaması için SU yetkisi verin",
+        "download_fail": "İndirme başarısız oldu, lütfen internet bağlantınızı kontrol edin",
+        "install_fail": "Kurulum başarısız oldu, lütfen /sdcard/Download/bindhosts-app adresinden manuel olarak kurulum yapın",
+        "module_update": "Modül Güncellemesi",
+        "update_true": "Modül güncellemesi etkinleştirildi",
+        "update_false": "Modül güncellemesi devre dışı bırakıldı",
+        "action_redirect": "Eylem Yönlendirmesi",
+        "action_prompt_true": "Magisk eylem yönlendirmesi WebUI'ı etkinleştirildi",
+        "action_prompt_false": "Magisk eylem yönlendirmesi WebUI'ı devre dışı bıraktı",
+        "update_hosts_daily": "Hosts'u günlük güncelle",
+        "cron_true": "Crontab girişi eklendi",
+        "cron_false": "Crontab girişi kaldırıldı"
+    },
+    "custom": {
+        "title": "Özel Kurallar",
+        "guide1": "Buraya özel yönlendirmeler ekleyin",
+        "example": "Örnek:",
+        "warning": "UYARI: Özel kurallar hem çalıştırmada hem de sıfırlamada yüklenir!",
+        "prompt_fail": "Zaten özel kuralda mevcut"
+    },
+    "source": {
+        "title": "Kaynaklar",
+        "guide1": "Kara liste kaynakları",
+        "guide2": "Özel kural setleri",
+        "format": "Format:",
+        "example": "Örnek:",
+        "source_page": "Daha Fazla Kaynak",
+        "prompt_fail": "Zaten kaynakta mevcut"
+    },
+    "blacklist": {
+        "title": "Kara liste",
+        "guide1": "Buraya eklediğiniz her şey kara listeye alınacaktır",
+        "example": "Örnek:",
+        "prompt_fail": "Zaten kara listede mevcut"
+    },
+    "whitelist": {
+        "title": "Beyaz liste",
+        "guide1": "Buraya eklediğiniz her şey kara listeye alınmayacaktır",
+        "example": "Örnek:",
+        "prompt_fail": "Zaten beyaz listede mevcut"
+    },
+    "mode": {
+        "button": "Mod",
+        "title": "Çalışma Modu",
+        "detail": "Daha fazla bilgi edin",
+        "reset": "Sıfırla (otomatik)"
+    }
+}
