@@ -1,0 +1,72 @@
+{
+    "language": "العربية",
+    "status": {
+        "title": "الحالة"
+    },
+    "global": {
+        "executing": "يتم تشغيل البرنامج النصي...",
+        "execute_error": "خطأ في تشغيل البرنامج النصي:",
+        "unwritable": "ملف hosts غير قابل للتعديل يرجى الإصلاح",
+        "reset": "تمت اعادة تهيئة ملف الhosts",
+        "disabled": "تم ايقاف الإضافة",
+        "adaway": "قم بإعادة تهيئة ال hosts في AdAway",
+        "dev_opt": "تم تفعيل خيار المطور",
+        "dev_opt_true": "خيار المطور يعمل بالفعل",
+        "dev_opt_fail": "خطأ في تفعيل خيار المطور",
+        "reboot": "قم إعادة تشغيل الجهاز"
+    },
+    "control_panel": {
+        "title": "لوحة التحكم",
+        "language": "اللغة",
+        "bad_translation": "ترجمة سيئة",
+        "add_language": "أضف لغة",
+        "get_tiles": "أضف خيار في لوحة الإشعارات",
+        "installing": "يتم التثبيت...",
+        "installed": "تم التثبيت, برجاء منح صلاحيات الروت لتطبيق Bindhosts",
+        "download_fail": "خطأ في التنزيل, برجاء التحقق من الاتصال بالإنترنت",
+        "install_fail": "فشل التثبيت, برجاء التثبيت يدويا, مسار التطبيق :  /sdcard/Download/bindhosts-app",
+        "module_update": "تحديث الإضافة",
+        "update_true": "تم تفعيل تحديث الإضافة",
+        "update_false": "تم إيقاف تحديث الإضافة",
+        "action_redirect": "اعادة تحويل Action",
+        "action_prompt_true": "تم تفعيل إعادة تحويل Action إلي واجهة الويب",
+        "action_prompt_false": "تم ايقاف إعادة تحويل Action إلي واجهة الويب",
+        "update_hosts_daily": "تحديث الhosts يوميا",
+        "cron_true": "تمت اضافة مدخل Crontab",
+        "cron_false": "تمت إزالة مدخل Crontab"
+    },
+    "custom": {
+        "title": "قوانين مخصصة",
+        "guide1": "أضف تحويلات مخصصة هتا",
+        "example": "مثلا:",
+        "warning": "تحذير: القوانين المخصصة يتم استخدامها في حالة اعادة التهيئة او التحديث",
+        "prompt_fail": "تمت اضافتها بالفعل"
+    },
+    "source": {
+        "title": "المصادر",
+        "guide1": "مصادر قائمة الحظر",
+        "guide2": "قواعد مخصصة",
+        "format": "الهيئة:",
+        "example": "مثال:",
+        "source_page": "مصادر اضافية",
+        "prompt_fail": "مضاف بالفعل"
+    },
+    "blacklist": {
+        "title": "القائمة السوداء",
+        "guide1": "كل شئ يضاف هنا سوف يتم حظره",
+        "example": "مثال:",
+        "prompt_fail": "مضاف بالفعل"
+    },
+    "whitelist": {
+        "title": "القائمة البيضاء",
+        "guide1": "كل شئ يضاف هنا لن يتم حظره",
+        "example": "مثال:",
+        "prompt_fail": "مضاف بالفعل"
+    },
+    "mode": {
+        "button": "الوضع",
+        "title": "وضع التشغيل",
+        "detail": "اعرف المزيد",
+        "reset": "اعادة تهيئة (تلقائي)"
+    }
+}
