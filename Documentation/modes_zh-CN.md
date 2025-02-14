@@ -11,9 +11,9 @@
 ## mode=0
 ### 默认模式
  - **APatch** 
-   - OverlayFS / magic mount
+   - bind mount (magic mount)
    - magic mount 兼容 Adaway，OverlayFS 不兼容 Adaway
-   - 隐藏: 使用 [ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext) 并开启遵循排除列表
+   - 隐藏: 排除修改 + [ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext) 的遵循排除列表
  - **Magisk** 
    - magic mount  
    - 兼容 Adaway  
@@ -54,8 +54,8 @@
   - [hosts_file_redirect](https://github.com/AndroidPatch/kpm/blob/main/src/hosts_file_redirect/)  
   - [操作指引](https://github.com/bindhosts/bindhosts/issues/3)
 - 似乎在所有设置下不起作用，需要碰运气
-- 与 Adaway 不兼容  
-- 隐藏: **对 APatch 而言最佳, 由于其压根没有挂载**
+- 与 Adaway 不兼容
+- 隐藏: 如果能正常工作，是个不错的方法
 
 ---
 

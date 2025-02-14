@@ -1,16 +1,14 @@
 # 隐藏指南
 
 ## APatch
- 由于以下原因，在 APatch 上隐藏对 hosts 文件的修改是一件颇有挑战性的事情:
-  1. 其使用 OverlayFS 但自身缺少对 hosts 文件取消挂载的方法
-  2. bind mount 并未被广泛应用
+在 APatch 上隐藏应正常工作，前提是使用[最新版本](https://github.com/bmax121/APatch/releases/latest)
+ - 对需要对其隐藏 root 的应用启用"排除修改"
+ - 启用 [ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext) 的遵循排除列表
 
- 建议: 
-   - [更新 APatch](https://nightly.link/bmax121/APatch/workflows/build/main/APatch) 并使用 [ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext) 的遵守排除列表
-   - 对于旧版本, 可以尝试使用 hosts_file_redirect kpm
-      - [使用教程](https://github.com/bindhosts/bindhosts/issues/3)
-      - [点击下载](https://github.com/AndroidPatch/kpm/releases)
-   - 若 hosts_file_redirect 失败, 请安装 [ZN-hostsredirect](https://github.com/aviraxp/ZN-hostsredirect/releases)
+旧版 APatch 因潜在问题不再推荐，但可尝试以下方案：
+   - 启用排除修改 + [ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext) 的遵循排除列表
+   - 虽然不再推荐，仍可尝试使用 hosts_file_redirect kpm [使用教程](https://github.com/bindhosts/bindhosts/issues/3)
+   - 若 hosts_file_redirect 失败，请安装 [ZN-hostsredirect](https://github.com/aviraxp/ZN-hostsredirect/releases)
 
 ## KernelSU
  在 KernelSU 上隐藏应该能正常工作, 只要:

@@ -11,9 +11,9 @@
 ## mode=0
 ### default mode
  - **APatch** 
-   - OverlayFS / magic mount
-   - magic mount is Adaway compatible, OverlayFS is NOT
-   - Hiding: [ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext)'s enforce denylist
+   - bind mount (magic mount)
+   - Adaway compatible
+   - Hiding: Exclude Modifications + [ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext)'s enforce denylist
  - **Magisk** 
    - magic mount  
    - Adaway compatible  
@@ -53,9 +53,9 @@
 - APatch only, requires hosts_file_redirect KPM  
   - [hosts_file_redirect](https://github.com/AndroidPatch/kpm/blob/main/src/hosts_file_redirect/)  
   - [How-to-Guide](https://github.com/bindhosts/bindhosts/issues/3)
-- Doesn't seem to work on all setups, hit-and-miss  
+- Does NOT work on all setups, hit-and-miss  
 - No Adaway compatibility  
-- Hiding: **best method for APatch, no mounts at all**
+- Hiding: good method if it WORKS
 
 ---
 

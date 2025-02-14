@@ -702,7 +702,7 @@ cronContainer.addEventListener('click', async function () {
 
 // Initial load
 window.onload = () => {
-    adjustHeaderForMMRL();
+    checkMMRL();
     ["custom", "sources", "blacklist", "whitelist"].forEach(loadFile);
     attachAddButtonListeners();
     attachHelpButtonListeners();
@@ -725,12 +725,22 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 // Function to check if running in MMRL
-function adjustHeaderForMMRL() {
+function checkMMRL() {
     if (typeof ksu !== 'undefined' && ksu.mmrl) {
-        console.log("Running in MMRL");
+        // Adjust inset
         header.style.top = 'var(--window-inset-top)';
         actionButton.style.bottom = 'calc(var(--window-inset-bottom) + 25px)';
         headerBlock.style.display = 'block';
+
+        // Request API permission
+        try {
+            $bindhosts.requestAdvancedKernelSUAPI();
+            $bindhosts.requestFileSystemAPI();
+        } catch (error) {
+            console.log("Error requesting API:", error);
+        }
+    } else {
+        console.log("Not running in MMRL environment.");
     }
 }
 

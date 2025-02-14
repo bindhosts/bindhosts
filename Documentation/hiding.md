@@ -1,15 +1,13 @@
 # Hiding Guide
 
 ## APatch
- Hiding in APatch is a bit challenging due to the following reasons:
-  1. it uses OverlayFS but lacks a built-in unmount mechanism
-  2. bind mount is NOT widely adopted
+ Hiding in APatch should just work, provided you are on [latest release](https://github.com/bmax121/APatch/releases/latest) 
+ - 'Exclude Modifications' to apps you want to hide root from.
+ - enable [ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext)'s enforce denylist
 
- Recommendations: 
-   - [update your APatch](https://nightly.link/bmax121/APatch/workflows/build/main/APatch) and use [ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext)'s enforce denylist
-   - for older versions, you can try to use hosts_file_redirect kpm
-      - [Usage Tutorial](https://github.com/bindhosts/bindhosts/issues/3), [Download here](https://github.com/AndroidPatch/kpm/releases)
-      - NOTE: this workaround is hit-and-miss. I really recommend to just use latest APatch.
+ Legacy APatch is discouraged due to potential issues. However, you can try the following:
+   - exclude modifications + enable [ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext)'s enforce denylist
+   - while this is not recommended anymore, you can still try to use hosts_file_redirect kpm. [Tutorial](https://github.com/bindhosts/bindhosts/issues/3)
    - if hosts_file_redirect fails, install [ZN-hostsredirect](https://github.com/aviraxp/ZN-hostsredirect/releases)
 
 ## KernelSU
