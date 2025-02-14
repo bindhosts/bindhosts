@@ -732,6 +732,13 @@ function checkMMRL() {
         actionButton.style.bottom = 'calc(var(--window-inset-bottom) + 25px)';
         headerBlock.style.display = 'block';
 
+        // Always keep status bars light since the WebUI is always in dark theme
+        try {
+            $bindhosts.setLightStatusBars(false)
+        } catch (error) {
+            console.log("Error setting status bars theme:", error)
+        }
+
         // Request API permission
         try {
             $bindhosts.requestAdvancedKernelSUAPI();
