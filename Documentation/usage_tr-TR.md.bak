@@ -19,7 +19,7 @@ bindhosts için çeşitli seçeneklere, Magisk/KernelSU/APatch üzerinde görün
 
 ### Örnek
 ```
-bindhosts --action          Bu komut, bindhosts'un durumuna göre IP adreslerini almak veya hosts dosyasını sıfırlamak için bindhosts eylemini (action) simüle eder.
+    bindhosts --action          Bu komut, bindhosts'un durumuna göre IP adreslerini almak veya hosts dosyasını sıfırlamak için bindhosts eylemini (action) simüle eder.
 bindhosts --tcpdump         Şu anda aktif olan IP adreslerini ağ modunda (WiFi veya veri) tespit eder, Cloudflare gibi DNS servislerinin kullanılmadığından emin olun.
 bindhosts --query <URL>     Hosts dosyasından bir URL sorgular.
 bindhosts --force-reset     Bindhosts'u sıfırlamak için zorlayıcı reset yapar, yani hosts dosyasındaki IP adreslerini sıfırlar.
