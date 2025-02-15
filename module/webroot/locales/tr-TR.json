@@ -5,7 +5,7 @@
     },
     "global": {
         "executing": "Komut dosyası çalışıyor...",
-        "execute_error": "Eylem komut dosyası çalıştırılırken hata oluştu.",
+        "execute_error": "Eylem (action) komut dosyası çalıştırılırken hata oluştu.",
         "unwritable": "Hosts dosyasına yazılamıyor, düzeltilmesi gerekiyor",
         "reset": "Hosts dosyası sıfırlandı!",
         "disabled": "Modül devre dışı bırakıldı",
@@ -28,9 +28,9 @@
         "module_update": "Modül Güncellemesi",
         "update_true": "Modül güncellemesi etkinleştirildi",
         "update_false": "Modül güncellemesi devre dışı bırakıldı",
-        "action_redirect": "Eylem Yönlendirmesi",
-        "action_prompt_true": "Magisk eylem yönlendirmesi WebUI'ı etkinleştirildi",
-        "action_prompt_false": "Magisk eylem yönlendirmesi WebUI'ı devre dışı bıraktı",
+        "action_redirect": "Eylem (action) Yönlendirmesi",
+        "action_prompt_true": "Magisk eylem (action) yönlendirmesi WebUI'ı etkinleştirildi",
+        "action_prompt_false": "Magisk eylem (action) yönlendirmesi WebUI'ı devre dışı bıraktı",
         "update_hosts_daily": "Hosts'u günlük güncelle",
         "cron_true": "Crontab girişi eklendi",
         "cron_false": "Crontab girişi kaldırıldı"
