@@ -489,7 +489,7 @@ tcpdump () {
 		echo "[+] make sure private dns is disabled!"
 		echo "[+] spawning tcpdump"
 		echo "[!] press ctrl+c to exit"
-		su -c "tcpdump -ltni any dst port 53"
+		sh -c "tcpdump -ltni any dst port 53"
 	else
 		echo "[!] tcpdump not found"
 		echo "[x] bailing out"
