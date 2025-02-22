@@ -183,7 +183,7 @@ async function checkUpdateStatus() {
 // Function to check action redirect WebUI status
 async function checkRedirectStatus() {
     try {
-        const result = await execCommand("su -c '[ ! -f /data/adb/bindhosts/webui_setting.sh ] || grep -q '^magisk_webui_redirect=1' /data/adb/bindhosts/webui_setting.sh' ");
+        const result = await execCommand("sh -c '[ ! -f /data/adb/bindhosts/webui_setting.sh ] || grep -q '^magisk_webui_redirect=1' /data/adb/bindhosts/webui_setting.sh' ");
         actionRedirectStatus.checked = !result;
     } catch (error) {
         actionRedirectStatus.checked = false;
@@ -241,7 +241,7 @@ async function checkBindhostsApp() {
         try {
             showPrompt("control_panel.installing", true, undefined, "[+]");
             await new Promise(resolve => setTimeout(resolve, 200));
-            const output = await execCommand("su -c 'sh /data/adb/modules/bindhosts/bindhosts-app.sh'");
+            const output = await execCommand("sh -c 'sh /data/adb/modules/bindhosts/bindhosts-app.sh'");
             const lines = output.split("\n");
             lines.forEach(line => {
                 if (line.includes("[+]")) {
@@ -368,7 +368,7 @@ async function executeActionScript() {
     try {
         showPrompt("global.executing", true, 50000);
         await new Promise(resolve => setTimeout(resolve, 200));
-            const command = "su -c 'sh /data/adb/modules/bindhosts/bindhosts.sh --action'";
+            const command = "sh -c 'sh /data/adb/modules/bindhosts/bindhosts.sh --action'";
             const output = await execCommand(command);
             const lines = output.split("\n");
             lines.forEach(line => {
@@ -646,7 +646,7 @@ document.getElementById("reset-mode").addEventListener("click", () => {
 // Event listener for the update toggle switch
 toggleContainer.addEventListener('click', async function () {
     try {
-        const result = await execCommand("su -c 'sh /data/adb/modules/bindhosts/bindhosts.sh --toggle-updatejson'");
+        const result = await execCommand("sh -c 'sh /data/adb/modules/bindhosts/bindhosts.sh --toggle-updatejson'");
         const lines = result.split("\n");
         lines.forEach(line => {
             if (line.includes("[+]")) {
@@ -664,7 +664,7 @@ toggleContainer.addEventListener('click', async function () {
 // Event listener for the action redirect switch
 actionRedirectContainer.addEventListener('click', async function () {
     try {
-        await execCommand(`su -c 'echo "magisk_webui_redirect=${actionRedirectStatus.checked ? 0 : 1}" > /data/adb/bindhosts/webui_setting.sh'`);
+        await execCommand(`sh -c 'echo "magisk_webui_redirect=${actionRedirectStatus.checked ? 0 : 1}" > /data/adb/bindhosts/webui_setting.sh'`);
         if (actionRedirectStatus.checked) {
             showPrompt("control_panel.action_prompt_false", false, undefined, "[×]");
         } else {
@@ -681,9 +681,9 @@ cronContainer.addEventListener('click', async function () {
     try {
         let command;
         if (cronToggle.checked) {
-            command = "su -c 'sh /data/adb/modules/bindhosts/bindhosts.sh --disable-cron'";
+            command = "sh -c 'sh /data/adb/modules/bindhosts/bindhosts.sh --disable-cron'";
         } else {
-            command = "su -c 'sh /data/adb/modules/bindhosts/bindhosts.sh --enable-cron'";
+            command = "sh -c 'sh /data/adb/modules/bindhosts/bindhosts.sh --enable-cron'";
         }
         const result = await execCommand(command);
         const lines = result.split("\n");
