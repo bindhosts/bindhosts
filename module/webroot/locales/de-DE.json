@@ -63,6 +63,12 @@
         "example": "Beispiel:",
         "prompt_fail": "Ist bereits in der Ausnahmeliste"
     },
+    "sources_whitelist": {
+        "title": "Ausnahmeliste Quellen",
+        "guide1": "Fügen Sie hier Ausnahmeliste-Quellen hinzu",
+        "example": "Beispiel:",
+        "prompt_fail": "Ist bereits in der Ausnahmeliste-Quelle"
+    },
     "mode": {
         "button": "Modus",
         "title": "Betriebsmodus",

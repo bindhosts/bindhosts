@@ -63,6 +63,12 @@
         "example": "مثال:",
         "prompt_fail": "مضاف بالفعل"
     },
+    "sources_whitelist": {
+        "title": "مصادر القائمة البيضاء",
+        "guide1": "أضف مصادر القائمة البيضاء هنا",
+        "example": "مثال:",
+        "prompt_fail": "مضاف بالفعل"
+    },
     "mode": {
         "button": "الوضع",
         "title": "وضع التشغيل",

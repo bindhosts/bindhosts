@@ -63,6 +63,12 @@
         "example": "Ejemplo:",
         "prompt_fail": "ya está en la lista blanca"
     },
+    "sources_whitelist": {
+        "title": "Fuentes de Lista Blanca",
+        "guide1": "Añade fuentes de lista blanca aquí",
+        "example": "Ejemplo:",
+        "prompt_fail": "ya está en la fuente de lista blanca"
+    },
     "mode": {
         "button": "Modo",
         "title": "Modo de Operación",

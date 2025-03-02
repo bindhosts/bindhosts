@@ -63,6 +63,12 @@
         "example": "例如：",
         "prompt_fail": "已存在于白名单内"
     },
+    "sources_whitelist": {
+        "title": "白名单源",
+        "guide1": "在此处添加白名单源",
+        "example": "例如：",
+        "prompt_fail": "已存在于白名单源内"
+    },
     "mode": {
         "button": "模式",
         "title": "工作模式",

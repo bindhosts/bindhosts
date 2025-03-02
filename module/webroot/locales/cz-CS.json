@@ -63,6 +63,12 @@
         "example": "Příklad:",
         "prompt_fail": "již existuje na whitelistu"
     },
+    "sources_whitelist": {
+        "title": "Zdroje Whitelistu",
+        "guide1": "Přidejte zdroje whitelistu zde",
+        "example": "Příklad:",
+        "prompt_fail": "již existuje ve zdroji whitelistu"
+    },
     "mode": {
         "button": "Režim",
         "title": "Provozní režim",

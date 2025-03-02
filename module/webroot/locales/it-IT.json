@@ -63,6 +63,12 @@
         "example": "Esempio:",
         "prompt_fail": "è già nella whitelist"
     },
+    "sources_whitelist": {
+        "title": "Fonti Whitelist",
+        "guide1": "Aggiungi qui le fonti della whitelist",
+        "example": "Esempio:",
+        "prompt_fail": "è già nella fonte whitelist"
+    },
     "mode": {
         "button": "Modalità",
         "title": "Modalità di funzionamento",

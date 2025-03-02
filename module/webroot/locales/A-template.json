@@ -63,6 +63,12 @@
         "example": "Example:",
         "prompt_fail": "is already in whitelist"
     },
+    "sources_whitelist": {
+        "title": "Whitelist Source",
+        "guide1": "Add whitelist sources here",
+        "example": "Example:",
+        "prompt_fail": "is already in whitelist source"
+    },
     "mode": {
         "button": "Mode",
         "title": "Operation Mode",

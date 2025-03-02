@@ -7,6 +7,7 @@ const filePaths = {
     sources: `${basePath}/sources.txt`,
     blacklist: `${basePath}/blacklist.txt`,
     whitelist: `${basePath}/whitelist.txt`,
+    sources_whitelist: `${basePath}/sources_whitelist.txt`,
 };
 
 const cover = document.querySelector('.cover');
@@ -90,7 +91,10 @@ export function applyRippleEffect() {
 // Function to read a file and display its content in the UI
 async function loadFile(fileType) {
     try {
-        const content = await execCommand(`cat ${filePaths[fileType]}`);
+        const content = await execCommand(`
+            [ -f ${filePaths[fileType]} ] || touch ${filePaths[fileType]}
+            cat ${filePaths[fileType]}
+        `);
         const lines = content
             .split("\n")
             .map(line => line.trim())
@@ -619,7 +623,8 @@ function attachAddButtonListeners() {
         { id: "custom-input", type: "custom", fail: "custom.prompt_fail" },
         { id: "sources-input", type: "sources", fail: "source.prompt_fail" },
         { id: "blacklist-input", type: "blacklist", fail: "blacklist.prompt_fail" },
-        { id: "whitelist-input", type: "whitelist", fail: "whitelist.prompt_fail" }
+        { id: "whitelist-input", type: "whitelist", fail: "whitelist.prompt_fail" },
+        { id: "sources_whitelist-input", type: "sources_whitelist", fail: "sources_whitelist.prompt_fail" }
     ];
     elements.forEach(({ id, type, fail }) => {
         const inputElement = document.getElementById(id);
@@ -706,7 +711,7 @@ cronContainer.addEventListener('click', async function () {
 // Initial load
 window.onload = () => {
     checkMMRL();
-    ["custom", "sources", "blacklist", "whitelist"].forEach(loadFile);
+    ["custom", "sources", "blacklist", "whitelist", "sources_whitelist"].forEach(loadFile);
     attachAddButtonListeners();
     attachHelpButtonListeners();
 };

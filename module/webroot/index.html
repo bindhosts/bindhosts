@@ -164,6 +164,25 @@
             </div>
             <ul id="whitelist-list"></ul>
         </div>
+
+        <!-- Whitelist source box -->
+        <div class="box">
+            <div>
+                <h2 data-i18n="sources_whitelist.title"></h2>
+                <button class="help-btn" data-type="sources_whitelist">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"><path d="M475-240q25 0 43-18t18-43.14q0-25.14-18-42.5T475-361q-25 0-43 17.36t-18 42.5Q414-276 432-258t43 18Zm-47-154h94q0-29 8-49t38-49q23-22 37.5-47.06 14.5-25.05 14.5-60.23 0-59.71-39-91.21-39-31.5-95-31.5-61 0-101.5 35T328-604l88 33q7-20 22-40t43-20q20 0 31 12.5t11 27.5q0 15-10.5 31T491-535q-40 37-51.5 60.5T428-394Zm52 348q-91 0-169.99-34.08-78.98-34.09-137.41-92.52-58.43-58.43-92.52-137.41Q46-389 46-480q0-91 34.08-169.99 34.09-78.98 92.52-137.41 58.43-58.43 137.41-92.52Q389-914 480-914q91 0 169.99 34.08 78.98 34.09 137.41 92.52 58.43 58.43 92.52 137.41Q914-571 914-480q0 91-34.08 169.99-34.09 78.98-92.52 137.41-58.43 58.43-137.41 92.52Q571-46 480-46Z"/></svg>
+                </button>
+            </div>
+            <div class="category-container">
+                <div class="input-box-wrapper">
+                    <textarea autocapitalize="off" class="input-box" id="sources_whitelist-input" type="text" placeholder="https://example.com/whitelist.txt"></textarea>
+                </div>
+                <button class="add-btn ripple-element" id="sources_whitelist-add" onclick="handleAdd('sources_whitelist')">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960" width="22px"><path d="M417-417H166v-126h251v-251h126v251h251v126H543v251H417v-251Z"/></svg>
+                </button>
+            </div>
+            <ul id="sources_whitelist-list"></ul>
+        </div>
     </div>
     <!-- End of box content -->
 
@@ -227,6 +246,16 @@
             <ul>
                 <li data-i18n="whitelist.guide1"></li>
                 <li data-i18n="whitelist.example"><br>host.not.to.block</li>
+            </ul>
+        </div>
+    </div>
+    <div id="sources_whitelist-help" class="overlay">
+        <div class="overlay-content">
+            <button class="close-btn" onclick="closeOverlay('sources_whitelist-help')">&#x2715;</button>
+            <h2 data-i18n="sources_whitelist.title"></h2>
+            <ul>
+                <li data-i18n="sources_whitelist.guide1"></li>
+                <li data-i18n="sources_whitelist.example"><br>https://raw.githubusercontent.com/anudeepND/whitelist/master/domains/whitelist.txt</li>
             </ul>
         </div>
     </div>

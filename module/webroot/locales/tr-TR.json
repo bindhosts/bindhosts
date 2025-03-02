@@ -63,6 +63,12 @@
         "example": "Örnek:",
         "prompt_fail": "Zaten beyaz listede mevcut"
     },
+    "sources_whitelist": {
+        "title": "Beyaz Liste Kaynakları",
+        "guide1": "Buraya beyaz liste kaynakları ekleyin",
+        "example": "Örnek:",
+        "prompt_fail": "Zaten beyaz liste kaynağında mevcut"
+    },
     "mode": {
         "button": "Mod",
         "title": "Çalışma Modu",
