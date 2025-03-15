@@ -26,10 +26,10 @@ Tamamen bağımsız, kendi kendine güncellenen bir sistem.
 
 ## Kaynaklar
 
-- [SSS](Documentation/faq.md)
-- [Kullanım](Documentation/usage.md)
-- [Gizleme](Documentation/hiding.md)
-- [Çalışma Modları](Documentation/modes.md)
+- [SSS](Documentation/faq_tr-TR.md)
+- [Kullanım](Documentation/usage_tr-TR.md)
+- [Gizleme](Documentation/hiding_tr-TR.md)
+- [Çalışma Modları](Documentation/modes_tr-TR.md)
 
 ## Bağlantılar
 
