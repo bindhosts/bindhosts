@@ -204,16 +204,9 @@ async function getHosts() {
     hostList.innerHTML = '';
 
     try {
-        let hostsText
-        if (isRunningOnMMRL) {
-            // Use MMRL FileSystem API to read the file in MMRL, not working when file is large
-            // Currently, fecth large files will crash MMRL
-            hostsText = $BiFile.read(`${moduleDirectory}/webroot/hosts.txt`);
-        } else {
-            const response = await fetch('hosts.txt');
-            if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-            hostsText = await response.text();
-        }
+        const response = await fetch('hosts.txt');
+        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+        let hostsText = await response.text();
 
         hostLines = hostsText
             .trim()
