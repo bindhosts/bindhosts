@@ -1,4 +1,4 @@
-import { execCommand, showPrompt, applyRippleEffect, checkMMRL, basePath, developerOption, setDeveloperOption, setLearnMore, initialTransition, isRunningOnMMRL, moduleDirectory } from './util.js';
+import { execCommand, showPrompt, applyRippleEffect, checkMMRL, basePath, developerOption, setDeveloperOption, setLearnMore, initialTransition, getFileContent, getProperties, moduleDirectory } from './util.js';
 import { loadTranslations } from './language.js';
 
 let clickCount = 0;
@@ -40,7 +40,7 @@ async function loadVersionFromModuleProp() {
  */
 async function updateStatusFromModuleProp() {
     try {
-        const description = await execCommand(`grep '^description=' ${moduleDirectory}/module.prop | sed 's/description=status: //'`);
+        const description = await getProperties().description.replace(/status:(\s?)/, "");
         if (!description.trim()) throw new Error("Description is empty");
         updateStatus(description.trim());
     } catch (error) {
@@ -204,9 +204,7 @@ async function getHosts() {
     hostList.innerHTML = '';
 
     try {
-        const response = await fetch('hosts.txt');
-        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-        let hostsText = await response.text();
+        let hostsText = await getFileContent('hosts.txt'); // Load hosts from hosts.txt
 
         hostLines = hostsText
             .trim()

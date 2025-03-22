@@ -7,11 +7,57 @@ export let isRunningOnMMRL = false;
 export function setDeveloperOption(value) { developerOption = value; }
 export function setLearnMore(value) { learnMore = value; }
 
-export const basePath = "/data/adb/bindhosts";
-export const moduleDirectory = "/data/adb/modules/bindhosts";
+export const moduleId = "bindhosts";
+export const basePath = `/data/adb/${moduleId}`;
+export const moduleDirectory = `/data/adb/modules/${moduleId}`;
 const header = document.querySelector('.header');
 const actionContainer = document.querySelector('.float');
 const content = document.querySelector('.content');
+
+/**
+ * Asynchronously fetches the content of a file from the specified path and returns it as a string.
+ *
+ * @param {string} path - The path to the file to fetch.
+ * @returns {Promise<string>} - A promise that resolves to the file content as a string.
+ *                            If an error occurs, an empty string is returned.
+ */
+export async function getFileContent(path) {
+    try {
+        const file = await fetch(path);
+        if (!file.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+        return await file.text();
+    } catch (error) {
+        console.error(`Failed to fetch file content: ${error}`);
+        return "";
+    }
+}
+
+/**
+ * Asynchronously retrieves properties from a configuration file and returns them as an object.
+ *
+ * @async
+ * @function
+ * @returns {Promise<Object>} A promise that resolves to an object containing key-value pairs
+ * from the configuration file.
+ *
+ * @throws {Error} If the file content cannot be retrieved or parsed.
+ */
+export async function getProperties() {
+    const configObj = {};
+    const lines = getFileContent(`${moduleDirectory}/module.prop`).split('\n');
+  
+    lines.forEach(line => {
+      // Skip empty lines
+      if (!line.trim()) return;
+  
+      const [key, value] = line.split('=').map(item => item.trim());
+      if (key && value) {
+        configObj[key] = value;
+      }
+    });
+  
+    return configObj;
+}
 
 /**
  * Execute shell commands
