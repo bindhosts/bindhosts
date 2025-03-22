@@ -258,7 +258,7 @@ export function checkMMRL() {
         // Request API permission
         try {
             $bindhosts.requestAdvancedKernelSUAPI();
-            $bindhosts.requestFileSystemAPI();
+            // $bindhosts.requestFileSystemAPI();
         } catch (error) {
             console.log("Error requesting API:", error);
         }
