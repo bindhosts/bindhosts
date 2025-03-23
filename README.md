@@ -1,4 +1,4 @@
-**English** | [简体中文](README_zh-CN.md) | [Türkçe](README_tr-TR.md)
+**English** | [简体中文](README_zh-CN.md) | [Türkçe](README_tr-TR.md) | [Italiano](README_it-IT.md)
 
 # bindhosts
 
