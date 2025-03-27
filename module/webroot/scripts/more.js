@@ -1,4 +1,4 @@
-import { execCommand, showPrompt, applyRippleEffect, checkMMRL, basePath, initialTransition, moduleDirectory, linkRedirect } from './util.js';
+import { exec, showPrompt, applyRippleEffect, checkMMRL, basePath, initialTransition, moduleDirectory, linkRedirect } from './util.js';
 import { loadTranslations } from './language.js';
 
 /**
@@ -10,7 +10,7 @@ import { loadTranslations } from './language.js';
 async function checkBindhostsApp() {
     const tilesContainer = document.getElementById('tiles-container');
     try {
-        const appInstalled = await execCommand(`pm path me.itejo443.bindhosts >/dev/null 2>&1 || echo "false"`);
+        const appInstalled = await exec(`pm path me.itejo443.bindhosts >/dev/null 2>&1 || echo "false"`);
         if (appInstalled.trim() === "false") {
             tilesContainer.style.display = "flex";
         }
@@ -27,7 +27,7 @@ async function installBindhostsApp (event) {
     try {
         showPrompt("control_panel.installing", true, undefined, "[+]");
         await new Promise(resolve => setTimeout(resolve, 200));
-        const output = await execCommand(`sh ${moduleDirectory}/bindhosts-app.sh`);
+        const output = await exec(`sh ${moduleDirectory}/bindhosts-app.sh`);
         const lines = output.split("\n");
         lines.forEach(line => {
             if (line.includes("[+]")) {
@@ -65,7 +65,7 @@ function checkUpdateStatus() {
  */
 async function toggleModuleUpdate() {
     try {
-        const result = await execCommand(`sh ${moduleDirectory}/bindhosts.sh --toggle-updatejson`);
+        const result = await exec(`sh ${moduleDirectory}/bindhosts.sh --toggle-updatejson`);
         const lines = result.split("\n");
         lines.forEach(line => {
             if (line.includes("[+]")) {
@@ -88,7 +88,7 @@ const actionRedirectStatus = document.getElementById('action-redirect');
  */
 async function checkMagisk() {
     try {
-        const magiskEnv = await execCommand(`command -v magisk >/dev/null 2>&1 && echo "true" || echo "false"`);
+        const magiskEnv = await exec(`command -v magisk >/dev/null 2>&1 && echo "true" || echo "false"`);
         if (magiskEnv.trim() === "true") {
             document.getElementById('action-redirect-container').style.display = "flex";
             await checkRedirectStatus();
@@ -104,7 +104,7 @@ async function checkMagisk() {
  */
 async function toggleActionRedirectWebui() {
     try {
-        await execCommand(`
+        await exec(`
             echo "magisk_webui_redirect=${actionRedirectStatus.checked ? 0 : 1}" > ${basePath}/webui_setting.sh
             chmod 755 ${basePath}/webui_setting.sh
         `);
@@ -146,7 +146,7 @@ const cronToggle = document.getElementById('toggle-cron');
  */
 async function checkCronStatus() {
     try {
-        const result = await execCommand(`grep -q "bindhosts.sh" ${basePath}/crontabs/root || echo "false"`);
+        const result = await exec(`grep -q "bindhosts.sh" ${basePath}/crontabs/root || echo "false"`);
         cronToggle.checked = result.trim() === "false" ? false : true;
     } catch (error) {
         console.error('Error checking cron status:', error);
@@ -159,7 +159,7 @@ async function checkCronStatus() {
  */
 async function toggleCron() {
     try {
-        const result = await execCommand(`sh ${moduleDirectory}/bindhosts.sh --${cronToggle.checked ? "disable" : "enable"}-cron`);
+        const result = await exec(`sh ${moduleDirectory}/bindhosts.sh --${cronToggle.checked ? "disable" : "enable"}-cron`);
         const lines = result.split("\n");
         lines.forEach(line => {
             if (line.includes("[+]")) {

@@ -1,4 +1,4 @@
-import { execCommand, basePath, applyRippleEffect, showPrompt } from './util.js';
+import { exec, basePath, applyRippleEffect, showPrompt } from './util.js';
 import { getCustomHostsList } from './hosts.js';
 
 // File selector
@@ -40,7 +40,7 @@ async function listFiles(path, skipAnimation = false) {
     }
     try {
         // Limit to .txt files and directories only, theoretically symlinks supported
-        const result = await execCommand(`
+        const result = await exec(`
             cd "${path}"
             find . -maxdepth 1 -type f -name "*.txt" -o -type d ! -name ".*" -o -type l | sort
         `);
@@ -95,7 +95,7 @@ async function listFiles(path, skipAnimation = false) {
                     // Select file
                     try {
                         const fileName = item.name.replace(/ /g, '_');
-                        await execCommand(`
+                        await exec(`
                             cp -f "${item.path}" ${basePath}/custom_${fileName}
                             chmod 644 ${basePath}/custom_${fileName}
                         `);

@@ -1,4 +1,4 @@
-import { execCommand, showPrompt, applyRippleEffect, checkMMRL, basePath, developerOption, setDeveloperOption, setLearnMore, initialTransition, moduleDirectory } from './util.js';
+import { exec, showPrompt, applyRippleEffect, checkMMRL, basePath, developerOption, setDeveloperOption, setLearnMore, initialTransition, moduleDirectory } from './util.js';
 import { loadTranslations } from './language.js';
 
 let clickCount = 0;
@@ -107,11 +107,11 @@ document.getElementById("mode-btn").addEventListener("click", async () => {
     async function saveModeSelection(mode) {
         try {
             if (mode === "reset") {
-                await execCommand(`rm -f ${basePath}/mode_override.sh`);
+                await exec(`rm -f ${basePath}/mode_override.sh`);
                 closeOverlay();
                 setLearnMore(false);
             } else {
-                await execCommand(`echo "mode=${mode}" > ${basePath}/mode_override.sh`);
+                await exec(`echo "mode=${mode}" > ${basePath}/mode_override.sh`);
             }
             showPrompt("global.reboot", true, 4000);
             await updateModeSelection();
@@ -126,14 +126,14 @@ document.getElementById("mode-btn").addEventListener("click", async () => {
      */
     async function updateModeSelection() {
         try {
-            const fileExists = await execCommand(`[ -f ${basePath}/mode_override.sh ] && echo 'true' || echo 'false'`);
+            const fileExists = await exec(`[ -f ${basePath}/mode_override.sh ] && echo 'true' || echo 'false'`);
             if (fileExists.trim() === "false") {
                 document.querySelectorAll("#mode-options input").forEach((input) => {
                     input.checked = false;
                 });
                 return;
             }
-            const content = await execCommand(`cat ${basePath}/mode_override.sh`);
+            const content = await exec(`cat ${basePath}/mode_override.sh`);
             const currentMode = content.trim().match(/mode=(\d+)/)?.[1] || null;
             document.querySelectorAll("#mode-options input").forEach((input) => {
                 input.checked = input.value === currentMode;
@@ -218,7 +218,7 @@ async function getHosts() {
 async function setupLink() {
     try {
         // backend required due to different target host file
-        await execCommand(`sh ${moduleDirectory}/bindhosts.sh --setup-link`);
+        await exec(`sh ${moduleDirectory}/bindhosts.sh --setup-link`);
     } catch (error) {
         console.error("Error linking hosts:", error);
     }
@@ -269,7 +269,7 @@ function loadMoreHosts(callback) {
  */
 async function handleRemove(event, domains) {
     try {
-        await execCommand(`sh ${moduleDirectory}/bindhosts.sh --whitelist ${domains.join(' ')}`);
+        await exec(`sh ${moduleDirectory}/bindhosts.sh --whitelist ${domains.join(' ')}`);
         // Find and remove the element directly
         const hostItem = event.target.closest('.host-list-row');
         if (hostItem) {
@@ -384,7 +384,7 @@ function setupRickRoll() {
         closeOverlay();
         try {
             // bilibili (China) or YouTube
-            await execCommand(`
+            await exec(`
                 if pm path tv.danmaku.bili > /dev/null 2>&1; then
                     am start -a android.intent.action.VIEW -d "https://b23.tv/Qhk2xvo"
                 else

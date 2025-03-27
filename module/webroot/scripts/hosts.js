@@ -1,4 +1,4 @@
-import { execCommand, showPrompt, applyRippleEffect, checkMMRL, basePath, initialTransition, setupSwipeToClose, moduleDirectory } from './util.js';
+import { exec, showPrompt, applyRippleEffect, checkMMRL, basePath, initialTransition, setupSwipeToClose, moduleDirectory } from './util.js';
 import { loadTranslations, translations } from './language.js';
 import { openFileSelector } from './file_selector.js';
 
@@ -67,7 +67,7 @@ function displayHostsList(lines, fileType) {
         // Remove line from file
         if (deleteLine) {
             deleteLine.addEventListener("click", async () => {
-                await execCommand(`
+                await exec(`
                     filtered=$(grep -vxF '${line}' ${basePath}/${filePaths[fileType]})
                     echo "$filtered" > ${basePath}/${filePaths[fileType]}
                 `);
@@ -80,7 +80,7 @@ function displayHostsList(lines, fileType) {
                 const fileName = listItem.querySelector("span").textContent;
                 const remove = await removeCustomHostsFile(fileName);
                 if (remove) {
-                    await execCommand(`rm -f ${basePath}/${fileName} ${moduleDirectory}/webroot/${fileName}`);
+                    await exec(`rm -f ${basePath}/${fileName} ${moduleDirectory}/webroot/${fileName}`);
                     listElement.removeChild(listItem);
                 }
             });
@@ -134,7 +134,7 @@ async function handleAdd(fileType, prompt) {
                 showPrompt(prompt, false, 2000, `${line}`);
                 continue;
             }
-            await execCommand(`echo "${line}" >> ${basePath}/${filePaths[fileType]}`);
+            await exec(`echo "${line}" >> ${basePath}/${filePaths[fileType]}`);
         }
         inputElement.value = ""; // Clear input if add successful
         loadFile(fileType);
@@ -306,7 +306,7 @@ document.getElementById("actionButton").addEventListener("click", async () => {
     try {
         showPrompt("global.executing", true, 50000);
         await new Promise(resolve => setTimeout(resolve, 200));
-            const output = await execCommand(`sh ${moduleDirectory}/bindhosts.sh --action`);
+            const output = await exec(`sh ${moduleDirectory}/bindhosts.sh --action`);
             const lines = output.split("\n");
             // Use translation key as much as possible
             lines.forEach(line => {
@@ -338,7 +338,7 @@ document.getElementById("actionButton").addEventListener("click", async () => {
  */
 export async function getCustomHostsList() {
     try {
-        const output = await execCommand(`ls ${basePath} | grep "^custom.*\.txt$" | grep -vx "custom.txt"`);
+        const output = await exec(`ls ${basePath} | grep "^custom.*\.txt$" | grep -vx "custom.txt"`);
         const lines = output.split("\n");
         displayHostsList(lines, "import_custom");
     } catch (error) {
@@ -364,7 +364,7 @@ async function fileNameEditor(fileName) {
     fileNameInput.value = rawFileName;
     try {
         // go to error if file is larger than 128KB
-        await execCommand(`[ $(wc -c < ${basePath}/${fileName}) -lt 131072 ] || exit 1`);
+        await exec(`[ $(wc -c < ${basePath}/${fileName}) -lt 131072 ] || exit 1`);
         const content = await fetch(`link/PERSISTENT_DIR/${fileName}`).then(response => response.text());
         editorInput.value = content;
         openFileEditor(fileName);
@@ -513,7 +513,7 @@ function openFileEditor(lastFileName, openEditor = true) {
         try {
             if (openEditor) {
                 // Save file
-                await execCommand(`
+                await exec(`
                     [ ! -f ${basePath}/${lastFileName} ] || rm -f ${basePath}/${lastFileName}
                     cat << 'AUniqueEOF' > ${basePath}/custom${newFileName}.txt
 ${content}
@@ -523,7 +523,7 @@ AUniqueEOF
                 showPrompt("global.saved", true, undefined, undefined, `${basePath}/custom${newFileName}.txt`);
             } else {
                 // Rename file
-                await execCommand(`mv -f ${basePath}/${lastFileName} ${basePath}/custom${newFileName}.txt`);
+                await exec(`mv -f ${basePath}/${lastFileName} ${basePath}/custom${newFileName}.txt`);
             }
             showPrompt("global.saved", true, undefined, undefined, `${basePath}/custom${newFileName}.txt`);
         } catch (error) {

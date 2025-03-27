@@ -1,5 +1,5 @@
 import { setupDocsMenu } from './docs.js';
-import { execCommand, applyRippleEffect, moduleDirectory } from './util.js';
+import { exec, applyRippleEffect, moduleDirectory } from './util.js';
 
 const languageMenu = document.querySelector('.language-menu');
 
@@ -131,7 +131,7 @@ function updateFooterLanguageKey() {
         const hostsText = escapeForSed(translations.footer.hosts);
         const moreText = escapeForSed(translations.footer.more);
 
-        execCommand(`
+        exec(`
             files="${moduleDirectory}/webroot/index.html ${moduleDirectory}/webroot/hosts.html ${moduleDirectory}/webroot/more.html"
             for file in $files; do
                 sed -i "s/<span data-i18n=\\"footer.home\\">[^<]*<\\/span>/<span data-i18n=\\"footer.home\\">${homeText}<\\/span>/g" "$file"

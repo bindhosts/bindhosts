@@ -17,7 +17,7 @@ const content = document.querySelector('.content');
  * @param {string} command - Command to execute
  * @returns {Promise<string>} - Command output
  */
-export async function execCommand(command) {
+export async function exec(command) {
     return new Promise((resolve, reject) => {
         const callbackName = `exec_callback_${Date.now()}`;
         window[callbackName] = (errno, stdout, stderr) => {
@@ -58,7 +58,7 @@ export function toast(message) {
  */
 export async function linkRedirect(link) {
     try {
-        await execCommand(`am start -a android.intent.action.VIEW -d ${link}`);
+        await exec(`am start -a android.intent.action.VIEW -d ${link}`);
     } catch (error) {
         console.error('Error redirect link:', error);
     }
@@ -160,7 +160,7 @@ export function showPrompt(key, isSuccess = true, duration = 2000, preValue = ""
                 } else {
                     clearInterval(countdownInterval);
                     countdownActive = false;
-                    execCommand("svc power reboot").catch(error => {
+                    exec("svc power reboot").catch(error => {
                         console.error("Failed to execute reboot command:", error);
                     });
                 }
@@ -200,7 +200,7 @@ export async function checkMMRL() {
 
         // Test API
         try {
-            await execCommand('ls /');
+            await exec('ls /');
         } catch (error) {
             const permissionOverlay = document.getElementById("mmrl-permission-overlay");
             permissionOverlay.style.display = 'flex';
