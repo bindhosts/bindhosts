@@ -61,13 +61,43 @@ function addCopyToClipboardListeners() {
     const sourceLinks = document.querySelectorAll("#copy-link");
     sourceLinks.forEach((element) => {
         element.addEventListener("click", function () {
-            navigator.clipboard.writeText(element.innerText).then(() => {
-                toast("Text copied to clipboard: " + element.innerText);
-            }).catch(err => {
-                console.error("Failed to copy text: ", err);
-            });
+            // Try the modern Clipboard API first
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(element.innerText)
+                    .then(() => {
+                        toast("Text copied to clipboard: " + element.innerText);
+                    })
+                    .catch(() => fallbackCopyToClipboard(element));
+            } else {
+                fallbackCopyToClipboard(element);
+            }
         });
     });
+}
+
+/**
+ * Fallback method to copy text to clipboard using document.execCommand
+ * Used when the Clipboard API is not supported or fails
+ * @param {HTMLElement} element - The element containing the text to copy
+ * @returns {void}
+ */
+function fallbackCopyToClipboard(element) {
+    try {
+        // Create a temporary textarea element
+        const textarea = document.createElement('textarea');
+        textarea.value = element.innerText;
+        textarea.style.position = 'absolute';
+        textarea.style.left = '-9999px';
+        textarea.style.top = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        const successful = document.execCommand('copy');
+        // Remove the temporary element
+        document.body.removeChild(textarea);
+        if (successful) toast("Text copied to clipboard: " + element.innerText);
+    } catch (err) {
+        console.error("Failed to copy text: ", err);
+    }
 }
 
 // Setup documents menu
