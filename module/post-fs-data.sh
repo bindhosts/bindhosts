@@ -50,6 +50,17 @@ if [ "$KSU" = true ] && [ -f ${SUSFS_BIN} ] ; then
 	fi
 fi
 
+# version control on MKSU is a bit fucked.
+if [ "$KSU_MAGIC_MOUNT" = "true" ] && [ ! -f /data/adb/ksu/.nomount  ] && [ ! -f /data/adb/ksu/.notmpfs ]; then
+	mode=0
+fi
+
+# well if it gets merged. basically counting chicks before teh eggs hatch.
+# change version code!
+if [ "$KSU" = "true" ] && [ -z "$KSU_MAGIC_MOUNT" ] && [ "$KSU_KERNEL_VER_CODE" -ge 12345 ]; then
+	mode=7
+fi
+
 # hosts_file_redirect operating_mode
 # this method is APatch only
 # no other heuristic other than dmesg
