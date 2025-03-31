@@ -21,8 +21,7 @@ export async function detectUserLanguage() {
         availableLanguages = availableData.languages;
         generateLanguageMenu();
 
-        // Fetch preferred language
-        const preferredResponse = await fetch('locales/prefered_language.txt');
+        // Get preferred language
         const prefered_language_code = localStorage.getItem('bindhostsLanguage');
 
         // Check if preferred language is valid
