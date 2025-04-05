@@ -545,7 +545,7 @@ restore_config() {
 	[ ! -f "$PERSISTENT_DIR" ]; mkdir -p "$PERSISTENT_DIR"
 	cp -f "$1" "$PERSISTENT_DIR/restore_me.tgz"
 	cd "$PERSISTENT_DIR"
-	if tar -zxf restore_me.tgz > /dev/null 2>&1; then
+	if busybox tar -zxf restore_me.tgz > /dev/null 2>&1; then
 		echo "[+] backup restored"
 	else
 		echo "[!] restore fail"	
