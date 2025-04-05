@@ -525,6 +525,35 @@ hosts_query () {
 	grep "$1" "$target_hostsfile" || echo "[!] no match found"
 }
 
+backup_config() {
+	if [ ! -d "$PERSISTENT_DIR" ]; then
+		echo "[!] no configuration directory to backup"
+		return
+	fi
+	cd "$PERSISTENT_DIR"
+	busybox tar czf bindhosts-$(date +%d%m%y).tgz *
+	mv -f bindhosts-$(date +%d%m%y).tgz /sdcard/Download
+	echo "[+] backup: $(ls /sdcard/Download/bindhosts-$(date +%d%m%y).tgz) "
+}
+
+restore_config() {
+	shift
+	if [ ! -f "$1" ]; then
+		echo "[!] file missing or unspecified"
+		return
+	fi
+	[ ! -f "$PERSISTENT_DIR" ]; mkdir -p "$PERSISTENT_DIR"
+	cp -f "$1" "$PERSISTENT_DIR/restore_me.tgz"
+	cd "$PERSISTENT_DIR"
+	if tar -zxf restore_me.tgz > /dev/null 2>&1; then
+		echo "[+] backup restored"
+	else
+		echo "[!] restore fail"	
+	fi
+	# clean
+	rm -f restore_me.tgz > /dev/null 2>&1
+}
+
 instant_whitelist() {
     # Backend for WebUI: whitelist domain instantly without re-run action
     shift
@@ -555,6 +584,8 @@ show_help () {
 	printf "\t\t\tif you do NOT know this, use --enable-cron\n"
 	printf " --enable-cron \t\tenables scheduled updates (10AM daily)\n"
 	printf " --disable-cron \tdisables scheduled updates\n"
+	printf " --backup-config \tcreate backup tarball\n"
+	printf " --restore-config <file.tgz> \trestore backup tarball\n"
 	printf " --help \t\tdisplays this message\n"
 }
 
@@ -568,6 +599,8 @@ case "$1" in
 	--custom-cron) custom_cron "$@"; exit ;;
 	--enable-cron) enable_cron; exit ;;
 	--disable-cron) disable_cron; exit ;;
+	--backup-config) backup_config; exit ;;
+	--restore-config) restore_config "$@"; exit ;;
 	--toggle-updatejson) toggle_updatejson; exit ;;
 	--hosts-lastmod) hosts_lastmod; exit ;;
 	--whitelist) instant_whitelist "$@"; exit ;;
