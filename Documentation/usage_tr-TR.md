@@ -12,7 +12,7 @@ Magisk/KernelSU/APatch için bindhosts’un çeşitli seçeneklerine aşağıdak
     > bindhosts
     ```
 
-- SDK Platform Tools (kök kabuğu) üzerinden:
+- SDK Platform Tools (root shell) üzerinden:
     ```shell
     > adb shell
     > su
@@ -22,7 +22,7 @@ Magisk/KernelSU/APatch için bindhosts’un çeşitli seçeneklerine aşağıdak
 ### Örnek
 ```
     bindhosts --action          Bu, bindhosts’un durumuna bağlı olarak IP’leri alma veya hosts dosyasını sıfırlama işlemini simüle eder
-    bindhosts --tcpdump         Ağ modunuzda (wifi veya veri) mevcut aktif IP adreslerini koklar (Cloudflare gibi DNS hizmetlerinin kullanılmadığından emin olun)
+    bindhosts --tcpdump         Ağ modunuzdaki mevcut aktif IP adreslerini koklayacaktır (wifi veya veri, cloudflare vb. gibi hiçbir DNS hizmetinin kullanılmadığından emin olun)
     bindhosts --query <URL>     Hosts dosyasında desen araması yapar
     bindhosts --force-reset     Bindhosts’u zorla sıfırlar, yani hosts dosyasını sıfır IP’ye geri döndürür
     bindhosts --force-update    Güncellemeye zorlar
@@ -32,16 +32,18 @@ Magisk/KernelSU/APatch için bindhosts’un çeşitli seçeneklerine aşağıdak
     bindhosts --help            Yukarıdaki resimde ve metinde gösterilen her şeyi görüntüler
 ```
 
-## Eylem
- Güncelleme ve sıfırlama arasında geçiş yapmak için eyleme basın
+## Eylem (Action)
+ Güncelleme ve sıfırlama arasında geçiş yapmak için eyleme (action) basın
  
 <img src="https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/screenshots/manager_action.gif" 
      onerror="this.onerror=null;this.src='https://raw.gitmirror.com/bindhosts/bindhosts/master/Documentation/screenshots/manager_action.gif';" 
      width="100%" alt="Manager Action">
 
-## Web Arayüzü
+## WebUI
   Özel kurallarınızı, kaynaklarınızı, beyaz listenizi veya kara listenizi ekleyin
  
 <img src="https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/screenshots/manager_webui.gif" 
      onerror="this.onerror=null;this.src='https://raw.gitmirror.com/bindhosts/bindhosts/master/Documentation/screenshots/manager_webui.gif';" 
      width="100%" alt="Manager WebUI">
+     
+     

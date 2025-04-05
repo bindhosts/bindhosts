@@ -8,9 +8,9 @@ Tamamen bağımsız, kendi kendine güncellenen bir sistem.
 
 ## Özellikler
 
-- WebUI ve eylem düğmesi kontrolü
+- WebUI ve eylem (action) düğmesi kontrolü
 - Adaway ile birlikte çalışabilme
-- Yönetici montajı, bağlama montajı ve OverlayFS ile sistemsiz hosts dosyası
+- Yönetici montajı, bind mount ve OverlayFS ile sistemsiz hosts dosyası
 - Yönlendirme yöntemleri: ZN-hostsredirect, hosts_file_redirect, open_redirect
 
 ## Desteklenen Root Yöneticileri
@@ -27,8 +27,8 @@ Tamamen bağımsız, kendi kendine güncellenen bir sistem.
 ## Kaynaklar
 
 - [SSS](Documentation/faq_tr-TR.md)
-- [Kullanım](Documentation/usage_tr-TR.md)
-- [Gizleme](Documentation/hiding_tr-TR.md)
+- [Kullanım Kılavuzu](Documentation/usage_tr-TR.md)
+- [Gizleme Kılavuzu](Documentation/hiding_tr-TR.md)
 - [Çalışma Modları](Documentation/modes_tr-TR.md)
 
 ## Bağlantılar

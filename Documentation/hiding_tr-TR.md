@@ -6,17 +6,17 @@ APatch'te gizleme, [en son sürümde](https://github.com/bmax121/APatch/releases
 - [ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext)'in kara liste uygulamasını etkinleştirin.
 
 Eski APatch kullanımı, olası sorunlar nedeniyle önerilmez. Ancak şu adımları deneyebilirsiniz:
-  - Değişiklikleri hariç tut + [ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext)'in kara liste uygulamasını etkinleştirin.
-  - Artık önerilmese de, hosts_file_redirect kpm kullanmayı deneyebilirsiniz. [Rehber](https://github.com/bindhosts/bindhosts/issues/3)
+  - Değişiklikleri hariç tut + [ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext)'in enforce denylist'i etkinleştirin.
+  - Artık önerilmesede, hosts_file_redirect kpm kullanmayı deneyebilirsiniz. [Rehber](https://github.com/bindhosts/bindhosts/issues/3)
   - Eğer hosts_file_redirect başarısız olursa, [ZN-hostsredirect](https://github.com/aviraxp/ZN-hostsredirect/releases) kurun.
 
 ## KernelSU
 KernelSU'da gizleme şu şartlar sağlandığında sorunsuz çalışır:
-  1. path_umount'a sahip olmanız (GKI, geri taşınmış)
+  1. path_umount'a sahip olmanız (GKI, backport edilmiş)
   2. Çakışan modül bulunmaması (ör. Magical OverlayFS)
 
 Öneriler:
-  - Eğer çekirdek GKI değilse ve path_umount eksikse, çekirdek geliştiricisinden [bu özelliği geri taşımasını](https://github.com/tiann/KernelSU/pull/1464) isteyin.
+  - Eğer kernel GKI değilse ve path_umount eksikse, çekirdek geliştiricisinden [bu özelliği backport etmesini](https://github.com/tiann/KernelSU/pull/1464) isteyin.
   - Alternatif olarak, sadece [ZN-hostsredirect](https://github.com/aviraxp/ZN-hostsredirect/releases) kurun.
 
 ### Varyantlar (MKSU, KernelSU-NEXT)
@@ -28,16 +28,17 @@ KernelSU'da gizleme şu şartlar sağlandığında sorunsuz çalışır:
 
 ## Magisk
 Magisk'te (ve klonlarında: Alpha, Kitsune) gizleme olduğu gibi çalışır.
-- Root'u gizlemek istediğiniz uygulamaları kara listeye ekleyin.
+- Root'u gizlemek istediğiniz uygulamaları denylist'e ekleyin.
 - İsteğe bağlı olarak [Shamiko](https://github.com/LSPosed/LSPosed.github.io/releases/) da kullanabilirsiniz.
 
 # SSS
 - Bu neden gerekli?
   - Bazı root tespitleri artık hosts dosyasının değiştirilip değiştirilmediğini kontrol ediyor.
 - Tespitleri nasıl kontrol ederim?
-  - [Tespit kontrolü nasıl yapılır](https://github.com/bindhosts/bindhosts/issues/4) okuyun.
-- APatch'te bağlama montajına nasıl geçerim?
+  - [Tespit kontrolü nasıl yapılır](https://github.com/bindhosts/bindhosts/issues/4)'ı okuyun.
+- APatch'te bind mount'a nasıl geçerim?
   - CI yapılarını [buradan](https://nightly.link/bmax121/APatch/workflows/build/main/APatch) alın.
 
 ## Terimler Sözlüğü
-- bağlama montajı - APatch'in sihirli montaj için kullandığı terim, esas olarak Magisk tarafından kullanılan montaj yöntemi.
+- bind mount - APatch'in magic mount için kullandığı terim, esas olarak Magisk tarafından kullanılan montaj yöntemi.
+
