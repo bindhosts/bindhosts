@@ -54,14 +54,15 @@
   - https://hblock.molinero.dev/hosts
 
 ### [Rem01Gaming](https://rem01gaming.dev/)
-  - main (GH Pages): https://d.rem01gaming.dev/hosts/adblock.txt
-  - backup: https://raw.githubusercontent.com/Rem01Gaming/dev-files/refs/heads/main/hosts/adblock.txt
+  - AdBlock: https://hosts.rem01gaming.dev/adblock
+  - Root Detection bypass: https://hosts.rem01gaming.dev/bypassroot
+  - Report Issue: https://github.com/Rem01Gaming/hosts/issues
 
 ## Custom rulesets
 
 ### [bebasid](https://github.com/bebasid/bebasid)
-   - combats censorship by TrustPositif in Indonesia.
-   - unblocks illegal websites that contains "negative content" like pornography, including reddit and nhentai
+   - Combats censorship by TrustPositif in Indonesia.
+   - Unblocks illegal websites that contains "negative content" such as pornography, including reddit and nhentai.
    - https://raw.githubusercontent.com/bebasid/bebasid/refs/heads/master/releases/hosts
    
 ### github-hosts (unofficial)
