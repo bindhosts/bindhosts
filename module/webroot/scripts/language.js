@@ -147,14 +147,13 @@ function updateFooterLanguageKey() {
 /**
  * Add memory to the language menu
  * Restore user language if default language is selected
- * @returns {void}
  */
 if (languageMenu) {
     languageMenu.addEventListener("click", (e) => {
         if (e.target.classList.contains("language-option")) {
             const lang = e.target.getAttribute("data-lang");
             localStorage.setItem('bindhostsLanguage', lang);
-            location.reload();
+            setTimeout(() => location.reload(), 80);
         }
     });
 }

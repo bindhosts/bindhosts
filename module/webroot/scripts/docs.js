@@ -218,13 +218,15 @@ export async function setupDocsMenu(docsLang) {
                     document.getElementById('about-document-content').innerHTML = '';
                     const { link, fallbackLink, linkMirror, fallbackLinkMirror } = docsData[element.dataset.type] || {};
                     getDocuments('about-document-content', link, fallbackLink, linkMirror, fallbackLinkMirror);
-                    aboutContent.style.transform = 'translateX(0)';
-                    bodyContent.style.transform = 'translateX(-20vw)';
-                    documentCover.style.opacity = '1';
-                    header.classList.add('back');
-                    backButton.style.transform = 'translateX(0)';
-                    const titleText = element.querySelector('.document-title').textContent;
-                    title.textContent = titleText;
+                    setTimeout(() => {
+                        aboutContent.style.transform = 'translateX(0)';
+                        bodyContent.style.transform = 'translateX(-20vw)';
+                        documentCover.style.opacity = '1';
+                        header.classList.add('back');
+                        backButton.style.transform = 'translateX(0)';
+                        const titleText = element.querySelector('.document-title').textContent;
+                        title.textContent = titleText;
+                    }, 100);
                 }
             }
 

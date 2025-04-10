@@ -2,6 +2,7 @@ import { translations } from './language.js';
 
 export let developerOption = false;
 export let learnMore = false;
+let footerClick = false;
 
 export function setDeveloperOption(value) { developerOption = value; }
 export function setLearnMore(value) { learnMore = value; }
@@ -81,8 +82,21 @@ export async function linkRedirect(link) {
 export function applyRippleEffect() {
     document.querySelectorAll('.ripple-element, .reboot').forEach(element => {
         if (element.dataset.rippleListener !== "true") {
-            element.addEventListener("pointerdown", function (event) {
-                if (isScrolling) return;
+            element.addEventListener("pointerdown", async (event) => {
+                const handlePointerUp = () => {
+                    ripple.classList.add("end");
+                    setTimeout(() => {
+                        ripple.classList.remove("end");
+                        ripple.remove();
+                    }, duration * 1000);
+                    element.removeEventListener("pointerup", handlePointerUp);
+                    element.removeEventListener("pointercancel", handlePointerUp);
+                };
+                element.addEventListener("pointerup", () => setTimeout(handlePointerUp, 80));
+                element.addEventListener("pointercancel", () => setTimeout(handlePointerUp, 80));
+
+                await new Promise(resolve => setTimeout(resolve, 80));
+                if (isScrolling || footerClick) return;
                 const ripple = document.createElement("span");
                 ripple.classList.add("ripple");
 
@@ -107,7 +121,6 @@ export function applyRippleEffect() {
                 // Adaptive color
                 const computedStyle = window.getComputedStyle(element);
                 const bgColor = computedStyle.backgroundColor || "rgba(0, 0, 0, 0)";
-                const textColor = computedStyle.color;
                 const isDarkColor = (color) => {
                     const rgb = color.match(/\d+/g);
                     if (!rgb) return false;
@@ -118,17 +131,6 @@ export function applyRippleEffect() {
 
                 // Append ripple and handle cleanup
                 element.appendChild(ripple);
-                const handlePointerUp = () => {
-                    ripple.classList.add("end");
-                    setTimeout(() => {
-                        ripple.classList.remove("end");
-                        ripple.remove();
-                    }, duration * 1000);
-                    element.removeEventListener("pointerup", handlePointerUp);
-                    element.removeEventListener("pointercancel", handlePointerUp);
-                };
-                element.addEventListener("pointerup", handlePointerUp);
-                element.addEventListener("pointercancel", handlePointerUp);
             });
             element.dataset.rippleListener = "true";
         }
@@ -247,6 +249,7 @@ export function initialTransition() {
     // Quit transition on switching page
     document.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', (e) => {
+            footerClick = true;
             if (link.href && link.href.startsWith(window.location.origin)) {
                 e.preventDefault();
                 content.classList.add('exiting');
@@ -259,7 +262,7 @@ export function initialTransition() {
                 if (backBtn) backBtn.click();
                 setTimeout(() => {
                     window.location.href = link.href;
-                }, 200);
+                }, 100);
             }
         });
     });

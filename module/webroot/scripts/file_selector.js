@@ -220,7 +220,7 @@ export async function openFileSelector(type) {
                     reject(error);
                 }
             } else if (item && item.querySelector('span').textContent.endsWith('.txt')) {
-                resolve(true)
+                resolve(true);
                 closeFileSelector();
             }
         });
