@@ -1,0 +1,129 @@
+{
+    "language": "Swedish",
+    "system_default": "Systemstandard",
+    "status": {
+        "title": "Status"
+    },
+    "global": {
+        "executing": "Skriptet körs...",
+        "execute_error": "Fel vid exekvering av årgärdsskript:",
+        "unwritable": "Oskrivbar hosts-fil, behöver korrigeras",
+        "reset": "Återställning av hosts-fil!",
+        "disabled": "Modulen har inaktiverats",
+        "adaway": "Återställ hosts i Adaway innan du fortsätter",
+        "dev_opt": "Utvecklaralternativ aktiverat",
+        "dev_opt_true": "Utvecklaralternativet är redan aktiverat",
+        "reboot": "Starta om för att verkställa, tryck för att starta om",
+        "save": "Spara",
+        "saved": "Filen sparad till",
+        "save_fail": "Det gick inte att spara filen",
+        "file_too_large": "Filredigering stöds inte på stora filer",
+        "file_name_empty": "Filnamnet får inte vara tomt",
+        "show_all": "Visa allt",
+        "more": "Mer"
+    },
+    "query": {
+        "title": "Värdfråga",
+        "host_ip": "IP",
+        "host_domain": "Domän",
+        "remove_prompt": "Vitlistad",
+        "remove_error": "Det gick inte att vitlista"
+    },
+    "control_panel": {
+        "title": "Kontrollpanel",
+        "language": "Språk",
+        "bad_translation": "Dålig översättning",
+        "add_language": "Lägg till ett språk",
+        "get_tiles": "Skaffa QS-tile",
+        "installing": "Installerar...",
+        "installed": "Installerad, aktivera SU-behörighet för bindhosts-appen",
+        "download_fail": "Det gick inte att ladda ner, kontrollera din internetanslutning",
+        "install_fail": "Det gick inte att installera, installera manuellt från /sdcard/Download/bindhosts-app",
+        "module_update": "Modulen uppdaterad",
+        "update_true": "Moduluppdatering aktiverad",
+        "update_false": "Moduluppdatering inaktiverad",
+        "action_redirect": "Åtgärdsomdirigering",
+        "action_prompt_true": "Aktiverad Magisk åtgärdsomdirigerings-WebUI",
+        "action_prompt_false": "Inaktiverad Magisk åtgärdsomdirigerings-WebUI",
+        "update_hosts_daily": "Uppdatera Hosts dagligen",
+        "cron_true": "Crontab-post tillagd",
+        "cron_false": "Crontab-post borttagen"
+    },
+    "custom": {
+        "title": "Anpassade regler",
+        "guide1": "Lägg till anpassade omdirigeringar här",
+        "example": "Exempel:",
+        "format": "Format:",
+        "warning": "VARNING: Anpassade regler laddas vid både körning och återställning!",
+        "prompt_fail": "är redan i anpassade regler"
+    },
+    "import_custom": {
+        "title": "Importera anpassade regler"
+    },
+    "source": {
+        "title": "Källor",
+        "guide1": "Svartlistade källor",
+        "guide2": "Anpassade regeluppsättningar",
+        "format": "Format:",
+        "example": "Exempel:",
+        "source_page": "Fler källor",
+        "prompt_fail": "finns redan i källor"
+    },
+    "blacklist": {
+        "title": "Svartlista",
+        "guide1": "Everything you add here will be blacklisted",
+        "example": "Exempel:",
+        "prompt_fail": "finns redan i svartlistan"
+    },
+    "whitelist": {
+        "title": "Vitlista",
+        "guide1": "Allt du lägger till här kommer inte att svartlistas",
+        "example": "Exempel:",
+        "prompt_fail": "finns redan i vitlistan"
+    },
+    "sources_whitelist": {
+        "title": "Vitlistkällor",
+        "guide1": "Lägg till vitlistkällor här",
+        "format": "Format:",
+        "example": "Exempel:",
+        "prompt_fail": "finns redan i vitlistkällan"
+    },
+    "mode": {
+        "button": "Läge",
+        "title": "Driftläge",
+        "detail": "Lär dig mer",
+        "reset": "Återställ (automatiskt)"
+    },
+    "more": {
+        "title": "Mer",
+        "documents": "Dokument",
+        "sources": "Källor",
+        "usage": "Användande",
+        "modes": "Lägen",
+        "hiding": "Dolda",
+        "faq": "FAQ",
+        "support": "Support",
+        "support_issue": "Rapportera ett problem"
+    },
+    "confirmation": {
+        "title": "Bekräfta ta bort?",
+        "message": "Är du säker på att du vill ta bort",
+        "cancel": "Avbryt",
+        "remove": "Ta bort"
+    },
+    "footer": {
+        "home": "Hem",
+        "hosts": "Hosts",
+        "more": "Mer"
+    },
+    "backup_restore": {
+        "backup_and_restore": "Säkerhetskopiera och återställa",
+        "export": "Exportera konfiguration",
+        "restore": "Återställ konfiguration",
+        "exported": "Konfiguration sparad till",
+        "export_fail": "Det gick inte att exportera konfiguration",
+        "invalid_config": "Ogiltig bindhosts-konfiguration",
+        "restored": "Konfiguration återställd",
+        "restore_fail": "Det gick inte att återställa konfigurationen"
+    }
+}
