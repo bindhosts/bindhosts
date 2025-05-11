@@ -41,6 +41,7 @@ pm path me.itejo443.bindhosts > /dev/null 2>&1 || {
     echo "[?] VOL [-]: NO"
     if detect_key_press; then
         echo "[+] Installing BindHosts-app..."
+	busybox chmod +x "$MODPATH/bindhosts-app.sh"
         sh "$MODPATH/bindhosts-app.sh"
     fi
 }
@@ -53,7 +54,6 @@ mkdir -p "$MODPATH/system/etc"
 # set permissions to bindhosts.sh
 busybox chmod +x "$MODPATH/bindhosts.sh"
 busybox chmod +x "$MODPATH/bindhosts-app.sh"
-
 # symlink bindhosts to manager path
 # for ez termux usage
 manager_paths="/data/adb/ap/bin /data/adb/ksu/bin"
