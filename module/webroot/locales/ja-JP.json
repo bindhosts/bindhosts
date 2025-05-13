@@ -33,18 +33,18 @@
         "add_language": "翻訳の追加",
         "get_tiles": "QSタイルへの追加",
         "installing": "インストール中...",
-        "installed": "インストール完了、アプリにSU権限を与えてください",
-        "download_fail": "ダウンロード失敗、インターネットに接続されているか確認してください",
-        "install_fail": "インストール失敗、/sdcard/Download/bindhosts-app から手動でインストールしてください",
+        "installed": "インストールが完了しました。アプリにSU権限を与えてください",
+        "download_fail": "ダウンロードに失敗しました。インターネットに接続されているか確認してください",
+        "install_fail": "インストールに失敗しました。/sdcard/Download/bindhosts-app から手動でインストールしてください",
         "module_update": "モジュールアップデート",
         "update_true": "モジュールのアップデートが有効化されました",
         "update_false": "モジュールのアップデートが無効化されました",
-        "action_redirect": "アクションのリダイレクト",
-        "action_prompt_true": "MagiskアクションはWebUIへリダイレクトされます",
-        "action_prompt_false": "MagiskアクションはWebUIへリダイレクトされなくなります",
-        "update_hosts_daily": "毎日自動でHostsを更新",
-        "cron_true": "Crontabのエントリーが追加されました",
-        "cron_false": "Crontabのエントリーが削除されました",
+        "action_redirect": "Action をリダイレクト",
+        "action_prompt_true": "Magisk Action は WebUI へリダイレクトされます",
+        "action_prompt_false": "Magisk Action は WebUI へリダイレクトされなくなりました",
+        "update_hosts_daily": "毎日自動で Hosts を更新",
+        "cron_true": "Crontab のエントリーが追加されました",
+        "cron_false": "Crontab のエントリーが削除されました",
         "create_shortcut": "ホーム画面へのショートカットを作成",
         "shortcut_created": "ホーム画面にショートカットを作成しました",
         "monitor_network_activity": "ネットワークアクティビティモニター"
@@ -71,13 +71,13 @@
     },
     "blacklist": {
         "title": "ブラックリスト",
-        "guide1": "ここに追加したものはすべてブラックリストに登録されます",
+        "guide1": "ここに追加したものはすべてブラックリストに追加され、ブロックされます",
         "example": "例:",
         "prompt_fail": "は、すでにブラックリストに存在します"
     },
     "whitelist": {
         "title": "ホワイトリスト",
-        "guide1": "ここに追加したものはすべてブラックリストに登録されません",
+        "guide1": "ここに追加したものはすべてホワイトリストに追加され、ブロックされません",
         "example": "例:",
         "prompt_fail": "は、すでにホワイトリストに存在します"
     },
@@ -98,30 +98,30 @@
         "documents": "ドキュメント",
         "sources": "ソース",
         "usage": "使い方",
-        "modes": "モード",
-        "hiding": "非表示",
+        "modes": "動作モードについて",
+        "hiding": "Root 検出から隠すには",
         "faq": "よくある質問",
         "support": "サポート",
         "support_issue": "問題を報告"
     },
     "confirmation": {
-        "title": "Confirm Remove?",
-        "message": "Are you sure you want to remove",
+        "title": "削除の確認",
+        "message": "本当に削除しますか？",
         "cancel": "キャンセル",
         "remove": "削除"
     },
     "footer": {
         "home": "ホーム",
-        "hosts": "ホスト",
+        "hosts": "Hosts",
         "more": "その他"
     },
     "backup_restore": {
         "backup_and_restore": "バックアップ & リストア",
-        "export": "設定をエクスポート",
+        "export": "設定をバックアップ",
         "restore": "設定をリストア",
         "exported": "設定ファイルの保存先",
         "export_fail": "設定のエクスポートに失敗",
-        "invalid_config": "無効なbindhostsの設定です",
+        "invalid_config": "無効な bindhosts の設定です",
         "restored": "設定のリストアに成功",
         "restore_fail": "設定のリストアに失敗"
     }
