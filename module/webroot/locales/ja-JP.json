@@ -1,0 +1,128 @@
+{
+    "language": "日本語",
+    "system_default": "システムの言語",
+    "status": {
+        "title": "ステータス"
+    },
+    "global": {
+        "dev_opt": "開発者オプションが有効になりました",
+        "dev_opt_true": "開発者オプションは既に有効化されています",
+        "reboot": "反映させるには再起動が必要です。タップして再起動",
+        "save": "保存",
+        "saved": "ファイルの保存先",
+        "save_fail": "ファイルの保存に失敗",
+        "file_too_large": "大きいファイルの編集はサポートされていません",
+        "file_name_empty": "ファイル名を空にすることはできません",
+        "show_all": "全て表示",
+        "more": "もっと見る",
+        "action": "アクション"
+    },
+    "query": {
+        "title": "ホストクエリ",
+        "search": "検索",
+        "host_ip": "IP",
+        "host_type": "タイプ",
+        "host_domain": "ドメイン",
+        "remove_prompt": "ホワイトリストに追加されました",
+        "remove_error": "ホワイトリストへの追加に失敗"
+    },
+    "control_panel": {
+        "title": "コントロールパネル",
+        "language": "言語",
+        "bad_translation": "誤訳の訂正",
+        "add_language": "翻訳の追加",
+        "get_tiles": "QSタイルへの追加",
+        "installing": "インストール中...",
+        "installed": "インストール完了、アプリにSU権限を与えてください",
+        "download_fail": "ダウンロード失敗、インターネットに接続されているか確認してください",
+        "install_fail": "インストール失敗、/sdcard/Download/bindhosts-app から手動でインストールしてください",
+        "module_update": "モジュールアップデート",
+        "update_true": "モジュールのアップデートが有効化されました",
+        "update_false": "モジュールのアップデートが無効化されました",
+        "action_redirect": "アクションのリダイレクト",
+        "action_prompt_true": "MagiskアクションはWebUIへリダイレクトされます",
+        "action_prompt_false": "MagiskアクションはWebUIへリダイレクトされなくなります",
+        "update_hosts_daily": "毎日自動でHostsを更新",
+        "cron_true": "Crontabのエントリーが追加されました",
+        "cron_false": "Crontabのエントリーが削除されました",
+        "create_shortcut": "ホーム画面へのショートカットを作成",
+        "shortcut_created": "ホーム画面にショートカットを作成しました",
+        "monitor_network_activity": "ネットワークアクティビティモニター"
+    },
+    "custom": {
+        "title": "カスタムルール",
+        "guide1": "ここにカスタムリダイレクトを追加します",
+        "example": "例:",
+        "format": "フォーマット:",
+        "warning": "警告: カスタムルールは実行時とリセット時の両方でロードされます！",
+        "prompt_fail": "は、すでにカスタムルールに存在します"
+    },
+    "import_custom": {
+        "title": "カスタムルールをインポート"
+    },
+    "source": {
+        "title": "ソース",
+        "guide1": "ブラックリストのソース",
+        "guide2": "カスタムルールセット",
+        "format": "フォーマット:",
+        "example": "例:",
+        "source_page": "他のソース",
+        "prompt_fail": "は、すでにソースに存在します"
+    },
+    "blacklist": {
+        "title": "ブラックリスト",
+        "guide1": "ここに追加したものはすべてブラックリストに登録されます",
+        "example": "例:",
+        "prompt_fail": "は、すでにブラックリストに存在します"
+    },
+    "whitelist": {
+        "title": "ホワイトリスト",
+        "guide1": "ここに追加したものはすべてブラックリストに登録されません",
+        "example": "例:",
+        "prompt_fail": "は、すでにホワイトリストに存在します"
+    },
+    "sources_whitelist": {
+        "title": "ホワイトリストのソース",
+        "guide1": "ここにホワイトリストのソースを追加します",
+        "format": "フォーマット:",
+        "example": "例:",
+        "prompt_fail": "は、すでにホワイトリストのソースに存在します"
+    },
+    "mode": {
+        "button": "モード",
+        "title": "動作モード",
+        "detail": "もっと詳しく知る",
+        "reset": "リセット (自動)"
+    },
+    "more": {
+        "documents": "ドキュメント",
+        "sources": "ソース",
+        "usage": "使い方",
+        "modes": "モード",
+        "hiding": "非表示",
+        "faq": "よくある質問",
+        "support": "サポート",
+        "support_issue": "問題を報告"
+    },
+    "confirmation": {
+        "title": "Confirm Remove?",
+        "message": "Are you sure you want to remove",
+        "cancel": "キャンセル",
+        "remove": "削除"
+    },
+    "footer": {
+        "home": "ホーム",
+        "hosts": "ホスト",
+        "more": "その他"
+    },
+    "backup_restore": {
+        "backup_and_restore": "バックアップ & リストア",
+        "export": "設定をエクスポート",
+        "restore": "設定をリストア",
+        "exported": "設定ファイルの保存先",
+        "export_fail": "設定のエクスポートに失敗",
+        "invalid_config": "無効なbindhostsの設定です",
+        "restored": "設定のリストアに成功",
+        "restore_fail": "設定のリストアに失敗"
+    }
+}
