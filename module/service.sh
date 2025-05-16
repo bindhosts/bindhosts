@@ -153,7 +153,9 @@ else
 fi
 
 # update description
-sed -i "s/^description=.*/$string/g" $MODDIR/module.prop
+sed "s/^description=.*/$string/g" $MODDIR/module.prop > $MODDIR/module.prop.tmp
+cat $MODDIR/module.prop.tmp > $MODDIR/module.prop
+rm -f $MODDIR/module.prop.tmp
 
 # remove previous linked hosts file and link again
 # hosts location might be different after reboot when user flash znhr/hfr
