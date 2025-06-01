@@ -9,6 +9,12 @@ on:
       - 'module/**'
       - 'update.json'
   workflow_dispatch:
+    inputs:
+      force_release:
+        description: 'Force change release file?'
+        required: true
+        type: boolean
+        default: false
 
 jobs:
   release:
@@ -22,59 +28,66 @@ jobs:
     - name: Set variables
       id: setup
       run: |
-        COMMIT_ID=$(git rev-parse --short HEAD)
+        MODULE_NAME="bindhosts"
+        MODULE_DESC="Systemless hosts for APatch, KernelSU and Magisk."
+        CHANGELOG_FILE="$(pwd)/CHANGELOG.md"
+        
         CURRENT_VERSION_CODE=$(jq -r .versionCode update.json)
         PREVIOUS_VERSION_CODE=$(jq -r .versionCode <(git show HEAD~1:update.json))
-        VERSION=$(jq -r .version update.json)
-        CHANGELOG_RAW=$(git diff HEAD^ HEAD -- CHANGELOG.md | grep '^+[^+]' | sed 's/^+//')
-        CHANGELOG=$(echo -e "## bindhosts\nSystemless hosts for APatch, KernelSU and Magisk\n\n---\n\n# Changelog\n$CHANGELOG_RAW")
-
-        echo "COMMIT_ID=$COMMIT_ID"
-        echo "CURRENT_VERSION_CODE=$CURRENT_VERSION_CODE"
-        echo "PREVIOUS_VERSION_CODE=$PREVIOUS_VERSION_CODE"
-        echo "VERSION=$VERSION"
-        echo "CHANGELOG=$CHANGELOG"
-
-        echo "COMMIT_ID=$COMMIT_ID" >> $GITHUB_ENV
-        echo "CURRENT_VERSION_CODE=$CURRENT_VERSION_CODE" >> $GITHUB_ENV
-        echo "PREVIOUS_VERSION_CODE=$PREVIOUS_VERSION_CODE" >> $GITHUB_ENV
-        echo "VERSION=$VERSION" >> $GITHUB_ENV
-        echo "CHANGELOG<<CHANGELOG_EOF" >> $GITHUB_ENV
-        echo "$CHANGELOG" >> $GITHUB_ENV
-        echo "CHANGELOG_EOF" >> $GITHUB_ENV
-
+        COMMIT_ID=$(git rev-parse --short HEAD)
+        echo "VERSION=$(jq -r .version update.json)" >> $GITHUB_ENV
+        echo "MODULE_PATH=$(pwd)/module/" >> $GITHUB_ENV
+        CHANGELOG_RAW=$(git diff HEAD^ HEAD -- ${CHANGELOG_FILE} | grep '^+[^+]' | sed 's/^+//')
+        {
+          echo "CHANGELOG<<EOF"
+          echo -e "## ${MODULE_NAME}\n${MODULE_DESC}\n\n---\n\n# Changelog:\n${CHANGELOG_RAW}"
+          echo "EOF"
+        } >> $GITHUB_ENV
+        
         if [ "$CURRENT_VERSION_CODE" -gt "$PREVIOUS_VERSION_CODE" ]; then
           echo "version_changed=true" >> $GITHUB_ENV
-          echo "ZIP_NAME=bindhosts" >> $GITHUB_ENV
+          echo "ZIP_NAME=$MODULE_NAME" >> $GITHUB_ENV
+        elif [ "${{ inputs.force_release }}" == "true" ]; then
+          echo "ZIP_NAME=$MODULE_NAME" >> $GITHUB_ENV
         else
           echo "version_changed=false" >> $GITHUB_ENV
-          echo "ZIP_NAME=bindhosts_$CURRENT_VERSION_CODE-$COMMIT_ID" >> $GITHUB_ENV
+          echo "ZIP_NAME=${MODULE_NAME}_${CURRENT_VERSION_CODE}-${COMMIT_ID}" >> $GITHUB_ENV
         fi
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
         name: ${{ env.ZIP_NAME }}
-        path: module/
+        path: ${{ env.MODULE_PATH }}**
 
     - name: Compressing files
-      if: env.version_changed == 'true'
+      if: ${{ env.version_changed == 'true' || inputs.force_release }}
       run: |
         echo "Compressing files..."
-        cd module/
-        zip -r "${{ env.ZIP_NAME }}" *
+        cd ${{ env.MODULE_PATH }}
+        zip -r ${{ env.ZIP_NAME }}.zip *
+        echo "Created zip file: ${{ env.ZIP_NAME }}.zip"
         mv *.zip ../
-        echo "Created zip file: ${{ env.ZIP_NAME }}"
 
-    - name: Create release
-      if: env.version_changed == 'true'
+    - name: Create new release
+      if: ${{ env.version_changed == 'true' }}
       uses: softprops/action-gh-release@v2
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        files: ${{ env.ZIP_NAME }}.zip
+        files: "${{ env.ZIP_NAME }}.zip"
         tag_name: "${{ env.VERSION }}"
         name: "Release ${{ env.VERSION }}"
         body: "${{ env.CHANGELOG }}"
         draft: false
         prerelease: false
+
+    - name: Force update latest release file
+      if: ${{ inputs.force_release }}
+      uses: softprops/action-gh-release@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        files: "${{ env.ZIP_NAME }}.zip"
+        tag_name: "${{ env.VERSION }}"
+        name: "Release ${{ env.VERSION }}"
