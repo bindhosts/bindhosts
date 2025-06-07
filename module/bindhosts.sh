@@ -354,7 +354,7 @@ adblock() {
 	# localhost
 	printf "127.0.0.1 localhost\n::1 localhost\n" > $target_hostsfile
 	# always restore user's custom rules
-	sed '/#/d' $PERSISTENT_DIR/custom*.txt >> $target_hostsfile
+	sed '/#/d; s/^disabled|//g' $PERSISTENT_DIR/custom*.txt >> $target_hostsfile
 	# blacklist.txt
 	for i in $(sed '/#/d' $PERSISTENT_DIR/blacklist.txt ); do echo "0.0.0.0 $i" >> "$rwdir/temphosts"; done
 	# whitelist.txt
@@ -387,7 +387,7 @@ reset() {
 	# localhost
 	printf "127.0.0.1 localhost\n::1 localhost\n" > $target_hostsfile
 	# always restore user's custom rules
-	sed '/#/d' $PERSISTENT_DIR/custom*.txt >> $target_hostsfile
+	sed '/#/d; s/^disabled|//g' $PERSISTENT_DIR/custom*.txt >> $target_hostsfile
         string="description=status: reset 🤐 | $(date)"
         sed -i "s/^description=.*/$string/g" $MODDIR/module.prop
         echo "[+] hosts file reset!"
@@ -452,7 +452,7 @@ quick_reset_restore () {
 		# localhost
 		printf "127.0.0.1 localhost\n::1 localhost\n" > $target_hostsfile
 		# always restore user's custom rules
-		sed '/#/d' $PERSISTENT_DIR/custom*.txt >> $target_hostsfile
+		sed '/#/d; s/^disabled|//g' $PERSISTENT_DIR/custom*.txt >> $target_hostsfile
 		string="description=status: reset 🤐 | $(date)"
 		echo "[+] hosts file reset!"
 	fi
