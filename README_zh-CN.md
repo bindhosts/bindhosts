@@ -22,8 +22,8 @@
 ### 同时支持以下第三方模块管理器
 
 - [KsuWebUI](https://github.com/5ec1cff/KsuWebUIStandalone)   <sup>🌐</sup>
-- [MMRL](https://github.com/DerGoogler/MMRL)   <sup>▶ 🌐</sup>
 - [WebUI-X](https://github.com/MMRLApp/WebUI-X-Portable)   <sup>🌐</sup>
+- [MMRL](https://github.com/MMRLApp/MMRL)
 
 ## 另请参阅
 

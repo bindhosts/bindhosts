@@ -22,8 +22,8 @@ Fully standalone, self-updating.
 ### Also Supported on
 
 - [KsuWebUI](https://github.com/5ec1cff/KsuWebUIStandalone)   <sup>🌐</sup>
-- [MMRL](https://github.com/DerGoogler/MMRL)   <sup>▶ 🌐</sup>
 - [WebUI-X](https://github.com/MMRLApp/WebUI-X-Portable)   <sup>🌐</sup>
+- [MMRL](https://github.com/MMRLApp/MMRL)
 
 ## Resources
 
