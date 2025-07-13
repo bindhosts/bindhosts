@@ -25,7 +25,7 @@ mode=0
 # while it is basically hideless, this still works.
 if { [ "$APATCH" = "true" ] && [ ! "$APATCH_BIND_MOUNT" = "true" ]; } || 
 	{ [ "$APATCH_BIND_MOUNT" = "true" ] && [ -f /data/adb/.litemode_enable ]; } || 
-	{ [ "$KSU_MAGIC_MOUNT" = "true" ] && { [ -f /data/adb/ksu/.nomount ] || [ -f /data/adb/ksu/.notmpfs ]; }; }; then
+	{ [ "$KSU_MAGIC_MOUNT" = "true" ] && [ -f /data/adb/ksu/.nomount ]; }; then
 	mode=2
 fi
 
