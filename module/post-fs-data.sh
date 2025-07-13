@@ -49,23 +49,11 @@ if [ "$KSU_NEXT" = "true" ] && [ "$KSU_KERNEL_VER_CODE" -ge 12183 ]; then
 fi
 
 # ksu+susfs operating_mode
-# handle probing for both modern and legacy susfs
-if [ "$KSU" = true ] && [ -f ${SUSFS_BIN} ] ; then
-	if ${SUSFS_BIN} show enabled_features | grep -q "CONFIG_KSU_SUSFS_TRY_UMOUNT" >/dev/null 2>&1; then
-		echo "bindhosts: post-fs-data.sh - susfs with try_umount found!" >> /dev/kmsg
-		mode=1
-	elif [ "$( ${SUSFS_BIN} show version | head -n1 | sed 's/v//; s/\.//g' )" -ge 153 ]; then
-		# this assumes feature was built
-		echo "bindhosts: post-fs-data.sh - susfs 153+ found" >> /dev/kmsg
-		mode=1
-	else
-		# theres no other way to probe for legacy susfs
-		# this assumes feature was built
-		dmesg | grep -q "susfs" > /dev/null 2>&1 && {
-		echo "bindhosts: post-fs-data.sh - legacy susfs found" >> /dev/kmsg
-		mode=1
-		}
-	fi
+# handle probing for susfs 1.5.3+
+if [ "$KSU" = true ] && [ -f ${SUSFS_BIN} ] &&
+	${SUSFS_BIN} show enabled_features | grep -q "CONFIG_KSU_SUSFS_TRY_UMOUNT" >/dev/null 2>&1; then
+	echo "bindhosts: post-fs-data.sh - susfs with try_umount found!" >> /dev/kmsg
+	mode=1
 fi
 
 # hosts_file_redirect operating_mode
