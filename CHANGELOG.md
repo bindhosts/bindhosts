@@ -4,6 +4,13 @@ Systemless hosts for APatch, KernelSU and Magisk
 ---
 
 # Changelog
+### 2.0.6
+- webui/js: remove unnecessary line when no custom hosts
+- webui/css: update WebUI-X css import address
+- webui/locales: add Polish translation
+- webui: drop homescreen shortcut button
+- scripts/post-fs-data: various mode probing hardening
+
 ### 2.0.5
 - action: remove MMRL from action redirect WebUI
 - webui: fix some false error log
