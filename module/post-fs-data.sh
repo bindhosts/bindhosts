@@ -35,7 +35,8 @@ fi
 # while deducing DE status is likely possible, that thing is hot-toggleable anyway so theres no assurance.
 denylist_handlers="rezygisk zygisk-assistant zygisk_nohello"
 for module_name in $denylist_handlers; do
-	if [ -d "/data/adb/modules/$module_name" ] && [ ! -f "/data/adb/modules/$module_name/disable" ]; then
+	if [ -d "/data/adb/modules/$module_name" ] && [ ! -f "/data/adb/modules/$module_name/disable" ] && 
+		[ ! -f "/data/adb/modules/$module_name/remove" ]; then
 		echo "bindhosts: post-fs-data.sh - $module_name found" >> /dev/kmsg
 		mode=2
 	fi
@@ -71,8 +72,8 @@ fi
 # znhr starts at late service when we have to decide what to do NOW.
 # we can only assume that it is on a working state
 # here we unconditionally flag an operating_mode for it
-if [ -d /data/adb/modules/hostsredirect ] && [ ! -f /data/adb/modules/hostsredirect/disable ] && 
-	[ -d /data/adb/modules/zygisksu ] && [ ! -f /data/adb/modules/zygisksu/disable ]; then
+if [ -d "/data/adb/modules/hostsredirect" ] && [ ! -f "/data/adb/modules/hostsredirect/disable" ] && [ ! -f "/data/adb/modules/hostsredirect/remove" ] &&
+	[ -d "/data/adb/modules/zygisksu" ] && [ ! -f "/data/adb/modules/zygisksu/disable" ] && [ ! -f "/data/adb/modules/zygisksu/remove" ]; then
 	mode=4
 fi
 
