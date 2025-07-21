@@ -1,1 +1,4 @@
 module/webroot/link
+webui/node_modules
+module/webroot/assets
+module/webroot/*.html

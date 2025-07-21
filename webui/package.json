@@ -1,0 +1,21 @@
+{
+  "name": "webui",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "dev": "vite",
+    "clean": "rimraf ../module/webroot/assets/*",
+    "build": "npm run clean && vite build"
+  },
+  "keywords": ["bindhosts"],
+  "author": "KOWX712",
+  "license": "WTFPL-2.0",
+  "type": "module",
+  "dependencies": {
+    "webuix": "^0.0.16"
+  },
+  "devDependencies": {
+    "rimraf": "^6.0.1",
+    "vite": "^7.0.5"
+  }
+}
