@@ -1,7 +1,10 @@
 import { exec, spawn, showPrompt, applyRippleEffect, checkMMRL, basePath, initialTransition, moduleDirectory, linkRedirect, filePaths, setupSwipeToClose } from './util.js';
 import { loadTranslations, translations } from './language.js';
-import { openFileSelector } from './file_selector.js';
-import { addCopyToClipboardListeners } from './docs.js';
+import { openFileSelector, isFileSelectorOpen } from './file_selector.js';
+import { addCopyToClipboardListeners, isDocOpen } from './docs.js';
+import { WXEventHandler } from "webuix";
+
+window.wx = new WXEventHandler();
 
 const tilesContainer = document.getElementById('tiles-container');
 
@@ -177,11 +180,13 @@ async function toggleCron() {
     }
 }
 
+let languageMenuListener = false, isLanguageMenuOpen = false;
 /**
  * Open language menu overlay, called by controlPanelEventlistener
  * @returns {void}
  */
 function openLanguageMenu() {
+    isLanguageMenuOpen = true;
     const languageOverlay = document.getElementById('language-overlay');
     languageOverlay.style.display = 'flex';
     setTimeout(() => {
@@ -192,16 +197,22 @@ function openLanguageMenu() {
         languageOverlay.style.opacity = '0';
         setTimeout(() => {
             languageOverlay.style.display = 'none';
+            isLanguageMenuOpen = false;
         }, 200);
     };
 
-    let languageMenuListener = false;
     if (!languageMenuListener) {
+        languageMenuListener = true;
         document.querySelector('.close-btn').addEventListener('click', closeOverlay);
         languageOverlay.addEventListener('click', (event) => {
             if (event.target === languageOverlay) closeOverlay();
         });
-        languageMenuListener = true;
+        wx.on(window, "back", (event) => {
+            if (isLanguageMenuOpen) {
+                event.stopImmediatePropagation();
+                closeOverlay();
+            }
+        });
     }
 }
 
@@ -216,13 +227,15 @@ function checkTcpdump() {
     });
 }
 
-let setupTcpdumpTerminal = false, contentBox = false;
+let setupTcpdumpTerminal = false, contentBox = false, isTcpdumpOpen = false;
 
 /**
  * Open tcpdump terminal
  * @returns {void}
  */
 function openTcpdumpTerminal() {
+    isTcpdumpOpen = true;
+
     const cover = document.querySelector('.document-cover');
     const terminal = document.getElementById('tcpdump-terminal');
     const terminalContent = document.getElementById('tcpdump-terminal-content');
@@ -245,19 +258,7 @@ function openTcpdumpTerminal() {
     if (!setupTcpdumpTerminal) {
         setupSwipeToClose(terminal, cover, backButton);
         stopBtn.addEventListener('click', () => stopTcpdump());
-        backButton.addEventListener('click', () => {
-            stopTcpdump();
-            floatBtn.classList.remove('show');
-            floatBtn.classList.remove('inTerminal');
-            scrollTopBtn.style.pointerEvents = 'none';
-            scrollTopBtn.style.opacity = '0';
-            terminal.style.transform = 'translateX(100%)';
-            bodyContent.style.transform = 'translateX(0)';
-            cover.style.opacity = '0';
-            backButton.style.transform = 'translateX(-100%)';
-            header.classList.remove('back');
-            title.textContent = translations.footer_more;
-        });
+        backButton.addEventListener('click', () => closeTcpdumpTerminal());
         const searchInput = document.getElementById('tcpdump-search-input');
         searchInput.addEventListener('input', () => {
             const searchTerm = searchInput.value.toLowerCase();
@@ -270,6 +271,12 @@ function openTcpdumpTerminal() {
         });
         scrollTopBtn.addEventListener('click', () => {
             terminalContent.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        wx.on(window, "back", (event) => {
+            if (isTcpdumpOpen) {
+                event.stopImmediatePropagation();
+                closeTcpdumpTerminal();
+            }
         });
         setupTcpdumpTerminal = true;
     }
@@ -338,6 +345,23 @@ function openTcpdumpTerminal() {
             setTimeout(() => floatBtn.classList.add('inTerminal'), 100);
         }
     };
+
+    const closeTcpdumpTerminal = () => {
+        stopTcpdump();
+        floatBtn.classList.remove('show');
+        floatBtn.classList.remove('inTerminal');
+        scrollTopBtn.style.pointerEvents = 'none';
+        scrollTopBtn.style.opacity = '0';
+        terminal.style.transform = 'translateX(100%)';
+        bodyContent.style.transform = 'translateX(0)';
+        cover.style.opacity = '0';
+        backButton.style.transform = 'translateX(-100%)';
+        header.classList.remove('back');
+        title.textContent = translations.footer_more;
+        setTimeout(() => {
+            isTcpdumpOpen = false;
+        }, 100);
+    }
 
     // Open output terminal
     setTimeout(() => {
@@ -479,6 +503,12 @@ function controlPanelEventlistener(event) {
         }
     });
 }
+
+wx.on(window, "back", () => {
+    if (!isLanguageMenuOpen && !isTcpdumpOpen && !isDocOpen && !isFileSelectorOpen) {
+        document.getElementById('home').click();
+    }
+});
 
 /**
  * Initial load event listener

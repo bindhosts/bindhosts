@@ -1,5 +1,10 @@
 import { linkRedirect, applyRippleEffect, toast, developerOption, learnMore, setupSwipeToClose } from './util.js';
 import { translations } from './language.js';
+import { WXEventHandler } from "webuix";
+
+window.wx = new WXEventHandler();
+
+export let isDocOpen = false;
 
 /**
  * Fetch documents from a link and display them in the specified element
@@ -181,7 +186,7 @@ export async function setupDocsMenu(docsLang) {
     docsOverlay.forEach(overlay => {
         const closeButton = overlay.querySelector(".close-docs-btn");
         if (closeButton) {
-            closeButton.addEventListener("click", () => closeOverlay(overlay));
+            closeButton.onclick = () => closeOverlay(overlay);
         }
         overlay.addEventListener("click", (e) => {
             if (e.target === overlay) {
@@ -193,10 +198,10 @@ export async function setupDocsMenu(docsLang) {
     // For about content
     const aboutContent = document.querySelector('.document-content');
     const documentCover = document.querySelector('.document-cover');
+    const backButton = document.getElementById('docs-back-btn');
     if (aboutContent) {
         const header = document.querySelector('.title-container');
         const title = document.getElementById('title');
-        const backButton = document.getElementById('docs-back-btn');
         const bodyContent = document.querySelector('.content');
 
         setupSwipeToClose(aboutContent, documentCover, backButton);
@@ -217,11 +222,13 @@ export async function setupDocsMenu(docsLang) {
             element.addEventListener('touchend', () => handleClick());
 
             function handleClick() {
+                isDocOpen = true;
                 if (!touchMoved) {
                     document.getElementById('about-document-content').innerHTML = '';
                     const { link, fallbackLink, linkMirror, fallbackLinkMirror } = docsData[element.dataset.type] || {};
                     getDocuments('about-document-content', link, fallbackLink, linkMirror, fallbackLinkMirror);
                     setTimeout(() => {
+                        documentCover.open = true;
                         aboutContent.style.transform = 'translateX(0)';
                         bodyContent.style.transform = 'translateX(-20vw)';
                         documentCover.style.opacity = '1';
@@ -241,9 +248,20 @@ export async function setupDocsMenu(docsLang) {
                 backButton.style.transform = 'translateX(-100%)';
                 header.classList.remove('back');
                 title.textContent = translations.footer_more;
+                setTimeout(() => {
+                    isDocOpen = false;
+                }, 100);
             });
         });
     } // End of about docs
+
+    wx.on(window, "back", (event) => {
+        if (isDocOpen) {
+            event.stopImmediatePropagation();
+            if (backButton) backButton.click();
+            if (activeDocs) closeOverlay(activeDocs);
+        }
+    });
 }
 
 /**
@@ -253,6 +271,7 @@ export async function setupDocsMenu(docsLang) {
  */
 function openOverlay(overlay) {
     if (activeDocs) closeOverlay(activeDocs);
+    isDocOpen = true;
     activeDocs = overlay;
     document.body.style.overflow = "hidden";
     overlay.style.display = "flex";
@@ -272,5 +291,6 @@ function closeOverlay(overlay) {
     overlay.style.opacity = "0";
     setTimeout(() => {
         overlay.style.display = "none";
+        isDocOpen = false;
     }, 200);
 }

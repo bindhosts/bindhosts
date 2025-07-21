@@ -1,5 +1,9 @@
 import { exec, showPrompt, applyRippleEffect, checkMMRL, basePath, developerOption, setDeveloperOption, setLearnMore, initialTransition, moduleDirectory } from './util.js';
 import { loadTranslations } from './language.js';
+import { isDocOpen } from './docs.js';
+import { WXEventHandler } from "webuix";
+
+window.wx = new WXEventHandler();
 
 let clickCount = 0;
 let clickTimeout;
@@ -30,8 +34,9 @@ function updateStatus() {
         }
     };
 
-    status.reduce((promise, item) => {
-        return promise.then(() => fetchStatus(item));
+    status.reduce(async (promise, item) => {
+        await promise;
+        return await fetchStatus(item);
     }, Promise.resolve()).catch(error => {
         console.error("Error updating status:", error);
     });
@@ -59,6 +64,8 @@ document.getElementById("status-box").addEventListener("click", async () => {
     }
 });
 
+let setupModeMenu = false, menuOpen = false;
+
 /**
  * Check if developer option is enabled
  * Allow open mode menu if developer option is enabled
@@ -75,26 +82,19 @@ document.getElementById("mode-btn").addEventListener("click", async () => {
     const modeMenu = document.getElementById("mode-menu");
     const overlayContent = document.querySelector(".overlay-content");
     if (developerOption) {
+        menuOpen = true;
         modeMenu.style.display = "flex";
         setTimeout(() => {
             modeMenu.style.opacity = "1";
             setLearnMore(true);
         }, 10);
-        document.querySelector(".close-btn").addEventListener("click", closeOverlay);
-        document.getElementById("learn-btn").addEventListener("click", closeOverlay);
-        modeMenu.addEventListener("click", (event) => {
-            if(!overlayContent.contains(event.target)) closeOverlay();
-        });
     }
 
-    /**
-     * Close overlay
-     * @returns {void}
-     */
-    function closeOverlay() {
+    const closeOverlay = () => {
         modeMenu.style.opacity = "0";
         setTimeout(() => {
             modeMenu.style.display = "none";
+            menuOpen = false;
         }, 200);
         setLearnMore(false);
     }
@@ -143,14 +143,27 @@ document.getElementById("mode-btn").addEventListener("click", async () => {
         }
     }
 
-    // Attach event listeners for mode options
-    document.getElementById("mode-options").addEventListener("change", (event) => {
-        const selectedMode = event.target.value;
-        saveModeSelection(selectedMode);
-    });
-
-    // Attach event listener for reset button
-    document.getElementById("reset-mode").addEventListener("click", () => saveModeSelection("reset"));
+    if (!setupModeMenu) {
+        setupModeMenu = true;
+        document.querySelector(".close-btn").onclick = closeOverlay;
+        document.getElementById("learn-btn").onclick = closeOverlay;
+        modeMenu.addEventListener("click", (event) => {
+            if(!overlayContent.contains(event.target)) closeOverlay();
+        });
+        // Attach event listeners for mode options
+        document.getElementById("mode-options").addEventListener("change", (event) => {
+            const selectedMode = event.target.value;
+            saveModeSelection(selectedMode);
+        });
+        // Attach event listener for reset button
+        document.getElementById("reset-mode").onclick = () => saveModeSelection("reset");
+        wx.on(window, "back", (event) => {
+            if (menuOpen) {
+                event.stopImmediatePropagation();
+                closeOverlay();
+            }
+        });
+    }
 });
 
 /**
@@ -406,6 +419,12 @@ function setupRickRoll() {
         setTimeout(() => rickRollOverlay.style.display = 'none', 200);
     }
 }
+
+wx.on(window, "back", () => {
+    if (!menuOpen && !isDocOpen) {
+        webui.exit();
+    }
+});
 
 /**
  * Initial load event listener

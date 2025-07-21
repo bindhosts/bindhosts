@@ -1,6 +1,10 @@
 import { exec, spawn, showPrompt, applyRippleEffect, checkMMRL, basePath, initialTransition, setupSwipeToClose, moduleDirectory, filePaths } from './util.js';
 import { loadTranslations, translations } from './language.js';
-import { openFileSelector } from './file_selector.js';
+import { openFileSelector, isFileSelectorOpen } from './file_selector.js';
+import { isDocOpen } from './docs.js';
+import { WXEventHandler } from "webuix";
+
+window.wx = new WXEventHandler();
 
 const forceUpdateButton = document.getElementById('force-update-btn');
 
@@ -241,11 +245,19 @@ function setupHelpMenu() {
         setTimeout(() => overlay.style.opacity = "1", 10);
     }
     function closeOverlay(overlay) {
-        activeOverlay = null;
         document.body.style.overflow = "";
         overlay.style.opacity = "0";
-        setTimeout(() => overlay.style.display = "none", 200);
+        setTimeout(() => {
+            overlay.style.display = "none";
+            activeOverlay = null;
+        }, 200);
     }
+    wx.on(window, "back", (event) => {
+        if (activeOverlay) {
+            event.stopImmediatePropagation();
+            closeOverlay(activeOverlay);
+        }
+    });
 }
 
 /**
@@ -351,7 +363,7 @@ function attachAddButtonListeners() {
     });
 }
 
-let actionRunning = false, setupActionTerminal = false, terminalClosed = true;
+let actionRunning = false, setupActionTerminal = false, isTerminalOpen = false;
 
 /**
  * Run bindhosts.sh with and display output in fake terminal
@@ -371,34 +383,29 @@ function runBindhosts(args) {
 
     if (!setupActionTerminal) {
         setupSwipeToClose(terminal, cover, backButton);
-        closeBtn.addEventListener('click', () => backButton.click());
-        backButton.addEventListener('click', () => {
-            terminal.style.transform = 'translateX(100%)';
-            bodyContent.style.transform = 'translateX(0)';
-            cover.style.opacity = '0';
-            backButton.style.transform = 'translateX(-100%)';
-            actionButton.style.transform = 'translateY(0)';
-            actionButton.classList.remove('inTerminal');
-            forceUpdateButton.classList.add('show');
-            closeBtn.style.opacity = '0';
-            closeBtn.style.pointerEvents = 'none';
-            header.classList.remove('back');
-            title.textContent = translations.footer_hosts;
-            terminalClosed = true;
+        closeBtn.addEventListener('click', () => closeTerminal());
+        backButton.addEventListener('click', () => closeTerminal());
+        wx.on(window, "back", (event) => {
+            if (isTerminalOpen) {
+                event.stopImmediatePropagation();
+                closeTerminal();
+            } else if (actionRunning) {
+                event.stopImmediatePropagation();
+                runBindhosts();
+            }
         });
         setupActionTerminal = true;
     }
 
     if (!actionRunning) {
         actionRunning = true;
-        terminalClosed = false;
         terminalContent.innerHTML = '';
         const output = spawn("sh", [`${moduleDirectory}/bindhosts.sh`, `${args}`]);
         output.stdout.on('data', (data) => appendOutput(data));
         output.stderr.on('data', (data) => appendOutput(data));
         output.on('error', () => appendOutput(translations.global_execute_error));
         output.on('exit', () => {
-            if (!terminalClosed) {
+            if (isTerminalOpen) {
                 closeBtn.style.opacity = '1';
                 closeBtn.style.pointerEvents = 'auto';
                 actionButton.style.transform = 'translateY(0)';
@@ -415,8 +422,26 @@ function runBindhosts(args) {
         terminalContent.appendChild(p);
     };
 
+    const closeTerminal = () => {
+        terminal.style.transform = 'translateX(100%)';
+        bodyContent.style.transform = 'translateX(0)';
+        cover.style.opacity = '0';
+        backButton.style.transform = 'translateX(-100%)';
+        actionButton.style.transform = 'translateY(0)';
+        actionButton.classList.remove('inTerminal');
+        forceUpdateButton.classList.add('show');
+        closeBtn.style.opacity = '0';
+        closeBtn.style.pointerEvents = 'none';
+        header.classList.remove('back');
+        title.textContent = translations.footer_hosts;
+        setTimeout(() => {
+            isTerminalOpen = false;
+        }, 200);
+    }
+
     // Open output terminal
     setTimeout(() => {
+        isTerminalOpen = true;
         terminal.style.transform = 'translateX(0)';
         bodyContent.style.transform = 'translateX(-20vw)';
         cover.style.opacity = '1';
@@ -452,7 +477,10 @@ async function getCustomHostsList() {
 // Open file selector to import custom hosts file
 document.getElementById("import-custom-button").addEventListener("click", async () => {
     const file = await openFileSelector("txt");
-    if (file) getCustomHostsList();
+    if (file) {
+        await new Promise(resolve => setTimeout(resolve, 100));
+        getCustomHostsList();   
+    }
 });
 
 const editorInput = document.getElementById("edit-input");
@@ -480,6 +508,7 @@ async function fileNameEditor(fileName) {
     }
 }
 
+let setupEditor = false, isEditorOpen = false;
 /**
  * Open file editor
  * @param {string} lastFileName - Name of the last file edited
@@ -487,6 +516,7 @@ async function fileNameEditor(fileName) {
  * @returns {void}
  */
 function openFileEditor(lastFileName, openEditor = true) {
+    isEditorOpen = true;
     const header = document.querySelector('.title-container');
     const title = document.getElementById('title');
     const fileName = document.querySelector('.file-name-editor');
@@ -497,6 +527,39 @@ function openFileEditor(lastFileName, openEditor = true) {
     const editor = document.getElementById('edit-content');
     const lineNumbers = document.querySelector('.line-numbers');
     const bodyContent = document.querySelector('.content');
+
+    if (!setupEditor) {
+        setupEditor = true;
+        fileNameInput.addEventListener('input', adjustFileNameWidth);
+        saveButton.addEventListener('click', saveFile);
+        editorInput.addEventListener('input', scrollSafeInset);
+        editorInput.addEventListener('blur', () => {
+            editorInput.style.paddingBottom = '30px';
+            lineNumbers.style.paddingBottom = '30px';
+        });
+        // Set line numbers
+        editorInput.addEventListener('input', () => {
+            const lines = editorInput.value.split('\n').length;
+            lineNumbers.innerHTML = Array.from({ length: lines }, (_, index) => 
+                `<div>${(index + 1).toString().padStart(2, ' ')}</div>`
+            ).join('');
+            // Sync scroll position
+            lineNumbers.scrollTop = editorInput.scrollTop;
+        });
+        editorInput.addEventListener('scroll', () => {
+            lineNumbers.style.top = `-${editorInput.scrollTop}px`;
+            // Sync scroll position
+            lineNumbers.scrollTop = editorInput.scrollTop;
+        });
+        editorInput.dispatchEvent(new Event('input'));
+        backButton.addEventListener('click', () => closeEditor());
+        wx.on(window, "back", (event) => {
+            if (isEditorOpen) {
+                event.stopImmediatePropagation();
+                closeEditor();
+            }
+        });
+    }
 
     // Adjust width of fileName according to the length of text in input
     function adjustFileNameWidth() {
@@ -515,7 +578,6 @@ function openFileEditor(lastFileName, openEditor = true) {
         document.body.removeChild(tempSpan);
     }
     adjustFileNameWidth();
-    fileNameInput.addEventListener('input', adjustFileNameWidth);
 
     // Show editor
     editorCover.style.opacity = '1';
@@ -533,23 +595,9 @@ function openFileEditor(lastFileName, openEditor = true) {
     if (openEditor) {
         editor.style.transform = 'translateX(0)';
         bodyContent.style.transform = 'translateX(-20vw)';
-    } else setTimeout(() => fileNameInput.focus(), 1000);
-
-    // Set line numbers
-    editorInput.addEventListener('input', () => {
-        const lines = editorInput.value.split('\n').length;
-        lineNumbers.innerHTML = Array.from({ length: lines }, (_, index) => 
-            `<div>${(index + 1).toString().padStart(2, ' ')}</div>`
-        ).join('');
-        // Sync scroll position
-        lineNumbers.scrollTop = editorInput.scrollTop;
-    });
-    editorInput.addEventListener('scroll', () => {
-        lineNumbers.style.top = `-${editorInput.scrollTop}px`;
-        // Sync scroll position
-        lineNumbers.scrollTop = editorInput.scrollTop;
-    });
-    editorInput.dispatchEvent(new Event('input'));
+    } else {
+        setTimeout(() => fileNameInput.focus(), 1000);
+    }
 
     // Scroll to avoid keyboard blocking input box
     function scrollSafeInset() {
@@ -576,11 +624,6 @@ function openFileEditor(lastFileName, openEditor = true) {
             }
         }, 100);
     }
-    editorInput.addEventListener('input', scrollSafeInset);
-    editorInput.addEventListener('blur', () => {
-        editorInput.style.paddingBottom = '30px';
-        lineNumbers.style.paddingBottom = '30px';
-    });
 
     // Setup swipe to close if not set it yet
     let isSwipeToCloseSetup = false;
@@ -590,17 +633,18 @@ function openFileEditor(lastFileName, openEditor = true) {
     }
 
     // Alternative way to close about docs with back button
-    backButton.addEventListener('click', () => {
+    function closeEditor() {
         if (openEditor) { editor.style.transform = 'translateX(100%)'; }
-        editorInput.removeEventListener('input', scrollSafeInset);
-        saveButton.removeEventListener('click', saveFile);
         editorCover.style.opacity = '0';
         editorCover.style.pointerEvents = 'none';
         backButton.style.transform = 'translateX(-100%)';
         header.classList.remove('back');
         title.style.display = 'block';
         actionButton.style.transform = 'translateY(0)';
-        setTimeout(() => forceUpdateButton.classList.add('show'), 200);
+        setTimeout(() => {
+            forceUpdateButton.classList.add('show');
+            isEditorOpen = false;
+        }, 200);
         fileName.style.display = 'none';
         saveButton.style.transform = 'translateX(calc(105% + 15px))';
         bodyContent.style.overflowY = 'auto';
@@ -609,7 +653,7 @@ function openFileEditor(lastFileName, openEditor = true) {
             li.scrollTo({ left: 0, behavior: 'smooth' });
         });
         editorInput.scrollTo(0, 0);
-    });
+    }
 
     // Save file
     async function saveFile() {
@@ -640,9 +684,8 @@ AUniqueEOF
             console.error("Failed to save file:", error);
         }
         getCustomHostsList();
-        backButton.click();
+        closeEditor();
     }
-    saveButton.addEventListener('click', saveFile);
 }
 
 /**
@@ -655,6 +698,12 @@ window.replaceSpaces = function(input) {
     input.value = input.value.replace(/ /g, '_').replace(/[\/\0*?[\]{}|&$`"'\\<>]/g, '');
     input.setSelectionRange(cursorPosition, cursorPosition);
 }
+
+wx.on(window, "back", () => {
+    if (!activeOverlay && !isDocOpen && !isTerminalOpen && !actionRunning && !isEditorOpen && !isFileSelectorOpen) {
+        document.getElementById('home').click();
+    }
+});
 
 /**
  * Initial load event listener
