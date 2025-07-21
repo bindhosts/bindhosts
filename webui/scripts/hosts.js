@@ -1,4 +1,5 @@
-import { exec, spawn, showPrompt, applyRippleEffect, checkMMRL, basePath, initialTransition, setupSwipeToClose, moduleDirectory, filePaths } from './util.js';
+import { exec, spawn } from './kernelsu.js';
+import { showPrompt, applyRippleEffect, checkMMRL, basePath, initialTransition, setupSwipeToClose, moduleDirectory, filePaths } from './util.js';
 import { loadTranslations, translations } from './language.js';
 import { openFileSelector, isFileSelectorOpen } from './file_selector.js';
 import { isDocOpen } from './docs.js';
@@ -463,14 +464,14 @@ forceUpdateButton.addEventListener('click', () => runBindhosts("--force-update")
  * @returns {Promise<void>}
  */
 async function getCustomHostsList() {
-    try {
-        const output = await exec(`ls ${basePath} | grep "^custom.*\.txt$" | grep -vx "custom.txt" || true`);
-        if (output.trim() !== '') {
-            const lines = output.split("\n");
+    const output = await exec(`ls ${basePath} | grep "^custom.*\.txt$" | grep -vx "custom.txt" || true`);
+    if (output.errno === 0) {
+        if (output.stdout.trim() !== '') {
+            const lines = output.stdout.split("\n");
             displayHostsList(lines, "import_custom");
         }
-    } catch (error) {
-        console.error("Failed to get custom hosts list:", error);
+    } else {
+        console.error("Failed to get custom hosts list:", output.stderr);
     }
 }
 
@@ -494,17 +495,16 @@ const fileNameInput = document.getElementById('file-name-input');
 async function fileNameEditor(fileName) {
     const rawFileName = fileName.replace("custom", "").replace(".txt", "");
     fileNameInput.value = rawFileName;
-    try {
-        // go to error if file is larger than 128KB
-        await exec(`[ $(wc -c < ${basePath}/${fileName}) -lt 131072 ] || exit 1`);
+    // Editor support for file smaller than 128KB
+    const result = await exec(`[ $(wc -c < ${basePath}/${fileName}) -lt 131072 ] || exit 1`);
+    if (result.errno === 0) {
         const content = await fetch(`link/PERSISTENT_DIR/${fileName}`).then(response => response.text());
         editorInput.value = content;
         openFileEditor(fileName);
-    } catch (error) {
+    } else {
         // Only rename is supported for large files
         openFileEditor(fileName, false);
         showPrompt("global_file_too_large", true);
-        console.error("Failed to get custom hosts list:", error);
     }
 }
 
@@ -663,25 +663,25 @@ function openFileEditor(lastFileName, openEditor = true) {
             showPrompt("global_file_name_empty", false);
             return;
         }
-        try {
-            if (openEditor) {
-                // Save file
-                await exec(`
-                    [ ! -f ${basePath}/${lastFileName} ] || rm -f ${basePath}/${lastFileName}
-                    cat << 'AUniqueEOF' > ${basePath}/custom${newFileName}.txt
+        let command;
+        if (openEditor) {
+            // Save file
+            command = `
+                [ ! -f ${basePath}/${lastFileName} ] || rm -f ${basePath}/${lastFileName}
+                cat << 'HostEditorEOF' > ${basePath}/custom${newFileName}.txt
 ${content}
-AUniqueEOF
-                    chmod 644 ${basePath}/custom${newFileName}.txt
-                `);
-                showPrompt("global_saved", true, undefined, undefined, `${basePath}/custom${newFileName}.txt`);
-            } else {
-                // Rename file
-                await exec(`mv -f ${basePath}/${lastFileName} ${basePath}/custom${newFileName}.txt`);
-            }
+HostEditorEOF
+                chmod 644 ${basePath}/custom${newFileName}.txt`;
+        } else {
+            // Rename file
+            command = `mv -f ${basePath}/${lastFileName} ${basePath}/custom${newFileName}.txt`;
+        }
+        const result = await exec(command);
+        if (result.errno === 0) {
             showPrompt("global_saved", true, undefined, undefined, `${basePath}/custom${newFileName}.txt`);
-        } catch (error) {
+        } else {
             showPrompt("global_save_fail", false);
-            console.error("Failed to save file:", error);
+            console.error("Failed to save file:", result.stderr);
         }
         getCustomHostsList();
         closeEditor();

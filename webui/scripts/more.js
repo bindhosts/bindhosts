@@ -1,4 +1,5 @@
-import { exec, spawn, showPrompt, applyRippleEffect, checkMMRL, basePath, initialTransition, moduleDirectory, linkRedirect, filePaths, setupSwipeToClose } from './util.js';
+import { exec, spawn } from './kernelsu.js';
+import { showPrompt, applyRippleEffect, checkMMRL, basePath, initialTransition, moduleDirectory, linkRedirect, filePaths, setupSwipeToClose } from './util.js';
 import { loadTranslations, translations } from './language.js';
 import { openFileSelector, isFileSelectorOpen } from './file_selector.js';
 import { addCopyToClipboardListeners, isDocOpen } from './docs.js';
@@ -15,12 +16,10 @@ const tilesContainer = document.getElementById('tiles-container');
  * @returns {void}
  */
 function checkBindhostsApp() {
-    const output = spawn("pm", ["path", "me.itejo443.bindhosts"]);
-    output.on('exit', (code) => {
-        if (code !== 0) {
-            tilesContainer.style.display = "flex";
-        }
-    });
+    exec("pm path me.itejo443.bindhosts")
+        .then(({ errno }) => {
+            if (errno !== 0) tilesContainer.style.display = "flex";
+        });
 }
 
 /**
@@ -62,9 +61,9 @@ function checkUpdateStatus() {
  * @returns {Promise<void>}
  */
 async function toggleModuleUpdate() {
-    try {
-        const result = await exec(`sh ${moduleDirectory}/bindhosts.sh --toggle-updatejson`);
-        const lines = result.split("\n");
+    const result = await exec(`sh ${moduleDirectory}/bindhosts.sh --toggle-updatejson`);
+    if (result.errno === 0) {
+        const lines = result.stdout.split("\n");
         lines.forEach(line => {
             if (line.includes("[+]")) {
                 showPrompt("control_panel_update_true", true, undefined, "[+]");
@@ -73,8 +72,8 @@ async function toggleModuleUpdate() {
             }
         });
         checkUpdateStatus();
-    } catch (error) {
-        console.error("Failed to toggle update", error);
+    } else {
+        console.error("Failed to toggle update:", result.stderr);
     }
 }
 
@@ -85,13 +84,13 @@ const actionRedirectStatus = document.getElementById('action-redirect');
  * @returns {void}
  */
 function checkMagisk() {
-    const output = spawn("command", ['-v', 'magisk']);
-    output.on('exit', (code) => {
-        if (code === 0) {
-            document.getElementById('action-redirect-container').style.display = "flex";
-            checkRedirectStatus();
-        }
-    });
+    exec(`grep -q Magisk ${basePath}/root_manager.sh`)
+        .then(({ errno }) => {
+            if (errno === 0) {
+                document.getElementById('action-redirect-container').style.display = "flex";
+                checkRedirectStatus();
+            }
+        });
 }
 
 /**
@@ -99,19 +98,19 @@ function checkMagisk() {
  * @returns {Promise<void>}
  */
 async function toggleActionRedirectWebui() {
-    try {
-        await exec(`
-            echo "magisk_webui_redirect=${actionRedirectStatus.checked ? 0 : 1}" > ${basePath}/webui_setting.sh
-            chmod 755 ${basePath}/webui_setting.sh
-        `);
+    const result = await exec(`
+        echo "magisk_webui_redirect=${actionRedirectStatus.checked ? 0 : 1}" > ${basePath}/webui_setting.sh
+        chmod 755 ${basePath}/webui_setting.sh || true
+    `);
+    if (result.errno === 0) {
         if (actionRedirectStatus.checked) {
             showPrompt("control_panel_action_prompt_false", false, undefined, "[×]");
         } else {
             showPrompt("control_panel_action_prompt_true", true, undefined, "[+]");
         }
         checkRedirectStatus();
-    } catch (error) {
-        console.error("Failed to execute change status", error);
+    } else {
+        console.error("Failed to execute change status", result.stderr);
     }
 }
 
@@ -148,10 +147,10 @@ function checkCronStatus() {
             if (text.includes('AdAway')) {
                 document.getElementById('cron-toggle-container').style.display = 'none';
             } else {
-                const result = spawn("grep", ["-q", "bindhosts.sh", `${basePath}/crontabs/root`]);
-                result.on('exit', (code) => {
-                    cronToggle.checked = code === 0 ? true : false;
-                });
+                exec(`grep -q bindhosts.sh ${basePath}/crontabs/root`)
+                    .then(({ errno }) => {
+                        cronToggle.checked = errno === 0 ? true : false;
+                    });
             }
         })
         .catch(error => {
@@ -164,9 +163,9 @@ function checkCronStatus() {
  * @returns {Promise<void>}
  */
 async function toggleCron() {
-    try {
-        const result = await exec(`sh ${moduleDirectory}/bindhosts.sh --${cronToggle.checked ? "disable" : "enable"}-cron`);
-        const lines = result.split("\n");
+    const result = await exec(`sh ${moduleDirectory}/bindhosts.sh --${cronToggle.checked ? "disable" : "enable"}-cron`);
+    if (result.errno === 0) {
+        const lines = result.stdout.split("\n");
         lines.forEach(line => {
             if (line.includes("[+]")) {
                 showPrompt("control_panel_cron_true", true, undefined, "[+]");
@@ -175,8 +174,8 @@ async function toggleCron() {
             }
         });
         checkCronStatus();
-    } catch (error) {
-        console.error("Failed to toggle cron", error);
+    } else {
+        console.error("Failed to toggle cron", result.stderr);
     }
 }
 
@@ -221,10 +220,10 @@ function openLanguageMenu() {
  * @returns {void}
  */
 function checkTcpdump() {
-    const result = spawn("command", ["-v", "tcpdump"]);
-    result.on('exit', (code) => {
-        if (code !== 0) document.getElementById('tcpdump-container').style.display = 'none';
-    });
+    exec("command -v tcpdump")
+        .then(({ errno }) => {
+            if (errno !== 0) document.getElementById('tcpdump-container').style.display = 'none';
+        })
 }
 
 let setupTcpdumpTerminal = false, contentBox = false, isTcpdumpOpen = false;
@@ -381,37 +380,37 @@ function openTcpdumpTerminal() {
  * @returns {Promise<void>}
  */
 async function exportConfig() {
-    try {
-        const config = {
-            metadata: {
-                version: "v1",
-                description: "bindhosts config backup"
-            }
-        };
-
-        // Fetch and process each file
-        for (const [fileType, filePath] of Object.entries(filePaths)) {
-            const response = await fetch(`link/PERSISTENT_DIR/${filePath}`);
-            if (!response.ok) throw new Error(`Failed to fetch ${filePath}`);
-            const text = await response.text();
-            const lines = text.trim();
-            config[fileType] = {
-                path: filePath,
-                content: lines
-            };
+    const config = {
+        metadata: {
+            version: "v1",
+            description: "bindhosts config backup"
         }
+    };
 
-        // Output in json format
-        const fileName = await exec(`
+    // Fetch and process each file
+    for (const [fileType, filePath] of Object.entries(filePaths)) {
+        const response = await fetch(`link/PERSISTENT_DIR/${filePath}`);
+        if (!response.ok) throw new Error(`Failed to fetch ${filePath}`);
+        const text = await response.text();
+        const lines = text.trim();
+        config[fileType] = {
+            path: filePath,
+            content: lines
+        };
+    }
+
+    // Output in json format
+    const result = await exec(`
             FILENAME="/storage/emulated/0/Download/bindhosts_config_$(date +%Y%m%d_%H%M%S).json"
             cat <<'JSON_EOF' > "$FILENAME"
 ${JSON.stringify(config)}
 JSON_EOF
             echo "$FILENAME"
         `);
-        showPrompt("backup_restore_exported", true, undefined, undefined, fileName.trim());
-    } catch (error) {
-        console.error("Backup failed:", error);
+    if (result.errno === 0) {
+        showPrompt("backup_restore_exported", true, undefined, undefined, result.stdout.trim());
+    } else {
+        console.error("Backup failed:", result.stderr);
         showPrompt("backup_restore_export_fail", false);
     }
 }
@@ -422,35 +421,34 @@ JSON_EOF
  * @return {Promise<void>}
  */
 async function restoreConfig() {
-    try {
-        const jsonConfig = await openFileSelector("json");
-        const config = JSON.parse(jsonConfig);
+    const jsonConfig = await openFileSelector("json");
+    const config = JSON.parse(jsonConfig);
 
-        // Validate using metadata
-        const isValid = config.metadata && config.metadata.description === "bindhosts config backup";
-        if (!isValid) {
-            showPrompt("backup_restore_invalid_config", false);
-            return;
-        }
+    // Validate using metadata
+    const isValid = config.metadata && config.metadata.description === "bindhosts config backup";
+    if (!isValid) {
+        showPrompt("backup_restore_invalid_config", false);
+        return;
+    }
 
-        // Restore each file according to backup version
-        if (config.metadata.version === "v1") {
-            for (const [fileType, fileData] of Object.entries(config)) {
-                if (!filePaths[fileType] || !fileData.content) continue;
-                const content = fileData.content;
-                await exec(`
-                    cat <<'RESTORE_EOF' > ${basePath}/${fileData.path}
+    // Restore each file according to backup version
+    if (config.metadata.version === "v1") {
+        for (const [fileType, fileData] of Object.entries(config)) {
+            if (!filePaths[fileType] || !fileData.content) continue;
+            const content = fileData.content;
+            const result = await exec(`
+                cat <<'RESTORE_EOF' > ${basePath}/${fileData.path}
 ${content}
 RESTORE_EOF
-                    chmod 644 ${basePath}/${fileData.path}
-                `);
+                chmod 644 ${basePath}/${fileData.path} || true
+            `);
+            if (result.errno === 0) {
+                showPrompt("backup_restore_restored", true);
+            } else {
+                console.error("Restore failed:", result.stderr);
+                showPrompt("backup_restore_restore_fail", false);
             }
         }
-
-        showPrompt("backup_restore_restored", true);
-    } catch (error) {
-        console.error("Restore failed:", error);
-        showPrompt("backup_restore_restore_fail", false);
     }
 }
 

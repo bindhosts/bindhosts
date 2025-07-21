@@ -1,4 +1,5 @@
-import { exec, basePath, applyRippleEffect, showPrompt } from './util.js';
+import { exec } from './kernelsu.js';
+import { basePath, applyRippleEffect, showPrompt } from './util.js';
 import { WXEventHandler } from "webuix";
 
 window.wx = new WXEventHandler();
@@ -43,13 +44,13 @@ async function listFiles(path, skipAnimation = false) {
         fileList.classList.add('switching');
         await new Promise(resolve => setTimeout(resolve, 150));
     }
-    try {
-        // Limit to .txt files and directories only, theoretically symlinks supported
-        const result = await exec(`
-            cd "${path}"
-            find . -maxdepth 1 -type f -name "*.${fileType}" -o -type d ! -name ".*" -o -type l | sort
-        `);
-        const items = result.split('\n').filter(Boolean).map(item => ({
+    // Limit to .txt files and directories only, theoretically symlinks supported
+    const result = await exec(`
+        cd "${path}"
+        find . -maxdepth 1 -type f -name "*.${fileType}" -o -type d ! -name ".*" -o -type l | sort
+    `);
+    if (result.errno === 0) {
+        const items = result.stdout.split('\n').filter(Boolean).map(item => ({
             path: path + '/' + item.replace(/^\.\//, ''),
             name: item.split('/').pop(),
             isDirectory: !item.endsWith('.' + fileType),
@@ -118,8 +119,8 @@ async function listFiles(path, skipAnimation = false) {
         if (!skipAnimation) {
             fileList.classList.remove('switching');
         }
-    } catch (error) {
-        console.error('Error listing files:', error);
+    } else {
+        console.error('Error listing files:', result.stderr);
         if (!skipAnimation) {
             fileList.classList.remove('switching');
         }

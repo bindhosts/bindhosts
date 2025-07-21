@@ -1,3 +1,4 @@
+import { exec, toast } from './kernelsu.js';
 import { translations } from './language.js';
 
 export let developerOption = false;
@@ -23,113 +24,17 @@ const forceUpdateButton = document.getElementById('force-update-btn');
 const content = document.querySelector('.content');
 
 /**
- * Executes a shell command with KernelSU privileges
- * @param {string} command - The shell command to execute
- * @returns {Promise<string>} A promise that resolves with stdout content
- * @throws {Error} If command execution fails with:
- *   - stderr in error message
+ * Redirect to a link with am command
+ * @param {string} link - The link to redirect in browser
  */
-export async function exec(command) {
-    return new Promise((resolve, reject) => {
-        const callbackName = `exec_callback_${Date.now()}`;
-        window[callbackName] = (errno, stdout, stderr) => {
-            delete window[callbackName];
-            if (errno === 0) {
-                resolve(stdout);
-            } else {
-                console.error(`Error executing command: ${stderr}`);
-                reject(stderr);
-            }
-        };
-        try {
-            ksu.exec(command, "{}", callbackName);
-        } catch (error) {
-            console.error(`Execution error: ${error}`);
-            reject(error);
-        }
-    });
-}
-
-/**
- * Spawns shell process with ksu spawn
- * @param {string} command - The command to execute
- * @param {string[]} [args=[]] - Array of arguments to pass to the command
- * @param {Object{}} [options={}] - Array of options with:
- *   - cwd <string> - Current working directory of the child process
- *   - env <Object> - Environment key-value pairs
- * @returns {Object} A child process object with:
- *   - stdout: Stream for standard output
- *   - stderr: Stream for standard error
- *   - stdin: Stream for standard input
- *   - on(event, listener): Attach event listener ('exit', 'error')
- *   - emit(event, ...args): Emit events internally
- */
-export function spawn(command, args = [], options = {}) {
-    const child = {
-        listeners: {},
-        stdout: new Stdio(),
-        stderr: new Stdio(),
-        stdin: new Stdio(),
-        on(event, listener) {
-            if (!this.listeners[event]) this.listeners[event] = [];
-            this.listeners[event].push(listener);
-        },
-        emit(event, ...args) {
-            if (this.listeners[event]) {
-                this.listeners[event].forEach(listener => listener(...args));
-            }
-        }
-    };
-    function Stdio() {
-        this.listeners = {};
-    }
-    Stdio.prototype.on = function(event, listener) {
-        if (!this.listeners[event]) {
-            this.listeners[event] = [];
-        }
-        this.listeners[event].push(listener);
-    };
-    Stdio.prototype.emit = function(event, ...args) {
-        if (this.listeners[event]) {
-            this.listeners[event].forEach(listener => listener(...args));
-        }
-    };
-    const callbackName = `spawn_callback_${Date.now()}`;
-    window[callbackName] = child;
-    child.on("exit", () => delete window[callbackName]);
-    try {
-        ksu.spawn(command, JSON.stringify(args), JSON.stringify(options), callbackName);
-    } catch (error) {
-        child.emit("error", error);
-        delete window[callbackName];
-    }
-    return child;
-}
-
-/**
- * Show toast with ksu
- * @param {string} message - Message to display
- * @returns {void}
- */
-export function toast(message) {
-    try {
-        ksu.toast(message);
-    } catch (error) {
-        console.error("Failed to show toast:", error);
-    }
-}
-
-/**
- * Redirect link on external browser
- * @param {string} link - URL to redirect
- * @returns {Promise<void>}
- */
-export async function linkRedirect(link) {
-    try {
-        await exec(`am start -a android.intent.action.VIEW -d ${link}`);
-    } catch (error) {
-        console.error('Error redirect link:', error);
-    }
+export function linkRedirect(link) {
+    toast("Redirecting to " + link);
+    setTimeout(() => {
+        exec(`am start -a android.intent.action.VIEW -d ${link}`, { env: { PATH: '/system/bin' }})
+            .then(({ errno }) => {
+                if (errno !== 0) toast("Failed to open link");
+            });
+    },100);
 }
 
 /**

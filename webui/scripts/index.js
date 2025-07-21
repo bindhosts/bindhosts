@@ -1,4 +1,5 @@
-import { exec, showPrompt, applyRippleEffect, checkMMRL, basePath, developerOption, setDeveloperOption, setLearnMore, initialTransition, moduleDirectory } from './util.js';
+import { exec } from './kernelsu.js';
+import { showPrompt, applyRippleEffect, checkMMRL, basePath, developerOption, setDeveloperOption, setLearnMore, initialTransition, moduleDirectory } from './util.js';
 import { loadTranslations } from './language.js';
 import { isDocOpen } from './docs.js';
 import { WXEventHandler } from "webuix";
@@ -28,7 +29,7 @@ function updateStatus() {
             const value = data.match(new RegExp(`${item.key}=(.*)`))[1].replace('status: ', '');
             document.getElementById(item.element).textContent = value;
         } catch (error) {
-            await setupLink();
+            setupLink();
             updateStatus();
             throw error;
         }
@@ -105,18 +106,22 @@ document.getElementById("mode-btn").addEventListener("click", async () => {
      * @returns {Promise<void>}
      */
     async function saveModeSelection(mode) {
-        try {
+        let command;
+        if (mode === "reset") {
+            command = `rm -f ${basePath}/mode_override.sh`;
+        } else {
+            command = `echo "mode=${mode}" > ${basePath}/mode_override.sh`;
+        }
+        const result = await exec(command);
+        if (result.errno === 0) {
             if (mode === "reset") {
-                await exec(`rm -f ${basePath}/mode_override.sh`);
                 closeOverlay();
                 setLearnMore(false);
-            } else {
-                await exec(`echo "mode=${mode}" > ${basePath}/mode_override.sh`);
             }
             showPrompt("global_reboot", true, 4000);
             await updateModeSelection();
-        } catch (error) {
-            console.error("Error saving mode selection:", error);
+        } else {
+            console.error("Error saving mode selection:", result.stderr);
         }
     }
 
@@ -125,22 +130,16 @@ document.getElementById("mode-btn").addEventListener("click", async () => {
      * @returns {Promise<void>}
      */
     async function updateModeSelection() {
-        try {
-            const fileExists = await exec(`[ -f ${basePath}/mode_override.sh ] && echo 'true' || echo 'false'`);
-            if (fileExists.trim() === "false") {
-                document.querySelectorAll("#mode-options input").forEach((input) => {
-                    input.checked = false;
-                });
-                return;
-            }
-            const content = await exec(`cat ${basePath}/mode_override.sh`);
-            const currentMode = content.trim().match(/mode=(\d+)/)?.[1] || null;
-            document.querySelectorAll("#mode-options input").forEach((input) => {
-                input.checked = input.value === currentMode;
-            });
-        } catch (error) {
-            console.error("Error updating mode selection:", error);
+        let currentMode;
+        const result = await exec(`cat ${basePath}/mode_override.sh`);
+        if (result.errno === 0) {
+            currentMode = result.trim().match(/mode=(\d+)/)?.[1] || null;
+        } else {
+            currentMode = null;
         }
+        document.querySelectorAll("#mode-options input").forEach((input) => {
+            input.checked = input.value === currentMode;
+        });
     }
 
     if (!setupModeMenu) {
@@ -219,22 +218,18 @@ async function getHosts() {
             }
         });
     } catch (error) {
-        await setupLink();
+        setupLink();
         await getHosts();
     }
 }
 
 /**
  * Link necessary file to the webroot if not found
- * @returns {Promise<void>}
+ * @returns {void}
  */
-async function setupLink() {
-    try {
-        // backend required due to different target host file
-        await exec(`sh ${moduleDirectory}/bindhosts.sh --setup-link`);
-    } catch (error) {
-        console.error("Error linking hosts:", error);
-    }
+function setupLink() {
+    // backend required due to different target host file
+    exec(`sh ${moduleDirectory}/bindhosts.sh --setup-link`);
 }
 
 /**
@@ -281,16 +276,16 @@ function loadMoreHosts(callback) {
  * @returns {Promise<void>}
  */
 async function handleRemove(event, domains) {
-    try {
-        await exec(`sh ${moduleDirectory}/bindhosts.sh --whitelist ${domains.join(' ')}`);
+    const result = await exec(`sh ${moduleDirectory}/bindhosts.sh --whitelist ${domains.join(' ')}`);
+    if (result.errno === 0) {
         // Find and remove the element directly
         const hostItem = event.target.closest('.host-list-row');
         if (hostItem) {
             hostList.removeChild(hostItem);
         }
         showPrompt("query_remove_prompt", true, 2000, undefined, domains.join(' '));
-    } catch (error) {
-        console.error("Error removing host:", error);
+    } else {
+        console.error("Error removing host:", result.stderr);
         showPrompt("query_remove_error", false, 2000, undefined, domains.join(' '));
     }
 }
@@ -393,20 +388,16 @@ function setupRickRoll() {
         }
     });
 
-    async function redirectRr() {
+    function redirectRr() {
         closeOverlay();
-        try {
-            // bilibili (China) or YouTube
-            await exec(`
-                if pm path tv.danmaku.bili > /dev/null 2>&1; then
-                    am start -a android.intent.action.VIEW -d "https://b23.tv/Qhk2xvo"
-                else
-                    am start -a android.intent.action.VIEW -d "https://youtu.be/dQw4w9WgXcQ"
-                fi
-            `);
-        } catch (error) {
-            console.error("Error redirect link:", error);
-        }
+        // bilibili (China) or YouTube
+        exec(`
+            if pm path tv.danmaku.bili > /dev/null 2>&1; then
+                am start -a android.intent.action.VIEW -d "https://b23.tv/Qhk2xvo"
+            else
+                am start -a android.intent.action.VIEW -d "https://youtu.be/dQw4w9WgXcQ"
+            fi
+        `);
     }
 
     function openOverlay() {

@@ -1,5 +1,6 @@
+import { exec } from './kernelsu.js';
 import { setupDocsMenu } from './docs.js';
-import { exec, applyRippleEffect, moduleDirectory } from './util.js';
+import { applyRippleEffect, moduleDirectory } from './util.js';
 
 const languageMenu = document.querySelector('.language-menu');
 
@@ -160,24 +161,24 @@ async function generateLanguageMenu() {
  * @returns {void}
  */
 function updateFooterLanguageKey() {
-    try {
-        // Function to escape / and & for use in sed
-        const escapeForSed = (text) => text.replace(/[\/&]/g, '\\$&');
-        const homeText = escapeForSed(translations.footer_home);
-        const hostsText = escapeForSed(translations.footer_hosts);
-        const moreText = escapeForSed(translations.footer_more);
+    // Function to escape / and & for use in sed
+    const escapeForSed = (text) => text.replace(/[\/&]/g, '\\$&');
+    const homeText = escapeForSed(translations.footer_home);
+    const hostsText = escapeForSed(translations.footer_hosts);
+    const moreText = escapeForSed(translations.footer_more);
 
-        exec(`
-            files="${moduleDirectory}/webroot/index.html ${moduleDirectory}/webroot/hosts.html ${moduleDirectory}/webroot/more.html"
-            for file in $files; do
-                sed -i "s/<span data-i18n=\\"footer.home\\">[^<]*<\\/span>/<span data-i18n=\\"footer.home\\">${homeText}<\\/span>/g" "$file"
-                sed -i "s/<span data-i18n=\\"footer.hosts\\">[^<]*<\\/span>/<span data-i18n=\\"footer.hosts\\">${hostsText}<\\/span>/g" "$file"
-                sed -i "s/<span data-i18n=\\"footer.more\\">[^<]*<\\/span>/<span data-i18n=\\"footer.more\\">${moreText}<\\/span>/g" "$file"
-            done
-        `);
-    } catch (error) {
-        console.error("Error updating translation key in HTML:", error);
-    }
+    exec(`
+        files="${moduleDirectory}/webroot/index.html ${moduleDirectory}/webroot/hosts.html ${moduleDirectory}/webroot/more.html"
+        for file in $files; do
+            sed -i "s/<span data-i18n=\\"footer.home\\">[^<]*<\\/span>/<span data-i18n=\\"footer.home\\">${homeText}<\\/span>/g" "$file"
+            sed -i "s/<span data-i18n=\\"footer.hosts\\">[^<]*<\\/span>/<span data-i18n=\\"footer.hosts\\">${hostsText}<\\/span>/g" "$file"
+            sed -i "s/<span data-i18n=\\"footer.more\\">[^<]*<\\/span>/<span data-i18n=\\"footer.more\\">${moreText}<\\/span>/g" "$file"
+        done
+    `).then(({ errno, stderr }) => {
+        if (errno !== 0) {
+            console.error("Error updating translation key in HTML:", stderr);
+        }
+    })
 }
 
 /**
