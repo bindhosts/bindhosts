@@ -122,8 +122,10 @@ export function applyRippleEffect() {
  * @returns {void}
  */
 export function showPrompt(key, isSuccess = true, duration = 2000, preValue = "", postValue = "") {
+    let input;
+    typeof translations[key] === 'undefined' ? input = key : input = translations[key];
     const prompt = document.getElementById('prompt');
-    const message = `${preValue} ${translations[key]} ${postValue}`.trim();
+    const message = `${preValue} ${input} ${postValue}`.trim();
     prompt.textContent = message;
     prompt.classList.toggle('error', !isSuccess);
 

@@ -102,6 +102,9 @@
     <string name="more_faq">常見問題</string>
     <string name="more_support">支援</string>
     <string name="more_support_issue">回饋問題</string>
+    <string name="more_support_update_canary">下載最新測試版</string>
+    <string name="more_support_update_success">更新成功，重啟生效</string>
+    <string name="more_support_update_fail">更新失敗， 請到 GitHub 下載並安裝</string>
 
     <!-- Confirmation -->
     <string name="confirmation_title">確認刪除？</string>

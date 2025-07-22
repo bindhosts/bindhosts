@@ -565,6 +565,8 @@ manager_install_zip() {
 		echo "[!] no manager logged, nothing specified or file not found"
 		return
 	fi
+	# webui flag
+	[ -n "$KSU_WEBUI" ] && touch "$PERSISTENT_DIR/bindhosts_webui"
 	# read which manager
 	. "$PERSISTENT_DIR/root_manager.sh"
 	case $manager in
@@ -585,6 +587,8 @@ manager_install_zip() {
 			exit 1
 			;;
 	esac
+	# cleanup
+	rm -f "$PERSISTENT_DIR/bindhosts_webui"
 }
 
 install_latest_artifact() {

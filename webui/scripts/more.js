@@ -179,6 +179,28 @@ async function toggleCron() {
     }
 }
 
+/**
+ * Update to latest canary version, called by controlPanelEventlistener
+ * @returns {void}
+ */
+function canaryUpdate() {
+    const result = spawn('sh', [`${moduleDirectory}/bindhosts.sh`, '--install-canary'], { env: { KSU_WEBUI: "true" } });
+    result.stdout.on('data', (data) => {
+        if (data.includes('[+]')) {
+            showPrompt(data, true, 15000);
+        } else if (data.includes('[x]') || data.includes('[!]')) {
+            showPrompt(data, false, 3000);
+        }
+    });
+    result.on('exit', (code) => {
+        if (code === 0) {
+            showPrompt("more_support_update_success", true, 3000);
+        } else {
+            showPrompt("more_support_update_fail", false, 3000);
+        }
+    });
+}
+
 let languageMenuListener = false, isLanguageMenuOpen = false;
 /**
  * Open language menu overlay, called by controlPanelEventlistener
@@ -465,6 +487,7 @@ function controlPanelEventlistener(event) {
         "action-redirect-container": toggleActionRedirectWebui,
         "cron-toggle-container": toggleCron,
         "github-issues": () => linkRedirect('https://github.com/bindhosts/bindhosts/issues/new'),
+        "canary-update": canaryUpdate,
         "export": exportConfig,
         "restore": restoreConfig
     };

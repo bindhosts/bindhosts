@@ -102,6 +102,9 @@
     <string name="more_faq">FAQ</string>
     <string name="more_support">Support</string>
     <string name="more_support_issue">Report an issue</string>
+    <string name="more_support_update_canary">Update to latest canary version</string>
+    <string name="more_support_update_success">Update successfully, reboot to take effect</string>
+    <string name="more_support_update_fail">Failed to update, please download and install manually from GitHub</string>
 
     <!-- Confirmation -->
     <string name="confirmation_title">Confirm Remove?</string>

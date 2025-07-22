@@ -33,7 +33,7 @@ detect_key_press() {
 }
 
 # Installation prompt if bindhosts app is not installed
-pm path me.itejo443.bindhosts > /dev/null 2>&1 || {
+pm path me.itejo443.bindhosts > /dev/null 2>&1 || [ -f "$PERSISTENT_DIR/bindhosts_webui" ] || {
     # Install App Section
     echo "[+] BindHosts-app, Ref:github.com/itejo443/BindHosts-app"
     echo "[?] Do you want to install BindHosts-app"
