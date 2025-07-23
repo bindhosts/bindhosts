@@ -15,7 +15,7 @@
 
 ## 支持的 Root 管理器
 
-- [APatch](https://github.com/bmax121/APatch) 
+- [APatch](https://github.com/bmax121/APatch)
 - [KernelSU](https://github.com/tiann/KernelSU)
 - [Magisk](https://github.com/topjohnwu/Magisk)  <sup>([没有WebUI](https://github.com/topjohnwu/Magisk/issues/8609#event-15568590949)👀)</sup>
 
@@ -27,13 +27,13 @@
 
 ## 另请参阅
 
-- [使用手册](Documentation/usage_zh-CN.md)
+- [常见问题](Documentation/faq.md)
 - [隐藏指南](Documentation/hiding_zh-CN.md)
 - [工作模式](Documentation/modes_zh-CN.md)
+- [使用手册](Documentation/usage_zh-CN.md)
 
 ## 链接
 
-- 点击 [此处](Documentation/faq.md) 查看常见问题
 - 点击 [此处](https://github.com/bindhosts/bindhosts/releases) 下载 bindhosts
 - 点击 [此处](Documentation/sources.md) 查看更多 hosts 规则源
 - 点击 [此处](Documentation/localize.md) 了解 bindhosts 的本地化流程
@@ -43,3 +43,4 @@
 如果遇到问题请在 [这里](https://github.com/bindhosts/bindhosts/issues) 提交你的 issues
 
 我们始终欢迎你们来提交 [请求](https://github.com/bindhosts/bindhosts/pulls)
+

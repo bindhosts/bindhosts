@@ -43,3 +43,4 @@ Tamamen bağımsız, kendi kendine güncellenen bir sistem.
 Sorunlarla karşılaşırsanız [burada](https://github.com/bindhosts/bindhosts/issues) bildirin.
 
 [Pull request](https://github.com/bindhosts/bindhosts/pulls) her zaman memnuniyetle karşılanır.
+
