@@ -1,10 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="system_default">系統預設</string>
-
     <!-- Status -->
     <string name="status_title">目前狀態</string>
-
     <!-- Global -->
     <string name="global_dev_opt">開發者模式已啟用</string>
     <string name="global_dev_opt_true">您已處於開發者模式</string>
@@ -17,7 +15,6 @@
     <string name="global_show_all">顯示剩餘</string>
     <string name="global_more">個</string>
     <string name="global_action">執行</string>
-
     <!-- Query -->
     <string name="query_title">Host 查詢</string>
     <string name="query_search">搜尋</string>
@@ -26,7 +23,6 @@
     <string name="query_host_domain">域名</string>
     <string name="query_remove_prompt">已移除</string>
     <string name="query_remove_error">移除失敗</string>
-
     <!-- Control Panel -->
     <string name="control_panel_title">控制面板</string>
     <string name="control_panel_language">語言</string>
@@ -47,7 +43,6 @@
     <string name="control_panel_cron_true">已開啟 hosts 每日更新</string>
     <string name="control_panel_cron_false">已關閉 hosts 每日更新</string>
     <string name="control_panel_monitor_network_activity">監控網路活動</string>
-
     <!-- Custom -->
     <string name="custom_title">自訂規則</string>
     <string name="custom_guide1">在此處添加自訂跳轉規則</string>
@@ -55,10 +50,8 @@
     <string name="custom_format">格式</string>
     <string name="custom_warning">警告：自訂規則在模組執行期間和重設後均會載入！</string>
     <string name="custom_prompt_fail">已存在於自訂規則內</string>
-
     <!-- Import -->
     <string name="import_custom_title">匯入自訂規則</string>
-
     <!-- Source -->
     <string name="source_title">規則（源）</string>
     <string name="source_guide1">黑名單</string>
@@ -67,32 +60,27 @@
     <string name="source_example">例如：</string>
     <string name="source_source_page">更多規則（源）</string>
     <string name="source_prompt_fail">已存在於規則內</string>
-
     <!-- Blacklist -->
     <string name="blacklist_title">黑名單</string>
     <string name="blacklist_guide1">添加到此處的域名均會被封鎖</string>
     <string name="blacklist_example">例如：</string>
     <string name="blacklist_prompt_fail">已存在於黑名單內</string>
-
     <!-- Whitelist -->
     <string name="whitelist_title">白名單</string>
     <string name="whitelist_guide1">添加到此處的域名均會被放行</string>
     <string name="whitelist_example">例如：</string>
     <string name="whitelist_prompt_fail">已存在於白名單內</string>
-
     <!-- Sources -->
     <string name="sources_whitelist_title">白名單源</string>
     <string name="sources_whitelist_guide1">在此處添加白名單源</string>
     <string name="sources_whitelist_format">格式</string>
     <string name="sources_whitelist_example">例如：</string>
     <string name="sources_whitelist_prompt_fail">已存在於白名單源內</string>
-
     <!-- Mode -->
     <string name="mode_button">模式</string>
     <string name="mode_title">工作模式</string>
     <string name="mode_detail">了解更多</string>
     <string name="mode_reset">重設（自動）</string>
-
     <!-- More -->
     <string name="more_documents">文件</string>
     <string name="more_sources">規則（源）</string>
@@ -105,18 +93,15 @@
     <string name="more_support_update_canary">下載最新測試版</string>
     <string name="more_support_update_success">更新成功，重啟生效</string>
     <string name="more_support_update_fail">更新失敗， 請到 GitHub 下載並安裝</string>
-
     <!-- Confirmation -->
     <string name="confirmation_title">確認刪除？</string>
     <string name="confirmation_message">確認刪除</string>
     <string name="confirmation_cancel">取消</string>
     <string name="confirmation_remove">刪除</string>
-
     <!-- Footer -->
     <string name="footer_home">首頁</string>
     <string name="footer_hosts">Hosts</string>
     <string name="footer_more">更多</string>
-
     <!-- Backup and Restore -->
     <string name="backup_restore_backup_and_restore">備份與復原</string>
     <string name="backup_restore_export">匯出配置</string>

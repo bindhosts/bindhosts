@@ -1,10 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="system_default">Sistem Varsayılanı</string>
-
     <!-- Status -->
     <string name="status_title">Durum</string>
-
     <!-- Global -->
     <string name="global_dev_opt">Geliştirici seçeneği etkinleştirildi</string>
     <string name="global_dev_opt_true">Geliştirici seçeneği zaten etkin</string>
@@ -17,7 +15,6 @@
     <string name="global_show_all">Tümünü göster</string>
     <string name="global_more">daha</string>
     <string name="global_action">Action</string>
-
     <!-- Query -->
     <string name="query_title">Host Sorgulama</string>
     <string name="query_search">Ara</string>
@@ -26,7 +23,6 @@
     <string name="query_host_domain">Domain</string>
     <string name="query_remove_prompt">Beyaz Liste</string>
     <string name="query_remove_error">Beyaz listeye ekleme başarısız</string>
-
     <!-- Control Panel -->
     <string name="control_panel_title">Kontrol Paneli</string>
     <string name="control_panel_language">Dil</string>
@@ -47,7 +43,6 @@
     <string name="control_panel_cron_true">Crontab girişi eklendi</string>
     <string name="control_panel_cron_false">Crontab girişi kaldırıldı</string>
     <string name="control_panel_monitor_network_activity">Ağ Etkinliğini İzle</string>
-
     <!-- Custom -->
     <string name="custom_title">Özel Kurallar</string>
     <string name="custom_guide1">Buraya özel yönlendirmeler ekleyin</string>
@@ -55,10 +50,8 @@
     <string name="custom_format">Format:</string>
     <string name="custom_warning">UYARI: Özel kurallar hem çalıştırmada hem de sıfırlamada yüklenir!</string>
     <string name="custom_prompt_fail">Zaten özel kuralda mevcut</string>
-
     <!-- Import -->
     <string name="import_custom_title">Özel Kuralları İçe Aktar</string>
-
     <!-- Source -->
     <string name="source_title">Kaynaklar</string>
     <string name="source_guide1">Kara liste kaynakları</string>
@@ -67,32 +60,27 @@
     <string name="source_example">Örnek:</string>
     <string name="source_source_page">Daha Fazla Kaynak</string>
     <string name="source_prompt_fail">Zaten kaynakta mevcut</string>
-
     <!-- Blacklist -->
     <string name="blacklist_title">Kara liste</string>
     <string name="blacklist_guide1">Buraya eklediğiniz her şey kara listeye alınacaktır</string>
     <string name="blacklist_example">Örnek:</string>
     <string name="blacklist_prompt_fail">Zaten kara listede mevcut</string>
-
     <!-- Whitelist -->
     <string name="whitelist_title">Beyaz liste</string>
     <string name="whitelist_guide1">Buraya eklediğiniz her şey kara listeye alınmayacaktır</string>
     <string name="whitelist_example">Örnek:</string>
     <string name="whitelist_prompt_fail">Zaten beyaz listede mevcut</string>
-
     <!-- Sources -->
     <string name="sources_whitelist_title">Beyaz Liste Kaynakları</string>
     <string name="sources_whitelist_guide1">Buraya beyaz liste kaynakları ekleyin</string>
     <string name="sources_whitelist_format">Format:</string>
     <string name="sources_whitelist_example">Örnek:</string>
     <string name="sources_whitelist_prompt_fail">Zaten beyaz liste kaynağında mevcut</string>
-
     <!-- Mode -->
     <string name="mode_button">Mod</string>
     <string name="mode_title">Çalışma Modu</string>
     <string name="mode_detail">Daha fazla bilgi edin</string>
     <string name="mode_reset">Sıfırla (otomatik)</string>
-
     <!-- More -->
     <string name="more_documents">Belgeler</string>
     <string name="more_sources">Kaynaklar</string>
@@ -102,18 +90,15 @@
     <string name="more_faq">SSS</string>
     <string name="more_support">Destek</string>
     <string name="more_support_issue">Sorun bildir</string>
-
     <!-- Confirmation -->
     <string name="confirmation_title">Kaldırmayı Onayla?</string>
     <string name="confirmation_message">Kaldırmak istediğinizden emin misiniz</string>
     <string name="confirmation_cancel">İptal</string>
     <string name="confirmation_remove">Kaldır</string>
-
     <!-- Footer -->
     <string name="footer_home">Ana Sayfa</string>
     <string name="footer_hosts">Hosts</string>
     <string name="footer_more">Daha Fazla</string>
-
     <!-- Backup and Restore -->
     <string name="backup_restore_backup_and_restore">Yedekleme &amp; Geri Yükleme</string>
     <string name="backup_restore_export">Yapılandırmayı dışa aktar</string>

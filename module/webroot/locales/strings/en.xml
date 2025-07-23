@@ -1,10 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="system_default">System Default</string>
-
     <!-- Status -->
     <string name="status_title">Status</string>
-
     <!-- Global -->
     <string name="global_dev_opt">Developer option enabled</string>
     <string name="global_dev_opt_true">Developer option already enabled</string>
@@ -17,7 +15,6 @@
     <string name="global_show_all">Show All</string>
     <string name="global_more">More</string>
     <string name="global_action">Action</string>
-
     <!-- Query -->
     <string name="query_title">Host Query</string>
     <string name="query_search">Search</string>
@@ -26,7 +23,6 @@
     <string name="query_host_domain">Domain</string>
     <string name="query_remove_prompt">Whitelisted</string>
     <string name="query_remove_error">Failed to whitelist</string>
-
     <!-- Control Panel -->
     <string name="control_panel_title">Control Panel</string>
     <string name="control_panel_language">Language</string>
@@ -47,7 +43,6 @@
     <string name="control_panel_cron_true">Crontab entry added</string>
     <string name="control_panel_cron_false">Crontab entry removed</string>
     <string name="control_panel_monitor_network_activity">Monitor Network Activity</string>
-
     <!-- Custom -->
     <string name="custom_title">Custom Rules</string>
     <string name="custom_guide1">Add custom redirects here</string>
@@ -55,10 +50,8 @@
     <string name="custom_format">Format:</string>
     <string name="custom_warning">WARNING: Custom rules are loaded on both run and reset!</string>
     <string name="custom_prompt_fail">is already in custom rule</string>
-
     <!-- Import -->
     <string name="import_custom_title">Import Custom Rules</string>
-
     <!-- Source -->
     <string name="source_title">Sources</string>
     <string name="source_guide1">Blacklist sources</string>
@@ -67,32 +60,27 @@
     <string name="source_example">Example:</string>
     <string name="source_source_page">More Sources</string>
     <string name="source_prompt_fail">is already in source</string>
-
     <!-- Blacklist -->
     <string name="blacklist_title">Blacklist</string>
     <string name="blacklist_guide1">Everything you add here will be blacklisted</string>
     <string name="blacklist_example">Example:</string>
     <string name="blacklist_prompt_fail">is already in blacklist</string>
-
     <!-- Whitelist -->
     <string name="whitelist_title">Whitelist</string>
     <string name="whitelist_guide1">Everything you add here won&apos;t be blacklisted</string>
     <string name="whitelist_example">Example:</string>
     <string name="whitelist_prompt_fail">is already in whitelist</string>
-
     <!-- Sources -->
     <string name="sources_whitelist_title">Whitelist Sources</string>
     <string name="sources_whitelist_guide1">Add whitelist sources here</string>
     <string name="sources_whitelist_format">Format:</string>
     <string name="sources_whitelist_example">Example:</string>
     <string name="sources_whitelist_prompt_fail">is already in whitelist source</string>
-
     <!-- Mode -->
     <string name="mode_button">Mode</string>
     <string name="mode_title">Operation Mode</string>
     <string name="mode_detail">Learn More</string>
     <string name="mode_reset">Reset (auto)</string>
-
     <!-- More -->
     <string name="more_documents">Documents</string>
     <string name="more_sources">Sources</string>
@@ -105,18 +93,15 @@
     <string name="more_support_update_canary">Update to latest canary version</string>
     <string name="more_support_update_success">Update successfully, reboot to take effect</string>
     <string name="more_support_update_fail">Failed to update, please download and install manually from GitHub</string>
-
     <!-- Confirmation -->
     <string name="confirmation_title">Confirm Remove?</string>
     <string name="confirmation_message">Are you sure you want to remove</string>
     <string name="confirmation_cancel">Cancel</string>
     <string name="confirmation_remove">Remove</string>
-
     <!-- Footer -->
     <string name="footer_home">Home</string>
     <string name="footer_hosts">Hosts</string>
     <string name="footer_more">More</string>
-
     <!-- Backup and Restore -->
     <string name="backup_restore_backup_and_restore">Backup &amp; Restore</string>
     <string name="backup_restore_export">Export config</string>
