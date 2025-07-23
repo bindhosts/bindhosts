@@ -56,4 +56,3 @@ Magisk'te (ve klonlarında: Alpha, Kitsune) gizleme olduğu gibi çalışır.
 ## Terimler Sözlüğü
 
 - bind mount - APatch'in magic mount için kullandığı terim, esas olarak Magisk tarafından kullanılan montaj yöntemi.
-

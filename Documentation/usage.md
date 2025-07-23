@@ -1,11 +1,13 @@
 # Usage
 
 ## Usage via Terminal
+
 <img src="https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/screenshots/terminal_usage.png" 
-     onerror="this.onerror=null;this.src='https://raw.gitmirror.com/bindhosts/bindhosts/master/Documentation/screenshots/terminal_usage.png';" 
-     width="100%" alt="Terminal Usage Screenshot">
+  onerror="this.onerror=null;this.src='https://raw.gitmirror.com/bindhosts/bindhosts/master/Documentation/screenshots/terminal_usage.png';" 
+  width="100%" alt="Terminal Usage Screenshot">
 
 You can access the various options as shown in the image for bindhosts Magisk/KernelSU/APatch
+
 - via Termux (or other various common terminal apps)
     ```shell
     > su
@@ -20,6 +22,7 @@ You can access the various options as shown in the image for bindhosts Magisk/Ke
     ```
 
 ### Example
+
 ```
     bindhosts --action          This will simulate bindhosts action to grab ips or reset the hosts file, depending on which state bindhosts is in
     bindhosts --tcpdump         Will sniff current active ip addresses on your network mode (wifi or data, make sure no DNS services are being used like cloudflare, etc.)
@@ -33,16 +36,18 @@ You can access the various options as shown in the image for bindhosts Magisk/Ke
 ```
 
 ## Action
- press action to toggle update and reset
+
+press action to toggle update and reset
  
 <img src="https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/screenshots/manager_action.gif" 
-     onerror="this.onerror=null;this.src='https://raw.gitmirror.com/bindhosts/bindhosts/master/Documentation/screenshots/manager_action.gif';" 
-     width="100%" alt="Manager Action">
+  onerror="this.onerror=null;this.src='https://raw.gitmirror.com/bindhosts/bindhosts/master/Documentation/screenshots/manager_action.gif';" 
+  width="100%" alt="Manager Action">
 
 ## WebUI
-  add your custom rules, sources, whitelist or blacklist
+
+add your custom rules, sources, whitelist or blacklist
  
 <img src="https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/screenshots/manager_webui.gif" 
-     onerror="this.onerror=null;this.src='https://raw.gitmirror.com/bindhosts/bindhosts/master/Documentation/screenshots/manager_webui.gif';" 
-     width="100%" alt="Manager WebUI">
+  onerror="this.onerror=null;this.src='https://raw.gitmirror.com/bindhosts/bindhosts/master/Documentation/screenshots/manager_webui.gif';" 
+  width="100%" alt="Manager WebUI">
 

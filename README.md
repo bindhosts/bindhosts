@@ -15,7 +15,7 @@ Fully standalone, self-updating.
 
 ## Supported Root Managers
 
-- [APatch](https://github.com/bmax121/APatch) 
+- [APatch](https://github.com/bmax121/APatch)
 - [KernelSU](https://github.com/tiann/KernelSU)
 - [Magisk](https://github.com/topjohnwu/Magisk)  <sup>([no WebUI](https://github.com/topjohnwu/Magisk/issues/8609#event-15568590949)👀)</sup>
 
@@ -43,4 +43,3 @@ Fully standalone, self-updating.
 Report [here](https://github.com/bindhosts/bindhosts/issues) if you encounter any issues.
 
 [Pull requests](https://github.com/bindhosts/bindhosts/pulls) are always welcome.
-

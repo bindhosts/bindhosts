@@ -56,4 +56,3 @@ Nascondersi in Magisk (e cloni, Alpha e Kitsune) dovrebbe funzionare cos√¨ com'√
 ## Glossario dei termini
 
 - bind mount - Termine di APatch per magic mount, metodo di montaggio utilizzato principalmente da Magisk.
-

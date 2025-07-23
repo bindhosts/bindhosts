@@ -56,4 +56,3 @@
 ## 术语表
 
 - bind mount - magic mount 在 APatch 中的术语，挂载办法主要源自 Magisk。
-
