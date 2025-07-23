@@ -1,11 +1,13 @@
 # Utilizzo
 
 ## Utilizzo tramite Terminale
+
 <img src="https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/screenshots/terminal_usage.png" 
-     onerror="this.onerror=null;this.src='https://raw.gitmirror.com/bindhosts/bindhosts/master/Documentation/screenshots/terminal_usage.png';" 
-     width="100%" alt="Terminal Usage Screenshot">
+onerror="this.onerror=null;this.src='https://raw.gitmirror.com/bindhosts/bindhosts/master/Documentation/screenshots/terminal_usage.png';" 
+width="100%" alt="Terminal Usage Screenshot">
 
 È possibile accedere alle varie opzioni come mostrato nell'immagine per bindhosts Magisk/KernelSU/APatch
+
 - tramite Termux (o altre varie app terminali comuni)
     ```shell
     > su
@@ -20,6 +22,7 @@
     ```
 
 ### Esempio
+
 ```
     bindhosts --action          Questo simulerà l'azione di bindhosts per catturare gli IP o reimpostare il file host, a seconda dello stato in cui si trova bindhosts
     bindhosts --tcpdump         Analizzerà gli indirizzi IP attivi correnti sulla tua modalità di rete (Wi-Fi o dati, assicurati che non siano in uso servizi DNS come Cloudflare, ecc.)
@@ -33,16 +36,17 @@
 ```
 
 ## Azione
- premere azione per attivare/disattivare l'aggiornamento e il ripristino
- 
+
+premere azione per attivare/disattivare l'aggiornamento e il ripristino
+
 <img src="https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/screenshots/manager_action.gif" 
-     onerror="this.onerror=null;this.src='https://raw.gitmirror.com/bindhosts/bindhosts/master/Documentation/screenshots/manager_action.gif';" 
-     width="100%" alt="Manager Action">
+onerror="this.onerror=null;this.src='https://raw.gitmirror.com/bindhosts/bindhosts/master/Documentation/screenshots/manager_action.gif';" 
+width="100%" alt="Manager Action">
 
 ## WebUI
-  aggiungi le tue regole, fonti, whitelist o blacklist personalizzate
- 
-<img src="https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/screenshots/manager_webui.gif" 
-     onerror="this.onerror=null;this.src='https://raw.gitmirror.com/bindhosts/bindhosts/master/Documentation/screenshots/manager_webui.gif';" 
-     width="100%" alt="Manager WebUI">
 
+aggiungi le tue regole, fonti, whitelist o blacklist personalizzate
+
+<img src="https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/screenshots/manager_webui.gif" 
+onerror="this.onerror=null;this.src='https://raw.gitmirror.com/bindhosts/bindhosts/master/Documentation/screenshots/manager_webui.gif';" 
+width="100%" alt="Manager WebUI">

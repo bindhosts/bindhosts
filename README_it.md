@@ -15,7 +15,7 @@ Completamente autonomo e auto-aggiornante.
 
 ## Gestori di root supportati
 
-- [APatch](https://github.com/bmax121/APatch) 
+- [APatch](https://github.com/bmax121/APatch)
 - [KernelSU](https://github.com/tiann/KernelSU)
 - [Magisk](https://github.com/topjohnwu/Magisk)  <sup>([no WebUI](https://github.com/topjohnwu/Magisk/issues/8609#event-15568590949)👀)</sup>
 
@@ -43,4 +43,3 @@ Completamente autonomo e auto-aggiornante.
 Segnala [qui](https://github.com/bindhosts/bindhosts/issues) se riscontri problemi.
 
 [Pull requests](https://github.com/bindhosts/bindhosts/pulls) sono sempre ben accetti.
-
