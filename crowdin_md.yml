@@ -1,0 +1,19 @@
+project_id_env: CROWDIN_PROJECT_ID
+api_token_env: CROWDIN_API_TOKEN
+preserve_hierarchy: 1
+files:
+  - source: /README.md
+    translation: /README_%locale%.md
+    type: md
+
+  - source: /Documentation/hiding.md
+    translation: /Documentation/hiding_%locale%.md
+    type: md
+
+  - source: /Documentation/modes.md
+    translation: /Documentation/modes_%locale%.md
+    type: md
+
+  - source: /Documentation/usage.md
+    translation: /Documentation/usage_%locale%.md
+    type: md
