@@ -9,17 +9,17 @@ width="100%" alt="Terminal Usage Screenshot">
 Magisk/KernelSU/APatch için bindhosts’un çeşitli seçeneklerine aşağıdaki yöntemlerle erişebilirsiniz:
 
 - Termux (veya diğer yaygın terminal uygulamaları) üzerinden:
-    ```shell
-    > su
-    > bindhosts
-    ```
+      ```shell
+      > su
+      > bindhosts
+      ```
 
 - SDK Platform Tools (root shell) üzerinden:
-    ```shell
-    > adb shell
-    > su
-    > bindhosts
-    ```
+      ```shell
+      > adb shell
+      > su
+      > bindhosts
+      ```
 
 ### Örnek
 
