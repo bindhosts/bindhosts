@@ -1,10 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="system_default">Systemstandard</string>
-
     <!-- Status -->
     <string name="status_title">Status</string>
-
     <!-- Global -->
     <string name="global_dev_opt">Utvecklaralternativ aktiverat</string>
     <string name="global_dev_opt_true">Utvecklaralternativet är redan aktiverat</string>
@@ -17,7 +15,6 @@
     <string name="global_show_all">Visa allt</string>
     <string name="global_more">Mer</string>
     <string name="global_action">Action</string>
-
     <!-- Query -->
     <string name="query_title">Värdförfrågan</string>
     <string name="query_search">Sök</string>
@@ -26,7 +23,6 @@
     <string name="query_host_domain">Domän</string>
     <string name="query_remove_prompt">Vitlistad</string>
     <string name="query_remove_error">Det gick inte att vitlista</string>
-
     <!-- Control Panel -->
     <string name="control_panel_title">Kontrollpanel</string>
     <string name="control_panel_language">Språk</string>
@@ -47,7 +43,6 @@
     <string name="control_panel_cron_true">Crontab-post tillagd</string>
     <string name="control_panel_cron_false">Crontab-post borttagen</string>
     <string name="control_panel_monitor_network_activity">Övervaka nätverksaktivitet</string>
-
     <!-- Custom -->
     <string name="custom_title">Anpassade regler</string>
     <string name="custom_guide1">Lägg till anpassade omdirigeringar här</string>
@@ -55,10 +50,8 @@
     <string name="custom_format">Format:</string>
     <string name="custom_warning">VARNING: Anpassade regler laddas vid både körning och återställning!</string>
     <string name="custom_prompt_fail">är redan i anpassade regler</string>
-
     <!-- Import -->
     <string name="import_custom_title">Importera anpassade regler</string>
-
     <!-- Source -->
     <string name="source_title">Källor</string>
     <string name="source_guide1">Svartlistade källor</string>
@@ -67,32 +60,27 @@
     <string name="source_example">Exempel:</string>
     <string name="source_source_page">Fler källor</string>
     <string name="source_prompt_fail">finns redan i källor</string>
-
     <!-- Blacklist -->
     <string name="blacklist_title">Svartlista</string>
     <string name="blacklist_guide1">Everything you add here will be blacklisted</string>
     <string name="blacklist_example">Exempel:</string>
     <string name="blacklist_prompt_fail">finns redan i svartlistan</string>
-
     <!-- Whitelist -->
     <string name="whitelist_title">Vitlista</string>
     <string name="whitelist_guide1">Allt du lägger till här kommer inte att svartlistas</string>
     <string name="whitelist_example">Exempel:</string>
     <string name="whitelist_prompt_fail">finns redan i vitlistan</string>
-
     <!-- Sources -->
     <string name="sources_whitelist_title">Vitlistkällor</string>
     <string name="sources_whitelist_guide1">Lägg till vitlistkällor här</string>
     <string name="sources_whitelist_format">Format:</string>
     <string name="sources_whitelist_example">Exempel:</string>
     <string name="sources_whitelist_prompt_fail">finns redan i vitlistkällan</string>
-
     <!-- Mode -->
     <string name="mode_button">Läge</string>
     <string name="mode_title">Driftläge</string>
     <string name="mode_detail">Lär dig mer</string>
     <string name="mode_reset">Återställ (automatiskt)</string>
-
     <!-- More -->
     <string name="more_documents">Dokument</string>
     <string name="more_sources">Källor</string>
@@ -102,18 +90,15 @@
     <string name="more_faq">FAQ</string>
     <string name="more_support">Support</string>
     <string name="more_support_issue">Rapportera ett problem</string>
-
     <!-- Confirmation -->
     <string name="confirmation_title">Bekräfta ta bort?</string>
     <string name="confirmation_message">Är du säker på att du vill ta bort</string>
     <string name="confirmation_cancel">Avbryt</string>
     <string name="confirmation_remove">Ta bort</string>
-
     <!-- Footer -->
     <string name="footer_home">Hem</string>
     <string name="footer_hosts">Hosts</string>
     <string name="footer_more">Mer</string>
-
     <!-- Backup and Restore -->
     <string name="backup_restore_backup_and_restore">Säkerhetskopiera och återställa</string>
     <string name="backup_restore_export">Exportera konfiguration</string>

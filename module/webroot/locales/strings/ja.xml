@@ -1,10 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="system_default">システムの言語</string>
-
     <!-- Status -->
     <string name="status_title">ステータス</string>
-
     <!-- Global -->
     <string name="global_dev_opt">開発者オプションが有効になりました</string>
     <string name="global_dev_opt_true">開発者オプションは既に有効化されています</string>
@@ -17,7 +15,6 @@
     <string name="global_show_all">全て表示</string>
     <string name="global_more">もっと見る</string>
     <string name="global_action">アクション</string>
-
     <!-- Query -->
     <string name="query_title">ホストクエリ</string>
     <string name="query_search">検索</string>
@@ -26,7 +23,6 @@
     <string name="query_host_domain">ドメイン</string>
     <string name="query_remove_prompt">ホワイトリストに追加されました</string>
     <string name="query_remove_error">ホワイトリストへの追加に失敗</string>
-
     <!-- Control Panel -->
     <string name="control_panel_title">コントロールパネル</string>
     <string name="control_panel_language">言語</string>
@@ -47,7 +43,6 @@
     <string name="control_panel_cron_true">Crontab のエントリーが追加されました</string>
     <string name="control_panel_cron_false">Crontab のエントリーが削除されました</string>
     <string name="control_panel_monitor_network_activity">ネットワークアクティビティモニター</string>
-
     <!-- Custom -->
     <string name="custom_title">カスタムルール</string>
     <string name="custom_guide1">ここにカスタムリダイレクトを追加します</string>
@@ -55,10 +50,8 @@
     <string name="custom_format">フォーマット:</string>
     <string name="custom_warning">警告: カスタムルールは実行時とリセット時の両方でロードされます！</string>
     <string name="custom_prompt_fail">は、すでにカスタムルールに存在します</string>
-
     <!-- Import -->
     <string name="import_custom_title">カスタムルールをインポート</string>
-
     <!-- Source -->
     <string name="source_title">ソース</string>
     <string name="source_guide1">ブラックリストのソース</string>
@@ -67,32 +60,27 @@
     <string name="source_example">例:</string>
     <string name="source_source_page">他のソース</string>
     <string name="source_prompt_fail">は、すでにソースに存在します</string>
-
     <!-- Blacklist -->
     <string name="blacklist_title">ブラックリスト</string>
     <string name="blacklist_guide1">ここに追加したものはすべてブラックリストに追加され、ブロックされます</string>
     <string name="blacklist_example">例:</string>
     <string name="blacklist_prompt_fail">は、すでにブラックリストに存在します</string>
-
     <!-- Whitelist -->
     <string name="whitelist_title">ホワイトリスト</string>
     <string name="whitelist_guide1">ここに追加したものはすべてホワイトリストに追加され、ブロックされません</string>
     <string name="whitelist_example">例:</string>
     <string name="whitelist_prompt_fail">は、すでにホワイトリストに存在します</string>
-
     <!-- Sources -->
     <string name="sources_whitelist_title">ホワイトリストのソース</string>
     <string name="sources_whitelist_guide1">ここにホワイトリストのソースを追加します</string>
     <string name="sources_whitelist_format">フォーマット:</string>
     <string name="sources_whitelist_example">例:</string>
     <string name="sources_whitelist_prompt_fail">は、すでにホワイトリストのソースに存在します</string>
-
     <!-- Mode -->
     <string name="mode_button">モード</string>
     <string name="mode_title">動作モード</string>
     <string name="mode_detail">もっと詳しく知る</string>
     <string name="mode_reset">リセット (自動)</string>
-
     <!-- More -->
     <string name="more_documents">ドキュメント</string>
     <string name="more_sources">ソース</string>
@@ -102,18 +90,15 @@
     <string name="more_faq">よくある質問</string>
     <string name="more_support">サポート</string>
     <string name="more_support_issue">問題を報告</string>
-
     <!-- Confirmation -->
     <string name="confirmation_title">削除の確認</string>
     <string name="confirmation_message">本当に削除しますか？</string>
     <string name="confirmation_cancel">キャンセル</string>
     <string name="confirmation_remove">削除</string>
-
     <!-- Footer -->
     <string name="footer_home">ホーム</string>
     <string name="footer_hosts">Hosts</string>
     <string name="footer_more">その他</string>
-
     <!-- Backup and Restore -->
     <string name="backup_restore_backup_and_restore">バックアップ &amp; リストア</string>
     <string name="backup_restore_export">設定をバックアップ</string>

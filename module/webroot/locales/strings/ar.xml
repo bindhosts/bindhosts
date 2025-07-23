@@ -1,10 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="system_default">النظام الافتراضي</string>
-
     <!-- Status -->
     <string name="status_title">الحالة</string>
-
     <!-- Global -->
     <string name="global_dev_opt">تم تفعيل خيار المطور</string>
     <string name="global_dev_opt_true">خيار المطور يعمل بالفعل</string>
@@ -17,7 +15,6 @@
     <string name="global_show_all">عرض الكل</string>
     <string name="global_more">أكثر</string>
     <string name="global_action">Action</string>
-
     <!-- Query -->
     <string name="query_title">استعلام المضيف</string>
     <string name="query_search">بحث</string>
@@ -26,7 +23,6 @@
     <string name="query_host_domain">النطاق</string>
     <string name="query_remove_prompt">القائمة البيضاء</string>
     <string name="query_remove_error">فشل في إضافة إلى القائمة البيضاء</string>
-
     <!-- Control Panel -->
     <string name="control_panel_title">لوحة التحكم</string>
     <string name="control_panel_language">اللغة</string>
@@ -47,7 +43,6 @@
     <string name="control_panel_cron_true">تمت اضافة مدخل Crontab</string>
     <string name="control_panel_cron_false">تمت إزالة مدخل Crontab</string>
     <string name="control_panel_monitor_network_activity">مراقبة نشاط الشبكة</string>
-
     <!-- Custom -->
     <string name="custom_title">قوانين مخصصة</string>
     <string name="custom_guide1">أضف تحويلات مخصصة هتا</string>
@@ -55,10 +50,8 @@
     <string name="custom_format">الهيئة:</string>
     <string name="custom_warning">تحذير: القوانين المخصصة يتم استخدامها في حالة اعادة التهيئة او التحديث</string>
     <string name="custom_prompt_fail">تمت اضافتها بالفعل</string>
-
     <!-- Import -->
     <string name="import_custom_title">استيراد قوانين مخصصة</string>
-
     <!-- Source -->
     <string name="source_title">المصادر</string>
     <string name="source_guide1">مصادر قائمة الحظر</string>
@@ -67,32 +60,27 @@
     <string name="source_example">مثال:</string>
     <string name="source_source_page">مصادر اضافية</string>
     <string name="source_prompt_fail">مضاف بالفعل</string>
-
     <!-- Blacklist -->
     <string name="blacklist_title">القائمة السوداء</string>
     <string name="blacklist_guide1">كل شئ يضاف هنا سوف يتم حظره</string>
     <string name="blacklist_example">مثال:</string>
     <string name="blacklist_prompt_fail">مضاف بالفعل</string>
-
     <!-- Whitelist -->
     <string name="whitelist_title">القائمة البيضاء</string>
     <string name="whitelist_guide1">كل شئ يضاف هنا لن يتم حظره</string>
-    <string name="whitelist_format">الهيئة:</string>
     <string name="whitelist_example">مثال:</string>
     <string name="whitelist_prompt_fail">مضاف بالفعل</string>
-
     <!-- Sources -->
     <string name="sources_whitelist_title">مصادر القائمة البيضاء</string>
     <string name="sources_whitelist_guide1">أضف مصادر القائمة البيضاء هنا</string>
+    <string name="sources_whitelist_format">الهيئة:</string>
     <string name="sources_whitelist_example">مثال:</string>
     <string name="sources_whitelist_prompt_fail">مضاف بالفعل</string>
-
     <!-- Mode -->
     <string name="mode_button">الوضع</string>
     <string name="mode_title">وضع التشغيل</string>
     <string name="mode_detail">اعرف المزيد</string>
     <string name="mode_reset">اعادة تهيئة (تلقائي)</string>
-
     <!-- More -->
     <string name="more_documents">المستندات</string>
     <string name="more_sources">المصادر</string>
@@ -102,18 +90,15 @@
     <string name="more_faq">الأسئلة الشائعة</string>
     <string name="more_support">الدعم</string>
     <string name="more_support_issue">الإبلاغ عن مشكلة</string>
-
     <!-- Confirmation -->
     <string name="confirmation_title">تأكيد الحذف</string>
     <string name="confirmation_message">هل أنت متأكد أنك تريد حذف</string>
     <string name="confirmation_cancel">إلغاء</string>
     <string name="confirmation_remove">حذف</string>
-
     <!-- Footer -->
     <string name="footer_home">الرئيسية</string>
     <string name="footer_hosts">Hosts</string>
     <string name="footer_more">المزيد</string>
-
     <!-- Backup and Restore -->
     <string name="backup_restore_backup_and_restore">النسخ الاحتياطي والاستعادة</string>
     <string name="backup_restore_export">تصدير التكوين</string>
