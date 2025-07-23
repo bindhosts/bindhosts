@@ -1,6 +1,7 @@
 import { toast } from './kernelsu.js';
 import { linkRedirect, applyRippleEffect, developerOption, learnMore, setupSwipeToClose } from './util.js';
 import { translations } from './language.js';
+import { marked } from "marked";
 import { WXEventHandler } from "webuix";
 
 window.wx = new WXEventHandler();
