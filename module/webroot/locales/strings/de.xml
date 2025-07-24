@@ -90,6 +90,9 @@
     <string name="more_faq">FAQ</string>
     <string name="more_support">Unterstützung</string>
     <string name="more_support_issue">Problem melden</string>
+    <string name="more_support_update_canary">Aktualisiere auf die aktuelle canary-Version</string>
+    <string name="more_support_update_success">Aktualisierung erfolgreich, ein Neustart ist zur Nutzung erforderlich</string>
+    <string name="more_support_update_fail">Update fehlgeschlagen. Bitte manuell von GitHub herunterladen und installieren</string>
     <!-- Confirmation -->
     <string name="confirmation_title">Löschen bestätigen?</string>
     <string name="confirmation_message">Sind Sie sicher, dass Sie entfernen möchten</string>

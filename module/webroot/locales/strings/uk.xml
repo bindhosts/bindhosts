@@ -41,7 +41,7 @@
     <string name="control_panel_action_prompt_false">Дія Magisk по перенаправленню в WebUI вимкнено</string>
     <string name="control_panel_update_hosts_daily">Оновлювати файл hosts щодня</string>
     <string name="control_panel_cron_true">Запис Crontab додана</string>
-    <string name="control_panel_cron_false">Запис Crontab видалена</string>
+    <string name="control_panel_cron_false">Запис Crontab видалено</string>
     <string name="control_panel_monitor_network_activity">Моніторинг мережевої активності</string>
     <!-- Custom -->
     <string name="custom_title">Користувацькі правила</string>
@@ -90,6 +90,8 @@
     <string name="more_faq">FAQ</string>
     <string name="more_support">Підтримка</string>
     <string name="more_support_issue">Повідомити про проблему</string>
+    <string name="more_support_update_success">Оновлення успішне, перезавантажте пристрій, щоб зміни набули чинності</string>
+    <string name="more_support_update_fail">Оновлення не вдалось, будь ласка, завантажте з GitHub і встановіть вручну</string>
     <!-- Confirmation -->
     <string name="confirmation_title">Підтвердити видалення?</string>
     <string name="confirmation_message">Ви впевнені, що хочете видалити</string>
