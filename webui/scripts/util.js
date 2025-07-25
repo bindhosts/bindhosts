@@ -193,13 +193,11 @@ export function initialTransition() {
     const actionBtn = document.querySelector('.action-container');
     const backBtn = document.querySelector('.back-button');
     const focusedFooterBtn = document.querySelector('.focused-footer-btn');
-    
+
     // Add loaded class after a short delay to trigger the animation
     focusedFooterBtn.classList.add('loaded');
     setTimeout(() => {
         content.classList.add('loaded');
-        title.classList.add('loaded');
-        if (modeBtn) modeBtn.classList.add('loaded');
         if (actionBtn) actionContainer.classList.add('show');
         if (forceUpdateButton) setTimeout(() => forceUpdateButton.classList.add('show'), 200);
     }, 10);
