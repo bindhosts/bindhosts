@@ -18,6 +18,10 @@
     border-bottom: 2px solid var(--border-color);
 }
 
+[dir="rtl"] .file-selector-header {
+    direction: ltr !important;
+}
+
 .current-path .separator {
     color: var(--text-muted);
     padding: 0 4px;
@@ -66,12 +70,17 @@
     position: relative;
     overflow: hidden;
     user-select: none;
+
+    svg {
+        flex-shrink: 0;
+        margin-right: 10px;
+        fill: var(--text-muted);
+    }
 }
 
 .file-item svg {
-    flex-shrink: 0;
-    margin-right: 10px;
-    fill: var(--text-muted);
+    margin-right: unset;
+    margin-left: 10px;
 }
 
 .file-item span {

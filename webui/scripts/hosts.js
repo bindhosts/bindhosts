@@ -74,7 +74,11 @@ function displayHostsList(lines, fileType) {
         // Click to show remove button
         listElement.appendChild(listItem);
         listItem.addEventListener('click', () => {
-            listItem.scrollTo({ left: listItem.scrollWidth, behavior: 'smooth' });
+            const isRTL = document.documentElement.getAttribute('dir') === 'rtl';
+            listItem.scrollTo({ 
+                left: isRTL ? -listItem.scrollWidth : listItem.scrollWidth,
+                behavior: 'smooth'
+            });
         });
         const deleteLine = listItem.querySelector("#line-delete");
         const deleteFile = listItem.querySelector("#file-delete");
@@ -582,7 +586,7 @@ function openFileEditor(lastFileName, openEditor = true) {
     // Show editor
     editorCover.style.opacity = '1';
     editorCover.style.pointerEvents = 'auto';
-    header.classList.add('back');
+    header.classList.add('back', 'save');
     backButton.style.transform = 'translateX(0)';
     saveButton.style.transform = 'translateX(0)';
     setTimeout(() => actionButton.style.transform = 'translateY(110px)', 50);
@@ -638,7 +642,7 @@ function openFileEditor(lastFileName, openEditor = true) {
         editorCover.style.opacity = '0';
         editorCover.style.pointerEvents = 'none';
         backButton.style.transform = 'translateX(-100%)';
-        header.classList.remove('back');
+        header.classList.remove('back', 'save');
         title.style.display = 'block';
         actionButton.style.transform = 'translateY(0)';
         setTimeout(() => {
@@ -712,7 +716,7 @@ wx.on(window, "back", () => {
 document.addEventListener('DOMContentLoaded', async () => {
     initialTransition();
     checkMMRL();
-    await loadTranslations();
+    loadTranslations();
     ["custom", "sources", "blacklist", "whitelist", "sources_whitelist"].forEach(loadFile);
     getCustomHostsList();
     attachAddButtonListeners();

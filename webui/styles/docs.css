@@ -27,6 +27,7 @@
 .file-name-editor {
     display: none;
     font-weight: normal;
+    pointer-events: auto;
 }
 
 .file-name-editor input {
@@ -76,6 +77,7 @@
 }
 
 .edit-input {
+    direction: ltr !important;
     position: relative;
     background-color: var(--bg-primary);
     height: 100%;

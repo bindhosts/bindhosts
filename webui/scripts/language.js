@@ -3,6 +3,17 @@ import { setupDocsMenu } from './docs.js';
 import { applyRippleEffect, moduleDirectory } from './util.js';
 
 const languageMenu = document.querySelector('.language-menu');
+const rtlLang = [
+  'ar',  // Arabic
+  'fa',  // Persian
+  'he',  // Hebrew
+  'ur',  // Urdu
+  'ps',  // Pashto
+  'sd',  // Sindhi
+  'ku',  // Kurdish
+  'yi',  // Yiddish
+  'dv',  // Dhivehi
+];
 
 export let translations = {};
 let baseTranslations = {};
@@ -88,6 +99,18 @@ export async function loadTranslations() {
         } else {
             translations = baseTranslations;
         }
+
+        // Support for rtl language
+        const isRTL = rtlLang.includes(lang.split('-')[0]);
+        const title = document.querySelector('.title-container');
+        const headerBtn = document.getElementById('mode-btn');
+        document.documentElement.setAttribute('dir', isRTL ? 'rtl' : 'ltr');
+        title.style.display = 'flex';
+        if (headerBtn) headerBtn.style.display = 'inline-block';
+        setTimeout(() => {
+            if (headerBtn) headerBtn.classList.add('loaded');
+            title.classList.add('loaded');
+        }, 10);
     } catch (error) {
         console.error('Error loading translations:', error);
         lang = 'en';
@@ -110,13 +133,7 @@ function applyTranslations() {
             if (el.hasAttribute("placeholder")) {
                 el.setAttribute("placeholder", translation);
             } else {
-                const existingHTML = el.innerHTML;
-                const splitHTML = existingHTML.split(/<br>/);
-                if (splitHTML.length > 1) {
-                    el.innerHTML = `${translation}<br>${splitHTML.slice(1).join('<br>')}`;
-                } else {
-                    el.textContent = translation;
-                }
+                el.textContent = translation;
             }
         }
     });
