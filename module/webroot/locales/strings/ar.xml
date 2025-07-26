@@ -6,15 +6,15 @@
     <!-- Global -->
     <string name="global_dev_opt">تم تفعيل خيار المطور</string>
     <string name="global_dev_opt_true">خيار المطور يعمل بالفعل</string>
-    <string name="global_reboot">قم إعادة تشغيل الجهاز</string>
+    <string name="global_reboot">أعد تشغيل الجهاز لتطبيق التغييرات، انقر لإعادة التشغيل</string>
     <string name="global_save">حفظ</string>
     <string name="global_saved">تم حفظ الملف في</string>
     <string name="global_save_fail">فشل حفظ الملف</string>
-    <string name="global_file_too_large">يدعم التعديل فقط على الملفات الكبيرة</string>
+    <string name="global_file_too_large">التعديل على الملفات الكبيرة غير مدعوم</string>
     <string name="global_file_name_empty">لا يمكن أن يكون اسم الملف فارغًا</string>
     <string name="global_show_all">عرض الكل</string>
-    <string name="global_more">أكثر</string>
-    <string name="global_action">Action</string>
+    <string name="global_more">المزيد</string>
+    <string name="global_action">إجراء</string>
     <!-- Query -->
     <string name="query_title">استعلام المضيف</string>
     <string name="query_search">بحث</string>
@@ -22,7 +22,7 @@
     <string name="query_host_type">النوع</string>
     <string name="query_host_domain">النطاق</string>
     <string name="query_remove_prompt">القائمة البيضاء</string>
-    <string name="query_remove_error">فشل في إضافة إلى القائمة البيضاء</string>
+    <string name="query_remove_error">فشل في الإضافة إلى القائمة البيضاء</string>
     <!-- Control Panel -->
     <string name="control_panel_title">لوحة التحكم</string>
     <string name="control_panel_language">اللغة</string>
@@ -90,6 +90,9 @@
     <string name="more_faq">الأسئلة الشائعة</string>
     <string name="more_support">الدعم</string>
     <string name="more_support_issue">الإبلاغ عن مشكلة</string>
+    <string name="more_support_update_canary">تحديث إلى أحدث إصدار تجريبي</string>
+    <string name="more_support_update_success">تم التحديث بنجاح، أعد التشغيل لتطبيق التغييرات</string>
+    <string name="more_support_update_fail">فشل التحديث، الرجاء التحميل والتثبيت يدوياً من GitHub</string>
     <!-- Confirmation -->
     <string name="confirmation_title">تأكيد الحذف</string>
     <string name="confirmation_message">هل أنت متأكد أنك تريد حذف</string>

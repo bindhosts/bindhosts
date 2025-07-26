@@ -90,6 +90,7 @@
     <string name="more_faq">よくある質問</string>
     <string name="more_support">サポート</string>
     <string name="more_support_issue">問題を報告</string>
+    <string name="more_support_update_canary">最新の Canary バージョンに更新</string>
     <!-- Confirmation -->
     <string name="confirmation_title">削除の確認</string>
     <string name="confirmation_message">本当に削除しますか？</string>
