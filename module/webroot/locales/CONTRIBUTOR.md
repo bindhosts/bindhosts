@@ -21,6 +21,7 @@
 ## German
 
 - [Vndkbopp77](https://github.com/Vndkbopp77)
+- [acmor](https://github.com/acmor)
 
 ---
 
@@ -33,6 +34,8 @@
 ## Indonesian
 
 - [Rem01Gaming](https://github.com/Rem01Gaming)
+- [Mesazane](https://github.com/mesazane)
+- [Neebe3289](https://github.com/Neebe3289)
 
 ---
 
@@ -45,6 +48,7 @@
 ## Japanese
 
 - [Mahiru](https://github.com/Nanaco3)
+- [reindex-ot](https://github.com/reindex-ot)
 
 ---
 
@@ -57,6 +61,8 @@
 ## Russian
 
 - [lynx](https://github.com/thisdialynx)
+- [0dinsky](https://github.com/0dinsky)
+- [Tihonov Matvey](https://crowdin.com/profile/rythmical)
 
 ---
 
@@ -81,3 +87,4 @@
 ## Ukrainian
 
 - [lynx](https://github.com/thisdialynx)
+- [Nick Kernitsky](https://crowdin.com/profile/mkern)
