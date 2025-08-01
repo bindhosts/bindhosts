@@ -90,6 +90,9 @@
     <string name="more_faq">FAQ</string>
     <string name="more_support">Поддержка</string>
     <string name="more_support_issue">Сообщить о проблеме</string>
+    <string name="more_support_update_canary">Обновить до последней тестовой версии</string>
+    <string name="more_support_update_success">Успешно обновлено, перезагрузитесь для применения изменений</string>
+    <string name="more_support_update_fail">Ошибка в обновлении, пожалуйста скачайте и установите вручную из GitHub</string>
     <!-- Confirmation -->
     <string name="confirmation_title">Подтвердить удаление?</string>
     <string name="confirmation_message">Вы уверены, что хотите удалить</string>

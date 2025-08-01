@@ -73,6 +73,7 @@
     <!-- Sources -->
     <string name="sources_whitelist_title">Fuentes de Lista Blanca</string>
     <string name="sources_whitelist_guide1">Añade fuentes de lista blanca aquí</string>
+    <string name="sources_whitelist_format">Formato:</string>
     <string name="sources_whitelist_example">Ejemplo:</string>
     <string name="sources_whitelist_prompt_fail">ya está en la fuente de lista blanca</string>
     <!-- Mode -->
@@ -89,6 +90,9 @@
     <string name="more_faq">FAQ</string>
     <string name="more_support">Soporte</string>
     <string name="more_support_issue">Informar un problema</string>
+    <string name="more_support_update_canary">Actualizar a la última versión canary</string>
+    <string name="more_support_update_success">Actualización exitosa, reinicia para que surta efecto</string>
+    <string name="more_support_update_fail">Error al actualizar, por favor descargue e instale manualmente desde GitHub</string>
     <!-- Confirmation -->
     <string name="confirmation_title">¿Confirmar eliminación?</string>
     <string name="confirmation_message">¿Está seguro de que desea eliminar</string>

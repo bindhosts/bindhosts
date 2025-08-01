@@ -6,7 +6,7 @@
     <!-- Global -->
     <string name="global_dev_opt">Opsi pengembang diaktifkan</string>
     <string name="global_dev_opt_true">Opsi pengembang telah di diaktifkan</string>
-    <string name="global_reboot">Reboot untuk menerapkan, tap untuk reboot</string>
+    <string name="global_reboot">Mulai ulang untuk menerapkan, klik untuk mulai ulang</string>
     <string name="global_save">Simpan</string>
     <string name="global_saved">File disimpan ke</string>
     <string name="global_save_fail">Gagal menyimpan file</string>
@@ -90,6 +90,9 @@
     <string name="more_faq">FAQ</string>
     <string name="more_support">Dukungan</string>
     <string name="more_support_issue">Laporkan masalah</string>
+    <string name="more_support_update_canary">Perbarui ke versi Canary terbaru</string>
+    <string name="more_support_update_success">Pembaruan berhasil, mulai ulang untuk menerapkan efeknya</string>
+    <string name="more_support_update_fail">Gagal memperbarui, tolong unduh dan pasang secara manual melalui GitHub</string>
     <!-- Confirmation -->
     <string name="confirmation_title">Konfirmasi Hapus?</string>
     <string name="confirmation_message">Apakah Anda yakin ingin menghapus</string>
