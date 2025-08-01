@@ -1,6 +1,5 @@
 [English](README.md) | [简体中文](README_zh-CN.md) | [Türkçe](README_tr.md) | [Italiano](README_it.md) | [Deutsch](README_de.md) | [Bahasa Indonesia](README_id.md) | [Español](README_es-ES.md)
 
-
 # bindhosts
 
 Hosts systemless untuk Apatch, KernelSU dan Magisk
