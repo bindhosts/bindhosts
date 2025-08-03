@@ -32,7 +32,7 @@ jobs:
     - name: build webroot
       run: |
         cd webui
-        npm install
+        npm ci
         npm run build
 
     - name: Set variables
