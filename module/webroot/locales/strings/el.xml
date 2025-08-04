@@ -14,7 +14,7 @@
     <string name="global_file_name_empty">Το όνομα του αρχείου δεν μπορεί να είναι κενό</string>
     <string name="global_show_all">Εμφάνιση Όλων</string>
     <string name="global_more">Περισσότερα</string>
-    <string name="global_action">Action</string>
+    <string name="global_action">Ενέργεια</string>
     <!-- Query -->
     <string name="query_title">Αναζήτηση Host</string>
     <string name="query_search">Αναζήτηση</string>
