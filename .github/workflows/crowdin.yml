@@ -34,7 +34,7 @@ jobs:
 
         create_pull_request: true
         localization_branch_name: crowdin_docs
-        pull_request_labels: 'enhancement, documentation'
+        pull_request_labels: 'enhancement, documentation, translation'
         pull_request_title: 'documentation: sync translation from Crowdin'
 
         config: 'crowdin_md.yml'
@@ -57,7 +57,7 @@ jobs:
 
         create_pull_request: true
         localization_branch_name: crowdin_xml
-        pull_request_labels: 'enhancement, documentation'
+        pull_request_labels: 'enhancement, webui, translation'
         pull_request_title: 'webui/locales: sync translation from Crowdin'
 
         config: 'crowdin_xml.yml'
