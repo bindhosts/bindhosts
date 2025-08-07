@@ -1,0 +1,115 @@
+<div class="body-content constant-height">
+    <!-- Status box -->
+    <div class="box translucent ripple-element" id="status-box">
+        <h2 id="status-header" data-i18n="status_title"></h2>
+        <p id="status-text">Initializing</p>
+    </div>
+
+    <!-- Query box -->
+    <div class="box translucent" id="query-box">
+        <h2 id="query-header" data-i18n="query_title">Query</h2>
+        <div class="search-box">
+            <input class="query-input translucent" type="text" id="query-input" placeholder="Search" data-i18n="query_search" autocapitalize="off">
+            <div class="search-btn ripple-element">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/></svg>
+            </div>
+            <div class="clear-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="#ccc"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+            </div>
+        </div>
+        <div class="host-list">
+            <div class="host-list-header">
+                <div class="host-list-header-ip" data-i18n="query_host_ip"></div>
+                <div class="host-list-header-domain" data-i18n="query_host_domain"></div>
+            </div>
+            <div class="host-list-item">
+                <!-- Host list will display here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Docs overlay -->
+<div id="modes-docs" class="docs overlay">
+    <div class="docs-content translucent-menu blur-box">
+        <button class="close-btn">&#x2715;</button>
+        <div class="documents">
+            <div id="modes-content">Loading...</div>
+            <div class="credit-marked">Markdown Parser by markedjs/marked</div>
+        </div>
+    </div>
+</div>
+
+<!-- Mode menu overlay -->
+<div id="mode-menu" class="overlay">
+    <div class="overlay-content translucent-menu blur-box">
+        <button class="close-btn">&#x2715;</button>
+        <h2 data-i18n="mode_title"></h2>
+        <form id="mode-options">
+            <label class="custom-radio">
+                <input type="radio" name="mode" value="0">
+                <span class="radio-circle"></span>
+                <span class="radio-label"><span data-i18n="mode_button"></span> 0<br>
+                <small>Default</small></span>
+            </label>
+            <label class="custom-radio">
+                <input type="radio" name="mode" value="1">
+                <span class="radio-circle"></span>
+                <span class="radio-label"><span data-i18n="mode_button"></span> 1<br>
+                <small>ksu_susfs_bind</small></span>
+            </label>
+            <label class="custom-radio">
+                <input type="radio" name="mode" value="2">
+                <span class="radio-circle"></span>
+                <span class="radio-label"><span data-i18n="mode_button"></span> 2<br>
+                <small>plain bindhosts</small></span>
+            </label>
+            <label class="custom-radio">
+                <input type="radio" name="mode" value="3">
+                <span class="radio-circle"></span>
+                <span class="radio-label"><span data-i18n="mode_button"></span> 3<br>
+                <small>apatch_hfr, hosts_file_redirect</small></span>
+            </label>
+            <label class="custom-radio">
+                <input type="radio" name="mode" value="4">
+                <span class="radio-circle"></span>
+                <span class="radio-label"><span data-i18n="mode_button"></span> 4<br>
+                <small>zn_hostsredirect</small></span>
+            </label>
+            <label class="custom-radio">
+                <input type="radio" name="mode" value="5">
+                <span class="radio-circle"></span>
+                <span class="radio-label"><span data-i18n="mode_button"></span> 5<br>
+                <small>ksu_susfs_open_redirect</small></span>
+            </label>
+            <label class="custom-radio">
+                <input type="radio" name="mode" value="6">
+                <span class="radio-circle"></span>
+                <span class="radio-label"><span data-i18n="mode_button"></span> 6<br>
+                <small>ksu_source_mod</small></span>
+            </label>
+            <label class="custom-radio">
+                <input type="radio" name="mode" value="7">
+                <span class="radio-circle"></span>
+                <span class="radio-label"><span data-i18n="mode_button"></span> 7<br>
+                <small>generic_overlay</small></span>
+            </label>
+            <label class="custom-radio">
+                <input type="radio" name="mode" value="8">
+                <span class="radio-circle"></span>
+                <span class="radio-label"><span data-i18n="mode_button"></span> 8<br>
+                <small>ksu_susfs_overlay</small></span>
+            </label>
+            <label class="custom-radio">
+                <input type="radio" name="mode" value="9">
+                <span class="radio-circle"></span>
+                <span class="radio-label"><span data-i18n="mode_button"></span> 9<br>
+                <small>ksu_susfs_bind_kstat</small></span>
+            </label>
+        </form>
+        <div class="reference-reset">
+            <button class="docs-btn ripple-element" id="learn-btn" data-type="modes" data-i18n="mode_detail"></button>
+            <button class="ripple-element" id="reset-mode" data-i18n="mode_reset"></button>
+        </div>
+    </div>
+</div>

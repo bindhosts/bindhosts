@@ -1,13 +1,10 @@
-import { exec } from './kernelsu.js';
-import { showPrompt, applyRippleEffect, checkMMRL, basePath, developerOption, setDeveloperOption, setLearnMore, initialTransition, moduleDirectory } from './util.js';
-import { loadTranslations } from './language.js';
-import { isDocOpen } from './docs.js';
-import { WXEventHandler } from "webuix";
+import { exec } from '../../utils/kernelsu.js';
+import { showPrompt, basePath, developerOption, setDeveloperOption, setLearnMore, moduleDirectory, createEventManager } from '../../utils/util.js';
+import { setupDocsMenu } from '../../utils/docs.js';
 
-window.wx = new WXEventHandler();
+let em = createEventManager();
 
-let clickCount = 0;
-let clickTimeout;
+let clickCount = 0, clickTimeout = 0;
 
 /**
  * Update the status elements with data from specified files.
@@ -46,26 +43,30 @@ function updateStatus() {
 /**
  * Developer option entrance, status box click event
  * Click 5 times in 2 seconds to enable developer option
+ * @returns {void}
  */
-document.getElementById("status-box").addEventListener("click", async () => {  
-    clickCount++;
-    clearTimeout(clickTimeout);
-    clickTimeout = setTimeout(() => {
-        clickCount = 0;
-    }, 2000);
-    if (clickCount === 5) {
-        clickCount = 0;
-        await checkDevOption();
-        if (!developerOption) {
-            setDeveloperOption(true);
-            showPrompt("global_dev_opt", true);
-        } else {
-            showPrompt("global_dev_opt_true", true);
+function setupDevOtp() {
+    const statusBox = document.getElementById("status-box");
+    em.on(statusBox, 'click', async () => {
+        clickCount++;
+        clearTimeout(clickTimeout);
+        clickTimeout = setTimeout(() => {
+            clickCount = 0;
+        }, 2000);
+        if (clickCount === 5) {
+            clickCount = 0;
+            await checkDevOption();
+            if (!developerOption) {
+                setDeveloperOption(true);
+                showPrompt("global_dev_opt", true);
+            } else {
+                showPrompt("global_dev_opt_true", true);
+            }
         }
-    }
-});
+    });
+}
 
-let setupModeMenu = false, menuOpen = false;
+let setupModeMenu = false
 
 /**
  * Check if developer option is enabled
@@ -73,97 +74,94 @@ let setupModeMenu = false, menuOpen = false;
  * @returns {Promise<void>}
  */
 async function checkDevOption() {
+    setupDevOtp();
     const response = await fetch('link/PERSISTENT_DIR/mode_override.sh');
-    if (response.ok) setDeveloperOption(true);
-    else setDeveloperOption(false);
+    setDeveloperOption(response.ok ? true : false);
 }
 
 // Open mode menu if developer option is enabled
-document.getElementById("mode-btn").addEventListener("click", async () => {
+function setupModeBtn() {
+    const modeBtn = document.getElementById("mode-btn");
     const modeMenu = document.getElementById("mode-menu");
     const overlayContent = document.querySelector(".overlay-content");
-    if (developerOption) {
-        menuOpen = true;
-        modeMenu.style.display = "flex";
-        setTimeout(() => {
-            modeMenu.style.opacity = "1";
-            setLearnMore(true);
-        }, 10);
-    }
 
-    const closeOverlay = () => {
-        modeMenu.style.opacity = "0";
-        setTimeout(() => {
-            modeMenu.style.display = "none";
-            menuOpen = false;
-        }, 200);
-        setLearnMore(false);
-    }
-
-    /**
-     * Save mode option
-     * @param {string} mode - Mode to save
-     * @returns {Promise<void>}
-     */
-    async function saveModeSelection(mode) {
-        let command;
-        if (mode === "reset") {
-            command = `rm -f ${basePath}/mode_override.sh`;
-        } else {
-            command = `echo "mode=${mode}" > ${basePath}/mode_override.sh`;
+    em.on(modeBtn, 'click', async () => {
+        if (developerOption) {
+            modeMenu.style.display = "flex";
+            setTimeout(() => {
+                modeMenu.style.opacity = "1";
+                setLearnMore(true);
+            }, 10);
         }
-        const result = await exec(command);
-        if (result.errno === 0) {
+
+        const closeOverlay = () => {
+            modeMenu.style.opacity = "0";
+            setTimeout(() => {
+                modeMenu.style.display = "none";
+            }, 200);
+            setLearnMore(false);
+        }
+
+        /**
+         * Save mode option
+         * @param {string} mode - Mode to save
+         * @returns {Promise<void>}
+         */
+        async function saveModeSelection(mode) {
+            let command;
             if (mode === "reset") {
-                closeOverlay();
-                setLearnMore(false);
+                command = `rm -f ${basePath}/mode_override.sh`;
+            } else {
+                command = `echo "mode=${mode}" > ${basePath}/mode_override.sh`;
             }
-            showPrompt("global_reboot", true, 4000);
-            await updateModeSelection();
-        } else {
-            console.error("Error saving mode selection:", result.stderr);
-        }
-    }
-
-    /**
-     * Update radio button state based on current mode
-     * @returns {Promise<void>}
-     */
-    async function updateModeSelection() {
-        let currentMode;
-        const result = await exec(`cat ${basePath}/mode_override.sh`);
-        if (result.errno === 0) {
-            currentMode = result.trim().match(/mode=(\d+)/)?.[1] || null;
-        } else {
-            currentMode = null;
-        }
-        document.querySelectorAll("#mode-options input").forEach((input) => {
-            input.checked = input.value === currentMode;
-        });
-    }
-
-    if (!setupModeMenu) {
-        setupModeMenu = true;
-        document.querySelector(".close-btn").onclick = closeOverlay;
-        document.getElementById("learn-btn").onclick = closeOverlay;
-        modeMenu.addEventListener("click", (event) => {
-            if(!overlayContent.contains(event.target)) closeOverlay();
-        });
-        // Attach event listeners for mode options
-        document.getElementById("mode-options").addEventListener("change", (event) => {
-            const selectedMode = event.target.value;
-            saveModeSelection(selectedMode);
-        });
-        // Attach event listener for reset button
-        document.getElementById("reset-mode").onclick = () => saveModeSelection("reset");
-        wx.on(window, "back", (event) => {
-            if (menuOpen) {
-                event.stopImmediatePropagation();
-                closeOverlay();
+            const result = await exec(command);
+            if (result.errno === 0) {
+                if (mode === "reset") {
+                    closeOverlay();
+                    setLearnMore(false);
+                }
+                showPrompt("global_reboot", true, 4000);
+                await updateModeSelection();
+            } else {
+                console.error("Error saving mode selection:", result.stderr);
             }
-        });
-    }
-});
+        }
+
+        /**
+         * Update radio button state based on current mode
+         * @returns {Promise<void>}
+         */
+        async function updateModeSelection() {
+            let currentMode;
+            const result = await exec(`cat ${basePath}/mode_override.sh`);
+            if (result.errno === 0) {
+                currentMode = result.trim().match(/mode=(\d+)/)?.[1] || null;
+            } else {
+                currentMode = null;
+            }
+            document.querySelectorAll("#mode-options input").forEach((input) => {
+                input.checked = input.value === currentMode;
+            });
+        }
+
+        if (!setupModeMenu) {
+            setupModeMenu = true;
+            modeMenu.querySelector(".close-btn").onclick = closeOverlay;
+            em.on(document.getElementById("learn-btn"), 'click', () => closeOverlay());
+            em.on(modeMenu, 'click', (event) => {
+                if(!overlayContent.contains(event.target)) closeOverlay();
+            });
+            // Attach event listeners for mode options
+            const modeOption = document.getElementById("mode-options");
+            em.on(modeOption, 'change', (event) => {
+                const selectedMode = event.target.value;
+                saveModeSelection(selectedMode);
+            });
+            // Attach event listener for reset button
+            document.getElementById("reset-mode").onclick = () => saveModeSelection("reset");
+        }
+    });
+}
 
 /**
  * Query box
@@ -172,13 +170,13 @@ document.getElementById("mode-btn").addEventListener("click", async () => {
  */
 let hostLines = [], originalHostLines = [], currentIndex = 0, initialHeight = 0;
 const batchSize = 30;
-const hostList = document.querySelector('.host-list-item');
 
 /**
  * Get hosts from hosts.txt and display them in the UI
  * @returns {Promise<void>}
  */
 async function getHosts() {
+    const hostList = document.querySelector('.host-list-item');
     hostList.innerHTML = '';
 
     try {
@@ -202,7 +200,7 @@ async function getHosts() {
         });
 
         // Add scroll event listener to reset horizontal scroll
-        hostList.addEventListener('scroll', () => {
+        em.on(hostList, 'scroll', () => {
             const rows = document.querySelectorAll('.host-list-row');
             rows.forEach(row => {
                 row.scrollTo({ left: 0, behavior: 'smooth' });
@@ -238,6 +236,7 @@ function setupLink() {
  * @returns {void}
  */
 function loadMoreHosts(callback) {
+    const hostList = document.querySelector('.host-list-item');
     for (let i = 0; i < batchSize && currentIndex < hostLines.length; i++, currentIndex++) {
         const [hostIp, ...domains] = hostLines[currentIndex];
         const dataType = hostIp === "0.0.0.0" ? "block" : "custom";
@@ -258,10 +257,12 @@ function loadMoreHosts(callback) {
 
         // Add event listener to remove button if it exists
         if (dataType !== 'custom') {
-            hostItem.querySelector('.remove-btn').addEventListener('click', (event) => handleRemove(event, domains));
+            const removeBtn = hostItem.querySelector('.remove-btn');
+            em.on(removeBtn, 'click', (e) => handleRemove(e, domains));
         }
-        hostItem.addEventListener('click', () => {
+        em.on(hostItem, 'click', () => {
             hostItem.scrollTo({ left: hostItem.scrollWidth, behavior: 'smooth' });
+
         });
         hostList.appendChild(hostItem);
     }
@@ -276,6 +277,7 @@ function loadMoreHosts(callback) {
  * @returns {Promise<void>}
  */
 async function handleRemove(event, domains) {
+    const hostList = document.querySelector('.host-list-item');
     const result = await exec(`sh ${moduleDirectory}/bindhosts.sh --whitelist ${domains.join(' ')}`);
     if (result.errno === 0) {
         // Find and remove the element directly
@@ -296,12 +298,13 @@ async function handleRemove(event, domains) {
  */
 function setupQueryInput() {
     getHosts();
+    const hostList = document.querySelector('.host-list-item');
     const inputBox = document.getElementById('query-input');
     const searchBtn = document.querySelector('.search-btn');
     const clearBtn = document.querySelector('.clear-btn');
 
     // Search functionality
-    searchBtn.addEventListener('click', () => {
+    em.on(searchBtn, 'click', () => {
         const query = inputBox.value.trim().toLowerCase();
         if (!query) getHosts();
 
@@ -320,114 +323,41 @@ function setupQueryInput() {
     });
 
     // Search on enter
-    inputBox.addEventListener('keypress', (event) => {
+    em.on(inputBox, 'keypress', (event) => {
         if (event.key === 'Enter') searchBtn.click();
-    });
+    })
 
     // Update clear button visibility on any input change
-    inputBox.addEventListener('input', () => {
-        if (inputBox.value.length > 0) clearBtn.style.display = 'flex';
-        else clearBtn.style.display = 'none';
-    });
+    em.on(inputBox, 'input', () => {
+        clearBtn.style.display = inputBox.value.length > 0 ? 'flex' : 'none';
+    })
 
     // Clear search functionality
-    clearBtn.addEventListener('click', async () => {
+    em.on(clearBtn, 'click', async () => {
         inputBox.value = '';
         clearBtn.style.display = 'none';
         await getHosts();
-    });
+    })
 }
 
-/**
- * Setup the Rick Roll overlay to appear on April 1st with a 70% chance.
- * Consecutive trigger protection for user experience.
- * Countdown end or clicking on close button or image will redirect to rick roll
- * Double click on black space to exit early
- * @returns {void}
- */
-function setupRickRoll() {
-    const today = new Date();
-    if (today.getMonth() !== 3 || today.getDate() !== 1) return;
-
-    const rickRollOverlay = document.getElementById('rick-roll');
-    const rickRollImage = document.querySelector('.rr-image-box');
-    const countDown = document.getElementById('rr-coundown');
-    const closeRrButton = document.querySelector('.close-rr-btn');
-    let redirect = true;
-    
-    const lastRickRoll = localStorage.getItem('lastRickRoll');
-    const shouldRickRoll = Math.random() < 0.7;
-
-    // Make sure this won't be triggered in a row for user experience
-    if (shouldRickRoll && lastRickRoll !== '1') {
-        openOverlay();
-        let countdownValue = 5;
-        countDown.textContent = countdownValue;
-        const countdownInterval = setInterval(() => {
-            countdownValue--;
-            countDown.textContent = countdownValue;
-            if (countdownValue === 0 && redirect) {
-                clearInterval(countdownInterval);
-                redirectRr();
-            }
-        }, 1000);
-
-        // Set flag in localStorage to prevent it from happening next time
-        localStorage.setItem('lastRickRoll', '1');
-    } else {
-        localStorage.setItem('lastRickRoll', '0');
-    }
-
-    rickRollImage.addEventListener('click', () => redirectRr());
-    closeRrButton.addEventListener('click', () => redirectRr());
-
-    rickRollOverlay.addEventListener('dblclick', (e) => {
-        if (e.target === rickRollOverlay) {
-            closeOverlay();
-            redirect = false;
-        }
-    });
-
-    function redirectRr() {
-        closeOverlay();
-        // bilibili (China) or YouTube
-        exec(`
-            if pm path tv.danmaku.bili > /dev/null 2>&1; then
-                am start -a android.intent.action.VIEW -d "https://b23.tv/Qhk2xvo"
-            else
-                am start -a android.intent.action.VIEW -d "https://youtu.be/dQw4w9WgXcQ"
-            fi
-        `);
-    }
-
-    function openOverlay() {
-        rickRollOverlay.style.display = 'flex';
-        setTimeout(() => rickRollOverlay.style.opacity = '1', 10);
-    }
-
-    function closeOverlay() {
-        rickRollOverlay.style.opacity = '0';
-        setTimeout(() => rickRollOverlay.style.display = 'none', 200);
-    }
-}
-
-wx.on(window, "back", () => {
-    if (!menuOpen && !isDocOpen) {
-        webui.exit();
-    }
-});
-
-/**
- * Initial load event listener
- * @returns {void}
- */
-document.addEventListener('DOMContentLoaded', async () => {
-    initialTransition();
-    checkMMRL();
-    loadTranslations();
-    await updateStatus();
+// init content
+export function init() {
+    document.getElementById('title').textContent = 'bindhosts ';
+    document.getElementById('mode-btn').classList.add('show');
+    updateStatus();
     checkDevOption();
+    setupModeBtn();
     setupQueryInput();
-    applyRippleEffect();
-    setupRickRoll();
-});
+    setupDocsMenu();
+}
+
+// exit cleanup
+export function destroy() {
+    clickCount = 0, clickTimeout = 0, setupModeMenu = false;
+    hostLines = [], originalHostLines = [], currentIndex = 0, initialHeight = 0;
+
+    document.getElementById('version-text').textContent = '';
+    document.getElementById('mode-btn').classList.remove('show');
+
+    em?.removeAll();
+}

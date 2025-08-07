@@ -1,10 +1,6 @@
 import { exec } from './kernelsu.js';
 import { basePath, applyRippleEffect, showPrompt } from './util.js';
-import { WXEventHandler } from "webuix";
 
-window.wx = new WXEventHandler();
-
-export let isFileSelectorOpen = false;
 let fileType;
 
 // File selector
@@ -180,12 +176,6 @@ document.querySelector('.close-selector').addEventListener('click', () => closeF
 fileSelector.addEventListener('click', (event) => {
     if (event.target === fileSelector) closeFileSelector();
 });
-wx.on(window, "back", (event) => {
-    if (isFileSelectorOpen) {
-        event.stopImmediatePropagation();
-        closeFileSelector();
-    }
-});
 
 /**
  * Function to close file selector
@@ -196,7 +186,6 @@ function closeFileSelector() {
     document.body.classList.remove("no-scroll");
     setTimeout(() => {
         fileSelector.style.display = 'none';
-        isFileSelectorOpen = false;
     }, 300);
 }
 
@@ -206,7 +195,6 @@ function closeFileSelector() {
  * @returns {Promise<string>} Resolves with the content of the selected JSON file or true in txt file
  */
 export async function openFileSelector(type) {
-    isFileSelectorOpen = true;
     fileType = type;
     fileSelector.style.display = 'flex';
     document.body.classList.add("no-scroll");

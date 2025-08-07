@@ -1,12 +1,9 @@
 import { toast } from './kernelsu.js';
-import { linkRedirect, applyRippleEffect, developerOption, learnMore, setupSwipeToClose } from './util.js';
-import { translations } from './language.js';
+import { linkRedirect, applyRippleEffect, developerOption, learnMore, setupSwipeToClose, createEventManager } from './util.js';
+import { translations, lang } from './language.js';
 import { marked } from "marked";
-import { WXEventHandler } from "webuix";
 
-window.wx = new WXEventHandler();
-
-export let isDocOpen = false;
+let em = createEventManager();
 
 /**
  * Fetch documents from a link and display them in the specified element
@@ -71,7 +68,7 @@ export function addCopyToClipboardListeners() {
     const sourceLinks = document.querySelectorAll("#copy-link");
     sourceLinks.forEach((element) => {
         if (element.dataset.copyListener !== "true") {
-            element.addEventListener("click", function () {
+            em.on(element, 'click', () => {
                 // Try the modern Clipboard API first
                 if (navigator.clipboard && navigator.clipboard.writeText) {
                     navigator.clipboard.writeText(element.innerText)
@@ -118,13 +115,13 @@ let activeDocs = null;
 
 /**
  * Setup documents menu event listeners to open and close document overlays
- * @param {string} docsLang - Language code for the documents
  * @returns {Promise<void>}
  */
-export async function setupDocsMenu(docsLang) {
-    let langCode;
-    if (docsLang === 'en') langCode = '';
-    else langCode = '_' + docsLang;
+export async function setupDocsMenu() {
+    // Cleanup
+    em?.removeAll();
+
+    let langCode = lang === 'en' ? '' : '_' + lang;
     const docsData = {
         source: {
             link: `https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/sources${langCode}.md`,
@@ -174,39 +171,43 @@ export async function setupDocsMenu(docsLang) {
     const docsButtons = document.querySelectorAll(".docs-btn");
     const docsOverlay = document.querySelectorAll(".docs");
 
-    docsButtons.forEach(button => {
-        button.addEventListener("click", () => {
-            const type = button.dataset.type;
-            const overlay = document.getElementById(`${type}-docs`);
-            if (type === 'modes' && developerOption && !learnMore) return;
-            openOverlay(overlay);
-            const { link, fallbackLink, linkMirror, fallbackLinkMirror, element } = docsData[type] || {};
-            getDocuments(element, link, fallbackLink, linkMirror, fallbackLinkMirror);
+    if (docsButtons) {
+        docsButtons.forEach(button => {
+            em.on(button, 'click', () => {
+                const type = button.dataset.type;
+                const overlay = document.getElementById(`${type}-docs`);
+                if (type === 'modes' && developerOption && !learnMore) return;
+                openOverlay(overlay);
+                const { link, fallbackLink, linkMirror, fallbackLinkMirror, element } = docsData[type] || {};
+                getDocuments(element, link, fallbackLink, linkMirror, fallbackLinkMirror);
+            });
         });
-    });
+    }
 
-    docsOverlay.forEach(overlay => {
-        const closeButton = overlay.querySelector(".close-docs-btn");
-        if (closeButton) {
-            closeButton.onclick = () => closeOverlay(overlay);
-        }
-        overlay.addEventListener("click", (e) => {
-            if (e.target === overlay) {
-                closeOverlay(overlay);
+    if (docsOverlay) {
+        docsOverlay.forEach(overlay => {
+            const closeButton = overlay.querySelector(".close-btn");
+            if (closeButton) {
+                closeButton.onclick = () => closeOverlay(overlay);
             }
+            em.on(overlay, 'click', (e) => {
+                if (e.target === overlay) {
+                    closeOverlay(overlay);
+                }
+            });
         });
-    });
+    }
 
     // For about content
     const aboutContent = document.querySelector('.document-content');
     const documentCover = document.querySelector('.document-cover');
-    const backButton = document.getElementById('docs-back-btn');
+    const backButton = document.querySelector('.back-button');
     if (aboutContent) {
         const header = document.querySelector('.title-container');
         const title = document.getElementById('title');
-        const bodyContent = document.querySelector('.content');
+        const bodyContent = document.querySelector('.body-content');
 
-        setupSwipeToClose(aboutContent, documentCover, backButton);
+        setupSwipeToClose(aboutContent, documentCover);
 
         // Attach click event to all about docs buttons
         document.querySelectorAll('.about-docs').forEach(element => {
@@ -216,26 +217,25 @@ export async function setupDocsMenu(docsLang) {
              * It could be an issue caused by momentum scrolling but currently I dont have a better workaround
             */
             let touchMoved = false;
-            element.addEventListener('mousedown', () => touchMoved = false);
-            element.addEventListener('touchstart', () => touchMoved = false);
-            element.addEventListener('mousemove', () => touchMoved = true);
-            element.addEventListener('touchmove', () => touchMoved = true);
-            element.addEventListener('mouseup', () => handleClick());
-            element.addEventListener('touchend', () => handleClick());
+            
+            em.on(element, 'mousedown', () => touchMoved = false);
+            em.on(element, 'touchstart', () => touchMoved = false);
+            em.on(element, 'mousemove', () => touchMoved = true);
+            em.on(element, 'touchmove', () => touchMoved = true);
+            em.on(element, 'mouseup', () => handleClick());
+            em.on(element, 'touchend', () => handleClick());
 
             function handleClick() {
-                isDocOpen = true;
                 if (!touchMoved) {
                     document.getElementById('about-document-content').innerHTML = '';
                     const { link, fallbackLink, linkMirror, fallbackLinkMirror } = docsData[element.dataset.type] || {};
                     getDocuments('about-document-content', link, fallbackLink, linkMirror, fallbackLinkMirror);
                     setTimeout(() => {
-                        documentCover.open = true;
                         aboutContent.style.transform = 'translateX(0)';
                         bodyContent.style.transform = 'translateX(-20vw)';
                         documentCover.style.opacity = '1';
                         header.classList.add('back');
-                        backButton.style.transform = 'translateX(0)';
+                        backButton.classList.add('show');
                         const titleText = element.querySelector('.document-title').textContent;
                         title.textContent = titleText;
                     }, 100);
@@ -243,27 +243,16 @@ export async function setupDocsMenu(docsLang) {
             }
 
             // Alternative way to close about docs with back button
-            backButton.addEventListener('click', () => {
+            em.on(backButton, 'click', () => {
                 aboutContent.style.transform = 'translateX(100%)';
                 bodyContent.style.transform = 'translateX(0)';
                 documentCover.style.opacity = '0';
-                backButton.style.transform = 'translateX(-100%)';
+                backButton.classList.remove('show');
                 header.classList.remove('back');
                 title.textContent = translations.footer_more;
-                setTimeout(() => {
-                    isDocOpen = false;
-                }, 100);
             });
         });
     } // End of about docs
-
-    wx.on(window, "back", (event) => {
-        if (isDocOpen) {
-            event.stopImmediatePropagation();
-            if (backButton) backButton.click();
-            if (activeDocs) closeOverlay(activeDocs);
-        }
-    });
 }
 
 /**
@@ -273,7 +262,6 @@ export async function setupDocsMenu(docsLang) {
  */
 function openOverlay(overlay) {
     if (activeDocs) closeOverlay(activeDocs);
-    isDocOpen = true;
     activeDocs = overlay;
     document.body.style.overflow = "hidden";
     overlay.style.display = "flex";
@@ -293,6 +281,5 @@ function closeOverlay(overlay) {
     overlay.style.opacity = "0";
     setTimeout(() => {
         overlay.style.display = "none";
-        isDocOpen = false;
     }, 200);
 }

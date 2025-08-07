@@ -7,6 +7,10 @@
     z-index: 4;
 }
 
+.document-content.show {
+    transform: translateX(0);
+}
+
 .document-cover {
     background-color: rgba(0, 0, 0, 0.5);
     opacity: 0;
@@ -157,26 +161,6 @@
 .action-terminal-output {
     margin: 0;
     font-family: monospace;
-}
-
-.back-button {
-    height: 45px;
-    width: 45px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 10px;
-    user-select: none;
-    position: absolute;
-    left: 0;
-    background-color: var(--bg-primary);
-    transform: translateX(-100%);
-    transition: transform 0.2s ease;
-
-    svg {
-        fill: var(--text-constant)
-    }
 }
 
 @media (min-width: 768px) {

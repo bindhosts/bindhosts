@@ -1,13 +1,10 @@
-import { exec, spawn } from './kernelsu.js';
-import { showPrompt, applyRippleEffect, checkMMRL, basePath, initialTransition, setupSwipeToClose, moduleDirectory, filePaths } from './util.js';
-import { loadTranslations, translations } from './language.js';
-import { openFileSelector, isFileSelectorOpen } from './file_selector.js';
-import { isDocOpen } from './docs.js';
-import { WXEventHandler } from "webuix";
+import { exec, spawn } from '../../utils/kernelsu.js';
+import { showPrompt, applyRippleEffect, basePath, setupSwipeToClose, moduleDirectory, filePaths, createEventManager } from '../../utils/util.js';
+import { translations } from '../../utils/language.js';
+import { openFileSelector } from '../../utils/file_selector.js';
+import { setupDocsMenu } from '../../utils/docs.js';
 
-window.wx = new WXEventHandler();
-
-const forceUpdateButton = document.getElementById('force-update-btn');
+let em = createEventManager();
 
 /**
  * Read a file and display its content in the UI
@@ -73,7 +70,7 @@ function displayHostsList(lines, fileType) {
         `;
         // Click to show remove button
         listElement.appendChild(listItem);
-        listItem.addEventListener('click', () => {
+        em.on(listItem, 'click', () => {
             const isRTL = document.documentElement.getAttribute('dir') === 'rtl';
             listItem.scrollTo({ 
                 left: isRTL ? -listItem.scrollWidth : listItem.scrollWidth,
@@ -97,33 +94,27 @@ function displayHostsList(lines, fileType) {
             };
         }
         // Remove line from file
-        if (deleteLine) {
-            deleteLine.addEventListener("click", async () => {
-                await exec(`
-                    filtered=$(grep -vxF '${line}' ${basePath}/${filePaths[fileType]})
-                    echo "$filtered" > ${basePath}/${filePaths[fileType]}
-                `);
-                listElement.removeChild(listItem);
-            });
-        }
+        em.on(deleteLine, 'click', async () => {
+            await exec(`
+                filtered=$(grep -vxF '${line}' ${basePath}/${filePaths[fileType]})
+                echo "$filtered" > ${basePath}/${filePaths[fileType]}
+            `);
+            listElement.removeChild(listItem);
+        });
         // Remove file
-        if (deleteFile) {
-            deleteFile.addEventListener("click", async () => {
-                const fileName = listItem.querySelector(".link-text").textContent;
-                const remove = await removeCustomHostsFile(fileName);
-                if (remove) {
-                    await exec(`rm -f "${basePath}/${fileName}"`);
-                    listElement.removeChild(listItem);
-                }
-            });
-        }
+        em.on(deleteFile, 'click', async () => {
+            const fileName = listItem.querySelector(".link-text").textContent;
+            const remove = await removeCustomHostsFile(fileName);
+            if (remove) {
+                await exec(`rm -f "${basePath}/${fileName}"`);
+                listElement.removeChild(listItem);
+            }
+        });
         // Edit file
-        if (editFile) {
-            editFile.addEventListener("click", () => {
-                const line = listItem.querySelector(".link-text").textContent;
-                fileNameEditor(line);
-            });
-        }
+        em.on(editFile, 'click', () => {
+            const line = listItem.querySelector(".link-text").textContent;
+            fileNameEditor(line);
+        });
         return listItem;
     };
 
@@ -137,7 +128,7 @@ function displayHostsList(lines, fileType) {
         showMoreItem.innerHTML = `<span>${translations.global_show_all} ${lines.length - showInitialLimit} ${translations.global_more}</span>`;
         listElement.appendChild(showMoreItem);
         // Remove the "Show More" button and show remaining items
-        showMoreItem.addEventListener('click', () => {
+        em.on(showMoreItem, 'click', () => {
             listElement.removeChild(showMoreItem);
             lines.slice(showInitialLimit).forEach(line => createListItem(line));
             applyRippleEffect();
@@ -202,15 +193,15 @@ function removeCustomHostsFile(fileName) {
     }
 
     return new Promise((resolve) => {
-        cancelButton.addEventListener("click", () => {
+        em.on(cancelButton, 'click', () => {
             closeConfirmationOverlay();
             resolve(false);
         });
-        confirmationOverlay.addEventListener("click", (e) => {
+        em.on(confirmationOverlay, 'click', (e) => {
             if (e.target === confirmationOverlay) cancelButton.click();
         });
         // Confirm file removal
-        removeButton.addEventListener("click", () => {
+        em.on(removeButton, 'click', () => {
             closeConfirmationOverlay();
             resolve(true);
         });
@@ -227,7 +218,7 @@ function setupHelpMenu() {
     const helpButtons = document.querySelectorAll(".help-btn");
     const overlays = document.querySelectorAll(".overlay");
     helpButtons.forEach(button => {
-        button.addEventListener("click", () => {
+        em.on(button, 'click', () => {
             const type = button.dataset.type;
             const overlay = document.getElementById(`${type}-help`);
             if (overlay) openOverlay(overlay);
@@ -236,9 +227,10 @@ function setupHelpMenu() {
     overlays.forEach(overlay => {
         const closeButton = overlay.querySelector(".close-btn");
         const docsButtons = overlay.querySelector(".docs-btn");
-        if (closeButton) closeButton.addEventListener("click", () => closeOverlay(overlay));
-        if (docsButtons) docsButtons.addEventListener("click", () => closeOverlay(overlay));
-        overlay.addEventListener("click", (e) => {
+        
+        em.on(closeButton, 'click', () => closeOverlay(overlay));
+        em.on(docsButtons, 'click', () => closeOverlay(overlay));
+        em.on(overlay, 'click', (e) => {
             if (e.target === overlay) closeOverlay(overlay);
         });
     });
@@ -257,12 +249,6 @@ function setupHelpMenu() {
             activeOverlay = null;
         }, 200);
     }
-    wx.on(window, "back", (event) => {
-        if (activeOverlay) {
-            event.stopImmediatePropagation();
-            closeOverlay(activeOverlay);
-        }
-    });
 }
 
 /**
@@ -271,72 +257,76 @@ function setupHelpMenu() {
  * Scoll up when focused input is at the bottom of the screen (60%)
  * @returns {void}
  */
-document.querySelectorAll('.input-box').forEach(inputBoxes => {
-    let startX, startY, isScrollingX, isScrollingY;
-    const lineHeight = parseFloat(window.getComputedStyle(inputBoxes).lineHeight);
+function setupKeyboardInset() {
+    const inputBox = document.querySelectorAll('.input-box');
 
-    inputBoxes.addEventListener('touchstart', (event) => {
-        const touch = event.touches[0];
-        startX = touch.clientX;
-        startY = touch.clientY;
-        isScrollingX = false;
-        isScrollingY = false;
-        document.body.style.overflow = "hidden";
-    });
-    inputBoxes.addEventListener('touchmove', (event) => {
-        const touch = event.touches[0];
-        const deltaX = touch.clientX - startX;
-        const deltaY = touch.clientY - startY;
-        // Only allow X or Y scroll in a single touchmove event
-        if (Math.abs(deltaX) > Math.abs(deltaY)) {
-            if (!isScrollingX) {
-                isScrollingX = true;
-                isScrollingY = false;
+    inputBox.forEach(inputBoxes => {
+        let startX, startY, isScrollingX, isScrollingY;
+        const lineHeight = parseFloat(window.getComputedStyle(inputBoxes).lineHeight);
+
+        em.on(inputBoxes, 'touchstart', (event) => {
+            const touch = event.touches[0];
+            startX = touch.clientX;
+            startY = touch.clientY;
+            isScrollingX = false;
+            isScrollingY = false;
+            document.body.style.overflow = "hidden";
+        });
+        em.on(inputBoxes, 'touchmove', (event) => {
+            const touch = event.touches[0];
+            const deltaX = touch.clientX - startX;
+            const deltaY = touch.clientY - startY;
+            // Only allow X or Y scroll in a single touchmove event
+            if (Math.abs(deltaX) > Math.abs(deltaY)) {
+                if (!isScrollingX) {
+                    isScrollingX = true;
+                    isScrollingY = false;
+                }
+                if (isScrollingY) event.preventDefault();
+            } else {
+                if (!isScrollingY) {
+                    isScrollingY = true;
+                    isScrollingX = false;
+                    inputBoxes.scrollTo({ left: 0, behavior: 'smooth' });
+                }
+                if (isScrollingX) event.preventDefault();
             }
-            if (isScrollingY) event.preventDefault();
-        } else {
-            if (!isScrollingY) {
-                isScrollingY = true;
-                isScrollingX = false;
-                inputBoxes.scrollTo({ left: 0, behavior: 'smooth' });
-            }
-            if (isScrollingX) event.preventDefault();
-        }
+        });
+        em.on(inputBoxes, 'touchend', () => {
+            isScrollingX = false;
+            isScrollingY = false;
+            document.body.style.overflow = "";
+            // Snap to the nearest line
+            const scrollTop = inputBoxes.scrollTop;
+            const nearestLine = Math.round(scrollTop / lineHeight) * lineHeight;
+            inputBoxes.scrollTo({ top: nearestLine, behavior: 'smooth' });
+        });
+        em.on(inputBoxes, 'focus', (event) => {
+            document.querySelector('.placeholder').classList.add('focused');
+            const wrapper = event.target.closest('.input-box-wrapper');
+            wrapper.classList.add('focus');
+            const inputBox = wrapper.querySelector('.input-box');
+            inputBox.style.paddingLeft = '9px';
+            setTimeout(() => {
+                const inputRect = event.target.getBoundingClientRect();
+                const viewportHeight = window.innerHeight;
+                const keyboardHeight = viewportHeight * 0.6;
+                const safeArea = 20;
+                if (inputRect.bottom > (viewportHeight - keyboardHeight)) {
+                    const scrollAmount = inputRect.bottom - (viewportHeight - keyboardHeight) + safeArea;
+                    document.querySelector('.body-content').scrollBy({ top: scrollAmount, behavior: 'smooth' });
+                }
+            }, 100);
+        });
+        em.on(inputBoxes, 'blur', () => {
+            document.querySelector('.placeholder').classList.remove('focused');
+            const wrapper = inputBoxes.closest('.input-box-wrapper');
+            wrapper.classList.remove('focus');
+            const inputBox = wrapper.querySelector('.input-box');
+            inputBox.style.paddingLeft = '10px';
+        });
     });
-    inputBoxes.addEventListener('touchend', () => {
-        isScrollingX = false;
-        isScrollingY = false;
-        document.body.style.overflow = "";
-        // Snap to the nearest line
-        const scrollTop = inputBoxes.scrollTop;
-        const nearestLine = Math.round(scrollTop / lineHeight) * lineHeight;
-        inputBoxes.scrollTo({ top: nearestLine, behavior: 'smooth' });
-    });
-    inputBoxes.addEventListener('focus', (event) => {
-        document.querySelector('.placeholder').classList.add('focused');
-        const wrapper = event.target.closest('.input-box-wrapper');
-        wrapper.classList.add('focus');
-        const inputBox = wrapper.querySelector('.input-box');
-        inputBox.style.paddingLeft = '9px';
-        setTimeout(() => {
-            const inputRect = event.target.getBoundingClientRect();
-            const viewportHeight = window.innerHeight;
-            const keyboardHeight = viewportHeight * 0.6;
-            const safeArea = 20;
-            if (inputRect.bottom > (viewportHeight - keyboardHeight)) {
-                const scrollAmount = inputRect.bottom - (viewportHeight - keyboardHeight) + safeArea;
-                document.querySelector('.content').scrollBy({ top: scrollAmount, behavior: 'smooth' });
-            }
-        }, 100);
-    });
-    inputBoxes.addEventListener('blur', () => {
-        document.querySelector('.placeholder').classList.remove('focused');
-        const wrapper = inputBoxes.closest('.input-box-wrapper');
-        wrapper.classList.remove('focus');
-        const inputBox = wrapper.querySelector('.input-box');
-        inputBox.style.paddingLeft = '10px';
-    });
-});
+}
 
 /**
  * Attach event listeners to the add buttons
@@ -354,17 +344,13 @@ function attachAddButtonListeners() {
     elements.forEach(({ id, type, fail }) => {
         const inputElement = document.getElementById(id);
         const buttonElement = document.getElementById(`${type}-add`);
-        if (inputElement) {
-            inputElement.addEventListener("keypress", (e) => {
-                if (e.key === "Enter") {
-                    handleAdd(type, fail);
-                    inputElement.blur();
-                }
-            });
-        }
-        if (buttonElement) {
-            buttonElement.addEventListener("click", () => handleAdd(type, fail));
-        }
+        em.on(inputElement, 'keypress', (e) => {
+            if (e.key === "Enter") {
+                handleAdd(type, fail);
+                inputElement.blur();
+            }
+        });
+        em.on(buttonElement, 'click', () => handleAdd(type, fail));
     });
 }
 
@@ -381,24 +367,16 @@ function runBindhosts(args) {
     const terminalContent = document.getElementById('action-terminal-content');
     const header = document.querySelector('.title-container');
     const title = document.getElementById('title');
-    const backButton = document.getElementById('edit-back-btn');
-    const bodyContent = document.querySelector('.content');
+    const backButton = document.querySelector('.back-button');
+    const bodyContent = document.querySelector('.body-content');
     const actionButton = document.querySelector('.float');
     const closeBtn = document.getElementById('close-terminal');
+    const forceUpdateButton = document.getElementById('force-update-btn');
 
     if (!setupActionTerminal) {
-        setupSwipeToClose(terminal, cover, backButton);
-        closeBtn.addEventListener('click', () => closeTerminal());
-        backButton.addEventListener('click', () => closeTerminal());
-        wx.on(window, "back", (event) => {
-            if (isTerminalOpen) {
-                event.stopImmediatePropagation();
-                closeTerminal();
-            } else if (actionRunning) {
-                event.stopImmediatePropagation();
-                runBindhosts();
-            }
-        });
+        setupSwipeToClose(terminal, cover);
+        em.on(closeBtn, 'click', () => closeTerminal());
+        em.on(backButton, 'click', () => closeTerminal());
         setupActionTerminal = true;
     }
 
@@ -431,7 +409,7 @@ function runBindhosts(args) {
         terminal.style.transform = 'translateX(100%)';
         bodyContent.style.transform = 'translateX(0)';
         cover.style.opacity = '0';
-        backButton.style.transform = 'translateX(-100%)';
+        backButton.classList.remove('show');
         actionButton.style.transform = 'translateY(0)';
         actionButton.classList.remove('inTerminal');
         forceUpdateButton.classList.add('show');
@@ -441,7 +419,7 @@ function runBindhosts(args) {
         title.textContent = translations.footer_hosts;
         setTimeout(() => {
             isTerminalOpen = false;
-        }, 200);
+        }, 100);
     }
 
     // Open output terminal
@@ -451,17 +429,13 @@ function runBindhosts(args) {
         bodyContent.style.transform = 'translateX(-20vw)';
         cover.style.opacity = '1';
         header.classList.add('back');
-        backButton.style.transform = 'translateX(0)';
+        backButton.classList.add('show');
         actionButton.style.transform = 'translateY(110px)';
         actionButton.classList.add('inTerminal');
         forceUpdateButton.classList.remove('show');
         title.textContent = translations.global_action;
     }, 50);
 }
-
-// Action button and force update button click event
-document.getElementById("action-btn").addEventListener("click", () => runBindhosts("--action"));
-forceUpdateButton.addEventListener('click', () => runBindhosts("--force-update"));
 
 /**
  * Find out custom hosts list and display it
@@ -479,17 +453,13 @@ async function getCustomHostsList() {
     }
 }
 
-// Open file selector to import custom hosts file
-document.getElementById("import-custom-button").addEventListener("click", async () => {
+async function importCustomHost() {
     const file = await openFileSelector("txt");
     if (file) {
         await new Promise(resolve => setTimeout(resolve, 100));
         getCustomHostsList();   
     }
-});
-
-const editorInput = document.getElementById("edit-input");
-const fileNameInput = document.getElementById('file-name-input');
+}
 
 /**
  * Open file name editor
@@ -497,6 +467,8 @@ const fileNameInput = document.getElementById('file-name-input');
  * @returns {Promise<void>}
  */
 async function fileNameEditor(fileName) {
+    const editorInput = document.getElementById("edit-input");
+    const fileNameInput = document.getElementById('file-name-input');
     const rawFileName = fileName.replace("custom", "").replace(".txt", "");
     fileNameInput.value = rawFileName;
     // Editor support for file smaller than 128KB
@@ -512,7 +484,7 @@ async function fileNameEditor(fileName) {
     }
 }
 
-let setupEditor = false, isEditorOpen = false;
+let setupEditor = false, isSwipeToCloseSetup = false;
 /**
  * Open file editor
  * @param {string} lastFileName - Name of the last file edited
@@ -520,29 +492,31 @@ let setupEditor = false, isEditorOpen = false;
  * @returns {void}
  */
 function openFileEditor(lastFileName, openEditor = true) {
-    isEditorOpen = true;
     const header = document.querySelector('.title-container');
     const title = document.getElementById('title');
     const fileName = document.querySelector('.file-name-editor');
-    const backButton = document.getElementById('edit-back-btn');
+    const backButton = document.querySelector('.back-button');
     const saveButton = document.getElementById('edit-save-btn');
     const actionButton = document.querySelector('.float');
     const editorCover = document.querySelector('.document-cover');
     const editor = document.getElementById('edit-content');
     const lineNumbers = document.querySelector('.line-numbers');
-    const bodyContent = document.querySelector('.content');
+    const bodyContent = document.querySelector('.body-content');
+    const forceUpdateButton = document.getElementById('force-update-btn');
+    const editorInput = document.getElementById("edit-input");
+    const fileNameInput = document.getElementById('file-name-input');
 
     if (!setupEditor) {
         setupEditor = true;
-        fileNameInput.addEventListener('input', adjustFileNameWidth);
-        saveButton.addEventListener('click', saveFile);
-        editorInput.addEventListener('input', scrollSafeInset);
-        editorInput.addEventListener('blur', () => {
+        em.on(fileNameInput, 'input', adjustFileNameWidth);
+        em.on(saveButton, 'click', saveFile);
+        em.on(editorInput, 'input', scrollSafeInset);
+        em.on(editorInput, 'blur', () => {
             editorInput.style.paddingBottom = '30px';
             lineNumbers.style.paddingBottom = '30px';
         });
         // Set line numbers
-        editorInput.addEventListener('input', () => {
+        em.on(editorInput, 'input', () => {
             const lines = editorInput.value.split('\n').length;
             lineNumbers.innerHTML = Array.from({ length: lines }, (_, index) => 
                 `<div>${(index + 1).toString().padStart(2, ' ')}</div>`
@@ -550,19 +524,13 @@ function openFileEditor(lastFileName, openEditor = true) {
             // Sync scroll position
             lineNumbers.scrollTop = editorInput.scrollTop;
         });
-        editorInput.addEventListener('scroll', () => {
+        em.on(editorInput, 'scroll', () => {
             lineNumbers.style.top = `-${editorInput.scrollTop}px`;
             // Sync scroll position
             lineNumbers.scrollTop = editorInput.scrollTop;
         });
         editorInput.dispatchEvent(new Event('input'));
-        backButton.addEventListener('click', () => closeEditor());
-        wx.on(window, "back", (event) => {
-            if (isEditorOpen) {
-                event.stopImmediatePropagation();
-                closeEditor();
-            }
-        });
+        em.on(backButton, 'click', () => closeEditor());
     }
 
     // Adjust width of fileName according to the length of text in input
@@ -570,7 +538,6 @@ function openFileEditor(lastFileName, openEditor = true) {
         const tempSpan = document.createElement('span');
         tempSpan.style.visibility = 'hidden';
         tempSpan.style.whiteSpace = 'nowrap';
-        tempSpan.style.fontFamily = window.getComputedStyle(fileNameInput).fontFamily;
         tempSpan.style.fontSize = '21px';
         tempSpan.textContent = fileNameInput.value;
         document.body.appendChild(tempSpan);
@@ -587,8 +554,8 @@ function openFileEditor(lastFileName, openEditor = true) {
     editorCover.style.opacity = '1';
     editorCover.style.pointerEvents = 'auto';
     header.classList.add('back', 'save');
-    backButton.style.transform = 'translateX(0)';
-    saveButton.style.transform = 'translateX(0)';
+    backButton.classList.add('show');
+    saveButton.classList.add('show');
     setTimeout(() => actionButton.style.transform = 'translateY(110px)', 50);
     forceUpdateButton.classList.remove('show');
     title.style.display = 'none';
@@ -630,27 +597,25 @@ function openFileEditor(lastFileName, openEditor = true) {
     }
 
     // Setup swipe to close if not set it yet
-    let isSwipeToCloseSetup = false;
     if (!isSwipeToCloseSetup) {
-        setupSwipeToClose(editor, editorCover, backButton);
+        setupSwipeToClose(editor, editorCover);
         isSwipeToCloseSetup = true;
     }
 
     // Alternative way to close about docs with back button
-    function closeEditor() {
+    const closeEditor = () => {
         if (openEditor) { editor.style.transform = 'translateX(100%)'; }
         editorCover.style.opacity = '0';
         editorCover.style.pointerEvents = 'none';
-        backButton.style.transform = 'translateX(-100%)';
+        backButton.classList.remove('show');
+        fileName.style.display = 'none';
+        saveButton.classList.remove('show');
         header.classList.remove('back', 'save');
-        title.style.display = 'block';
+        title.style.display = 'inline';
         actionButton.style.transform = 'translateY(0)';
         setTimeout(() => {
             forceUpdateButton.classList.add('show');
-            isEditorOpen = false;
         }, 200);
-        fileName.style.display = 'none';
-        saveButton.style.transform = 'translateX(calc(105% + 15px))';
         bodyContent.style.overflowY = 'auto';
         bodyContent.style.transform = 'translateX(0)';
         document.querySelectorAll('.box li').forEach(li => {
@@ -703,23 +668,45 @@ window.replaceSpaces = function(input) {
     input.setSelectionRange(cursorPosition, cursorPosition);
 }
 
-wx.on(window, "back", () => {
-    if (!activeOverlay && !isDocOpen && !isTerminalOpen && !actionRunning && !isEditorOpen && !isFileSelectorOpen) {
-        document.getElementById('home').click();
-    }
-});
-
 /**
- * Initial load event listener
+ * Initial load
  * @returns {void}
  */
-document.addEventListener('DOMContentLoaded', async () => {
-    initialTransition();
-    checkMMRL();
-    loadTranslations();
+export function init() {
+    document.getElementById('title').textContent = translations.footer_hosts;
     ["custom", "sources", "blacklist", "whitelist", "sources_whitelist"].forEach(loadFile);
     getCustomHostsList();
     attachAddButtonListeners();
     setupHelpMenu();
+    setupDocsMenu();
+    setupKeyboardInset();
     applyRippleEffect();
-});
+
+    // Action button and force update button click event
+    const actionBtn = document.getElementById("action-btn");
+    const forceUpdateButton = document.getElementById('force-update-btn');
+    const actionContainer = document.querySelector('.action-container');
+    em.on(actionBtn, 'click', () => runBindhosts("--action"));
+    em.on(forceUpdateButton, 'click', () => runBindhosts("--force-update"));
+    actionContainer.classList.add('show');
+    setTimeout(() => forceUpdateButton.classList.add('show'), 200);
+
+    // Open file selector to import custom hosts file
+    em.on(document.getElementById("import-custom-button"), 'click', ()=> importCustomHost());
+}
+
+// Exit cleanup
+export function destroy() {
+    actionRunning = false, setupActionTerminal = false, isTerminalOpen = false;
+    activeOverlay = null, setupEditor = false, isSwipeToCloseSetup = false;
+
+    const forceUpdateButton = document.getElementById('force-update-btn');
+    const actionContainer = document.querySelector('.action-container');
+    const saveBtn = document.getElementById('edit-save-btn');
+
+    setTimeout(() => actionContainer.classList.remove('show'), 50);
+    forceUpdateButton.classList.remove('show');
+    saveBtn.classList.remove('show');
+
+    em?.removeAll();
+}

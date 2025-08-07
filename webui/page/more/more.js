@@ -1,13 +1,10 @@
-import { exec, spawn } from './kernelsu.js';
-import { showPrompt, applyRippleEffect, checkMMRL, basePath, initialTransition, moduleDirectory, linkRedirect, filePaths, setupSwipeToClose } from './util.js';
-import { loadTranslations, translations } from './language.js';
-import { openFileSelector, isFileSelectorOpen } from './file_selector.js';
-import { addCopyToClipboardListeners, isDocOpen } from './docs.js';
-import { WXEventHandler } from "webuix";
+import { exec, spawn } from '../../utils/kernelsu.js';
+import { showPrompt, applyRippleEffect, basePath, moduleDirectory, linkRedirect, filePaths, setupSwipeToClose, createEventManager } from '../../utils/util.js';
+import { translations, generateLanguageMenu } from '../../utils/language.js';
+import { openFileSelector } from '../../utils/file_selector.js';
+import { addCopyToClipboardListeners, setupDocsMenu } from '../../utils/docs.js';
 
-window.wx = new WXEventHandler();
-
-const tilesContainer = document.getElementById('tiles-container');
+let em = createEventManager();
 
 /**
  * Check if user has installed bindhosts app
@@ -16,6 +13,8 @@ const tilesContainer = document.getElementById('tiles-container');
  * @returns {void}
  */
 function checkBindhostsApp() {
+    const tilesContainer = document.getElementById('tiles-container');
+
     exec("pm path me.itejo443.bindhosts")
         .then(({ errno }) => {
             if (errno !== 0) tilesContainer.style.display = "flex";
@@ -28,6 +27,7 @@ function checkBindhostsApp() {
  */
 function installBindhostsApp() {
     showPrompt("control_panel_installing", true, 10000, "[+]");
+    const tilesContainer = document.getElementById('tiles-container');
     const output = spawn("sh", [`${moduleDirectory}/bindhosts-app.sh`]);
     output.stdout.on('data', (data) => {
         if (data.includes("[+]")) {
@@ -77,7 +77,6 @@ async function toggleModuleUpdate() {
     }
 }
 
-const actionRedirectStatus = document.getElementById('action-redirect');
 /**
  * Display action redirect switch when running in Magisk
  * Action redirect WebUI toggle
@@ -98,6 +97,7 @@ function checkMagisk() {
  * @returns {Promise<void>}
  */
 async function toggleActionRedirectWebui() {
+    const actionRedirectStatus = document.getElementById('action-redirect');
     const result = await exec(`
         echo "magisk_webui_redirect=${actionRedirectStatus.checked ? 0 : 1}" > ${basePath}/webui_setting.sh
         chmod 755 ${basePath}/webui_setting.sh || true
@@ -119,6 +119,8 @@ async function toggleActionRedirectWebui() {
  * @returns {void}
  */
 function checkRedirectStatus() {
+    const actionRedirectStatus = document.getElementById('action-redirect');
+
     fetch(`link/PERSISTENT_DIR/webui_setting.sh`)
         .then(response => {
             if (!response.ok) throw new Error('File not found');
@@ -133,13 +135,14 @@ function checkRedirectStatus() {
         });
 }
 
-const cronToggle = document.getElementById('toggle-cron');
 /**
  * Check cron status
  * Event listener for cron toggle
  * @returns {void}
  */
 function checkCronStatus() {
+    const cronToggle = document.getElementById('toggle-cron');
+
     // Hide cron toggle when using AdAway
     fetch('link/MODDIR/module.prop')
         .then(response => response.text())
@@ -163,6 +166,7 @@ function checkCronStatus() {
  * @returns {Promise<void>}
  */
 async function toggleCron() {
+    const cronToggle = document.getElementById('toggle-cron');
     const result = await exec(`sh ${moduleDirectory}/bindhosts.sh --${cronToggle.checked ? "disable" : "enable"}-cron`);
     if (result.errno === 0) {
         const lines = result.stdout.split("\n");
@@ -201,14 +205,15 @@ function canaryUpdate() {
     });
 }
 
-let languageMenuListener = false, isLanguageMenuOpen = false;
+let languageMenuListener = false;
 /**
  * Open language menu overlay, called by controlPanelEventlistener
  * @returns {void}
  */
 function openLanguageMenu() {
-    isLanguageMenuOpen = true;
     const languageOverlay = document.getElementById('language-overlay');
+
+    // Open menu
     languageOverlay.style.display = 'flex';
     setTimeout(() => {
         languageOverlay.style.opacity = '1';
@@ -218,21 +223,18 @@ function openLanguageMenu() {
         languageOverlay.style.opacity = '0';
         setTimeout(() => {
             languageOverlay.style.display = 'none';
-            isLanguageMenuOpen = false;
         }, 200);
     };
 
     if (!languageMenuListener) {
         languageMenuListener = true;
-        document.querySelector('.close-btn').addEventListener('click', closeOverlay);
-        languageOverlay.addEventListener('click', (event) => {
+        const closeBtn = document.querySelector('.close-btn');
+        const infoBtn = document.getElementById('translate-btn');
+
+        closeBtn.onclick = () => closeOverlay();
+        infoBtn.onclick = () => closeOverlay();
+        em.on(languageOverlay, 'click', (event) => {
             if (event.target === languageOverlay) closeOverlay();
-        });
-        wx.on(window, "back", (event) => {
-            if (isLanguageMenuOpen) {
-                event.stopImmediatePropagation();
-                closeOverlay();
-            }
         });
     }
 }
@@ -248,22 +250,20 @@ function checkTcpdump() {
         })
 }
 
-let setupTcpdumpTerminal = false, contentBox = false, isTcpdumpOpen = false;
+let setupTcpdumpTerminal = false, contentBox = false;
 
 /**
  * Open tcpdump terminal
  * @returns {void}
  */
 function openTcpdumpTerminal() {
-    isTcpdumpOpen = true;
-
     const cover = document.querySelector('.document-cover');
     const terminal = document.getElementById('tcpdump-terminal');
     const terminalContent = document.getElementById('tcpdump-terminal-content');
     const header = document.querySelector('.title-container');
     const title = document.getElementById('title');
-    const backButton = document.getElementById('docs-back-btn');
-    const bodyContent = document.querySelector('.content');
+    const backButton = document.querySelector('.back-button');
+    const bodyContent = document.querySelector('.body-content');
     const floatBtn = document.querySelector('.float');
     const stopBtn = document.getElementById('stop-tcpdump');
     const scrollTopBtn = document.getElementById('scroll-top');
@@ -277,11 +277,11 @@ function openTcpdumpTerminal() {
     `;
 
     if (!setupTcpdumpTerminal) {
-        setupSwipeToClose(terminal, cover, backButton);
-        stopBtn.addEventListener('click', () => stopTcpdump());
-        backButton.addEventListener('click', () => closeTcpdumpTerminal());
+        setupSwipeToClose(terminal, cover);
+        em.on(stopBtn, 'click', () => stopTcpdump());
+        em.on(backButton, 'click', () => closeTcpdumpTerminal());
         const searchInput = document.getElementById('tcpdump-search-input');
-        searchInput.addEventListener('input', () => {
+        em.on(searchInput, 'input', () => {
             const searchTerm = searchInput.value.toLowerCase();
             const tcpdumpLines = document.querySelectorAll('.tcpdump-line');
             tcpdumpLines.forEach(line => {
@@ -290,14 +290,8 @@ function openTcpdumpTerminal() {
                 line.style.display = domain.textContent.toLowerCase().includes(searchTerm) ? 'flex': 'none';
             });
         });
-        scrollTopBtn.addEventListener('click', () => {
+        em.on(scrollTopBtn, 'click', () => {
             terminalContent.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-        wx.on(window, "back", (event) => {
-            if (isTcpdumpOpen) {
-                event.stopImmediatePropagation();
-                closeTcpdumpTerminal();
-            }
         });
         setupTcpdumpTerminal = true;
     }
@@ -376,12 +370,9 @@ function openTcpdumpTerminal() {
         terminal.style.transform = 'translateX(100%)';
         bodyContent.style.transform = 'translateX(0)';
         cover.style.opacity = '0';
-        backButton.style.transform = 'translateX(-100%)';
+        backButton.classList.remove('show');
         header.classList.remove('back');
         title.textContent = translations.footer_more;
-        setTimeout(() => {
-            isTcpdumpOpen = false;
-        }, 100);
     }
 
     // Open output terminal
@@ -390,7 +381,7 @@ function openTcpdumpTerminal() {
         bodyContent.style.transform = 'translateX(-20vw)';
         cover.style.opacity = '1';
         header.classList.add('back');
-        backButton.style.transform = 'translateX(0)';
+        backButton.classList.add('show');
         floatBtn.classList.add('show');
         title.textContent = translations.control_panel_monitor_network_activity;
         setTimeout(() => stopTcpdump(), 60000);
@@ -513,37 +504,42 @@ function controlPanelEventlistener(event) {
             };
 
             // Touch event
-            el.addEventListener('touchstart', () => touchMoved = false);
-            el.addEventListener('touchmove', () => touchMoved = true);
-            el.addEventListener('touchend', handleEndEvent);
+            em.on(el, 'touchstart', () => touchMoved = false);
+            em.on(el, 'touchmove', () => touchMoved = true);
+            em.on(el, 'touchend', handleEndEvent);
 
             // Mouse event
-            el.addEventListener('mousedown', () => touchMoved = false);
-            el.addEventListener('mousemove', () => touchMoved = true);
-            el.addEventListener('mouseup', handleEndEvent);
+            em.on(el, 'mousedown', () => touchMoved = false);
+            em.on(el, 'mousemove', () => touchMoved = true);
+            em.on(el, 'mouseup', handleEndEvent);
         }
     });
 }
-
-wx.on(window, "back", () => {
-    if (!isLanguageMenuOpen && !isTcpdumpOpen && !isDocOpen && !isFileSelectorOpen) {
-        document.getElementById('home').click();
-    }
-});
 
 /**
  * Initial load event listener
  * @returns {void}
  */
-document.addEventListener('DOMContentLoaded', async () => {
-    initialTransition();
-    checkMMRL();
-    loadTranslations();
+export function init() {
+    document.getElementById('title').textContent = translations.footer_more;
     checkUpdateStatus();
     checkBindhostsApp();
     checkMagisk();
     checkCronStatus();
     checkTcpdump();
     controlPanelEventlistener();
+    setupDocsMenu();
+    generateLanguageMenu();
     applyRippleEffect();
-});
+}
+
+export function destroy() {
+    languageMenuListener = false;
+    setupTcpdumpTerminal = false, contentBox = false;
+
+    const floatBtn = document.querySelector('.float');
+    floatBtn.classList.remove('show');
+    floatBtn.classList.remove('inTerminal');
+
+    em?.removeAll();
+}

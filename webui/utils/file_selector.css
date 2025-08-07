@@ -78,7 +78,7 @@
     }
 }
 
-.file-item svg {
+[dir="rtl"] .file-item svg {
     margin-right: unset;
     margin-left: 10px;
 }

@@ -1,59 +1,47 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bindhost</title>
-    <link rel="stylesheet" href="styles/color.css" type="text/css">
-    <link rel="stylesheet" href="styles/styles.css" type="text/css">
-    <link rel="stylesheet" href="styles/markdown.css" type="text/css">
+    <title>bindhosts</title>
+    <link rel="stylesheet" href="./index.css" type="text/css">
+    <link rel="stylesheet" href="./utils/color.css" type="text/css">
+    <link rel="stylesheet" href="./utils/docs.css" type="text/css">
+    <link rel="stylesheet" href="./utils/markdown.css" type="text/css">
+    <link rel="stylesheet" href="./utils/file_selector.css" type="text/css">
     <link rel="stylesheet" href="link/PERSISTENT_DIR/.webui_config/custom.css" type="text/css">
-    <script type="module" crossorigin src="scripts/index.js"></script>
-    <script type="module" crossorigin src="scripts/docs.js"></script>
+    <script type="module" crossorigin src="./index.js"></script>
+    <script type="module" crossorigin src="./utils/docs.js"></script>
+    <script type="module" crossorigin src="./utils/file_selector.js"></script>
 </head>
-
 <body>
     <!-- Header -->
     <div class="header">
-        <div class="title-container">
-            <span id="title">bindhosts <span id="version-text"></span></span>
+        <div class="back-button ripple-element fixed-ripple">
+            <svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960" width="22px"><path d="M640-80 240-480l400-400 71 71-329 329 329 329-71 71Z"/></svg>
         </div>
-        <button class="docs-btn ripple-element" id="mode-btn" data-type="modes">
+        <div class="title-container">
+            <div>
+                <span id="title">bindhosts </span>
+                <span id="version-text"></span>
+                <div class="file-name-editor">
+                    <span>custom</span>
+                    <input type="text" id="file-name-input" autocapitalize="off" oninput="window.replaceSpaces(this)">
+                    <span>.txt</span>
+                </div>
+            </div>
+        </div>
+        <button class="docs-btn ripple-element fixed-ripple" id="mode-btn" data-type="modes">
             <span data-i18n="mode_button"></span><span id="mode-text">X</span>
+        </button>
+        <button class="ripple-element fixed-ripple" id="edit-save-btn">
+            <span data-i18n="global_save"></span>
         </button>
     </div>
 
     <!-- Content -->
-    <div class="content constant-height">
-        <!-- Status box -->
-        <div class="box translucent ripple-element" id="status-box">
-            <h2 id="status-header" data-i18n="status_title"></h2>
-            <p id="status-text">Initializing</p>
-        </div>
-
-        <!-- Query box -->
-        <div class="box translucent" id="query-box">
-            <h2 id="query-header" data-i18n="query_title">Query</h2>
-            <div class="search-box">
-                <input class="query-input translucent" type="text" id="query-input" placeholder="Search" data-i18n="query_search" autocapitalize="off">
-                <div class="search-btn ripple-element">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/></svg>
-                </div>
-                <div class="clear-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="#ccc"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
-                </div>
-            </div>
-            <div class="host-list">
-                <div class="host-list-header">
-                    <div class="host-list-header-ip" data-i18n="query_host_ip"></div>
-                    <div class="host-list-header-domain" data-i18n="query_host_domain"></div>
-                </div>
-                <div class="host-list-item">
-                    <!-- Host list will display here -->
-                </div>
-            </div>
-        </div>
+    <div class="content" id="content-container">
+        <!-- page content will be loaded here -->
     </div>
 
     <!-- Custom background -->
@@ -61,88 +49,17 @@
         <img id="custom-bg-img" src="" alt="Custom Background">
     </div>
 
-    <!-- Docs overlay -->
-    <div id="modes-docs" class="docs">
-        <div class="docs-content translucent-menu blur-box">
-            <button class="close-docs-btn">&#x2715;</button>
-            <div class="documents">
-                <div id="modes-content">Loading...</div>
-                <div class="credit-marked">Markdown Parser by markedjs/marked</div>
+    <!-- File selector overlay -->
+    <div class="file-selector-overlay overlay">
+        <div class="file-selector translucent-menu blur-box">
+            <div class="file-selector-header">
+                <button class="file-selector-back-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="40 -1050 900 960" width="22px"><path d="M400-93.85 13.85-480 400-866.15l56.77 56.77L127.38-480l329.39 329.38L400-93.85Z"/></svg>
+                </button>
+                <div class="current-path">/storage/emulated/0/Download</div>
+                <button class="close-selector close-btn">&#x2715;</button>
             </div>
-        </div>
-    </div>
-
-    <!-- Mode menu overlay -->
-    <div id="mode-menu" class="overlay">
-        <div class="overlay-content translucent-menu blur-box">
-            <button class="close-btn">&#x2715;</button>
-            <h2 data-i18n="mode_title"></h2>
-            <form id="mode-options">
-                <label class="custom-radio">
-                    <input type="radio" name="mode" value="0">
-                    <span class="radio-circle"></span>
-                    <span class="radio-label"><span data-i18n="mode_button"></span> 0<br>
-                    <small>Default</small></span>
-                </label>
-                <label class="custom-radio">
-                    <input type="radio" name="mode" value="1">
-                    <span class="radio-circle"></span>
-                    <span class="radio-label"><span data-i18n="mode_button"></span> 1<br>
-                    <small>ksu_susfs_bind</small></span>
-                </label>
-                <label class="custom-radio">
-                    <input type="radio" name="mode" value="2">
-                    <span class="radio-circle"></span>
-                    <span class="radio-label"><span data-i18n="mode_button"></span> 2<br>
-                    <small>plain bindhosts</small></span>
-                </label>
-                <label class="custom-radio">
-                    <input type="radio" name="mode" value="3">
-                    <span class="radio-circle"></span>
-                    <span class="radio-label"><span data-i18n="mode_button"></span> 3<br>
-                    <small>apatch_hfr, hosts_file_redirect</small></span>
-                </label>
-                <label class="custom-radio">
-                    <input type="radio" name="mode" value="4">
-                    <span class="radio-circle"></span>
-                    <span class="radio-label"><span data-i18n="mode_button"></span> 4<br>
-                    <small>zn_hostsredirect</small></span>
-                </label>
-                <label class="custom-radio">
-                    <input type="radio" name="mode" value="5">
-                    <span class="radio-circle"></span>
-                    <span class="radio-label"><span data-i18n="mode_button"></span> 5<br>
-                    <small>ksu_susfs_open_redirect</small></span>
-                </label>
-                <label class="custom-radio">
-                    <input type="radio" name="mode" value="6">
-                    <span class="radio-circle"></span>
-                    <span class="radio-label"><span data-i18n="mode_button"></span> 6<br>
-                    <small>ksu_source_mod</small></span>
-                </label>
-                <label class="custom-radio">
-                    <input type="radio" name="mode" value="7">
-                    <span class="radio-circle"></span>
-                    <span class="radio-label"><span data-i18n="mode_button"></span> 7<br>
-                    <small>generic_overlay</small></span>
-                </label>
-                <label class="custom-radio">
-                    <input type="radio" name="mode" value="8">
-                    <span class="radio-circle"></span>
-                    <span class="radio-label"><span data-i18n="mode_button"></span> 8<br>
-                    <small>ksu_susfs_overlay</small></span>
-                </label>
-                <label class="custom-radio">
-                    <input type="radio" name="mode" value="9">
-                    <span class="radio-circle"></span>
-                    <span class="radio-label"><span data-i18n="mode_button"></span> 9<br>
-                    <small>ksu_susfs_bind_kstat</small></span>
-                </label>
-            </form>
-            <div class="reference-reset">
-                <button class="docs-btn ripple-element" id="learn-btn" data-type="modes" data-i18n="mode_detail"></button>
-                <button class="ripple-element" id="reset-mode" data-i18n="mode_reset"></button>
-            </div>
+            <div class="file-list"></div>
         </div>
     </div>
 
@@ -166,31 +83,33 @@
 
     <!-- Footer -->
     <div class="footer blur-box">
-        <a class="footer-btn">
-            <div class="footer-btn-icon ripple-element focused-footer-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M160-120v-480l320-240 320 240v480H560v-280H400v280H160Z"/></svg>
-            </div>
-            <div class="footer-btn-text">
-                <span data-i18n="footer_home">Home</span>
-            </div>
-        </a>
-        <a class="footer-btn" href="hosts.html">
+        <button class="footer-btn" id="home" page="home">
             <div class="footer-btn-icon ripple-element">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M160-120q-33 0-56.5-23.5T80-200v-560q0-33 23.5-56.5T160-840h200q33 0 56.5 23.5T440-760v560q0 33-23.5 56.5T360-120H160Zm440 0q-33 0-56.5-23.5T520-200v-560q0-33 23.5-56.5T600-840h200q33 0 56.5 23.5T880-760v560q0 33-23.5 56.5T800-120H600Zm-440-80h200v-560H160v560Zm440 0h200v-560H600v560ZM200-360h120v-80H200v80Zm440 0h120v-80H640v80ZM200-480h120v-80H200v80Zm440 0h120v-80H640v80ZM200-600h120v-80H200v80Zm440 0h120v-80H640v80ZM160-200h200-200Zm440 0h200-200Z"/></svg>
+                <svg class="active" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M160-120v-480l320-240 320 240v480H560v-280H400v280H160Z"/></svg>
+                <svg class="inactive" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z"/></svg>
             </div>
             <div class="footer-btn-text">
-                <span data-i18n="footer_hosts">Hosts</span>
+                <span data-i18n="footer_home"></span>
             </div>
-        </a>
-        <a class="footer-btn" href="more.html">
+        </button>
+        <button class="footer-btn" id="hosts" page="hosts">
             <div class="footer-btn-icon ripple-element">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M440-280h80v-240h-80v240Zm40-320q17 0 28.5-11.5T520-640q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640q0 17 11.5 28.5T480-600Zm0 520q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>
+                <svg class="active" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M160-120q-33 0-56.5-23.5T80-200v-560q0-33 23.5-56.5T160-840h200q33 0 56.5 23.5T440-760v560q0 33-23.5 56.5T360-120H160Zm440 0q-33 0-56.5-23.5T520-200v-560q0-33 23.5-56.5T600-840h200q33 0 56.5 23.5T880-760v560q0 33-23.5 56.5T800-120H600ZM200-360h120v-80H200v80Zm440 0h120v-80H640v80ZM200-480h120v-80H200v80Zm440 0h120v-80H640v80ZM200-600h120v-80H200v80Zm440 0h120v-80H640v80Z"/></svg>
+                <svg class="inactive" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M160-120q-33 0-56.5-23.5T80-200v-560q0-33 23.5-56.5T160-840h200q33 0 56.5 23.5T440-760v560q0 33-23.5 56.5T360-120H160Zm440 0q-33 0-56.5-23.5T520-200v-560q0-33 23.5-56.5T600-840h200q33 0 56.5 23.5T880-760v560q0 33-23.5 56.5T800-120H600Zm-440-80h200v-560H160v560Zm440 0h200v-560H600v560ZM200-360h120v-80H200v80Zm440 0h120v-80H640v80ZM200-480h120v-80H200v80Zm440 0h120v-80H640v80ZM200-600h120v-80H200v80Zm440 0h120v-80H640v80ZM160-200h200-200Zm440 0h200-200Z"/></svg>
             </div>
             <div class="footer-btn-text">
-                <span data-i18n="footer_more">More</span>
+                <span data-i18n="footer_hosts"></span>
             </div>
-        </a>
+        </button>
+        <button class="footer-btn" id="more" page="more">
+            <div class="footer-btn-icon ripple-element">
+                <svg class="active" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M440-280h80v-240h-80v240Zm40-320q17 0 28.5-11.5T520-640q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640q0 17 11.5 28.5T480-600Zm0 520q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z"/></svg>
+                <svg class="inactive" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M440-280h80v-240h-80v240Zm40-320q17 0 28.5-11.5T520-640q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640q0 17 11.5 28.5T480-600Zm0 520q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>
+            </div>
+            <div class="footer-btn-text">
+                <span data-i18n="footer_more"></span>
+            </div>
+        </button>
     </div>
 </body>
-
 </html>

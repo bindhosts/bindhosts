@@ -19,9 +19,6 @@ export const filePaths = {
 
 export const basePath = "/data/adb/bindhosts";
 export const moduleDirectory = "/data/adb/modules/bindhosts";
-const actionContainer = document.querySelector('.float');
-const forceUpdateButton = document.getElementById('force-update-btn');
-const content = document.querySelector('.content');
 
 /**
  * Redirect to a link with am command
@@ -32,9 +29,12 @@ export function linkRedirect(link) {
     setTimeout(() => {
         exec(`am start -a android.intent.action.VIEW -d ${link}`, { env: { PATH: '/system/bin' }})
             .then(({ errno }) => {
-                if (errno !== 0) toast("Failed to open link");
+                if (errno !== 0) {
+                    toast("Failed to open link with exec");
+                    window.open(link, "_blank");
+                }
             });
-    },100);
+    }, 100);
 }
 
 /**
@@ -113,6 +113,14 @@ export function applyRippleEffect() {
 }
 
 /**
+ * set status of global vairable: footerClick
+ * @param {boolean} status 
+ */
+export function setFooterClick(status) {
+    footerClick = status;
+}
+
+/**
  * Show the prompt with a success or error message
  * @param {string} key - Translation key for the message
  * @param {boolean} isSuccess - Whether the message indicates success
@@ -171,7 +179,7 @@ export function showPrompt(key, isSuccess = true, duration = 2000, preValue = ""
  * @returns {void}
  */
 export async function checkMMRL() {
-    if (Object.keys($bindhosts).length > 0) {
+    if (typeof $bindhosts !== 'undefined' && Object.keys($bindhosts).length > 0) {
         // Set status bars theme based on device theme
         try {
             $bindhosts.setLightStatusBars(!window.matchMedia('(prefers-color-scheme: dark)').matches)
@@ -182,58 +190,15 @@ export async function checkMMRL() {
 }
 
 /**
- * Add loaded class and transition for links
- * @returns {void}
- */
-export function initialTransition() {
-    const content = document.querySelector('.constant-height');
-    const title = document.querySelector('.title-container');
-    const modeBtn = document.getElementById('mode-btn');
-    const saveBtn = document.getElementById('edit-save-btn');
-    const actionBtn = document.querySelector('.action-container');
-    const backBtn = document.querySelector('.back-button');
-    const focusedFooterBtn = document.querySelector('.focused-footer-btn');
-
-    // Add loaded class after a short delay to trigger the animation
-    focusedFooterBtn.classList.add('loaded');
-    setTimeout(() => {
-        content.classList.add('loaded');
-        if (actionBtn) actionContainer.classList.add('show');
-        if (forceUpdateButton) setTimeout(() => forceUpdateButton.classList.add('show'), 200);
-    }, 10);
-
-    // Quit transition on switching page
-    document.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', (e) => {
-            if (link.href && link.href.startsWith(window.location.origin)) {
-                footerClick = true;
-                e.preventDefault();
-                content.classList.add('exiting');
-                title.classList.remove('loaded');
-                focusedFooterBtn.classList.remove('loaded');
-                if (actionBtn) setTimeout(() => actionContainer.classList.remove('show'), 50);
-                if (forceUpdateButton) forceUpdateButton.classList.remove('show');
-                if (modeBtn) modeBtn.classList.remove('loaded');
-                if (saveBtn) saveBtn.style.transform = 'translateX(calc(105% + 15px))';
-                if (backBtn) backBtn.click();
-                setTimeout(() => {
-                    window.location.href = link.href;
-                }, 100);
-            }
-        });
-    });
-}
-
-/**
  * Setup swipe to close for slide-in panels
  * @param {HTMLElement} element - Element to swipe
  * @param {HTMLElement} cover - Cover element
- * @param {HTMLElement} backButton - Back button element
  * @returns {void}
  */
-export function setupSwipeToClose(element, cover, backButton) {
+export function setupSwipeToClose(element, cover) {
     let startX = 0, currentX = 0, startY = 0, isDragging = false, isScrolling = false;
-    const bodyContent = document.querySelector('.content');
+    const bodyContent = document.querySelector('.body-content');
+    const backButton = document.querySelector('.back-button');
 
     const handleStart = (e) => {
         const preElements = document.querySelectorAll('.documents *');
@@ -325,64 +290,115 @@ export function setupSwipeToClose(element, cover, backButton) {
 }
 
 // Scroll event
-let lastScrollY = content.scrollTop;
 let isScrolling = false;
-let scrollTimeout;
-const scrollThreshold = 25;
-content.addEventListener('scroll', () => {
-    isScrolling = true;
-    clearTimeout(scrollTimeout);
-    scrollTimeout = setTimeout(() => {
-        isScrolling = false;
-    }, 200);
-    if (content.scrollTop > lastScrollY && content.scrollTop > scrollThreshold) {
-        if (actionContainer && !actionContainer.classList.contains('tcpdump-btn')) {
-            setTimeout(() => actionContainer.classList.remove('show'), 100);
-        }
-        if (forceUpdateButton) forceUpdateButton.classList.remove('show');
-    } else if (content.scrollTop < lastScrollY) {
-        if (actionContainer && !actionContainer.classList.contains('tcpdump-btn')) {
-            actionContainer.classList.add('show');
-        }
-        if (forceUpdateButton) setTimeout(() => forceUpdateButton.classList.add('show'), 200);
-    }
+export function setupScrollEvent() {
+    const content = document.querySelector('.body-content');
+    const actionContainer = document.querySelector('.float');
+    const forceUpdateButton = document.getElementById('force-update-btn');
 
-    // Hide remove button on scroll
-    const box = document.querySelector('.box li');
-    if (box) {
-        document.querySelectorAll('.box li').forEach(li => {
-            li.scrollTo({ left: 0, behavior: 'smooth' });
-        });
-    }
-
-    lastScrollY = content.scrollTop;
-});
-
-// Terminal scroll event
-document.querySelectorAll('.terminal').forEach(terminal => {
-    terminal.addEventListener('scroll', () => {
+    let lastScrollY = content.scrollTop;
+    let scrollTimeout;
+    const scrollThreshold = 25;
+    content.addEventListener('scroll', () => {
         isScrolling = true;
         clearTimeout(scrollTimeout);
         scrollTimeout = setTimeout(() => {
             isScrolling = false;
         }, 200);
-        if ((terminal.scrollTop > lastScrollY && terminal.scrollTop > scrollThreshold)
-            || (terminal.scrollTop === 0 && actionContainer.classList.contains('tcpdump-btn'))) {
-            if (actionContainer && actionContainer.classList.contains('inTerminal')) {
-                if (terminal.scrollTop === 0 && actionContainer.classList.contains('tcpdump-btn')) {
-                    setTimeout(() => actionContainer.classList.remove('show'), 100);
-                } else {
+        if (content.scrollTop > lastScrollY && content.scrollTop > scrollThreshold) {
+            if (actionContainer && !actionContainer.classList.contains('tcpdump-btn')) {
+                setTimeout(() => actionContainer.classList.remove('show'), 100);
+            }
+            if (forceUpdateButton) forceUpdateButton.classList.remove('show');
+        } else if (content.scrollTop < lastScrollY) {
+            if (actionContainer && !actionContainer.classList.contains('tcpdump-btn')) {
+                actionContainer.classList.add('show');
+            }
+            if (forceUpdateButton) setTimeout(() => forceUpdateButton.classList.add('show'), 200);
+        }
+    
+        // Hide remove button on scroll
+        const box = document.querySelector('.box li');
+        if (box) {
+            document.querySelectorAll('.box li').forEach(li => {
+                li.scrollTo({ left: 0, behavior: 'smooth' });
+            });
+        }
+    
+        lastScrollY = content.scrollTop;
+    });
+}
+
+// Terminal scroll event
+export function setupTerminalSrollEvent() {
+    const actionContainer = document.querySelector('.float');
+
+    document.querySelectorAll('.terminal').forEach(terminal => {
+        terminal.addEventListener('scroll', () => {
+            isScrolling = true;
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                isScrolling = false;
+            }, 200);
+            if ((terminal.scrollTop > lastScrollY && terminal.scrollTop > scrollThreshold)
+                || (terminal.scrollTop === 0 && actionContainer.classList.contains('tcpdump-btn'))) {
+                if (actionContainer && actionContainer.classList.contains('inTerminal')) {
+                    if (terminal.scrollTop === 0 && actionContainer.classList.contains('tcpdump-btn')) {
+                        setTimeout(() => actionContainer.classList.remove('show'), 100);
+                    } else {
+                        actionContainer.classList.add('show');
+                    }
+                }
+            } else if (terminal.scrollTop < lastScrollY && terminal.scrollTop > terminal.clientHeight * 0.5) {
+                if (actionContainer && actionContainer.classList.contains('inTerminal')) {
                     actionContainer.classList.add('show');
                 }
             }
-        } else if (terminal.scrollTop < lastScrollY && terminal.scrollTop > terminal.clientHeight * 0.5) {
-            if (actionContainer && actionContainer.classList.contains('inTerminal')) {
-                actionContainer.classList.add('show');
-            }
+            lastScrollY = terminal.scrollTop;
+        });
+    });    
+}
+
+/**
+ * Event listener manager to simplify the process of registering and cleaning up event listeners.
+ * 
+ * Example usage:
+ * const events = createEventManager();
+ * 
+ * const button = document.getElementById('myBtn');
+ * events.on(button, 'click', () => console.log('clicked'));
+ * 
+ * events.removeAll();
+ * 
+ * @returns {{
+*   on: (target: EventTarget, type: string, handler: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions) => void,
+*   off: (target: EventTarget, type: string, handler: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions) => void,
+*   removeAll: () => void
+* }} An object with methods to register 'on', remove 'off', and batch remove 'removeAll' event listeners.
+*/
+export function createEventManager() {
+    const listeners = [];
+
+    function on(target, type, handler, options) {
+        if (!target || typeof target.addEventListener !== 'function') return;
+
+        target.addEventListener(type, handler, options);
+        listeners.push({ target, type, handler, options });
+    }
+
+    function off(target, type, handler, options) {
+        target.removeEventListener(type, handler, options);
+    }
+
+    function removeAll() {
+        for (const { target, type, handler, options } of listeners) {
+            target.removeEventListener(type, handler, options);
         }
-        lastScrollY = terminal.scrollTop;
-    });
-});
+        listeners.length = 0;
+    }
+
+    return { on, off, removeAll };
+}
 
 export async function setupCustomBackground() {
     // custom background
@@ -403,9 +419,7 @@ export async function setupCustomBackground() {
                 break;
             }
         } catch (error) {
-            console.error("Error checking background:", error);
+            console.log(error);
         }
     }
 }
-
-document.addEventListener("DOMContentLoaded", setupCustomBackground);

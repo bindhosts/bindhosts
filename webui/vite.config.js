@@ -1,15 +1,13 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-    base: '',
+    base: './',
     build: {
         outDir: '../module/webroot',
-        rollupOptions: {
-            input: {
-                main: 'index.html',
-                hosts: 'hosts.html',
-                more: 'more.html'
-            }
-        }
+        // minify: false,
+        // terserOptions: {
+        //   keep_classnames: true,
+        //   keep_fnames: true
+        // },
     }
 });

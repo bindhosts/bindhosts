@@ -1,0 +1,243 @@
+.force-update-button {
+    padding: 8px;
+    margin-bottom: 12px;
+    margin-right: 29px;
+    border-radius: 20px;
+    transform: translateY(calc(100% + 12px)) scale(0.5);
+    transition: transform 0.2s ease, border-radius 0.4s ease, scale 0.4s ease;
+}
+
+[dir="rtl"] .force-update-button {
+    margin-right: unset;
+    margin-left: 29px;
+}
+
+.force-update-button.show {
+    border-radius: 10px;
+    transform: translate(0) scale(1);
+}
+
+.category-container {
+    display: flex;
+    position: relative;
+    width: 100%;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+
+.input-box-wrapper {
+    background-color: var(--bg-input);
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    box-sizing: border-box;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: calc(100% - 35px);
+    height: 35px;
+}
+
+.input-box-wrapper.focus {
+    border: 2px solid var(--btn-primary);
+}
+
+.input-box {
+    outline: none;
+    border: none;
+    width: 100%;
+    padding: 0 10px;
+    font-family: inherit;
+    line-height: 1.5;
+    color: var(--text-primary);
+    background-color: transparent;
+    resize: none;
+    white-space: nowrap;
+    word-wrap: break-word;
+}
+
+.add-btn {
+    display: flex;
+    border-radius: 8px;
+    height: 35px;
+    width: 35px;
+    background-color: var(--btn-primary);
+    border: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.import-button svg,
+.add-btn svg {
+    fill: var(--btn-primary-text);
+    z-index: 1;
+}
+
+.edit-btn,
+.delete-btn {
+    height: 35px;
+    width: 35px;
+    right: 0;
+    margin-left: 5px;
+    background-color: var(--btn-delete);
+    display: flex;
+    flex-shrink: 0;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    justify-content: center;
+    align-items: center;
+    
+    svg {
+        z-index: 1;
+    }
+}
+
+[dir="rtl"] .edit-btn,
+[dir="rtl"] .delete-btn {
+    right: unset;
+    left: 0;
+    margin-left: unset;
+    margin-right: 5px;
+}
+
+.edit-btn {
+    background-color: var(--btn-edit);
+}
+
+.link-box {
+    display: flex;
+    min-width: 100%;
+    align-items: center;
+    gap: 5px;
+}
+
+.link-text {
+    font-size: 14px;
+    word-break: break-all;
+    word-wrap: break-word;
+}
+
+.favicon-wrapper {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 35px;
+    height: 35px;
+
+    svg {
+        padding: 5px;
+        box-sizing: border-box;
+        fill: var(--border-alt-text);
+    }
+}
+
+.favicon {
+    width: 100%;
+    height: 100%;
+    background-color: var(--border-alt);
+    border-radius: 8px;
+}
+
+.favicon-loader {
+    width: 22px;
+    height: 22px;
+    margin: 5px;
+    border: 3px solid #ccc;
+    border-top: 3px solid #555;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    position: absolute;
+    left: 0;
+}
+
+.favicon-img {
+    display: none;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.show-more-item span {
+    text-align: center;
+    width: 100%;
+    user-select: none;
+}
+
+.help-btn {
+    background-color: transparent;
+    height: fit-content;
+    width: fit-content;
+    border: none;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+
+    svg {
+        fill: var(--text-primary);
+    }
+}
+
+[dir="rtl"] .help-btn {
+    right: unset;
+    left: 10px;
+}
+
+
+[dir="rtl"] .format {
+    direction: ltr !important;
+    text-align: right !important;
+}
+
+.import-button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.import-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--btn-primary);
+    width: 100%;
+    height: 35px;
+    border-radius: 8px;
+    border: none;
+    margin: 5px 0;
+    text-decoration: none;
+}
+
+.source-btn-wrapper {
+    margin-top: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#source-btn {
+    color: var(--text-muted);
+    border: 1px solid var(--text-muted);
+}
+
+.confirm-btn-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    gap: 5px;
+    user-select: none;
+}
+
+.confirm-btn {
+    background-color: inherit;
+    color: currentColor;
+    font-size: 14px;
+    border: none;
+    border-radius: 30px;
+    padding: 12px;
+}
