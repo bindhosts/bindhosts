@@ -201,9 +201,13 @@ async function getHosts() {
 
         // Add scroll event listener to reset horizontal scroll
         em.on(hostList, 'scroll', () => {
+            const isRTL = document.documentElement.getAttribute('dir') === 'rtl';
             const rows = document.querySelectorAll('.host-list-row');
             rows.forEach(row => {
-                row.scrollTo({ left: 0, behavior: 'smooth' });
+                row.scrollTo({ 
+                    left: isRTL ? row.scrollWidth : -row.scrollWidth, 
+                    behavior: 'smooth'
+                });
             });
 
             // Existing scroll to load more functionality
@@ -261,8 +265,11 @@ function loadMoreHosts(callback) {
             em.on(removeBtn, 'click', (e) => handleRemove(e, domains));
         }
         em.on(hostItem, 'click', () => {
-            hostItem.scrollTo({ left: hostItem.scrollWidth, behavior: 'smooth' });
-
+            const isRTL = document.documentElement.getAttribute('dir') === 'rtl';    
+            hostItem.scrollTo({ 
+                left: isRTL ? -hostItem.scrollWidth : hostItem.scrollWidth,
+                behavior: 'smooth'
+            });
         });
         hostList.appendChild(hostItem);
     }

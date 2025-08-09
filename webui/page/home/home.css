@@ -133,6 +133,12 @@
     transform: translateX(105%);
 }
 
+[dir="rtl"] .host-list-row button {
+    right: unset;
+    left: 0;
+    transform: translateX(-105%);
+}
+
 /* Mode menu */
 #mode-menu .overlay-content {
     display: flex;
