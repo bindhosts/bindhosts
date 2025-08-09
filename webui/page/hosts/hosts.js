@@ -176,6 +176,7 @@ function removeCustomHostsFile(fileName) {
     const confirmationOverlay = document.getElementById("confirmation-overlay");
     const cancelButton = document.getElementById("cancel-btn");
     const removeButton = document.getElementById("remove-btn");
+    const closeBtn = document.getElementById('close-confirmation');
 
     document.getElementById("confirmation-file-name").textContent = fileName;
 
@@ -193,18 +194,19 @@ function removeCustomHostsFile(fileName) {
     }
 
     return new Promise((resolve) => {
-        em.on(cancelButton, 'click', () => {
+        closeBtn.onclick = () => {
             closeConfirmationOverlay();
             resolve(false);
-        });
+        }
+        cancelButton.onclick = () => closeBtn.click();
         em.on(confirmationOverlay, 'click', (e) => {
-            if (e.target === confirmationOverlay) cancelButton.click();
+            if (e.target === confirmationOverlay) closeBtn.click();
         });
         // Confirm file removal
-        em.on(removeButton, 'click', () => {
+        removeButton.onclick = () => {
             closeConfirmationOverlay();
             resolve(true);
-        });
+        }
     });
 }
 
@@ -391,7 +393,7 @@ function runBindhosts(args) {
             if (isTerminalOpen) {
                 closeBtn.style.opacity = '1';
                 closeBtn.style.pointerEvents = 'auto';
-                actionButton.style.transform = 'translateY(0)';
+                actionButton.classList.add('show');
             }
             actionRunning = false;
         });
@@ -410,7 +412,7 @@ function runBindhosts(args) {
         bodyContent.style.transform = 'translateX(0)';
         cover.style.opacity = '0';
         backButton.classList.remove('show');
-        actionButton.style.transform = 'translateY(0)';
+        actionButton.classList.add('show');
         actionButton.classList.remove('inTerminal');
         forceUpdateButton.classList.add('show');
         closeBtn.style.opacity = '0';
@@ -430,7 +432,7 @@ function runBindhosts(args) {
         cover.style.opacity = '1';
         header.classList.add('back');
         backButton.classList.add('show');
-        actionButton.style.transform = 'translateY(110px)';
+        actionButton.classList.remove('show');
         actionButton.classList.add('inTerminal');
         forceUpdateButton.classList.remove('show');
         title.textContent = translations.global_action;
@@ -556,7 +558,7 @@ function openFileEditor(lastFileName, openEditor = true) {
     header.classList.add('back', 'save');
     backButton.classList.add('show');
     saveButton.classList.add('show');
-    setTimeout(() => actionButton.style.transform = 'translateY(110px)', 50);
+    actionButton.classList.remove('show');
     forceUpdateButton.classList.remove('show');
     title.style.display = 'none';
     fileName.style.display = 'flex';
@@ -612,7 +614,7 @@ function openFileEditor(lastFileName, openEditor = true) {
         saveButton.classList.remove('show');
         header.classList.remove('back', 'save');
         title.style.display = 'inline';
-        actionButton.style.transform = 'translateY(0)';
+        actionButton.classList.add('show');
         setTimeout(() => {
             forceUpdateButton.classList.add('show');
         }, 200);
