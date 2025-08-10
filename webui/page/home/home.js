@@ -199,15 +199,11 @@ async function getHosts() {
             initialHeight = hostList.offsetHeight;
         });
 
-        // Add scroll event listener to reset horizontal scroll
+        // Scroll down to load more
         em.on(hostList, 'scroll', () => {
-            const isRTL = document.documentElement.getAttribute('dir') === 'rtl';
-            const rows = document.querySelectorAll('.host-list-row');
-            rows.forEach(row => {
-                row.scrollTo({ 
-                    left: isRTL ? row.scrollWidth : -row.scrollWidth, 
-                    behavior: 'smooth'
-                });
+            // Reset position
+            document.querySelectorAll('.scrollable-list').forEach(el => {
+                el.scrollTo({ left: 0, behavior: 'smooth' });
             });
 
             // Existing scroll to load more functionality
@@ -245,16 +241,18 @@ function loadMoreHosts(callback) {
         const [hostIp, ...domains] = hostLines[currentIndex];
         const dataType = hostIp === "0.0.0.0" ? "block" : "custom";
         const hostItem = document.createElement('div');
-        hostItem.classList.add('host-list-row');
+        hostItem.className = 'scrollable-list';
         hostItem.setAttribute('data-type', dataType);
 
         // Add remove button if dataType is not 'custom'
         hostItem.innerHTML = `
-            <div class="host-ip">${hostIp}</div>
-            <div class="host-domain">${domains.join(' ')}</div>
+            <div class="host-list-row">
+                <div class="host-ip">${hostIp}</div>
+                <div class="host-domain">${domains.join(' ')}</div>
+            </div>
             ${dataType !== 'custom' ? `
-            <button class="remove-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960" width="22px" fill="#ffffff"><path d="M277.37-111.87q-37.78 0-64.39-26.61t-26.61-64.39v-514.5h-45.5v-91H354.5v-45.5h250.52v45.5h214.11v91h-45.5v514.5q0 37.78-26.61 64.39t-64.39 26.61H277.37Zm78.33-168.37h85.5v-360h-85.5v360Zm163.1 0h85.5v-360h-85.5v360Z"/></svg>
+            <button class="remove-btn ripple-element">
+                <svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960" width="22px"><path d="M277.37-111.87q-37.78 0-64.39-26.61t-26.61-64.39v-514.5h-45.5v-91H354.5v-45.5h250.52v45.5h214.11v91h-45.5v514.5q0 37.78-26.61 64.39t-64.39 26.61H277.37Zm78.33-168.37h85.5v-360h-85.5v360Zm163.1 0h85.5v-360h-85.5v360Z"/></svg>
             </button>
             ` : ''}
         `;

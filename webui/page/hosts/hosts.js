@@ -53,6 +53,7 @@ function displayHostsList(lines, fileType) {
         const faviconUrl = `https://twenty-icons.com/${domain}`;
 
         const listItem = document.createElement("li");
+        listItem.className = 'scrollable-list';
         listItem.innerHTML = `
             <div class="link-box">
                 ${fileType !== "import_custom" ? `<div class="favicon-wrapper">

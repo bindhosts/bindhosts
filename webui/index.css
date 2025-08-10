@@ -283,6 +283,12 @@ h2 {
     display: flex;
     align-items: center;
     padding: 5px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.scrollable-list {
+    display: flex;
+    align-items: center;
     overflow-x: auto;
     border-bottom: 1px solid var(--border-color);
 }

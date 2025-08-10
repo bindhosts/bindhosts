@@ -289,74 +289,70 @@ export function setupSwipeToClose(element, cover) {
     element.addEventListener('mouseup', handleEnd);
 }
 
-// Scroll event
+let em;
 let isScrolling = false;
-export function setupScrollEvent() {
-    const content = document.querySelector('.body-content');
-    const actionContainer = document.querySelector('.float');
-    const forceUpdateButton = document.getElementById('force-update-btn');
+let lastScrollY = 0;
+let scrollTimeout;
+const scrollThreshold = 25;
 
-    let lastScrollY = content.scrollTop;
-    let scrollTimeout;
-    const scrollThreshold = 25;
-    content.addEventListener('scroll', () => {
+// Scroll event
+export function setupScrollEvent() {
+    em?.removeAll();
+    em = createEventManager();
+
+    const content = document.querySelector('.body-content');
+    const floatBtn = document.querySelector('.float');
+    const forceUpdateButton = document.getElementById('force-update-btn');
+    const isNotTcpBtn = floatBtn && !floatBtn.classList.contains('tcpdump-btn');
+
+    lastScrollY = content.scrollTop;
+
+    em.on(content, 'scroll', () => {
         isScrolling = true;
         clearTimeout(scrollTimeout);
         scrollTimeout = setTimeout(() => {
             isScrolling = false;
         }, 200);
+
+        // Scroll down
         if (content.scrollTop > lastScrollY && content.scrollTop > scrollThreshold) {
-            if (actionContainer && !actionContainer.classList.contains('tcpdump-btn')) {
-                setTimeout(() => actionContainer.classList.remove('show'), 100);
-            }
-            if (forceUpdateButton) forceUpdateButton.classList.remove('show');
+            if (isNotTcpBtn) floatBtn.classList.remove('show');
+            forceUpdateButton?.classList.remove('show');
+        // Scroll up
         } else if (content.scrollTop < lastScrollY) {
-            if (actionContainer && !actionContainer.classList.contains('tcpdump-btn')) {
-                actionContainer.classList.add('show');
-            }
-            if (forceUpdateButton) setTimeout(() => forceUpdateButton.classList.add('show'), 200);
+            if (isNotTcpBtn) floatBtn.classList.add('show');
+            setTimeout(() => forceUpdateButton?.classList.add('show'), 200);
         }
-    
+
         // Hide remove button on scroll
-        const box = document.querySelector('.box li');
-        if (box) {
-            document.querySelectorAll('.box li').forEach(li => {
-                li.scrollTo({ left: 0, behavior: 'smooth' });
-            });
-        }
-    
+        document.querySelectorAll('.scrollable-list').forEach(el => {
+            el.scrollTo({ left: 0, behavior: 'smooth' });
+        });
+
         lastScrollY = content.scrollTop;
     });
-}
 
-// Terminal scroll event
-export function setupTerminalSrollEvent() {
-    const actionContainer = document.querySelector('.float');
+    if (!floatBtn) return;
 
     document.querySelectorAll('.terminal').forEach(terminal => {
-        terminal.addEventListener('scroll', () => {
+        em.on(terminal, 'scroll', () => {
             isScrolling = true;
             clearTimeout(scrollTimeout);
             scrollTimeout = setTimeout(() => {
                 isScrolling = false;
             }, 200);
-            if ((terminal.scrollTop > lastScrollY && terminal.scrollTop > scrollThreshold)
-                || (terminal.scrollTop === 0 && actionContainer.classList.contains('tcpdump-btn'))) {
-                if (actionContainer && actionContainer.classList.contains('inTerminal')) {
-                    if (terminal.scrollTop === 0 && actionContainer.classList.contains('tcpdump-btn')) {
-                        setTimeout(() => actionContainer.classList.remove('show'), 100);
-                    } else {
-                        actionContainer.classList.add('show');
-                    }
-                }
-            } else if (terminal.scrollTop < lastScrollY && terminal.scrollTop > terminal.clientHeight * 0.5) {
-                if (actionContainer && actionContainer.classList.contains('inTerminal')) {
-                    actionContainer.classList.add('show');
-                }
+
+            if (!floatBtn.classList.contains('inTerminal')) return;
+
+            // At top
+            if (terminal.scrollTop === 0 && floatBtn.classList.contains('tcpdump-btn')) {
+                setTimeout(() => floatBtn.classList.remove('show'), 100); // Hide go-top button
+            } else {
+                floatBtn.classList.add('show'); // Show button on scroll
             }
             lastScrollY = terminal.scrollTop;
         });
-    });    
+    });
 }
 
 /**
