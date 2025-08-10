@@ -2,28 +2,28 @@
 
 :root {
     /* Background colors */
-    --bg-primary: var(--background, #F5F5F5);
-    --bg-secondary: var(--tonalSurface, #fff);
-    --bg-input: var(--surfaceBright, #F5F5F5);
+    --bg-primary: var(--background, #fbf8ff);
+    --bg-secondary: var(--tonalSurface, #f3f0f9);
+    --bg-input: var(--surfaceBright, #fbf8ff);
 
     /* Text colors */
-    --text-constant: var(--onSurface, #000);
-    --text-primary: var(--onSurface, #000);
+    --text-constant: var(--onSurface, #1b1b21);
+    --text-primary: var(--onSurface, #1b1b21);
     --text-muted: #757575;
 
     /* Border colors */
-    --border-color: var(--outlineVariant, #ccc);
-    --border-alt: var(--filledTonalButtonContainerColor, #ddd);
-    --border-alt-text: var(--filledTonalButtonContentColor, #333);
+    --border-color: var(--outlineVariant, #c7c5d0);
+    --border-alt: var(--filledTonalButtonContentColor, #e1e0f9);
+    --border-alt-text: var(--filledTonalButtonContainerColor, #444559);
 
     /* Scroll bar colors */
     --scroll-bar-color: #ddd;
 
     /* Button colors */
-    --btn-primary: var(--primary, #007bff);
+    --btn-primary: var(--primary, #565992);
     --btn-primary-text: var(--onPrimary, #fff);
-    --btn-delete: #FF4D4D;
-    --btn-edit: var(--error, #FFDD00);
+    --btn-delete: #f26767;
+    --btn-edit: var(--error, #f6e052);
 
     /* Prompt colors */
     --prompt-success: #4CAF50;
@@ -37,19 +37,23 @@
 @media (prefers-color-scheme: dark) {
     :root {
         /* Background colors */
-        --bg-primary: var(--background, #151515);
-        --bg-secondary: var(--tonalSurface, #292929);
-        --bg-input: var(--surfaceBright, #1b1b1b);
+        --bg-primary: var(--background, #131318);
+        --bg-secondary: var(--tonalSurface, #1c1c24);
+        --bg-input: var(--surfaceBright, #2c2c30);
 
         /* Text colors */
-        --text-constant: var(--onSurface, #eee);;
-        --text-primary: var(--onSurface, #eee);
+        --text-constant: var(--onSurface, #e4e1e9);
+        --text-primary: var(--onSurface, #e4e1e9);
         --text-muted: #C2C2C2;
 
         /* Border colors */
-        --border-color: var(--outlineVariant, #636363);
-        --border-alt: var(--filledTonalButtonContainerColor, #666);
-        --border-alt-text: var(--filledTonalButtonContentColor, #eee);
+        --border-color: var(--outlineVariant, #46464f);
+        --border-alt: var(--filledTonalButtonContainerColor, #444559);
+        --border-alt-text: var(--filledTonalButtonContentColor, #e1e0f9);
+
+        /* Button colors */
+        --btn-primary: var(--primary, #bfc2ff);
+        --btn-primary-text: var(--onPrimary, #272b60);
 
         /* Scroll bar colors */
         --scroll-bar-color: #666;
