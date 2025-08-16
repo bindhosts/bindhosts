@@ -21,8 +21,8 @@
     <string name="query_host_ip">IP</string>
     <string name="query_host_type">Tipe</string>
     <string name="query_host_domain">Domain</string>
-    <string name="query_remove_prompt">Whitelist</string>
-    <string name="query_remove_error">Gagal menambahkan ke whitelist</string>
+    <string name="query_remove_prompt">Hapus dari daftar putih</string>
+    <string name="query_remove_error">Gagal menambahkan ke daftar putih</string>
     <!-- Control Panel -->
     <string name="control_panel_title">Panel Kontrol</string>
     <string name="control_panel_language">Bahasa</string>
