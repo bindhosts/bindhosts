@@ -19,9 +19,8 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    height: calc(var(--top-inset) + 55px);
-    font-size: 22px;
-    font-weight: bold;
+    height: calc(var(--top-inset) + 70px);
+    font-size: 24px;
     color: var(--text-constant);
     background-color: var(--bg-primary);
     justify-content: flex-end;
@@ -69,7 +68,7 @@ body {
 .header button {
     flex-shrink: 0;
     font-size: 16px;
-    font-weight: bold;
+    font-weight: 500;
     color: var(--btn-primary-text);
     background-color: var(--btn-primary);
     border: none;
@@ -183,9 +182,9 @@ body {
 
 .constant-height {
     position: fixed;
-    top: calc(var(--top-inset) + 55px);
+    top: calc(var(--top-inset) + 70px);
     width: 100%;
-    height: calc(100vh - var(--top-inset) - 55px);
+    height: calc(100vh - var(--top-inset) - 70px);
     padding-bottom: calc(var(--bottom-inset) + 80px);
     box-sizing: border-box;
 }
@@ -225,14 +224,14 @@ body {
 .box {
     position: relative;
     flex-shrink: 0;
-    width: calc(100% - 60px);
+    width: calc(100% - 30px);
     max-width: 768px;
     background-color: var(--bg-secondary);
     border: none;
     border-radius: 15px;
-    box-shadow: 2px 2px 10px var(--shadow-light);
-    padding: 15px;
-    margin-top: 10px;
+    box-sizing: border-box;
+    padding: 20px;
+    margin-bottom: 10px;
     overflow: hidden;
 }
 
@@ -251,7 +250,7 @@ body {
 
 .tcpdump-content,
 .tcpdump-search {
-    width: calc(100% - 30px);
+    width: 100%;
     max-width: none;
 }
 
@@ -262,13 +261,8 @@ h2 {
 .box h2 {
     margin-top: 0;
     font-size: 20px;
-    font-weight: bold;
+    font-weight: 500;
     margin-bottom: 10px;
-}
-
-.box-content {
-    border-radius: 10px;
-    overflow: hidden;
 }
 
 .box ul,
@@ -449,7 +443,6 @@ h2 {
     left: 10px;
     background-color: var(--prompt-success);
     border-radius: 8px;
-    box-shadow: 0 2px 4px var(--shadow-light);
     color: white;
     font-size: 15px;
     word-break: break-all;
@@ -600,7 +593,7 @@ h2 {
         position: fixed;
         left: 80px;
         width: calc(100% - 80px);
-        height: calc(100vh - var(--top-inset) - 55px);
+        height: calc(100vh - var(--top-inset) - 70px);
         padding-bottom: 0;
     }
 

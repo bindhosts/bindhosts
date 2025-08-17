@@ -131,6 +131,10 @@
     display: none;
 }
 
+.tcpdump-header {
+    margin-bottom: 10px;
+}
+
 .tcpdump-header-content {
     font-family: monospace;
     margin: 0;
