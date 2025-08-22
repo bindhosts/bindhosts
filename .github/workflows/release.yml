@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         fetch-depth: 2
 
@@ -65,7 +65,7 @@ jobs:
 
     - name: Download artifact
       if: ${{ env.version_changed == 'true' || inputs.force_release }}
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v5
       with:
         name: ${{ env.ZIP_NAME }}
         path: ${{ env.MODULE_NAME }}
