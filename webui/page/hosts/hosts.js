@@ -55,13 +55,26 @@ function displayHostsList(lines, fileType) {
         const listItem = document.createElement("li");
         listItem.className = 'scrollable-list';
         listItem.innerHTML = `
+            <!-- Favicon and link text -->
             <div class="link-box">
                 ${fileType !== "import_custom" ? `<div class="favicon-wrapper">
                     <div class="favicon-loader"></div>
                     <img class="favicon-img favicon" src="${faviconUrl}" />
                 </div>` : ""}
-                <div class="link-text">${line}</div>
+                <div class="link-text">${line.replace(/^disabled\|/, '')}</div>
+
+                <!-- Checkbox (custom hosts only) -->
+                ${fileType === "custom" ? `<div class="checkbox-wrapper">
+                    <input type="checkbox" class="checkbox" id="checkbox1" disabled />
+                    <label for="checkbox1" class="custom-checkbox">
+                        <span class="tick-symbol">
+                            <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 -3 26 26" width="16px" height="16px" fill="#fff"><path d="M 22.566406 4.730469 L 20.773438 3.511719 C 20.277344 3.175781 19.597656 3.304688 19.265625 3.796875 L 10.476563 16.757813 L 6.4375 12.71875 C 6.015625 12.296875 5.328125 12.296875 4.90625 12.71875 L 3.371094 14.253906 C 2.949219 14.675781 2.949219 15.363281 3.371094 15.789063 L 9.582031 22 C 9.929688 22.347656 10.476563 22.613281 10.96875 22.613281 C 11.460938 22.613281 11.957031 22.304688 12.277344 21.839844 L 22.855469 6.234375 C 23.191406 5.742188 23.0625 5.066406 22.566406 4.730469 Z"/></svg>
+                        </span>
+                    </label>
+                </div>` : ''}
             </div>
+
+            <!-- Edit and delete buttons -->
             ${fileType === "import_custom" ? `<button class="edit-btn ripple-element">
                 <svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960" width="22px" fill="#ffffff"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg>
             </button>` : ""}
@@ -71,7 +84,8 @@ function displayHostsList(lines, fileType) {
         `;
         // Click to show remove button
         listElement.appendChild(listItem);
-        em.on(listItem, 'click', () => {
+        em.on(listItem, 'click', (e) => {
+            if (e.target.classList.contains("checkbox-wrapper")) return;
             const isRTL = document.documentElement.getAttribute('dir') === 'rtl';
             listItem.scrollTo({ 
                 left: isRTL ? -listItem.scrollWidth : listItem.scrollWidth,
@@ -94,6 +108,14 @@ function displayHostsList(lines, fileType) {
                 listItem.querySelector(".favicon-wrapper").innerHTML = `<svg class="favicon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M80-120v-720h400v160h400v560H80Zm80-80h80v-80h-80v80Zm0-160h80v-80h-80v80Zm0-160h80v-80h-80v80Zm0-160h80v-80h-80v80Zm160 480h80v-80h-80v80Zm0-160h80v-80h-80v80Zm0-160h80v-80h-80v80Zm0-160h80v-80h-80v80Zm160 480h320v-400H480v80h80v80h-80v80h80v80h-80v80Zm160-240v-80h80v80h-80Zm0 160v-80h80v80h-80Z"/></svg>`;
             };
         }
+        // Checkbox functionality for custom hosts
+        const checkbox = listItem.querySelector(".checkbox");
+        if (checkbox) checkbox.checked = !line.startsWith('disabled|');
+        em.on(listItem.querySelector('.checkbox-wrapper'), 'click', () => {
+            const command = line.startsWith('disabled|') ? `s/${line}/${line.replace(/^disabled\|/, '')}/` : `s/^${line}/disabled|${line}/`;
+            exec(`sed -i '${command}' ${basePath}/${filePaths[fileType]}`);
+            loadFile(fileType);
+        });
         // Remove line from file
         em.on(deleteLine, 'click', async () => {
             await exec(`
@@ -309,7 +331,7 @@ function setupKeyboardInset() {
             const wrapper = event.target.closest('.input-box-wrapper');
             wrapper.classList.add('focus');
             const inputBox = wrapper.querySelector('.input-box');
-            inputBox.style.paddingLeft = '9px';
+            inputBox.style.padding = '0 9px';
             setTimeout(() => {
                 const inputRect = event.target.getBoundingClientRect();
                 const viewportHeight = window.innerHeight;
