@@ -8,7 +8,7 @@
             </button>
         </div>
         <div class="category-container">
-            <div class="input-box-wrapper translucent-menu">
+            <div class="input-box-wrapper translucent">
                 <textarea autocapitalize="off" class="input-box" rows="1" id="sources-input" type="text" placeholder="https://adaway.org/hosts.txt"></textarea>
             </div>
             <button class="add-btn ripple-element" id="sources-add">
@@ -27,7 +27,7 @@
             </button>
         </div>
         <div class="category-container">
-            <div class="input-box-wrapper translucent-menu">
+            <div class="input-box-wrapper translucent">
                 <textarea autocapitalize="off" class="input-box" rows="1" id="sources_whitelist-input" type="text" placeholder="https://example.com/whitelist_txt"></textarea>
             </div>
             <button class="add-btn ripple-element" id="sources_whitelist-add">
@@ -46,7 +46,7 @@
             </button>
         </div>
         <div class="category-container">
-            <div class="input-box-wrapper translucent-menu">
+            <div class="input-box-wrapper translucent">
                 <textarea autocapitalize="off" class="input-box" rows="1" id="whitelist-input" type="text" placeholder="s.youtube.com"></textarea>
             </div>
             <button class="add-btn ripple-element" id="whitelist-add">
@@ -65,7 +65,7 @@
             </button>
         </div>
         <div class="category-container">
-            <div class="input-box-wrapper translucent-menu">
+            <div class="input-box-wrapper translucent">
                 <textarea autocapitalize="off" class="input-box" rows="1" id="blacklist-input" type="text" placeholder="online-casino.com"></textarea>
             </div>
             <button class="add-btn ripple-element" id="blacklist-add">
@@ -84,7 +84,7 @@
             </button>
         </div>
         <div class="category-container">
-            <div class="input-box-wrapper translucent-menu">
+            <div class="input-box-wrapper translucent">
                 <textarea autocapitalize="off" class="input-box" rows="1" id="custom-input" type="text" placeholder="93.184.215.14 example.com"></textarea>
             </div>
             <button class="add-btn ripple-element" id="custom-add">
@@ -118,17 +118,17 @@
 <div class="document-cover translucent constant-height blur-box"></div>
 <div class="constant-height slide-menu" id="edit-content">
     <div class="line-numbers"></div>
-    <textarea class="edit-input translucent-menu" id="edit-input"></textarea>
+    <textarea class="edit-input blur-box" id="edit-input"></textarea>
 </div>
 
 <!-- Action terminal -->
-<div class="constant-height translucent-menu slide-menu blur-box" id="action-terminal">
+<div class="constant-height blur-box slide-menu blur-box" id="action-terminal">
     <div class="terminal" id="action-terminal-content"></div>
 </div>
 
 <!-- Help overlay -->
 <div id="sources-help" class="overlay">
-    <div class="overlay-content translucent-menu blur-box">
+    <div class="overlay-content blur-box">
         <button class="close-btn">&#x2715;</button>
         <h2 data-i18n="source_title"></h2>
         <ul>
@@ -160,7 +160,7 @@
     </div>
 </div>
 <div id="sources_whitelist-help" class="overlay">
-    <div class="overlay-content translucent-menu blur-box">
+    <div class="overlay-content blur-box">
         <button class="close-btn">&#x2715;</button>
         <h2 data-i18n="sources_whitelist_title"></h2>
         <ul>
@@ -178,7 +178,7 @@
     </div>
 </div>
 <div id="whitelist-help" class="overlay">
-    <div class="overlay-content translucent-menu blur-box">
+    <div class="overlay-content blur-box">
         <button class="close-btn">&#x2715;</button>
         <h2 data-i18n="whitelist_title"></h2>
         <ul>
@@ -191,7 +191,7 @@
     </div>
 </div>
 <div id="blacklist-help" class="overlay">
-    <div class="overlay-content translucent-menu blur-box">
+    <div class="overlay-content blur-box">
         <button class="close-btn">&#x2715;</button>
         <h2 data-i18n="blacklist_title"></h2>
         <ul>
@@ -204,7 +204,7 @@
     </div>
 </div>
 <div id="custom-help" class="overlay">
-    <div class="overlay-content translucent-menu blur-box">
+    <div class="overlay-content blur-box">
         <button class="close-btn">&#x2715;</button>
         <h2 data-i18n="custom_title"></h2>
         <ul>
@@ -219,7 +219,7 @@
     </div>
 </div>
 <div id="import_custom-help" class="overlay">
-    <div class="overlay-content translucent-menu blur-box">
+    <div class="overlay-content blur-box">
         <button class="close-btn">&#x2715;</button>
         <h2 data-i18n="import_custom_title"></h2>
         <ul>
@@ -236,7 +236,7 @@
 
 <!-- Source docs overlay -->
 <div id="source-docs" class="docs overlay">
-    <div class="docs-content translucent-menu blur-box">
+    <div class="docs-content blur-box">
         <button class="close-btn">&#x2715;</button>
         <div class="documents">
             <div id="source-content">Loading...</div>
@@ -247,7 +247,7 @@
 
 <!-- Confirmation dialog overlay -->
 <div class="overlay" id="confirmation-overlay">
-    <div class="overlay-content translucent-menu blur-box">
+    <div class="overlay-content blur-box">
         <button class="close-btn" id="close-confirmation"></button>
         <h2 data-i18n="confirmation_title"></h2>
         <p>

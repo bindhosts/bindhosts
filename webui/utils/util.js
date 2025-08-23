@@ -395,27 +395,3 @@ export function createEventManager() {
 
     return { on, off, removeAll };
 }
-
-export async function setupCustomBackground() {
-    // custom background
-    const bgContainer = document.getElementById("custom-bg");
-    const bgImage = document.getElementById("custom-bg-img");
-    const bgPaths = [
-        "link/PERSISTENT_DIR/.webui_config/custom_background.webp",
-        "link/PERSISTENT_DIR/.webui_config/custom_background.jpg",
-        "link/PERSISTENT_DIR/.webui_config/custom_background.png"
-    ];
-
-    for (const path of bgPaths) {
-        try {
-            const response = await fetch(path, { method: "HEAD" });
-            if (response.ok) {
-                bgImage.src = path;
-                bgContainer.style.display = "flex";
-                break;
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    }
-}

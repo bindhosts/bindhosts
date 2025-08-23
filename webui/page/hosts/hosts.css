@@ -327,3 +327,67 @@
     border-radius: 30px;
     padding: 12px;
 }
+
+/* editor workpace */
+.editor-container {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+.line-numbers {
+    position: absolute;
+    left: 0;
+    top: 0;
+    min-height: 100%;
+    width: 30px;
+    padding: 75px 3px 30px 0;
+    color: var(--text-primary);
+    background-color: var(--scroll-bar-color);
+    border-right: 1px solid var(--border-color);
+    text-align: right;
+    font-family: monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    overflow-x: hidden;
+    z-index: 1;
+    transition: padding-bottom 0.2s ease;
+    user-select: none;
+}
+
+.edit-input {
+    direction: ltr !important;
+    position: relative;
+    background-color: var(--bg-primary);
+    height: 100%;
+    width: 100%;
+    color: inherit;
+    font-size: 14px;
+    line-height: 1.5;
+    border: none;
+    outline: none;
+    resize: none;
+    padding-left: 40px;
+    padding-top: 5px;
+    padding-bottom: 30px;
+    box-sizing: border-box;
+    transition: padding-bottom 0.2s ease;
+    overflow-y: auto;
+    white-space: nowrap;
+    scrollbar-color: var(--scroll-bar-color) var(--bg-secondary);
+}
+
+#edit-input::-webkit-scrollbar {
+    width: 25px;
+    transition: width 0.2s ease;
+}
+
+#edit-input::-webkit-scrollbar-track {
+    background-color: var(--bg-input);
+}
+
+#edit-input::-webkit-scrollbar-thumb {
+    min-height: 40px;
+    background-color: var(--scroll-bar-color);
+    border-radius: 5px;
+}

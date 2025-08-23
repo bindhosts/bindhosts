@@ -1,5 +1,5 @@
 import { exec } from './utils/kernelsu.js';
-import { applyRippleEffect, checkMMRL, setupCustomBackground, setupScrollEvent, setFooterClick } from './utils/util.js';
+import { applyRippleEffect, checkMMRL, setupScrollEvent, setFooterClick } from './utils/util.js';
 import { loadTranslations, applyTranslations } from './utils/language.js';
 import { WXEventHandler } from "webuix";
 
@@ -27,12 +27,12 @@ async function loadContent(contentName) {
 
     // Cleanup
     setFooterClick(true);
-    content.classList.remove('loaded');
+    document.querySelector('.body-content')?.classList.remove('loaded');
     document.querySelector('.back-button').click();
     if (currentModule && currentModule?.destroy) {
         currentModule.destroy();
     }
-    await new Promise(resolve => setTimeout(resolve, 100));
+    await new Promise(resolve => setTimeout(resolve, 50));
 
     // Update focued button
     document.querySelectorAll('.footer-btn').forEach(btn => {
@@ -77,7 +77,7 @@ async function loadContent(contentName) {
 
     // Initialize content
     setFooterClick(false);
-    content.classList.add('loaded');
+    document.querySelector('.body-content').classList.add('loaded');
     setupScrollEvent();
     applyRippleEffect();
     applyTranslations();
@@ -161,6 +161,44 @@ function setupRickRoll() {
     }
 }
 
+async function setupUserCustomization() {
+    // custom css
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = 'link/PERSISTENT_DIR/.webui_config/custom.css';
+    link.onerror = () => {
+        console.log('Custom CSS not found, using default styles');
+        if (link.parentNode) {
+            link.parentNode.removeChild(link);
+        }
+    };
+
+    document.head.appendChild(link);
+
+    // custom background
+    const bgContainer = document.getElementById("custom-bg");
+    const bgImage = document.getElementById("custom-bg-img");
+    const bgPaths = [
+        "link/PERSISTENT_DIR/.webui_config/custom_background.webp",
+        "link/PERSISTENT_DIR/.webui_config/custom_background.jpg",
+        "link/PERSISTENT_DIR/.webui_config/custom_background.png"
+    ];
+
+    for (const path of bgPaths) {
+        try {
+            const response = await fetch(path, { method: "HEAD" });
+            if (response.ok) {
+                bgImage.src = path;
+                bgContainer.style.display = "flex";
+                break;
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
 wx.on(window, 'back', () => {
     const backBtn = document.querySelector('.back-button');
     const overlays = document.querySelectorAll('.overlay');
@@ -199,7 +237,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     checkMMRL();
     loadContent('home');
     loadTranslations();
-    setupCustomBackground();
+    setupUserCustomization();
     applyRippleEffect();
     setupRickRoll();
 });

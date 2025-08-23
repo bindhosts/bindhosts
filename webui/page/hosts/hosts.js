@@ -464,18 +464,18 @@ function runBindhosts(args) {
 
 /**
  * Find out custom hosts list and display it
- * @returns {Promise<void>}
+ * @returns {void}
  */
-async function getCustomHostsList() {
-    const output = await exec(`ls ${basePath} | grep "^custom.*\.txt$" | grep -vx "custom.txt" || true`);
-    if (output.errno === 0) {
-        if (output.stdout.trim() !== '') {
-            const lines = output.stdout.split("\n");
-            displayHostsList(lines, "import_custom");
-        }
-    } else {
-        console.error("Failed to get custom hosts list:", output.stderr);
-    }
+function getCustomHostsList() {
+    exec(`ls ${basePath} | grep "^custom.*\.txt$" | grep -vx "custom.txt"`)
+        .then(({ stdout, stderr, errno }) => {
+            if (errno === 0) {
+                const lines = stdout.split("\n");
+                displayHostsList(lines, "import_custom");
+            } else {
+                console.error("Failed to get custom hosts list:", stderr);
+            }
+        });
 }
 
 async function importCustomHost() {
