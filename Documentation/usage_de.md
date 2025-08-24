@@ -8,13 +8,13 @@ width="100%" alt="Terminal Usage Screenshot">
 
 Sie können auf die verschiedenen Optionen zugreifen, wie in der Abbildung für bindhosts Magisk/KernelSU/APatch gezeigt
 
-- über Termux (oder andere gängige Terminal-Apps)
+ - über Termux (oder andere gängige Terminal-Apps)
       ```shell
       > su
       > bindhosts
       ```
 
-- über SDK-Plattform-Tools (Root-Shell)
+ - über SDK-Plattform-Tools (Root-Shell)
       ```shell
       > adb shell
       > su
