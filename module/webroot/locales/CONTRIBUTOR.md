@@ -18,6 +18,12 @@
 
 ---
 
+## French
+
+- [dimatteo](https://github.com/dimatteo)
+
+---
+
 ## German
 
 - [Vndkbopp77](https://github.com/Vndkbopp77)
@@ -49,12 +55,20 @@
 
 - [Mahiru](https://github.com/Nanaco3)
 - [reindex-ot](https://github.com/reindex-ot)
+- [nana7](https://crowdin.com/profile/nana7)
 
 ---
 
-### Polish
+## Polish
 
 - [Bladius2024](https://github.com/Bladius2024)
+
+---
+
+## Portuguese (Brazilian)
+
+- [SecretGogeta](https://crowdin.com/profile/secretgogeta)
+- [Isac Campelo](https://crowdin.com/profile/isaccampelo192)
 
 ---
 
@@ -63,6 +77,7 @@
 - [lynx](https://github.com/thisdialynx)
 - [0dinsky](https://github.com/0dinsky)
 - [Tihonov Matvey](https://crowdin.com/profile/rythmical)
+- [vertekplus](https://github.com/vertekplus)
 
 ---
 
