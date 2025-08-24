@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system_default">Padrão do Sistema</string>
+    <!-- Status -->
+    <string name="status_title">Estado</string>
+    <!-- Global -->
+    <string name="global_dev_opt">Opções do Desenvolvedor ativada</string>
+    <string name="global_dev_opt_true">Opções do Desenvolvedor já ativada</string>
+    <string name="global_reboot">Reinicie para ter efeito, clique para reiniciar</string>
+    <string name="global_save">Salvar</string>
+    <string name="global_saved">Arquivo salvo em</string>
+    <string name="global_save_fail">Falha ao salvar arquivo</string>
+    <string name="global_file_too_large">Edição de arquivo não é suportado em arquivo grande</string>
+    <string name="global_file_name_empty">Nome do arquivo não pode estar vazio</string>
+    <string name="global_show_all">Exibir Tudo</string>
+    <string name="global_more">Mais</string>
+    <string name="global_action">Ação</string>
+    <!-- Query -->
+    <string name="query_title">Consulta de Hospedeiro</string>
+    <string name="query_search">Pesquisar</string>
+    <string name="query_host_ip">IP</string>
+    <string name="query_host_type">Tipo</string>
+    <string name="query_host_domain">Domínio</string>
+    <string name="query_remove_prompt">Na lista branca</string>
+    <string name="query_remove_error">Falha ao incluir na lista branca</string>
+    <!-- Control Panel -->
+    <string name="control_panel_title">Painel de Controle</string>
+    <string name="control_panel_language">Idioma</string>
+    <string name="control_panel_bad_translation">Tradução Ruim</string>
+    <string name="control_panel_add_language">Adicionar um Idioma</string>
+    <string name="control_panel_get_tiles">Adicionar Bloco de Configurações Rápidas</string>
+    <string name="control_panel_installing">Instalando...</string>
+    <string name="control_panel_installed">Instalado. Por favor, habilite os privilégios SU para o aplicativo bindhosts</string>
+    <string name="control_panel_download_fail">Falha ao baixar, por favor verifique sua conexão á Internet</string>
+    <string name="control_panel_install_fail">Falha ao instalar, por favor instale manualmente em /sdcard/Download/bindhosts-app</string>
+    <string name="control_panel_module_update">Atualização do módulo</string>
+    <string name="control_panel_update_true">Atualização do módulo habilitada</string>
+    <string name="control_panel_update_false">Atualização do módulo desabilitada</string>
+    <string name="control_panel_action_redirect">Redirecionamento de ação</string>
+    <string name="control_panel_action_prompt_true">Redirecionamento de ação do Magisk habilitado para WebUI</string>
+    <string name="control_panel_action_prompt_false">Redirecionamento de ação do Magisk desabilitado para WebUI</string>
+    <string name="control_panel_update_hosts_daily">Atualizar Hosts diariamente</string>
+    <string name="control_panel_cron_true">Entrada do Crontab adicionada</string>
+    <string name="control_panel_cron_false">Entrada do Crontab removida</string>
+    <string name="control_panel_monitor_network_activity">Monitorar Atividade da Rede</string>
+    <!-- Custom -->
+    <string name="custom_title">Regras Customizadas</string>
+    <string name="custom_guide1">Adicione redirecionamentos customizados aqui</string>
+    <string name="custom_example">Exemplo:</string>
+    <string name="custom_format">Formato:</string>
+    <string name="custom_warning">ATENÇÃO: Regras customizadas são carregadas na execução e na redefinição!</string>
+    <string name="custom_prompt_fail">já está na regra customizada</string>
+    <!-- Import -->
+    <string name="import_custom_title">Importar Regras Customizadas</string>
+    <!-- Source -->
+    <string name="source_title">Fontes</string>
+    <string name="source_guide1">Fontes na lista negra</string>
+    <string name="source_guide2">Conjunto de Regras Customizados</string>
+    <string name="source_format">Formato:</string>
+    <string name="source_example">Exemplo:</string>
+    <string name="source_source_page">Mais fontes</string>
+    <string name="source_prompt_fail">já está na fonte</string>
+    <!-- Blacklist -->
+    <string name="blacklist_title">Lista negra</string>
+    <string name="blacklist_guide1">Tudo que você adiciona aqui vai ser colocado na lista negra</string>
+    <string name="blacklist_example">Exemplo:</string>
+    <string name="blacklist_prompt_fail">já está na lista negra</string>
+    <!-- Whitelist -->
+    <string name="whitelist_title">Lista de permissões</string>
+    <!-- Sources -->
+    <!-- Mode -->
+    <!-- More -->
+    <!-- Confirmation -->
+    <string name="confirmation_title">Confirmar Remoção?</string>
+    <string name="confirmation_message">Você tem certeza que quer remover</string>
+    <string name="confirmation_cancel">Cancelar</string>
+    <string name="confirmation_remove">Remover</string>
+    <!-- Footer -->
+    <string name="footer_home">Início</string>
+    <string name="footer_more">Mais</string>
+    <!-- Backup and Restore -->
+    <string name="backup_restore_backup_and_restore">Backup &amp; Restaurar</string>
+    <string name="backup_restore_export">Exportar configuração</string>
+    <string name="backup_restore_restore">Restaurar configuração</string>
+    <string name="backup_restore_exported">Configuração salvada em</string>
+    <string name="backup_restore_export_fail">Falha ao exportar configuração</string>
+    <string name="backup_restore_invalid_config">Configuração bindhosts inválida</string>
+    <string name="backup_restore_restored">Configuração restaurada com sucesso</string>
+    <string name="backup_restore_restore_fail">Falha ao restaurar configuração</string>
+</resources>

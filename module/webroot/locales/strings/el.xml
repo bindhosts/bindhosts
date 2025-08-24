@@ -90,6 +90,9 @@
     <string name="more_faq">Συχνές Ερωτήσεις</string>
     <string name="more_support">Υποστήριξη</string>
     <string name="more_support_issue">Αναφορά προβλήματος</string>
+    <string name="more_support_update_canary">Ενημέρωση στην τελευταία έκδοση Canary</string>
+    <string name="more_support_update_success">Επιτυχής ενημέρωση, επανεκκίνηση για να τεθεί σε ισχύ</string>
+    <string name="more_support_update_fail">Αποτυχία ενημέρωσης, παρακαλούμε κατεβάστε και κάντε εγκατάσταση χειροκίνητα από το GitHub</string>
     <!-- Confirmation -->
     <string name="confirmation_title">Επιβεβαίωση Αφαίρεσης?</string>
     <string name="confirmation_message">Είστε σίγουροι ότι θέλετε να αφαιρέσετε?</string>
