@@ -70,6 +70,13 @@ jobs:
         name: ${{ env.ZIP_NAME }}
         path: ${{ env.MODULE_NAME }}
 
+    - name: Zip module for release
+      if: ${{ env.version_changed == 'true' || inputs.force_release }}
+      run: |
+        cd ${{ env.MODULE_NAME }}
+        zip -r ../${{ env.MODULE_NAME }}.zip .
+        cd ..
+
     - name: Create new release
       if: ${{ env.version_changed == 'true' }}
       uses: softprops/action-gh-release@v2
