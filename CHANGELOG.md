@@ -4,6 +4,17 @@ Systemless hosts for APatch, KernelSU and Magisk
 ---
 
 # Changelog
+### 2.0.7
+- webui: adapted WebUI-X back gesture interceptor
+- webui: fix favicon not loading in WebUI-X
+- webui: add support for right-to-left language
+- webui: new color scheme, refactored ui
+- webui: new button to update to latest canary version in 'more' page
+- webui: better custom background support. custom.css will not be updated if you're upgrading from an older version, please extract from zip and replace manually if needed. [detail](https://github.com/bindhosts/bindhosts/blob/master/Documentation/customize.md)
+- scripts: custom.txt now support 'disable|' prefix to disable specific host. This feature is also available in webui.
+- translation: use Crowdin for translation service. [detail](https://github.com/bindhosts/bindhosts/blob/master/Documentation/localize.md)
+- translation: new language: French, Portuguese (Brazilian). [contributor](https://github.com/bindhosts/bindhosts/blob/master/module/webroot/locales/CONTRIBUTOR.md)
+
 ### 2.0.6
 - webui/js: remove unnecessary line when no custom hosts
 - webui/css: update WebUI-X css import address
