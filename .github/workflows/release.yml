@@ -42,6 +42,7 @@ jobs:
         CURRENT_VERSION_CODE=$(jq -r .versionCode update.json)
         PREVIOUS_VERSION_CODE=$(jq -r .versionCode <(git show HEAD~1:update.json))
         COMMIT_ID=$(git rev-parse --short HEAD)
+        echo "ZIP_NAME=${{ env.MODULE_NAME }}_${CURRENT_VERSION_CODE}-${COMMIT_ID}" >> $GITHUB_ENV
         echo "VERSION=$(jq -r .version update.json)" >> $GITHUB_ENV
         CHANGELOG_RAW=$(git diff HEAD^ HEAD -- "CHANGELOG.md" | grep '^+[^+]' | sed 's/^+//')
         {
@@ -54,7 +55,6 @@ jobs:
           echo "version_changed=true" >> $GITHUB_ENV
         else
           echo "version_changed=false" >> $GITHUB_ENV
-          echo "ZIP_NAME=${{ env.MODULE_NAME }}_${CURRENT_VERSION_CODE}-${COMMIT_ID}" >> $GITHUB_ENV
         fi
 
     - name: Upload artifact
