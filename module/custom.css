@@ -67,11 +67,11 @@
 :root {
     /* Choose one based on you background color theme */
     /* Dark background color scheme */
-    
+    /*
         --text-primary: #fff;
         --text-muted: #C2C2C2;
         --scroll-bar-color: #666;
-    
+     */
 
     /* Light background color scheme */
     /* 
@@ -83,21 +83,21 @@
 
 .footer-btn-icon.focus,
 .translucent {
-    
+    /*
         color: var(--text-primary) !important;
         background-color: rgba(0, 0, 0, 0) !important;
         border: 1px solid var(--border-color);
-    
+     */
 
     /* Blur intensity (optional) */
     /* backdrop-filter: blur(3px); */
 }
 
 .blur-box {
-    color: var(--text-primary);
+    /* color: var(--text-primary); */
 
     /* Dark background effect */
-    background-color: rgba(0, 0, 0, 0.1);
+    /* background-color: rgba(0, 0, 0, 0.1); */
 
     /* Light background effect */
     /* background-color: rgba(255, 255, 255, 0.4); */
@@ -107,5 +107,5 @@
 .footer,
 #copy-link {
     /* Prevent conflict with translucent background */
-    background-color: transparent;
+    /* background-color: transparent; */
 }
