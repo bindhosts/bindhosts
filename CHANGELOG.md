@@ -13,7 +13,7 @@ Systemless hosts for APatch, KernelSU and Magisk
 - webui: better custom background support. custom.css will not be updated if you're upgrading from an older version, please extract from zip and replace manually if needed. [detail](https://github.com/bindhosts/bindhosts/blob/master/Documentation/customize.md)
 - scripts: custom.txt now support 'disable|' prefix to disable specific host. This feature is also available in webui.
 - translation: use Crowdin for translation service. [detail](https://github.com/bindhosts/bindhosts/blob/master/Documentation/localize.md)
-- translation: new language: French, Portuguese (Brazilian). [contributor](https://github.com/bindhosts/bindhosts/blob/master/module/webroot/locales/CONTRIBUTOR.md)
+- translation: new language: French, Portuguese (Brazilian). [contributor](https://github.com/bindhosts/bindhosts/blob/master/webui/locales/CONTRIBUTOR.md)
 
 ### 2.0.6
 - webui/js: remove unnecessary line when no custom hosts
