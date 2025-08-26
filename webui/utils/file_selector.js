@@ -1,6 +1,7 @@
 import { exec } from './kernelsu.js';
-import { basePath, applyRippleEffect, showPrompt } from './util.js';
+import { basePath, applyRippleEffect, showPrompt, createEventManager } from './util.js';
 
+let em = createEventManager();
 let fileType;
 
 // File selector
@@ -64,7 +65,7 @@ async function listFiles(path, skipAnimation = false) {
                 </svg>
                 <span>..</span>
             `;
-            backItem.addEventListener('click', async () => {
+            em.on(backItem, 'click', () => {
                 document.querySelector('.file-selector-back-button').click();
             });
             fileList.appendChild(backItem);
@@ -83,7 +84,7 @@ async function listFiles(path, skipAnimation = false) {
                 <span>${item.name}</span>
             `;
             // Attach click event
-            itemElement.addEventListener('click', async () => {
+            em.on(itemElement, 'click', async () => {
                 if (item.isDirectory) {
                     // Go into directory
                     currentPath = item.path;
@@ -96,17 +97,19 @@ async function listFiles(path, skipAnimation = false) {
                     await listFiles(item.path);
                 } else if (item.isTextFile) {
                     // Select file
-                    try {
-                        const fileName = item.name.replace(/ /g, '_');
-                        await exec(`
-                            cp -f "${item.path}" ${basePath}/custom_${fileName}
-                            chmod 644 ${basePath}/custom_${fileName}
-                        `);
-                        closeFileSelector();
-                        showPrompt('global_saved', true, undefined, undefined, `${basePath}/custom_${fileName}`);
-                    } catch (error) {
-                        showPrompt('global_save_fail', false);
-                    }
+                    const fileName = item.name.replace(/ /g, '_');
+                    exec(`
+                        cp -f "${item.path}" ${basePath}/custom_${fileName}
+                        chmod 644 ${basePath}/custom_${fileName}
+                    `).then(({ errno, stderr }) => {
+                        if (errno === 0) {
+                            closeFileSelector();
+                            showPrompt('global_saved', true, undefined, undefined, `${basePath}/custom_${fileName}`);
+                        } else {
+                            showPrompt('global_save_fail', false);
+                            console.error('Error copying file:', stderr);
+                        }
+                    });
                 }
             });
             fileList.appendChild(itemElement);
@@ -126,56 +129,54 @@ async function listFiles(path, skipAnimation = false) {
 }
 
 /**
- * Update click handler to use data-path attribute
- * By clicking on a path segment, the user can navigate to that directory
+ * Setup init listener
  * @returns {void}
  */
-document.querySelector('.current-path').addEventListener('click', async (event) => {
-    const segment = event.target.closest('.path-segment');
-    if (!segment) return;
-    
-    const targetPath = segment.dataset.path;
-    if (!targetPath || targetPath === currentPath) return;
-    
-    // Return if already at /storage/emulated/0
-    const clickedSegment = segment.textContent;
-    if ((clickedSegment === 'storage' || clickedSegment === 'emulated') && 
-        currentPath === '/storage/emulated/0') {
-        return;
-    }
+function setupListeners() {
+    em.on(document.querySelector('.current-path'), 'click', async (event) => {
+        const segment = event.target.closest('.path-segment');
+        if (!segment) return;
 
-    // Always stay within /storage/emulated/0
-    if (targetPath.split('/').length <= 3) {
-        currentPath = '/storage/emulated/0';
-    } else {
-        currentPath = targetPath;
-    }
-    updateCurrentPath();
-    await listFiles(currentPath);
-});
+        const targetPath = segment.dataset.path;
+        if (!targetPath || targetPath === currentPath) return;
 
-/**
- * Back button handler to navigate up one directory
- * @returns {void}
- */
-document.querySelector('.file-selector-back-button').addEventListener('click', async () => {
-    if (currentPath === '/storage/emulated/0') return;
-    currentPath = currentPath.split('/').slice(0, -1).join('/');
-    if (currentPath === '') currentPath = '/storage/emulated/0';
-    const currentPathElement = document.querySelector('.current-path');
-    currentPathElement.innerHTML = currentPath.split('/').filter(Boolean).join('<span class="separator">›</span>');
-    currentPathElement.scrollTo({ 
-        left: currentPathElement.scrollWidth,
-        behavior: 'smooth'
+        // Return if already at /storage/emulated/0
+        const clickedSegment = segment.textContent;
+        if ((clickedSegment === 'storage' || clickedSegment === 'emulated') && 
+            currentPath === '/storage/emulated/0') {
+            return;
+        }
+
+        // Always stay within /storage/emulated/0
+        if (targetPath.split('/').length <= 3) {
+            currentPath = '/storage/emulated/0';
+        } else {
+            currentPath = targetPath;
+        }
+        updateCurrentPath();
+        await listFiles(currentPath);
     });
-    await listFiles(currentPath);
-});
 
-// Close file selector overlay
-document.querySelector('.close-selector').addEventListener('click', () => closeFileSelector());
-fileSelector.addEventListener('click', (event) => {
-    if (event.target === fileSelector) closeFileSelector();
-});
+    // Back button
+    em.on(document.querySelector('.file-selector-back-button'), 'click', async () => {
+        if (currentPath === '/storage/emulated/0') return;
+        currentPath = currentPath.split('/').slice(0, -1).join('/');
+        if (currentPath === '') currentPath = '/storage/emulated/0';
+        const currentPathElement = document.querySelector('.current-path');
+        currentPathElement.innerHTML = currentPath.split('/').filter(Boolean).join('<span class="separator">›</span>');
+        currentPathElement.scrollTo({ 
+            left: currentPathElement.scrollWidth,
+            behavior: 'smooth'
+        });
+        await listFiles(currentPath);
+    });
+
+    // Close file selector overlay
+    em.on(document.querySelector('.close-selector'), 'click', () => closeFileSelector());
+    em.on(fileSelector, 'click', (event) => {
+        if (event.target === fileSelector) closeFileSelector();
+    });
+}
 
 /**
  * Function to close file selector
@@ -187,6 +188,7 @@ function closeFileSelector() {
     setTimeout(() => {
         fileSelector.style.display = 'none';
     }, 300);
+    em?.removeAll();
 }
 
 /**
@@ -196,11 +198,15 @@ function closeFileSelector() {
  */
 export async function openFileSelector(type) {
     fileType = type;
+    currentPath = '/storage/emulated/0/Download';
+
+    // Show file selector overlay
     fileSelector.style.display = 'flex';
-    document.body.classList.add("no-scroll");
     fileSelector.offsetHeight;
     fileSelector.style.opacity = '1';
-    currentPath = '/storage/emulated/0/Download';
+    document.body.classList.add("no-scroll");
+    setupListeners();
+
     const currentPathElement = document.querySelector('.current-path');
     currentPathElement.innerHTML = currentPath.split('/').filter(Boolean).join('<span class="separator">›</span>');
     currentPathElement.scrollTo({ 
@@ -212,16 +218,14 @@ export async function openFileSelector(type) {
     // Return a promise that resolves with the selected JSON content
     return new Promise((resolve, reject) => {
         const fileList = document.querySelector('.file-list');
-        fileList.addEventListener('click', async (event) => {
+        em.on(fileList, 'click', (event) => {
             const item = event.target.closest('.file-item');
             if (item && item.querySelector('span').textContent.endsWith('.json')) {
-                try {
-                    const jsonConfig = await exec(`cat ${currentPath}/${item.querySelector('span').textContent}`);
-                    closeFileSelector();
-                    resolve(jsonConfig.trim());
-                } catch (error) {
-                    reject(error);
-                }
+                exec(`cat ${currentPath}/${item.querySelector('span').textContent}`)
+                    .then(({ errno, stdout, stderr }) => {
+                        errno === 0 ? resolve(stdout) : reject(stderr);
+                        closeFileSelector();
+                    });
             } else if (item && item.querySelector('span').textContent.endsWith('.txt')) {
                 closeFileSelector();
                 resolve(true);
