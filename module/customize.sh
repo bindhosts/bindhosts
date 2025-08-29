@@ -15,7 +15,7 @@ detect_key_press() {
     timeout_seconds=6  # Modify this to change the wait time
 
     # Read input with timeout using a pipe and capture the exit code
-    read -r -t $timeout_seconds line < <(getevent -ql)
+    read -r -t $timeout_seconds line < <(getevent -ql | awk '/KEY_VOLUME/ {print; exit}')
 
     # Check if input was read or timed out
     if [ $? -eq 142 ]; then  # Timeout exit code
