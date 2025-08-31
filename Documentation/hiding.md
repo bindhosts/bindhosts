@@ -5,12 +5,13 @@
 Hiding in APatch should just work, provided you are on [latest release](https://github.com/bmax121/APatch/releases/latest)
 
 - 'Exclude Modifications' to apps you want to hide root from.
-- enable [ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext)'s enforce denylist
+- Install [ReZygisk](https://github.com/PerformanC/ReZygisk) as denylist handler
+- OR if you use [ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext), enable enforce denylist
 - OR you can install either [NoHello](https://github.com/MhmRdd/NoHello) or [Zygisk Assistant](https://github.com/snake-4/Zygisk-Assistant)
 
 Legacy APatch is discouraged due to potential issues. However, you can try the following:
 
-- exclude modifications + enable [ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext)'s enforce denylist
+- exclude modifications + [ReZygisk](https://github.com/PerformanC/ReZygisk) OR [ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext)'s enforce denylist
 - OR you can install either [NoHello](https://github.com/MhmRdd/NoHello) or [Zygisk Assistant](https://github.com/snake-4/Zygisk-Assistant)
 - while this is not recommended anymore, you can still try to use hosts_file_redirect kpm. [Tutorial](https://github.com/bindhosts/bindhosts/issues/3)
 - if hosts_file_redirect fails, install [ZN-hostsredirect](https://github.com/aviraxp/ZN-hostsredirect/releases)
@@ -25,6 +26,8 @@ Hiding in KernelSU should just work, provided that:
 Recommendations:
 
 - if kernel is non-gki and kernel lacks path_umount, ask kernel dev to [backport this feature](https://github.com/tiann/KernelSU/pull/1464)
+- Install [ReZygisk](https://github.com/PerformanC/ReZygisk) as denylist handler
+- OR if you use [ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext), enable enforce denylist
 - OR you can install either [NoHello](https://github.com/MhmRdd/NoHello), [Shamiko](https://github.com/LSPosed/LSPosed.github.io/releases/) or [Zygisk Assistant](https://github.com/snake-4/Zygisk-Assistant)
 - alternatively, just install [ZN-hostsredirect](https://github.com/aviraxp/ZN-hostsredirect/releases)
 
