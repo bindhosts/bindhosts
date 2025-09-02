@@ -181,9 +181,9 @@ body {
 
 .constant-height {
     position: fixed;
-    padding-top: 70px;
     width: 100%;
-    height: 100vh;
+    height: calc(100vh - var(--top-inset));
+    padding-top: 70px;
     padding-bottom: calc(var(--bottom-inset) + 80px);
     box-sizing: border-box;
 }
