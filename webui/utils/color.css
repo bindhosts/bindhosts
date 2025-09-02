@@ -13,8 +13,8 @@
 
     /* Border colors */
     --border-color: var(--outlineVariant, #c7c5d0);
-    --border-alt: var(--filledTonalButtonContentColor, #e1e0f9);
-    --border-alt-text: var(--filledTonalButtonContainerColor, #444559);
+    --border-alt: var(--filledTonalButtonContainerColor, #e1e0f9);
+    --border-alt-text: var(--filledTonalButtonContentColor, #444559);
 
     /* Scroll bar colors */
     --scroll-bar-color: #ddd;
