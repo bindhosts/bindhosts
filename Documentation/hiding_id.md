@@ -7,6 +7,7 @@ Penyembunyian di APatch seharusnya berfungsi, asalkan anda menggunakan [rilis te
 - 'Kecualikan Modifikasi' pada aplikasi yang root-nya ingin anda sembunyikan.
 - aktifkan [ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext) paksa daftar tolak
 - ATAU anda dapat memasang [NoHello](https://github.com/MhmRdd/NoHello) atau [Zygisk Assistant](https://github.com/snake-4/Zygisk-Assistant)
+- ATAU anda dapat memasang [NoHello](https://github.com/MhmRdd/NoHello) atau [Zygisk Assistant](https://github.com/snake-4/Zygisk-Assistant)
 
 APatch lama tidak direkomendasikan karena potensi masalah. Namun, anda dapat mencoba hal berikut ini:
 
@@ -25,6 +26,8 @@ Penyembunyian di KernelSU seharusnya berfungsi, asalkan:
 Rekomendasi:
 
 - jika kernel non-gki dan kernel tidak memiliki path_umount, minta pengembang kernel untuk [mem-backport fitur ini](https://github.com/tiann/KernelSU/pull/1464)
+- ATAU anda dapat memasang [NoHello](https://github.com/MhmRdd/NoHello), [Shamiko](https://github.com/LSPosed/LSPosed.github.io/releases/) atau [Zygisk Assistant](https://github.com/snake-4/Zygisk-Assistant)
+- alternatifnya, cukup pasang [ZN-hostsredirect](https://github.com/aviraxp/ZN-hostsredirect/releases)
 - ATAU anda dapat memasang [NoHello](https://github.com/MhmRdd/NoHello), [Shamiko](https://github.com/LSPosed/LSPosed.github.io/releases/) atau [Zygisk Assistant](https://github.com/snake-4/Zygisk-Assistant)
 - alternatifnya, cukup pasang [ZN-hostsredirect](https://github.com/aviraxp/ZN-hostsredirect/releases)
 
