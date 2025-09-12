@@ -94,6 +94,12 @@ ksu_susfs_bind_kstat() {
 	echo "bindhosts: service.sh - mode ksu_susfs_bind_kstat" >> /dev/kmsg
 }
 
+ksu_add_try_umount() { 
+	mount_bind
+	/data/adb/ksud add-try-umount '/system/etc/hosts'
+	echo "bindhosts: service.sh - mode ksu_add_try_umount" >> /dev/kmsg
+}
+
 ##
 # check opmodes and then do something
 case $operating_mode in
@@ -107,6 +113,7 @@ case $operating_mode in
 	7) generic_overlay ;;
 	8) ksu_susfs_overlay ;;
 	9) ksu_susfs_bind_kstat ;;
+	10001) ksu_add_try_umount ;;
 	*) normal_mount ;; # catch invalid modes
 esac
 

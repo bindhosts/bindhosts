@@ -57,6 +57,13 @@ if [ "$KSU" = true ] && [ -f ${SUSFS_BIN} ] &&
 	mode=1
 fi
 
+# https://github.com/5ec1cff/KernelSU/pull/16
+# we just check ksud if it exists, atleast for now
+if [ "$KSU" = true ] && /data/adb/ksud -h | grep -q "add-try-umount" >/dev/null 2>&1; then
+	echo "bindhosts: post-fs-data.sh - ksud with add-try-umount found!" >> /dev/kmsg
+	mode=10001
+fi
+
 # hosts_file_redirect operating_mode
 # this method is APatch only
 # no other heuristic other than dmesg
