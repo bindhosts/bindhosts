@@ -5,7 +5,8 @@
 Ocultar en APatch debería funcionar, siempre y cuando estés en la [última versión](https://github.com/bmax121/APatch/releases/latest)
 
 - 'Excluir modificaciones' a las aplicaciones de las que desea ocultar root.
-- Activa la lista de denegación de [ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext)
+- Instala [ReZygisk](https://github.com/PerformanC/ReZygisk) como controlador de lista de denegación
+- O si utiliza [ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext), habilite la lista de denegación
 - O puede instalar [NoHello](https://github.com/MhmRdd/NoHello) o [Zygisk Assistant](https://github.com/snake-4/Zygisk-Assistant)
 
 APatch Legacy no se recomienda debido a problemas potenciales. Sin embargo, puedes probar lo siguiente:
@@ -25,6 +26,8 @@ Ocultar en KernelSu solo debería funcionar, siempre que:
 Recomendaciones:
 
 - si el kernel no es gki y carece de path_umount, pregunte al dev del kernel que [haga backport a esta característica](https://github.com/tiann/KernelSU/pull/1464)
+- Instala [ReZygisk](https://github.com/PerformanC/ReZygisk) como controlador de lista de denegación
+- O si utiliza [ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext), habilite la lista de denegación
 - O puedes instalar [NoHello](https://github.com/MhmRdd/NoHello), [Shamiko](https://github.com/LSPosed/LSPosed.github.io/releases/) o [Zygisk Assistant](https://github.com/snake-4/Zygisk-Assistant)
 - Alternativamente, simplemente instale [ZN-hostsredirect](https://github.com/aviraxp/ZN-hostsredirect/releases)
 
