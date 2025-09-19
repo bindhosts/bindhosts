@@ -33,10 +33,17 @@ fi
 # so far ReZygisk, NoHello, Zygisk Assistant does it
 # while Zygisk Next can also do it, it will only do that when denylist is enforced (DE)
 # while deducing DE status is likely possible, that thing is hot-toggleable anyway so theres no assurance.
-denylist_handlers="rezygisk zygisk-assistant zygisk_nohello"
+denylist_handlers="rezygisk zygisksu zygisk-assistant zygisk_nohello"
 for module_name in $denylist_handlers; do
 	if [ -d "/data/adb/modules/$module_name" ] && [ ! -f "/data/adb/modules/$module_name/disable" ] && 
 		[ ! -f "/data/adb/modules/$module_name/remove" ]; then
+		if [ "$module_name" = "zygisksu" ]; then
+			if grep -q NeoZygisk /data/adb/modules/zygisksu/module.prop; then
+				module_name="NeoZygisk"
+			else
+				continue;
+			fi
+		fi
 		echo "bindhosts: post-fs-data.sh - $module_name found" >> /dev/kmsg
 		mode=2
 	fi
