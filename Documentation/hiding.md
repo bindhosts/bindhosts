@@ -5,14 +5,14 @@
 Hiding in APatch should just work, provided you are on [latest release](https://github.com/bmax121/APatch/releases/latest)
 
 - 'Exclude Modifications' to apps you want to hide root from.
-- Install [ReZygisk](https://github.com/PerformanC/ReZygisk) as denylist handler
-- OR if you use [ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext), enable enforce denylist
-- OR you can install either [NoHello](https://github.com/MhmRdd/NoHello) or [Zygisk Assistant](https://github.com/snake-4/Zygisk-Assistant)
+- Install either NeoZygisk or ReZygisk as denylist handler
+- OR if you use ZygiskNext, enable enforce denylist
+- OR you can install either NoHello or Zygisk Assistant on top of Zygisk Next
 
 Legacy APatch is discouraged due to potential issues. However, you can try the following:
 
-- exclude modifications + [ReZygisk](https://github.com/PerformanC/ReZygisk) OR [ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext)'s enforce denylist
-- OR you can install either [NoHello](https://github.com/MhmRdd/NoHello) or [Zygisk Assistant](https://github.com/snake-4/Zygisk-Assistant)
+- exclude modifications plus either NeoZygisk, ReZygisk OR ZygiskNext's enforce denylist
+- OR you can install either NoHello or Zygisk Assistant
 - while this is not recommended anymore, you can still try to use hosts_file_redirect kpm. [Tutorial](https://github.com/bindhosts/bindhosts/issues/3)
 - if hosts_file_redirect fails, install [ZN-hostsredirect](https://github.com/aviraxp/ZN-hostsredirect/releases)
 
@@ -26,14 +26,14 @@ Hiding in KernelSU should just work, provided that:
 Recommendations:
 
 - if kernel is non-gki and kernel lacks path_umount, ask kernel dev to [backport this feature](https://github.com/tiann/KernelSU/pull/1464)
-- Install [ReZygisk](https://github.com/PerformanC/ReZygisk) as denylist handler
-- OR if you use [ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext), enable enforce denylist
-- OR you can install either [NoHello](https://github.com/MhmRdd/NoHello), [Shamiko](https://github.com/LSPosed/LSPosed.github.io/releases/) or [Zygisk Assistant](https://github.com/snake-4/Zygisk-Assistant)
+- Install NeoZygisk or ReZygisk as denylist handler
+- OR if you use ZygiskNext, enable enforce denylist
+- OR you can install either NoHello, Shamiko or Zygisk Assistant on top of Zygisk Next
 - alternatively, just install [ZN-hostsredirect](https://github.com/aviraxp/ZN-hostsredirect/releases)
 
 ### Variants (MKSU, KernelSU-NEXT)
 
-- For MKSU, you can use [Shamiko](https://github.com/LSPosed/LSPosed.github.io/releases/)
+- For MKSU, same recommendations as KernelSU
 - For KernelSU-NEXT, hiding will just work (via mode 6)
 
 ### SuSFS
@@ -45,7 +45,7 @@ Recommendations:
 Hiding in Magisk (and clones, Alpha, Kitsune) should just work as is.
 
 - Add the apps you want to hide root from to the denylist.
-- optionally you can also use [Shamiko](https://github.com/LSPosed/LSPosed.github.io/releases/)
+- optionally you can also use Shamiko on Alpha
 
 # FAQ
 
@@ -54,8 +54,16 @@ Hiding in Magisk (and clones, Alpha, Kitsune) should just work as is.
 - How do I check for detections?
   - Read [how to check for detections](https://github.com/bindhosts/bindhosts/issues/4)
 - How do I move to bind mount on APatch?
-  - get ci builds [here](https://nightly.link/bmax121/APatch/workflows/build/main/APatch)
+  - get [latest release](https://github.com/bmax121/APatch/releases/latest)
 
-## Glossary of terms
+## Links
 
-- bind mount - APatch's term for magic mount, mounting method primarily used by Magisk.
+### Zygisk providers
+- [NeoZygisk](https://github.com/JingMatrix/NeoZygisk)
+- [ReZygisk](https://github.com/PerformanC/ReZygisk)
+- [ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext)
+
+### Zygisk addons
+- [NoHello](https://github.com/MhmRdd/NoHello)
+- [Shamiko](https://github.com/LSPosed/LSPosed.github.io/releases/)
+- [Zygisk Assistant](https://github.com/snake-4/Zygisk-Assistant)
