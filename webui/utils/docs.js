@@ -1,4 +1,4 @@
-import { toast } from './kernelsu.js';
+import { toast } from 'kernelsu-alt';
 import { linkRedirect, applyRippleEffect, developerOption, learnMore, setupSwipeToClose, createEventManager } from './util.js';
 import { translations, lang } from './language.js';
 import { marked } from "marked";

@@ -14,6 +14,7 @@
   "license": "WTFPL-2.0",
   "type": "module",
   "dependencies": {
+    "kernelsu-alt": "^1.0.1",
     "marked": "^16.1.1",
     "webuix": "^0.0.16"
   },

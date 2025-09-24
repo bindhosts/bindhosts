@@ -1,4 +1,4 @@
-import { exec, spawn } from '../../utils/kernelsu.js';
+import { exec, spawn } from 'kernelsu-alt';
 import { showPrompt, applyRippleEffect, basePath, setupSwipeToClose, moduleDirectory, filePaths, createEventManager } from '../../utils/util.js';
 import { translations } from '../../utils/language.js';
 import { openFileSelector } from '../../utils/file_selector.js';

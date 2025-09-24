@@ -1,4 +1,4 @@
-import { exec } from './kernelsu.js';
+import { exec } from 'kernelsu-alt';
 import { basePath, applyRippleEffect, showPrompt, createEventManager } from './util.js';
 
 let em = createEventManager();

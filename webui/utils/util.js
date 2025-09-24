@@ -1,4 +1,4 @@
-import { exec, toast } from './kernelsu.js';
+import { exec, toast } from 'kernelsu-alt';
 import { translations } from './language.js';
 
 export let developerOption = false;

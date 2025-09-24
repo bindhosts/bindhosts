@@ -1,4 +1,4 @@
-import { exec } from './utils/kernelsu.js';
+import { exec } from 'kernelsu-alt';
 import { applyRippleEffect, checkMMRL, setupScrollEvent, setFooterClick } from './utils/util.js';
 import { loadTranslations, applyTranslations } from './utils/language.js';
 import { WXEventHandler } from "webuix";

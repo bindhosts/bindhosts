@@ -1,4 +1,4 @@
-import { exec } from '../../utils/kernelsu.js';
+import { exec } from 'kernelsu-alt';
 import { showPrompt, basePath, developerOption, setDeveloperOption, setLearnMore, moduleDirectory, createEventManager } from '../../utils/util.js';
 import { setupDocsMenu } from '../../utils/docs.js';
 
