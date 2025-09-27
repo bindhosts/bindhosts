@@ -69,8 +69,8 @@ body {
     flex-shrink: 0;
     font-size: 16px;
     font-weight: 500;
-    color: var(--btn-primary-text);
-    background-color: var(--btn-primary);
+    color: var(--btn-secondary-text);
+    background-color: var(--btn-secondary);
     border: none;
     border-radius: 8px;
     padding: 5px 10px;
@@ -149,7 +149,7 @@ body {
 .force-update-button,
 .action-button {
     bottom: 0px;
-    background-color: var(--btn-primary);
+    background-color: var(--btn-secondary);
     border: none;
     border-radius: 15px;
     padding: 12px;
@@ -161,7 +161,7 @@ body {
     pointer-events: auto;
 
     svg {
-        fill: var(--btn-primary-text);
+        fill: var(--btn-secondary-text);
         z-index: 1;
     }
 }

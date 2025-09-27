@@ -4,7 +4,7 @@
     /* Background colors */
     --bg-primary: var(--background, #fbf8ff);
     --bg-secondary: var(--tonalSurface, #f3f0f9);
-    --bg-input: var(--surfaceBright, #fbf8ff);
+    --bg-input: var(--surfaceContainerLow, #f5f2fa);
 
     /* Text colors */
     --text-constant: var(--onSurface, #1b1b21);
@@ -13,8 +13,8 @@
 
     /* Border colors */
     --border-color: var(--outlineVariant, #c7c5d0);
-    --border-alt: var(--filledTonalButtonContainerColor, #e1e0f9);
-    --border-alt-text: var(--filledTonalButtonContentColor, #444559);
+    --border-alt: var(--secondaryContainer, #e1e0f9);
+    --border-alt-text: var(--onSecondaryContainer, #444559);
 
     /* Scroll bar colors */
     --scroll-bar-color: #ddd;
@@ -22,6 +22,8 @@
     /* Button colors */
     --btn-primary: var(--primary, #565992);
     --btn-primary-text: var(--onPrimary, #fff);
+    --btn-secondary: var(--primaryContainer, #e0e0ffff);
+    --btn-secondary-text: var(--onPrimaryContainer, #11144bff);
     --btn-delete: #f26767;
     --btn-edit: var(--error, #f6e052);
 
@@ -39,7 +41,7 @@
         /* Background colors */
         --bg-primary: var(--background, #131318);
         --bg-secondary: var(--tonalSurface, #1c1c24);
-        --bg-input: var(--surfaceBright, #2c2c30);
+        --bg-input: var(--surfaceContainerLow, #1b1b21);
 
         /* Text colors */
         --text-constant: var(--onSurface, #e4e1e9);
@@ -48,12 +50,14 @@
 
         /* Border colors */
         --border-color: var(--outlineVariant, #46464f);
-        --border-alt: var(--filledTonalButtonContainerColor, #444559);
-        --border-alt-text: var(--filledTonalButtonContentColor, #e1e0f9);
+        --border-alt: var(--secondaryContainer, #444559);
+        --border-alt-text: var(--onSecondaryContainer, #e1e0f9);
 
         /* Button colors */
         --btn-primary: var(--primary, #bfc2ff);
         --btn-primary-text: var(--onPrimary, #272b60);
+        --btn-secondary: var(--primaryContainer, #3e4278ff);
+        --btn-secondary-text: var(--onPrimaryContainer, #e0e0ffff);
 
         /* Scroll bar colors */
         --scroll-bar-color: #666;

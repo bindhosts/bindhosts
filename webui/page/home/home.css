@@ -8,8 +8,8 @@
 }
 
 #status-box {
-    background-color: var(--btn-primary);
-    color: var(--btn-primary-text);
+    background-color: var(--border-alt);
+    color: var(--border-alt-text);
 }
 
 /* Query box */
