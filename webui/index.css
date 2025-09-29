@@ -597,8 +597,7 @@ h2 {
         position: fixed;
         left: 80px;
         width: calc(100% - 80px);
-        height: 100vh;
-        padding-bottom: 0;
+        padding-bottom: var(--bottom-inset);
     }
 
     .prompt.show {
