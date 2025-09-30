@@ -100,6 +100,11 @@
     transition: .4s;
 }
 
+[dir="rtl"] .slider:before {
+    left: unset;
+    right: 3px;
+}
+
 input:checked+.slider {
     background-color: var(--btn-primary);
 }
@@ -111,6 +116,10 @@ input:focus+.slider {
 input:checked+.slider:before {
     background-color: var(--btn-primary-text);
     transform: translateX(15px);
+}
+
+[dir="rtl"] input:checked+.slider:before {
+    transform: translateX(-15px);
 }
 
 .slider.round {
