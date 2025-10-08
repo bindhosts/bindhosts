@@ -352,7 +352,7 @@ adblock() {
 		fi
 	done
 
-	# if all downloads failed, abort the update.
+	# if all downloads failed we are probably offline, abort the update.
 	if [ "$successful_downloads" -eq 0 ] && [ "$total_downloads" -gt 0 ]; then
 		echo "[!] all downloads failed, aborting update."
 		echo "[!] keeping existing hosts file."
