@@ -331,22 +331,38 @@ adblock() {
 	illusion
 	# source processing start!
 	echo "[+] processing sources"
-	sed '/#/d' $PERSISTENT_DIR/sources.txt | grep http > /dev/null || {
-			echo "[x] no sources found 😭" 
-			echo "[x] sources.txt needs correction 💢"
-			return
-			}
-        # download routine start!
-	for url in $(sed '/#/d' $PERSISTENT_DIR/sources.txt | grep http) ; do 
+	sources=$(sed '/#/d' $PERSISTENT_DIR/sources.txt | grep http)
+	if [ -z "$sources" ]; then
+		echo "[x] no sources found 😭"
+		echo "[x] sources.txt needs correction 💢"
+		return
+	fi
+
+	# download routine start!
+	successful_downloads=0
+	total_downloads=0
+	for url in $sources ; do
+		total_downloads=$((total_downloads + 1))
 		echo "[>] fetching $url"
-		download "$url" >> "$rwdir/temphosts" || echo "[x] failed downloading $url"
-		echo "" >> "$rwdir/temphosts"
+		if download "$url" >> "$rwdir/temphosts"; then
+			successful_downloads=$((successful_downloads + 1))
+			echo "" >> "$rwdir/temphosts"
+		else
+			echo "[x] failed downloading $url"
+		fi
 	done
-	# if temphosts is empty
-	# its either user did something
-	# or inaccessible urls / no internet
+
+	# if all downloads failed we are probably offline, abort the update.
+	if [ "$successful_downloads" -eq 0 ] && [ "$total_downloads" -gt 0 ]; then
+		echo "[!] all downloads failed, aborting update."
+		echo "[!] keeping existing hosts file."
+		rm -f "$rwdir/temphosts"
+		return
+	fi
+
+	# if temphosts is empty (can happen if sources were valid but returned no content)
 	[ ! -s "$rwdir/temphosts" ] && {
-		echo "[!] downloaded hosts found to be empty"
+		echo "[!] downloaded hosts content is empty"
 		echo "[!] using old hosts file!"
 		# strip first two lines since thats just localhost
 		tail -n +3 $target_hostsfile > "$rwdir/temphosts"
