@@ -31,8 +31,6 @@ fi
 
 # we can force mode 2 if user has something that gives unconditional umount to /system/etc/hosts
 # so far NeoZygisk, ReZygisk, NoHello, Zygisk Assistant does it
-# while Zygisk Next can also do it, it will only do that when denylist is enforced (DE)
-# while deducing DE status is likely possible, that thing is hot-toggleable anyway so theres no assurance.
 denylist_handlers="rezygisk zygisksu zygisk-assistant zygisk_nohello"
 for module_name in $denylist_handlers; do
 	if [ -d "/data/adb/modules/$module_name" ] && [ ! -f "/data/adb/modules/$module_name/disable" ] && 
@@ -48,6 +46,18 @@ for module_name in $denylist_handlers; do
 		mode=2
 	fi
 done
+
+# on ZN 1.3.0 deducing DE / UM status at boot is now possible
+# enforce_denylist:1 is DE
+# enforce_denylist:2 is UM
+zygisksu_dir="/data/adb/modules/zygisksu"
+if [ -d "$zygisksu_dir" ] && [ ! -f "$zygisksu_dir/remove" ] && [ ! -f "$zygisksu_dir/disable" ]; then
+	enforce_denylist_mode=$(cat /data/adb/zygisksu/denylist_enforce)
+	if [ "$enforce_denylist_mode" -gt 0 ]; then 
+		echo "bindhosts: post-fs-data.sh - ZygiskNext 1.3.0+ found with enforce_denylist $enforce_denylist_mode" >> /dev/kmsg
+		mode=2
+	fi
+fi
 
 # ksu next 12183
 # ksu next added try_umount /system/etc/hosts recently
@@ -87,7 +97,7 @@ fi
 # we can only assume that it is on a working state
 # here we unconditionally flag an operating_mode for it
 if [ -d "/data/adb/modules/hostsredirect" ] && [ ! -f "/data/adb/modules/hostsredirect/disable" ] && [ ! -f "/data/adb/modules/hostsredirect/remove" ] &&
-	[ -d "/data/adb/modules/zygisksu" ] && [ ! -f "/data/adb/modules/zygisksu/disable" ] && [ ! -f "/data/adb/modules/zygisksu/remove" ]; then
+	[ -d "$zygisksu_dir" ] && [ ! -f "$zygisksu_dir/disable" ] && [ ! -f "$zygisksu_dir/remove" ]; then
 	mode=4
 fi
 
