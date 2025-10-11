@@ -8,18 +8,18 @@ width="100%" alt="Terminal Usage Screenshot">
 
 Anda dapat mengakses berbagai opsi seperti yang ditunjukkan pada gambar untuk bindhosts Magisk/KernelSU/APatch
 
- - melalui Termux (atau berbagai aplikasi terminal umum lainnya)
-      ```shell
-      > su
-      > bindhosts
-      ```
+- melalui Termux (atau berbagai aplikasi terminal umum lainnya)
+    ```shell
+    > su
+    > bindhosts
+    ```
 
- - melalui SDK Platform Tools (root shell)
-      ```shell
-      > adb shell
-      > su
-      > bindhosts
-      ```
+- melalui SDK Platform Tools (root shell)
+    ```shell
+    > adb shell
+    > su
+    > bindhosts
+    ```
 
 ### Contoh
 
