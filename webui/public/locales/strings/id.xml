@@ -6,7 +6,7 @@
     <!-- Global -->
     <string name="global_dev_opt">Opsi pengembang diaktifkan</string>
     <string name="global_dev_opt_true">Opsi pengembang telah di diaktifkan</string>
-    <string name="global_reboot">Mulai ulang untuk menerapkan, klik untuk mulai ulang</string>
+    <string name="global_reboot">Mulai ulang untuk menerapkan, ketuk untuk memulai ulang</string>
     <string name="global_save">Simpan</string>
     <string name="global_saved">File disimpan ke</string>
     <string name="global_save_fail">Gagal menyimpan file</string>
@@ -30,39 +30,39 @@
     <string name="control_panel_add_language">Tambahkan Bahasa Lainnya</string>
     <string name="control_panel_get_tiles">Dapatkan Tile QS</string>
     <string name="control_panel_installing">Memasang...</string>
-    <string name="control_panel_installed">Terinstal, silakan aktifkan izin SU untuk aplikasi bindhosts</string>
-    <string name="control_panel_download_fail">Gagal mengunduh, silakan periksa koneksi internet Anda</string>
-    <string name="control_panel_install_fail">Gagal menginstal, silakan instal secara manual dari /sdcard/Download/bindhosts-app</string>
+    <string name="control_panel_installed">Terpasang, silakan aktifkan izin SU untuk aplikasi bindhosts</string>
+    <string name="control_panel_download_fail">Gagal mengunduh, silakan periksa koneksi internet anda</string>
+    <string name="control_panel_install_fail">Gagal memasang, silakan instal secara manual dari /sdcard/Download/bindhosts-app</string>
     <string name="control_panel_module_update">Pembaruan Modul</string>
-    <string name="control_panel_update_true">Pembaharuan Modul diaktifkan</string>
-    <string name="control_panel_update_false">Pembaharuan Modul dinonaktifkan</string>
-    <string name="control_panel_action_redirect">Action Redirect</string>
-    <string name="control_panel_action_prompt_true">Redirect Magisk action ke WebUI diaktifkan</string>
-    <string name="control_panel_action_prompt_false">Redirect Magisk action ke WebUI dinonaktifkan</string>
+    <string name="control_panel_update_true">Pembaruan Modul diaktifkan</string>
+    <string name="control_panel_update_false">Pembaruan Modul dinonaktifkan</string>
+    <string name="control_panel_action_redirect">Alihkan Action</string>
+    <string name="control_panel_action_prompt_true">Pengalihan Magisk action ke WebUI diaktifkan</string>
+    <string name="control_panel_action_prompt_false">Pengalihan Magisk action ke WebUI dinonaktifkan</string>
     <string name="control_panel_update_hosts_daily">Perbarui Host Setiap Hari</string>
-    <string name="control_panel_cron_true">Crontab entry ditambahkan</string>
-    <string name="control_panel_cron_false">Crontab entry dihapus</string>
+    <string name="control_panel_cron_true">Entri Crontab ditambahkan</string>
+    <string name="control_panel_cron_false">Entri Crontab dihapus</string>
     <string name="control_panel_monitor_network_activity">Pantau Aktivitas Jaringan</string>
     <!-- Custom -->
     <string name="custom_title">Aturan kustom</string>
-    <string name="custom_guide1">Tambahkan pengalihan kustom disini</string>
+    <string name="custom_guide1">Tambahkan pengalihan khusus disini</string>
     <string name="custom_example">Contoh:</string>
     <string name="custom_format">Format:</string>
-    <string name="custom_warning">PERINGATAN: Aturan kustom dimuat saat run dan reset!</string>
+    <string name="custom_warning">PERINGATAN: Aturan khusus dimuat saat dijalankan dan disetel ulang!</string>
     <string name="custom_prompt_fail">sudah ada di aturan kustom</string>
     <!-- Import -->
     <string name="import_custom_title">Impor Aturan Kustom</string>
     <!-- Source -->
-    <string name="source_title">Sources</string>
+    <string name="source_title">Sumber</string>
     <string name="source_guide1">Sumber daftar hitam</string>
-    <string name="source_guide2">Aturan kustom</string>
+    <string name="source_guide2">Sumber aturan kustom</string>
     <string name="source_format">Format:</string>
     <string name="source_example">Contoh:</string>
     <string name="source_source_page">Sumber lainnya</string>
-    <string name="source_prompt_fail">sudah ada di source</string>
+    <string name="source_prompt_fail">sudah ada di sumber</string>
     <!-- Blacklist -->
     <string name="blacklist_title">Daftar hitam</string>
-    <string name="blacklist_guide1">Apapun yang Anda tambahkan di sini akan masuk ke daftar hitam</string>
+    <string name="blacklist_guide1">Apapun yang anda tambahkan di sini akan masuk ke daftar hitam</string>
     <string name="blacklist_example">Contoh:</string>
     <string name="blacklist_prompt_fail">sudah ada di daftar hitam</string>
     <!-- Whitelist -->
