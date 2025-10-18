@@ -8,18 +8,18 @@ width="100%" alt="Terminal Usage Screenshot">
 
 Μπορείτε να αποκτήσετε πρόσβαση στις διάφορες επιλογές όπως φαίνεται στην εικόνα για το bindhosts Magisk/KernelSU/APatch
 
- - μέσω Termux (ή άλλων διαφόρων κοινών εφαρμογών τερματικού)
-      ```shell
-      > su
-      > bindhosts
-      ```
+- μέσω Termux (ή άλλων διαφόρων κοινών εφαρμογών τερματικού)
+    ```shell
+    > su
+    > bindhosts
+    ```
 
- - μέσω SDK Platform Tools (κέλυφος root)
-      ```shell
-      > adb shell
-      > su
-      > bindhosts
-      ```
+- μέσω SDK Platform Tools (κέλυφος root)
+    ```shell
+    > adb shell
+    > su
+    > bindhosts
+    ```
 
 ### Παράδειγμα
 

@@ -8,18 +8,18 @@ width="100%" alt="Terminal Usage Screenshot">
 
 为了在使用 Magisk/KernelSU/APatch 时均能访问如图所示的多个选项，您可以
 
- - 通过 Termux (或者其他类似的终端 app)
-      ```shell
-      > su
-      > bindhosts
-      ```
+- 通过 Termux (或者其他类似的终端 app)
+    ```shell
+    > su
+    > bindhosts
+    ```
 
- - 通过 SDK Platform Tools (root shell)
-      ```shell
-      > adb shell
-      > su
-      > bindhosts
-      ```
+- 通过 SDK Platform Tools (root shell)
+    ```shell
+    > adb shell
+    > su
+    > bindhosts
+    ```
 
 ### 例如
 
