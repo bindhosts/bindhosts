@@ -4,6 +4,15 @@ Systemless hosts for APatch, KernelSU and Magisk
 ---
 
 # Changelog
+### 2.0.8
+- scripts/post-fs-data: add ZN 1.3.0 mode 2 support
+- webui: various changes for rtl languages
+- webui: add kernelsu-alt to dependency
+- scripts/post-fs-data: add NeoZygisk into denylist_handlers
+- scripts/post-fs-data: add mode 10001
+- webui: fix abnormal color and content height
+- webui: fix restore json config
+
 ### 2.0.7
 - webui: adapted WebUI-X back gesture interceptor
 - webui: fix favicon not loading in WebUI-X
