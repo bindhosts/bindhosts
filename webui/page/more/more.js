@@ -1,5 +1,5 @@
 import { exec, spawn } from 'kernelsu-alt';
-import { showPrompt, applyRippleEffect, basePath, moduleDirectory, linkRedirect, filePaths, setupSwipeToClose, createEventManager } from '../../utils/util.js';
+import { showPrompt, reboot, applyRippleEffect, basePath, moduleDirectory, linkRedirect, filePaths, setupSwipeToClose, createEventManager } from '../../utils/util.js';
 import { translations, generateLanguageMenu } from '../../utils/language.js';
 import { openFileSelector } from '../../utils/file_selector.js';
 import { addCopyToClipboardListeners, setupDocsMenu } from '../../utils/docs.js';
@@ -30,17 +30,17 @@ function checkBindhostsApp() {
 function installBindhostsApp() {
     if (isDownloading) return;
     isDownloading = true;
-    showPrompt("control_panel_installing", true, 10000, "[+]");
+    showPrompt("[+] " + translations.control_panel_installing, true, 10000);
     const tilesContainer = document.getElementById('tiles-container');
     const output = spawn("sh", [`${moduleDirectory}/bindhosts-app.sh`], { env: { WEBUI_QUIET: "true" }});
     output.stdout.on('data', (data) => {
         if (data.includes("[+]")) {
-            showPrompt("control_panel_installed", true, 5000, "[+]");
+            showPrompt("[+] " + translations.control_panel_installed, true, 5000);
             tilesContainer.style.display = "none";
         } else if (data.includes("[x] Failed to download")) {
-            showPrompt("control_panel_download_fail", false, undefined, "[×]");
+            showPrompt("[×] " + translations.control_panel_download_fail, false);
         } else if (data.includes("[*]")) {
-            showPrompt("control_panel_install_fail", false, 5000, "[×]");
+            showPrompt("[×] " + translations.control_panel_install_fail, false, 5000);
         }
     });
     output.on('exit', () => {
@@ -74,9 +74,9 @@ async function toggleModuleUpdate() {
         const lines = result.stdout.split("\n");
         lines.forEach(line => {
             if (line.includes("[+]")) {
-                showPrompt("control_panel_update_true", true, undefined, "[+]");
+                showPrompt("[+] " + translations.control_panel_update_true);
             } else if (line.includes("[x]")) {
-                showPrompt("control_panel_update_false", false, undefined, "[×]");
+                showPrompt("[×] "+ translations.control_panel_update_false, false);
             }
         });
         checkUpdateStatus();
@@ -113,9 +113,9 @@ async function toggleActionRedirectWebui() {
     `);
     if (result.errno === 0) {
         if (actionRedirectStatus.checked) {
-            showPrompt("control_panel_action_prompt_false", false, undefined, "[×]");
+            showPrompt("[×] " + translations.control_panel_action_prompt_false, false);
         } else {
-            showPrompt("control_panel_action_prompt_true", true, undefined, "[+]");
+            showPrompt("[+] " + translations.control_panel_action_prompt_true);
         }
         checkRedirectStatus();
     } else {
@@ -182,9 +182,9 @@ async function toggleCron() {
         const lines = result.stdout.split("\n");
         lines.forEach(line => {
             if (line.includes("[+]")) {
-                showPrompt("control_panel_cron_true", true, undefined, "[+]");
+                showPrompt("[+] " + translations.control_panel_cron_true);
             } else if (line.includes("[x]")) {
-                showPrompt("control_panel_cron_false", false, undefined, "[×]");
+                showPrompt("[×] " + translations.control_panel_cron_false, false);
             }
         });
         checkCronStatus();
@@ -211,7 +211,11 @@ function canaryUpdate() {
     });
     result.on('exit', (code) => {
         isDownloading = false;
-        showPrompt(code === 0 ? "more_support_update_success" : "more_support_update_fail", code === 0, 3000);
+        if (code === 0) {
+            showPrompt(translations.more_support_update_success, true, 4000, translations.global_reboot, reboot);
+        } else {
+            showPrompt(translations.more_support_update_fail, false);
+        }
     });
 }
 
@@ -224,7 +228,7 @@ function localesUpdate() {
     if (isDownloading) return;
     isDownloading = true;
 
-    showPrompt("more_support_checking_update", true, 10000);
+    showPrompt(translations.more_support_checking_update, true, 10000);
     fetch("https://raw.githubusercontent.com/bindhosts/bindhosts/bot/locales_version")
         .then(response => {
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
@@ -242,7 +246,7 @@ function localesUpdate() {
             const local_version = await fetch('locales/version').then(response => response.text()).then(text => text.trim());
 
             if (Number(remote_version) <= Number(local_version)) {
-                showPrompt("more_support_no_update", true, 3000);
+                showPrompt(translations.more_support_no_update, true);
                 isDownloading = false;
             } else {
                 const result = spawn('sh', [`${moduleDirectory}/bindhosts.sh`, '--update-locales'], { env: { WEBUI_QUIET: "true" }});
@@ -257,7 +261,7 @@ function localesUpdate() {
             }
         })
         .catch(error => {
-            showPrompt("more_support_update_locales_failed", false);
+            showPrompt(translations.more_support_update_locales_failed, false);
             isDownloading = false;
         });
 }
@@ -481,10 +485,10 @@ JSON_EOF
 echo "$FILENAME"
         `);
     if (result.errno === 0) {
-        showPrompt("backup_restore_exported", true, undefined, undefined, result.stdout.trim());
+        showPrompt(translations.backup_restore_exported + " " + result.stdout.trim());
     } else {
         console.error("Backup failed:", result.stderr);
-        showPrompt("backup_restore_export_fail", false);
+        showPrompt(translations.backup_restore_export_fail, false);
     }
 }
 
@@ -501,7 +505,7 @@ async function restoreConfig() {
     // Validate using metadata
     const isValid = config.metadata && config.metadata.description === "bindhosts config backup";
     if (!isValid) {
-        showPrompt("backup_restore_invalid_config", false);
+        showPrompt(translations.backup_restore_invalid_config, false);
         return;
     }
 
@@ -517,10 +521,10 @@ RESTORE_EOF
 chmod 644 ${basePath}/${fileData.path} || true
             `);
             if (result.errno === 0) {
-                showPrompt("backup_restore_restored", true);
+                showPrompt(translations.backup_restore_restored);
             } else {
                 console.error("Restore failed:", result.stderr);
-                showPrompt("backup_restore_restore_fail", false);
+                showPrompt(translations.backup_restore_restore_fail, false);
             }
         }
     }

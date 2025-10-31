@@ -1,5 +1,6 @@
 import { exec } from 'kernelsu-alt';
 import { basePath, applyRippleEffect, showPrompt, createEventManager } from './util.js';
+import { translations } from './language.js';
 
 let em = createEventManager();
 let fileType;
@@ -104,9 +105,9 @@ async function listFiles(path, skipAnimation = false) {
                     `).then(({ errno, stderr }) => {
                         if (errno === 0) {
                             closeFileSelector();
-                            showPrompt('global_saved', true, undefined, undefined, `${basePath}/custom_${fileName}`);
+                            showPrompt(translations.global_saved + ` ${basePath}/custom_${fileName}`);
                         } else {
-                            showPrompt('global_save_fail', false);
+                            showPrompt(translations.global_save_fail, false);
                             console.error('Error copying file:', stderr);
                         }
                     });

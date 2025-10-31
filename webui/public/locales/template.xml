@@ -6,7 +6,9 @@
     <!-- Global -->
     <string name="global_dev_opt">Developer option enabled</string>
     <string name="global_dev_opt_true">Developer option already enabled</string>
-    <string name="global_reboot">Reboot to take effect, tap to reboot</string>
+    <string name="global_reboot_now">Reboot to take effect</string>
+    <string name="global_reboot">Reboot</string>
+    <string name="global_rebooting">Rebooting...</string>
     <string name="global_save">Save</string>
     <string name="global_saved">File saved to</string>
     <string name="global_save_fail">Failed to save file</string>

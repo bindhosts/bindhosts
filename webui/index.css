@@ -441,31 +441,63 @@ h2 {
     left: 10px;
 }
 
-.prompt {
+.prompt-container {
     position: fixed;
-    bottom: 0;
-    left: 10px;
-    background-color: var(--prompt-success);
-    border-radius: 8px;
-    color: white;
-    font-size: 15px;
-    word-break: break-all;
-    padding: 5px 10px;
-    z-index: 2000;
-    width: auto;
-    max-width: calc(100% - 40px);
-    transform: translateY(100%);
-    transition: transform 0.3s ease;
-    overflow: hidden;
-    user-select: none;
+    bottom: calc(var(--bottom-inset) + 96px);
+    left: 0;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.prompt {
+    background-color: var(--prompt);
+    color: var(--prompt-text);
+    width: calc(100% - 32px);
+    max-width: 900px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    border-radius: 4px;
+    box-sizing: border-box;
+    opacity: 0;
+    transform: scale(0.9);
+    transition: all 0.2s ease;
+}
+
+.prompt.show {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
 }
 
 .prompt.error {
     background-color: var(--prompt-error);
+    color: var(--prompt-error-text);
 }
 
-.prompt.show {
-    transform: translateY(calc((var(--bottom-inset) + 85px) * -1));
+.prompt-text {
+    font-size: 14px;
+    padding: 14px 0;
+    user-select: none;
+}
+
+.prompt-btn {
+    display: none;
+    flex-shrink: 0; 
+    font-size: 1em;
+    color: var(--btn-secondary);
+    background-color: transparent;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 50px;
+}
+
+.prompt-btn.show {
+    display: block;
 }
 
 .footer {
@@ -598,9 +630,5 @@ h2 {
         left: 80px;
         width: calc(100% - 80px);
         padding-bottom: var(--bottom-inset);
-    }
-
-    .prompt.show {
-        transform: translateY(calc((var(--bottom-inset) + 20px) * -1));
     }
 }

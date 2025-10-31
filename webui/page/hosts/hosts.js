@@ -178,7 +178,7 @@ async function handleAdd(fileType, prompt) {
 
         for (const line of inputLines) {
             if (existingLines.includes(line)) {
-                showPrompt(prompt, false, 2000, `${line}`);
+                showPrompt(line + ' ' + translations[prompt], false, 2000);
                 continue;
             }
             await exec(`echo "${line}" >> ${basePath}/${filePaths[fileType]}`);
@@ -505,7 +505,7 @@ async function fileNameEditor(fileName) {
     } else {
         // Only rename is supported for large files
         openFileEditor(fileName, false);
-        showPrompt("global_file_too_large", true);
+        showPrompt(translations.global_file_too_large);
     }
 }
 
@@ -654,7 +654,7 @@ function openFileEditor(lastFileName, openEditor = true) {
         const newFileName = fileNameInput.value;
         const content = editorInput.value.trim();
         if (newFileName === "") {
-            showPrompt("global_file_name_empty", false);
+            showPrompt(translations.global_file_name_empty, false);
             return;
         }
         let command;
@@ -672,9 +672,9 @@ HostEditorEOF
         }
         const result = await exec(command);
         if (result.errno === 0) {
-            showPrompt("global_saved", true, undefined, undefined, `${basePath}/custom${newFileName}.txt`);
+            showPrompt(translations.global_saved + ` ${basePath}/custom${newFileName}.txt`);
         } else {
-            showPrompt("global_save_fail", false);
+            showPrompt(translations.global_save_fail, false);
             console.error("Failed to save file:", result.stderr);
         }
         getCustomHostsList();
