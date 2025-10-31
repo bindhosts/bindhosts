@@ -5,6 +5,7 @@ import { openFileSelector } from '../../utils/file_selector.js';
 import { addCopyToClipboardListeners, setupDocsMenu } from '../../utils/docs.js';
 
 let em = createEventManager();
+let isDownloading = false;
 
 /**
  * Check if user has installed bindhosts app
@@ -22,13 +23,16 @@ function checkBindhostsApp() {
 }
 
 /**
- * Install the bindhosts app, called by controlPanelEventlistener
+ * Install the bindhosts app
  * @returns {void}
+ * @see controlPanelEventlistener - Calling this function
  */
 function installBindhostsApp() {
+    if (isDownloading) return;
+    isDownloading = true;
     showPrompt("control_panel_installing", true, 10000, "[+]");
     const tilesContainer = document.getElementById('tiles-container');
-    const output = spawn("sh", [`${moduleDirectory}/bindhosts-app.sh`]);
+    const output = spawn("sh", [`${moduleDirectory}/bindhosts-app.sh`], { env: { WEBUI_QUIET: "true" }});
     output.stdout.on('data', (data) => {
         if (data.includes("[+]")) {
             showPrompt("control_panel_installed", true, 5000, "[+]");
@@ -38,6 +42,9 @@ function installBindhostsApp() {
         } else if (data.includes("[*]")) {
             showPrompt("control_panel_install_fail", false, 5000, "[×]");
         }
+    });
+    output.on('exit', () => {
+        isDownloading = false;
     });
 }
 
@@ -57,8 +64,9 @@ function checkUpdateStatus() {
 }
 
 /**
- * Switch module update status and refresh toggle, called by controlPanelEventlistener
+ * Switch module update status and refresh toggle
  * @returns {Promise<void>}
+ * @see controlPanelEventlistener - Calling this function
  */
 async function toggleModuleUpdate() {
     const result = await exec(`sh ${moduleDirectory}/bindhosts.sh --toggle-updatejson`);
@@ -93,8 +101,9 @@ function checkMagisk() {
 }
 
 /**
- * Toggle the action redirect WebUI setting, called by controlPanelEventlistener
+ * Toggle the action redirect WebUI setting
  * @returns {Promise<void>}
+ * @see controlPanelEventlistener - Calling this function
  */
 async function toggleActionRedirectWebui() {
     const actionRedirectStatus = document.getElementById('action-redirect');
@@ -162,8 +171,9 @@ function checkCronStatus() {
 }
 
 /**
- * Toggle cron job status, called by controlPanelEventlistener
+ * Toggle cron job status
  * @returns {Promise<void>}
+ * @see controlPanelEventlistener - Calling this function
  */
 async function toggleCron() {
     const cronToggle = document.getElementById('toggle-cron');
@@ -184,11 +194,14 @@ async function toggleCron() {
 }
 
 /**
- * Update to latest canary version, called by controlPanelEventlistener
+ * Update to latest canary version
  * @returns {void}
+ * @see controlPanelEventlistener - Calling this function
  */
 function canaryUpdate() {
-    const result = spawn('sh', [`${moduleDirectory}/bindhosts.sh`, '--install-canary'], { env: { KSU_WEBUI: "true" } });
+    if (isDownloading) return;
+    isDownloading = true;
+    const result = spawn('sh', [`${moduleDirectory}/bindhosts.sh`, '--install-canary'], { env: { KSU_WEBUI: "true", WEBUI_QUIET: "true" }});
     result.stdout.on('data', (data) => {
         if (data.includes('[+]')) {
             showPrompt(data, true, 15000);
@@ -197,18 +210,16 @@ function canaryUpdate() {
         }
     });
     result.on('exit', (code) => {
-        if (code === 0) {
-            showPrompt("more_support_update_success", true, 3000);
-        } else {
-            showPrompt("more_support_update_fail", false, 3000);
-        }
+        isDownloading = false;
+        showPrompt(code === 0 ? "more_support_update_success" : "more_support_update_fail", code === 0, 3000);
     });
 }
 
 let languageMenuListener = false;
 /**
- * Open language menu overlay, called by controlPanelEventlistener
+ * Open language menu overlay
  * @returns {void}
+ * @see controlPanelEventlistener - Calling this function
  */
 function openLanguageMenu() {
     const languageOverlay = document.getElementById('language-overlay');
@@ -255,6 +266,7 @@ let setupTcpdumpTerminal = false, contentBox = false;
 /**
  * Open tcpdump terminal
  * @returns {void}
+ * @see controlPanelEventlistener - Calling this function
  */
 function openTcpdumpTerminal() {
     const cover = document.querySelector('.document-cover');
@@ -297,7 +309,7 @@ function openTcpdumpTerminal() {
     }
 
     const tcpdumpHeader = document.getElementById('tcpdump-header');
-    const output = spawn("sh", [`${moduleDirectory}/bindhosts.sh`, '--tcpdump']);
+    const output = spawn("sh", [`${moduleDirectory}/bindhosts.sh`, '--tcpdump'], { env: { WEBUI_QUIET: "true" }});
     output.stdout.on('data', (data) => {
         if (data.includes('Out IP') || data.includes('In IP')) {
             if (!contentBox) appendContentBox();
@@ -316,7 +328,7 @@ function openTcpdumpTerminal() {
                 addCopyToClipboardListeners();
                 applyRippleEffect();
             }
-        } else if (!data.startsWith("[")) {
+        } else {
             appendVerbose(data);
         }
     });
@@ -391,6 +403,7 @@ function openTcpdumpTerminal() {
 /**
  * Backup bindhosts config to /sdcard/Download/bindhosts_config.json
  * @returns {Promise<void>}
+ * @see controlPanelEventlistener - Calling this function
  */
 async function exportConfig() {
     const config = {
@@ -414,11 +427,11 @@ async function exportConfig() {
 
     // Output in json format
     const result = await exec(`
-            FILENAME="/storage/emulated/0/Download/bindhosts_config_$(date +%Y%m%d_%H%M%S).json"
-            cat <<'JSON_EOF' > "$FILENAME"
+FILENAME="/storage/emulated/0/Download/bindhosts_config_$(date +%Y%m%d_%H%M%S).json"
+cat <<'JSON_EOF' > "$FILENAME"
 ${JSON.stringify(config)}
 JSON_EOF
-            echo "$FILENAME"
+echo "$FILENAME"
         `);
     if (result.errno === 0) {
         showPrompt("backup_restore_exported", true, undefined, undefined, result.stdout.trim());
@@ -432,6 +445,7 @@ JSON_EOF
  * Restore config
  * Open file selector and restore config from selected file
  * @return {Promise<void>}
+ * @see controlPanelEventlistener - Calling this function
  */
 async function restoreConfig() {
     const jsonConfig = await openFileSelector("json");
@@ -450,10 +464,10 @@ async function restoreConfig() {
             if (!filePaths[fileType] || !fileData.content) continue;
             const content = fileData.content;
             const result = await exec(`
-                cat <<'RESTORE_EOF' > ${basePath}/${fileData.path}
+cat <<'RESTORE_EOF' > ${basePath}/${fileData.path}
 ${content}
 RESTORE_EOF
-                chmod 644 ${basePath}/${fileData.path} || true
+chmod 644 ${basePath}/${fileData.path} || true
             `);
             if (result.errno === 0) {
                 showPrompt("backup_restore_restored", true);

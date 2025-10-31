@@ -15,10 +15,12 @@ versionCode=$(grep versionCode $MODDIR/module.prop | sed 's/versionCode=//g' )
 rwdir=$MODDIR
 [ -w /dev ] && rwdir=/dev
 
-echo "[+] bindhosts v$versionCode"
-echo "[%] bindhosts.sh"
-echo "[%] standalone hosts-based-adblocking implementation"
-echo "[%] mode: $operating_mode | rwdir: $rwdir "
+if [ -z "$WEBUI_QUIET" ]; then
+	echo "[+] bindhosts v$versionCode"
+	echo "[%] bindhosts.sh"
+	echo "[%] standalone hosts-based-adblocking implementation"
+	echo "[%] mode: $operating_mode | rwdir: $rwdir "
+fi
 
 [ -f $MODDIR/disable ] && {
 	echo "[*] not running since module has been disabled"

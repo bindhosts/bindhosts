@@ -4,8 +4,7 @@
   "description": "",
   "scripts": {
     "dev": "vite",
-    "clean": "rimraf ../module/webroot/assets/*",
-    "build": "npm run clean && vite build"
+    "build": "vite build --emptyOutDir"
   },
   "keywords": [
     "bindhosts"
@@ -16,10 +15,7 @@
   "dependencies": {
     "kernelsu-alt": "^1.0.1",
     "marked": "^16.1.1",
+    "vite": "^7.1.12",
     "webuix": "^0.0.16"
-  },
-  "devDependencies": {
-    "rimraf": "^6.0.1",
-    "vite": "^7.0.5"
   }
 }
