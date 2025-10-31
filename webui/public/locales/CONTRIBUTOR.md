@@ -78,12 +78,14 @@
 - [0dinsky](https://github.com/0dinsky)
 - [Tihonov Matvey](https://crowdin.com/profile/rythmical)
 - [vertekplus](https://github.com/vertekplus)
+- [milky white](https://crowdin.com/profile/vbmetahater)
 
 ---
 
 ## Spanish
 
 - [Lxchoooo](https://github.com/Lxchoooo)
+- [Lucho Modz](https://crowdin.com/profile/luchomodzzz)
 
 ---
 

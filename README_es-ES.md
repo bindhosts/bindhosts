@@ -1,4 +1,4 @@
-[English](README.md) | [简体中文](README_zh-CN.md) | [Türkçe](README_tr.md) | [Italiano](README_it.md) | [Deutsch](README_de.md) | [Bahasa Indonesia](README_id.md) | [Español](README_es-ES.md)
+[English](README.md) | [Deutsch](README_de.md) | [Español](README_es-ES.md) | [Français](README_fr.md) | [Bahasa Indonesia](README_id.md) | [Italiano](README_it.md) | [Русский](README_ru.md) | [Türkçe](README_tr.md) | [简体中文](README_zh-CN.md)
 
 # bindhosts
 
@@ -27,10 +27,10 @@ Totalmente autónomo, autoactualizado.
 
 ## Fuentes
 
-- [FAQ](Documentation/faq.md)
-- [Uso](Documentation/usage.md)
+- [FAQ](Documentation/faq_es-ES.md)
+- [Uso](Documentation/usage_es-ES.md)
 - [Ocultación](Documentation/hiding_es-ES.md)
-- [Modos operativos](Documentation/modes.md)
+- [Modos operativos](Documentation/modes_es-ES.md)
 
 ## Links
 
