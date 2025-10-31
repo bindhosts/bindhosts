@@ -4,7 +4,10 @@ on:
   push:
     branches: [ master ]
     paths: 
-      - 'module/weboot/locales/strings/*.xml'
+      - 'crowdin_md.yml'
+      - 'crowdin_xml.yml'
+      - '.github/workflows/crowdin.yml'
+      - 'webui/public/locales/strings/*.xml'
       - '*.md'
   schedule:
     - cron: '0 0 * * 0'
@@ -62,3 +65,56 @@ jobs:
 
         config: 'crowdin_xml.yml'
         crowdin_branch_name: master
+
+  upload-translations:
+    runs-on: ubuntu-latest
+    needs: synchronize-xml
+    steps:
+    - name: Checkout translation branch
+      uses: actions/checkout@v5
+      with:
+        ref: 'crowdin_xml'
+
+    - name: Configure git
+      run: |
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git config --global user.name "github-actions[bot]"
+
+    - name: Create timestamp
+      run: |
+        date +%Y%m%d > webui/public/locales/version
+
+        if git status --porcelain | grep 'webui/public/locales/version'; then
+          git add webui/public/locales/version
+          git commit -m "bot: update timestamp"
+          git push
+        fi
+
+    - name: Upload locales folder
+      uses: actions/upload-artifact@v5
+      with:
+        name: locales
+        path: webui/public/locales
+
+    - name: Checkout bot
+      uses: actions/checkout@v5
+      with:
+        ref: 'bot'
+
+    - name: Download translation
+      uses: actions/download-artifact@v5
+      with:
+        name: locales
+        path: locales
+
+    - name: Push to bot branch
+      run: |
+        rm -f locales_version locales.zip
+        cd locales
+        cp version ../locales_version
+        zip -r ../locales.zip .
+        cd ..
+
+        git add locales.zip locales_version
+        git commit -m "bot: update locales"
+        git push
