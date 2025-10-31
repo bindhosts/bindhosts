@@ -5,17 +5,25 @@ import { marked } from "marked";
 
 let em = createEventManager();
 
+const main = "https://raw.githubusercontent.com";
+const mirror = "https://hub.gitmirror.com/raw.githubusercontent.com";
+const repo = "bindhosts/bindhosts";
+const branch = "master";
+
 /**
  * Fetch documents from a link and display them in the specified element
  * @param {string} element - ID of the element to display the document content
  * @param {string} link - Primary link to fetch the document
- * @param {string} fallbackLink - Fallback link if the primary link fails
- * @param {string} linkMirror - mirror link of main link
- * @param {string} fallbackLinkMirror - mirror link of fallback link
+ * @param {string} fallback - Fallback link if the primary link fails
  * @returns {void}
  */
-async function getDocuments(element, link, fallbackLink, linkMirror, fallbackLinkMirror) {
-    const urls = [link, fallbackLink, linkMirror, fallbackLinkMirror];
+async function getDocuments(element, link, fallback) {
+    const urls = [
+        `${main}/${repo}/${branch}/${link}`,
+        `${main}/${repo}/${branch}/${fallback}`,
+        `${mirror}/${repo}/${branch}/${link}`,
+        `${mirror}/${repo}/${branch}/${fallback}`
+    ];
     let lastError = null;
     for (const url of urls) {
         try {
@@ -124,45 +132,33 @@ export async function setupDocsMenu() {
     let langCode = lang === 'en' ? '' : '_' + lang;
     const docsData = {
         source: {
-            link: `https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/sources${langCode}.md`,
-            fallbackLink: `https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/sources.md`,
-            linkMirror: `https://raw.gitmirror.com/bindhosts/bindhosts/master/Documentation/sources${langCode}.md`,
-            fallbackLinkMirror: `https://raw.gitmirror.com/bindhosts/bindhosts/master/Documentation/sources.md`,
+            link: `Documentation/sources${langCode}.md`,
+            fallback: `Documentation/sources.md`,
             element: 'source-content',
         },
         translate: {
-            link: `https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/localize${langCode}.md`,
-            fallbackLink: `https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/localize.md`,
-            linkMirror: `https://raw.gitmirror.com/bindhosts/bindhosts/master/Documentation/localize${langCode}.md`,
-            fallbackLinkMirror: `https://raw.gitmirror.com/bindhosts/bindhosts/master/Documentation/localize.md`,
+            link: `Documentation/localize${langCode}.md`,
+            fallback: `Documentation/localize.md`,
             element: 'translate-content',
         },
         modes: {
-            link: `https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/modes${langCode}.md`,
-            fallbackLink: `https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/modes.md`,
-            linkMirror: `https://raw.gitmirror.com/bindhosts/bindhosts/master/Documentation/modes${langCode}.md`,
-            fallbackLinkMirror: `https://raw.gitmirror.com/bindhosts/bindhosts/master/Documentation/modes.md`,
+            link: `Documentation/modes${langCode}.md`,
+            fallback: `Documentation/modes.md`,
             element: 'modes-content',
         },
         usage: {
-            link: `https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/usage${langCode}.md`,
-            fallbackLink: `https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/usage.md`,
-            linkMirror: `https://raw.gitmirror.com/bindhosts/bindhosts/master/Documentation/usage${langCode}.md`,
-            fallbackLinkMirror: `https://raw.gitmirror.com/bindhosts/bindhosts/master/Documentation/usage.md`,
+            link: `Documentation/usage${langCode}.md`,
+            fallback: `Documentation/usage.md`,
             element: 'usage-content',
         },
         hiding: {
-            link: `https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/hiding${langCode}.md`,
-            fallbackLink: `https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/hiding.md`,
-            linkMirror: `https://raw.gitmirror.com/bindhosts/bindhosts/master/Documentation/hiding${langCode}.md`,
-            fallbackLinkMirror: `https://raw.gitmirror.com/bindhosts/bindhosts/master/Documentation/hiding.md`,
+            link: `Documentation/hiding${langCode}.md`,
+            fallback: `Documentation/hiding.md`,
             element: 'hiding-content',
         },
         faq: {
-            link: `https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/faq${langCode}.md`,
-            fallbackLink: `https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/faq.md`,
-            linkMirror: `https://raw.gitmirror.com/bindhosts/bindhosts/master/Documentation/faq${langCode}.md`,
-            fallbackLinkMirror: `https://raw.gitmirror.com/bindhosts/bindhosts/master/Documentation/faq.md`,
+            link: `Documentation/faq${langCode}.md`,
+            fallback: `Documentation/faq.md`,
             element: 'faq-content',
         },
     };
@@ -178,8 +174,8 @@ export async function setupDocsMenu() {
                 const overlay = document.getElementById(`${type}-docs`);
                 if (type === 'modes' && developerOption && !learnMore) return;
                 openOverlay(overlay);
-                const { link, fallbackLink, linkMirror, fallbackLinkMirror, element } = docsData[type] || {};
-                getDocuments(element, link, fallbackLink, linkMirror, fallbackLinkMirror);
+                const { link, fallback, element } = docsData[type] || {};
+                getDocuments(element, link, fallback);
             });
         });
     }
@@ -228,8 +224,8 @@ export async function setupDocsMenu() {
             function handleClick() {
                 if (!touchMoved) {
                     document.getElementById('about-document-content').innerHTML = '';
-                    const { link, fallbackLink, linkMirror, fallbackLinkMirror } = docsData[element.dataset.type] || {};
-                    getDocuments('about-document-content', link, fallbackLink, linkMirror, fallbackLinkMirror);
+                    const { link, fallback } = docsData[element.dataset.type] || {};
+                    getDocuments('about-document-content', link, fallback);
                     setTimeout(() => {
                         aboutContent.style.transform = 'translateX(0)';
                         bodyContent.style.transform = 'translateX(-20vw)';
