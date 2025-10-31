@@ -6,7 +6,6 @@
     <!-- Global -->
     <string name="global_dev_opt">Opsi pengembang diaktifkan</string>
     <string name="global_dev_opt_true">Opsi pengembang telah di diaktifkan</string>
-    <string name="global_reboot">Mulai ulang untuk menerapkan, ketuk untuk memulai ulang</string>
     <string name="global_save">Simpan</string>
     <string name="global_saved">File disimpan ke</string>
     <string name="global_save_fail">Gagal menyimpan file</string>

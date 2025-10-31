@@ -6,7 +6,6 @@
     <!-- Global -->
     <string name="global_dev_opt">Opción de desarrollador activada</string>
     <string name="global_dev_opt_true">La opción de desarrollador ya estaba activada</string>
-    <string name="global_reboot">Reinicia para aplicar los cambios, toca para reiniciar</string>
     <string name="global_save">Guardar</string>
     <string name="global_saved">Archivo guardado en</string>
     <string name="global_save_fail">Error al guardar el archivo</string>
