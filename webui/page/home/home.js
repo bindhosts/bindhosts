@@ -56,7 +56,6 @@ function setupDevOtp() {
         }, 2000);
         if (clickCount === 5) {
             clickCount = 0;
-            await checkDevOption();
             if (!developerOption) {
                 setDeveloperOption(true);
                 showPrompt(translations.global_dev_opt);
@@ -75,7 +74,7 @@ let setupModeMenu = false
  * @returns {Promise<void>}
  */
 async function checkDevOption() {
-    setupDevOtp();
+    if (developerOption) return;
     const response = await fetch('link/PERSISTENT_DIR/mode_override.sh');
     setDeveloperOption(response.ok ? true : false);
 }
@@ -352,6 +351,7 @@ export function init() {
     document.getElementById('mode-btn').classList.add('show');
     updateStatus();
     checkDevOption();
+    setupDevOtp();
     setupModeBtn();
     setupQueryInput();
     setupDocsMenu();
