@@ -609,6 +609,18 @@ manager_install_zip() {
 	rm -f "$PERSISTENT_DIR/bindhosts_webui"
 }
 
+update_locales() {
+    link1="https://raw.githubusercontent.com/bindhosts/bindhosts/bot/locales.zip"
+	link2="https://raw.gitmirror.com/bindhosts/bindhosts/raw/bot/locales.zip"
+    error=0
+	echo "[+] downloading: $link1"
+    download "$link1" > "$rwdir/locales.zip" || download "$link2" > "$rwdir/locales.zip"
+    [ -s "$rwdir/locales.zip" ] || error=1
+    unzip -o "$rwdir/locales.zip" -d "$MODDIR/webroot/locales" || error=1
+    rm -f "$rwdir/locales.zip"
+    [ "$error" -eq 0 ] || exit 1
+}
+
 install_latest_artifact() {
 	# likely won't happen but lets be defensive
 	if [ ! -f "$PERSISTENT_DIR/root_manager.sh" ]; then
@@ -639,23 +651,12 @@ install_latest_artifact() {
 	if [ -f "$latest_zip_local" ] ; then
 		echo "[+] zip: $latest_zip_local" 
 		manager_install_zip "$latest_zip_local"
+		update_locales || true
 	else
 		echo "[x] artifact download fail"
 		exit 1
 	fi
 	[ -f "$latest_zip_local" ] && rm "$latest_zip_local"
-}
-
-update_locales() {
-    link1="https://raw.githubusercontent.com/bindhosts/bindhosts/bot/locales.zip"
-	link2="https://raw.gitmirror.com/bindhosts/bindhosts/raw/bot/locales.zip"
-    error=0
-	echo "[+] downloading: $link1"
-    download "$link1" > "$rwdir/locales.zip" || download "$link2" > "$rwdir/locales.zip"
-    [ -s "$rwdir/locales.zip" ] || error=1
-    unzip -o "$rwdir/locales.zip" -d "$MODDIR/webroot/locales" || error=1
-    rm -f "$rwdir/locales.zip"
-    [ "$error" -eq 0 ] || exit 1
 }
 
 show_help () {
