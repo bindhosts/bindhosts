@@ -8,7 +8,7 @@ let em = createEventManager();
 const main = "https://raw.githubusercontent.com";
 const mirror = "https://hub.gitmirror.com/raw.githubusercontent.com";
 const repo = "bindhosts/bindhosts";
-const branch = "master";
+const branch = "crowdin_docs";
 
 /**
  * Fetch documents from a link and display them in the specified element
