@@ -44,7 +44,7 @@ export function linkRedirect(link) {
  * @return {void}
  */
 export function applyRippleEffect() {
-    document.querySelectorAll('.ripple-element, .reboot').forEach(element => {
+    document.querySelectorAll('.ripple-element').forEach(element => {
         if (element.dataset.rippleListener !== "true") {
             element.addEventListener("pointerdown", async (event) => {
                 // Pointer up event
@@ -122,56 +122,42 @@ export function setFooterClick(status) {
 
 /**
  * Show the prompt with a success or error message
- * @param {string} key - Translation key for the message
+ * @param {string} message - Text message to display
  * @param {boolean} isSuccess - Whether the message indicates success
  * @param {number} [duration=2000] - Duration to display the message
- * @param {string} [preValue=""] - Text to prepend to the message
- * @param {string} [postValue=""] - Text to append to the message
+ * @param {string} callbackName - Function name to show in prompt button
+ * @param {Function} [callback=() => {}] - Callback funtion
  * @returns {void}
  */
-export function showPrompt(key, isSuccess = true, duration = 2000, preValue = "", postValue = "") {
-    let input;
-    typeof translations[key] === 'undefined' ? input = key : input = translations[key];
+export function showPrompt(message, isSuccess = true, duration = 2000, callbackName = '', callback = null) {
     const prompt = document.getElementById('prompt');
-    const message = `${preValue} ${input} ${postValue}`.trim();
-    prompt.textContent = message;
+    const promtpBtn = prompt.querySelector('.prompt-btn');
+    prompt.querySelector('.prompt-text').textContent = message.trim();
     prompt.classList.toggle('error', !isSuccess);
+
+    const hasCallback = typeof callback === 'function';
+    promtpBtn.textContent = hasCallback ? callbackName : '';
+    promtpBtn.onclick = callback || null;
+    promtpBtn.classList.toggle('show', hasCallback);
 
     if (window.promptTimeout) {
         clearTimeout(window.promptTimeout);
     }
-    if (message.includes("Reboot to take effect")) {
-        prompt.classList.add('reboot');
-        applyRippleEffect();
-        let countdownActive = false;
-        prompt.onclick = () => {
-            if (countdownActive) return;
-            countdownActive = true;
-            let countdown = 3;
-            prompt.textContent = `Rebooting in ${countdown}...`;
-            const countdownInterval = setInterval(() => {
-                countdown--;
-                if (countdown > 0) {
-                    prompt.textContent = `Rebooting in ${countdown}...`;
-                } else {
-                    clearInterval(countdownInterval);
-                    countdownActive = false;
-                    exec("svc power reboot").catch(error => {
-                        console.error("Failed to execute reboot command:", error);
-                    });
-                }
-            }, 1000);
-        };
-    } else {
-        prompt.classList.remove('reboot');
-    }
-
     setTimeout(() => {
         prompt.classList.add('show');
         window.promptTimeout = setTimeout(() => {
             prompt.classList.remove('show');
         }, duration);
-    }, 100);
+    }, 10);
+}
+
+/**
+ * Reboot device in two second
+ * @returns {void}
+ */
+export function reboot() {
+    setTimeout(() => showPrompt(translations.global_rebooting), 200);
+    setTimeout(() => exec("svc power reboot").catch(() => {}), 2000);
 }
 
 /**

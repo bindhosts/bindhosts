@@ -1,6 +1,7 @@
 import { exec } from 'kernelsu-alt';
-import { showPrompt, basePath, developerOption, setDeveloperOption, setLearnMore, moduleDirectory, createEventManager } from '../../utils/util.js';
+import { showPrompt, reboot, basePath, developerOption, setDeveloperOption, setLearnMore, moduleDirectory, createEventManager } from '../../utils/util.js';
 import { setupDocsMenu } from '../../utils/docs.js';
+import { translations } from '../../utils/language.js';
 
 let em = createEventManager();
 
@@ -58,9 +59,9 @@ function setupDevOtp() {
             await checkDevOption();
             if (!developerOption) {
                 setDeveloperOption(true);
-                showPrompt("global_dev_opt", true);
+                showPrompt(translations.global_dev_opt);
             } else {
-                showPrompt("global_dev_opt_true", true);
+                showPrompt(translations.global_dev_opt_true);
             }
         }
     });
@@ -120,7 +121,7 @@ function setupModeBtn() {
                     closeOverlay();
                     setLearnMore(false);
                 }
-                showPrompt("global_reboot", true, 4000);
+                showPrompt(translations.global_reboot_now, true, 5000, translations.global_reboot, reboot);
                 await updateModeSelection();
             } else {
                 console.error("Error saving mode selection:", result.stderr);
@@ -290,10 +291,10 @@ async function handleRemove(event, domains) {
         if (hostItem) {
             hostList.removeChild(hostItem);
         }
-        showPrompt("query_remove_prompt", true, 2000, undefined, domains.join(' '));
+        showPrompt(translations.query_remove_prompt + ' ' + domains.join(' '));
     } else {
         console.error("Error removing host:", result.stderr);
-        showPrompt("query_remove_error", false, 2000, undefined, domains.join(' '));
+        showPrompt(translations.query_remove_error + ' ' + domains.join(' '), false);
     }
 }
 
