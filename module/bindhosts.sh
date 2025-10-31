@@ -646,6 +646,18 @@ install_latest_artifact() {
 	[ -f "$latest_zip_local" ] && rm "$latest_zip_local"
 }
 
+update_locales() {
+    link1="https://raw.githubusercontent.com/bindhosts/bindhosts/bot/locales.zip"
+	link2="https://raw.gitmirror.com/bindhosts/bindhosts/raw/bot/locales.zip"
+    error=0
+	echo "[+] downloading: $link1"
+    download "$link1" > "$rwdir/locales.zip" || download "$link2" > "$rwdir/locales.zip"
+    [ -s "$rwdir/locales.zip" ] || error=1
+    unzip -o "$rwdir/locales.zip" -d "$MODDIR/webroot/locales" || error=1
+    rm -f "$rwdir/locales.zip"
+    [ "$error" -eq 0 ] || exit 1
+}
+
 show_help () {
 	echo "[%] $( grep '^description=' $MODDIR/module.prop | sed 's/description=//' )"
 	echo "usage:"
@@ -676,6 +688,7 @@ case "$1" in
 	--hosts-lastmod) hosts_lastmod; exit ;;
 	--whitelist) instant_whitelist "$@"; exit ;;
 	--install-canary) install_latest_artifact; exit;;
+	--update-locales) update_locales; exit;;
 	--setup-link) setup_link; exit;;
 	--help|*) show_help; exit ;;
 esac

@@ -215,6 +215,53 @@ function canaryUpdate() {
     });
 }
 
+/**
+ * Hot update tranlslation bundle
+ * @returns {void}
+ * @see controlPanelEventlistener - Calling this function
+ */
+function localesUpdate() {
+    if (isDownloading) return;
+    isDownloading = true;
+
+    showPrompt("more_support_checking_update", true, 10000);
+    fetch("https://raw.githubusercontent.com/bindhosts/bindhosts/bot/locales_version")
+        .then(response => {
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            return response.text();
+        })
+        .catch(async () => {
+            return fetch("https://hub.gitmirror.com/raw.githubusercontent.com/bindhosts/bindhosts/bot/locales_version")
+                .then(response => {
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    return response.text()
+                });
+        })
+        .then(async (version) => {
+            const remote_version = version.trim();
+            const local_version = await fetch('locales/version').then(response => response.text()).then(text => text.trim());
+
+            if (Number(remote_version) <= Number(local_version)) {
+                showPrompt("more_support_no_update", true, 3000);
+                isDownloading = false;
+            } else {
+                const result = spawn('sh', [`${moduleDirectory}/bindhosts.sh`, '--update-locales'], { env: { WEBUI_QUIET: "true" }});
+                result.on('exit', (code) => {
+                    isDownloading = false;
+                    if (code === 0) {
+                        window.location.reload();
+                    } else {
+                        throw new Error(`Update failed with code: ${code}`);
+                    }
+                });
+            }
+        })
+        .catch(error => {
+            showPrompt("more_support_update_locales_failed", false);
+            isDownloading = false;
+        });
+}
+
 let languageMenuListener = false;
 /**
  * Open language menu overlay
@@ -493,6 +540,7 @@ function controlPanelEventlistener(event) {
         "cron-toggle-container": toggleCron,
         "github-issues": () => linkRedirect('https://github.com/bindhosts/bindhosts/issues/new'),
         "canary-update": canaryUpdate,
+        "locales-update": localesUpdate,
         "export": exportConfig,
         "restore": restoreConfig
     };

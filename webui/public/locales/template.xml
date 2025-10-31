@@ -93,6 +93,10 @@
     <string name="more_support_update_canary">Update to latest canary version</string>
     <string name="more_support_update_success">Update successfully, reboot to take effect</string>
     <string name="more_support_update_fail">Failed to update, please download and install manually from GitHub</string>
+    <string name="more_support_checking_update">Checking for update...</string>
+    <string name="more_support_no_update">There is currently no update available</string>
+    <string name="more_support_update_locales">Update translation bundle</string>
+    <string name="more_support_update_locales_failed">Failed to update translation bundle</string>
     <!-- Confirmation -->
     <string name="confirmation_title">Confirm Remove?</string>
     <string name="confirmation_message">Are you sure you want to remove</string>
