@@ -6,7 +6,6 @@
     <!-- Global -->
     <string name="global_dev_opt">Geliştirici seçeneği etkinleştirildi</string>
     <string name="global_dev_opt_true">Geliştirici seçeneği zaten etkin</string>
-    <string name="global_reboot">Etkili olması için yeniden başlatın, yeniden başlatmak için dokunun</string>
     <string name="global_save">Kaydet</string>
     <string name="global_saved">Dosya kaydedildi</string>
     <string name="global_save_fail">Dosya kaydedilemedi</string>
