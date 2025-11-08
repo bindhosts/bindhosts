@@ -8,10 +8,10 @@ Totalmente independentes e com autoatualização.
 
 ## Recursos
 
-- Controle via **WebUI** e botão de ação  
-- **Compatível com AdAway**  
-- **Hosts systemless** através de *manager mount*, *bind mount* e **OverlayFS**  
-- Métodos de redirecionamento: **ZN-hostsredirect**, **hosts_file_redirect**, **open_redirect**
+- Controle via WebUI e botão de ação  
+- Compatível com AdAway  
+- Hosts systemless através de manager mount, bind mount e OverlayFS  
+- Métodos de redirecionamento: ZN-hostsredirect, hosts_file_redirect, open_redirect
 
 ## Gerenciadores de Root Suportados
 
