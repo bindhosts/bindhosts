@@ -6,7 +6,9 @@
     <!-- Global -->
     <string name="global_dev_opt">Opción de desarrollador activada</string>
     <string name="global_dev_opt_true">La opción de desarrollador ya estaba activada</string>
-    <string name="global_reboot">Reinicia para aplicar los cambios, toca para reiniciar</string>
+    <string name="global_reboot_now">Reinicia para aplicar cambios</string>
+    <string name="global_reboot">Reiniciar</string>
+    <string name="global_rebooting">Reiniciando...</string>
     <string name="global_save">Guardar</string>
     <string name="global_saved">Archivo guardado en</string>
     <string name="global_save_fail">Error al guardar el archivo</string>
@@ -93,6 +95,10 @@
     <string name="more_support_update_canary">Actualizar a la última versión canary</string>
     <string name="more_support_update_success">Actualización exitosa, reinicia para que surta efecto</string>
     <string name="more_support_update_fail">Error al actualizar, por favor descargue e instale manualmente desde GitHub</string>
+    <string name="more_support_checking_update">Comprobando la actualización...</string>
+    <string name="more_support_no_update">Actualmente no hay ninguna actualización disponible</string>
+    <string name="more_support_update_locales">Actualizar el paquete de traducción</string>
+    <string name="more_support_update_locales_failed">Error al actualizar el paquete de traducción</string>
     <!-- Confirmation -->
     <string name="confirmation_title">¿Confirmar eliminación?</string>
     <string name="confirmation_message">¿Está seguro de que desea eliminar</string>
