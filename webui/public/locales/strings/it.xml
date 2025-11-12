@@ -6,7 +6,6 @@
     <!-- Global -->
     <string name="global_dev_opt">Opzione sviluppatore abilitata</string>
     <string name="global_dev_opt_true">Opzione sviluppatore già abilitata</string>
-    <string name="global_reboot">Riavvia per rendere effettivo, tocca per riavviare</string>
     <string name="global_save">Salva</string>
     <string name="global_saved">File salvato in</string>
     <string name="global_save_fail">Errore nel salvataggio del file</string>
