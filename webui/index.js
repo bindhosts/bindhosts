@@ -1,7 +1,7 @@
 import { exec } from 'kernelsu-alt';
 import { applyRippleEffect, checkMMRL, setupScrollEvent, setFooterClick } from './utils/util.js';
 import { loadTranslations, applyTranslations } from './utils/language.js';
-import { WXEventHandler } from "webuix";
+import { WXEventHandler, WebUI, Intent } from "webuix";
 
 window.wx = new WXEventHandler();
 
