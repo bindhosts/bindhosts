@@ -6,7 +6,6 @@
     <!-- Global -->
     <string name="global_dev_opt">Настройки разработчика включены</string>
     <string name="global_dev_opt_true">Настройки разработчика уже включены</string>
-    <string name="global_reboot">Перезагрузитесь для применения изменений, нажмите для перезагрузки</string>
     <string name="global_save">Сохранить</string>
     <string name="global_saved">Файл сохранён в</string>
     <string name="global_save_fail">Ошибка сохранения файла</string>
