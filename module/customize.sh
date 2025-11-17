@@ -118,4 +118,10 @@ grep -qv "#" "$MODPATH/system/etc/hosts" > /dev/null 2>&1 || {
 # set permissions always
 hosts_set_perm "$MODPATH/system/etc/hosts"
 
+# for ksu that supports metamodule, we won't know what the metamodule does
+# so we need to skip_mount it right away
+if [ "$KSU" = true ] && [ ! "$KSU_MAGIC_MOUNT" = true ] &&  [ "$KSU_VER_CODE" -ge 22098 ]; then
+	touch "$MODPATH/skip_mount"
+fi
+
 # EOF
