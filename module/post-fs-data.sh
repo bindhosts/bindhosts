@@ -31,6 +31,13 @@ if { [ "$APATCH" = "true" ] && [ ! "$APATCH_BIND_MOUNT" = "true" ]; } ||
 	mode=2
 fi
 
+# ksud kernel umount
+# https://github.com/tiann/KernelSU/commit/4a18921bc00eb83ba3e60bec5672dfbc4d2bd9a2
+if [ "$KSU" = true ] && /data/adb/ksud kernel 2>&1 | grep -q "umount" >/dev/null 2>&1; then
+	echo "bindhosts: post-fs-data.sh - ksud with kernel umount found!" >> /dev/kmsg
+	mode=10
+fi
+
 # we can force mode 2 if user has something that gives unconditional umount to /system/etc/hosts
 # so far NeoZygisk, ReZygisk, NoHello, Zygisk Assistant does it
 denylist_handlers="rezygisk zygisksu zygisk-assistant zygisk_nohello"
@@ -74,13 +81,6 @@ if [ "$KSU" = true ] && [ -f ${SUSFS_BIN} ] &&
 	${SUSFS_BIN} show enabled_features | grep -q "CONFIG_KSU_SUSFS_TRY_UMOUNT" >/dev/null 2>&1; then
 	echo "bindhosts: post-fs-data.sh - susfs with try_umount found!" >> /dev/kmsg
 	mode=1
-fi
-
-# https://github.com/5ec1cff/KernelSU/pull/16
-# we just check ksud if it exists, atleast for now
-if [ "$KSU" = true ] && /data/adb/ksud -h | grep -q "add-try-umount" >/dev/null 2>&1; then
-	echo "bindhosts: post-fs-data.sh - ksud with add-try-umount found!" >> /dev/kmsg
-	mode=10001
 fi
 
 # hosts_file_redirect operating_mode

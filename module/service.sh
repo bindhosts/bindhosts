@@ -94,10 +94,11 @@ ksu_susfs_bind_kstat() {
 	echo "bindhosts: service.sh - mode ksu_susfs_bind_kstat" >> /dev/kmsg
 }
 
-ksu_add_try_umount() { 
+ksud_kernel_umount() { 
 	mount_bind
-	/data/adb/ksud add-try-umount '/system/etc/hosts'
-	echo "bindhosts: service.sh - mode ksu_add_try_umount" >> /dev/kmsg
+	/data/adb/ksud kernel umount add '/system/etc/hosts' --flags 2 > /dev/null 2>&1
+	/data/adb/ksud kernel notify-module-mounted >/dev/null 2>&1 # this way ksu will unlock umount
+	echo "bindhosts: service.sh - mode ksud_kernel_umount" >> /dev/kmsg
 }
 
 ##
@@ -113,7 +114,7 @@ case $operating_mode in
 	7) generic_overlay ;;
 	8) ksu_susfs_overlay ;;
 	9) ksu_susfs_bind_kstat ;;
-	10001) ksu_add_try_umount ;;
+	10) ksud_kernel_umount ;;
 	*) normal_mount ;; # catch invalid modes
 esac
 
