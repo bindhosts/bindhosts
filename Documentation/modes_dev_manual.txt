@@ -93,4 +93,11 @@ mode=9
      Adaway compatible
      for people with failing mode 1, opt-in only
 
+mode=10
+     ksud_kernel_umount
+	KernelSU only
+	22106+
+     Adaway compatible.
+     Tells ksu driver that /system/etc/hosts is an unmounable.
+
 # EOF

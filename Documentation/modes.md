@@ -131,3 +131,13 @@
 - Adaway compatible  
 - Hiding: **best in its class as SuSFS handles the unmount**
 
+---
+
+## mode=10
+### ksud_kernel_umount
+- mount --bind + kernel assisted umount
+- KernelSU only  
+- Requires KernelSU 22106+
+- Adaway compatible  
+- Hiding: Its fine. KernelSU handles the unmount, but it does not handle isoservice.
+
