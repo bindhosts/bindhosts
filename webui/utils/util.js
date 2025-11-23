@@ -28,22 +28,21 @@ export const moduleDirectory = "/data/adb/modules/bindhosts";
 export function linkRedirect(link) {
     toast("Redirecting to " + link);
 
-    if (typeof $bindhosts !== 'undefined' && Object.keys($bindhosts).length > 0) {
-        const webui = new WebUI();
-        const intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(link);
-        webui.startActivity(intent);
-        return;
-    }
-
     setTimeout(() => {
-        exec(`am start -a android.intent.action.VIEW -d ${link}`, { env: { PATH: '/system/bin' }})
-            .then(({ errno }) => {
-                if (errno !== 0) {
-                    toast("Failed to open link with exec");
-                    window.open(link, "_blank");
-                }
-            });
+        if (typeof $bindhosts !== 'undefined' && Object.keys($bindhosts).length > 0) {
+            const webui = new WebUI();
+            const intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(link);
+            webui.startActivity(intent);
+        } else {
+            exec(`am start -a android.intent.action.VIEW -d ${link}`, { env: { PATH: '/system/bin' }})
+                .then(({ errno }) => {
+                    if (errno !== 0) {
+                        toast("Failed to open link with exec");
+                        window.open(link, "_blank");
+                    }
+                });
+        }
     }, 100);
 }
 
