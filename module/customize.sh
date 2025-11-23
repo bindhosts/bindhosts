@@ -101,10 +101,10 @@ done
 
 # webui custom css config
 if [ ! -d "$PERSISTENT_DIR/.webui_config" ] || [ ! -f "$PERSISTENT_DIR/.webui_config/custom.css" ]; then
-    mkdir -p "$PERSISTENT_DIR/.webui_config"
-    mv "$MODPATH/custom.css" "$PERSISTENT_DIR/.webui_config/custom.css"
+	mkdir -p "$PERSISTENT_DIR/.webui_config"
+	mv "$MODPATH/custom.css" "$PERSISTENT_DIR/.webui_config/custom.css"
 else
-    rm "$MODPATH/custom.css"
+	rm "$MODPATH/custom.css"
 fi
 
 # if hosts file empty or just comments
@@ -113,15 +113,9 @@ grep -qv "#" "$MODPATH/system/etc/hosts" > /dev/null 2>&1 || {
 	echo "[+] creating hosts file"
 	cat /system/etc/hosts > "$MODPATH/system/etc/hosts"
 	printf "127.0.0.1 localhost\n::1 localhost\n" >> "$MODPATH/system/etc/hosts"
-	}
+}
 
 # set permissions always
 hosts_set_perm "$MODPATH/system/etc/hosts"
-
-# for ksu that supports metamodule, we won't know what the metamodule does
-# so we need to skip_mount it right away
-if [ "$KSU" = true ] && [ ! "$KSU_MAGIC_MOUNT" = true ] &&  [ "$KSU_VER_CODE" -ge 22098 ]; then
-	touch "$MODPATH/skip_mount"
-fi
 
 # EOF

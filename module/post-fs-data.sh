@@ -87,9 +87,7 @@ fi
 # this method is APatch only
 # no other heuristic other than dmesg
 if [ "$APATCH" = true ]; then
-	dmesg | grep -q "hosts_file_redirect" && {
-	mode=3
-	}
+	dmesg | grep -q "hosts_file_redirect" && mode=3
 fi
 
 # ZN-hostsredirect operating_mode
@@ -104,10 +102,10 @@ if [ -d "/data/adb/modules/hostsredirect" ] && [ ! -f "/data/adb/modules/hostsre
 fi
 
 # override operating mode here
-[ -f /data/adb/bindhosts/mode_override.sh ] && {
+if [ -f /data/adb/bindhosts/mode_override.sh ]; then
 	echo "bindhosts: post-fs-data.sh - mode_override found!" >> /dev/kmsg
 	. /data/adb/bindhosts/mode_override.sh
-	}
+fi
 
 # write operating mode to mode.sh 
 # service.sh will read it

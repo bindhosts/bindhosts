@@ -115,7 +115,7 @@ case $operating_mode in
 	8) ksu_susfs_overlay ;;
 	9) ksu_susfs_bind_kstat ;;
 	10) ksud_kernel_umount ;;
-	*) normal_mount ;; # catch invalid modes
+	*) bindhosts ;; # catch invalid modes
 esac
 
 ##################
