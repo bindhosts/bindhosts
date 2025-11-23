@@ -38,20 +38,15 @@ if [ "$KSU" = true ] && /data/adb/ksud kernel 2>&1 | grep -q "umount" >/dev/null
 	mode=10
 fi
 
+# Zygisk provider handling zone !!!
+
 # we can force mode 2 if user has something that gives unconditional umount to /system/etc/hosts
-# so far NeoZygisk, ReZygisk, NoHello, Zygisk Assistant does it
-denylist_handlers="rezygisk zygisksu zygisk-assistant zygisk_nohello"
+# so far ReZygisk, NoHello, Zygisk Assistant does it
+denylist_handlers="rezygisk zygisk-assistant zygisk_nohello"
 for module_name in $denylist_handlers; do
 	if [ -d "/data/adb/modules/$module_name" ] && [ ! -f "/data/adb/modules/$module_name/disable" ] && 
 		[ ! -f "/data/adb/modules/$module_name/remove" ]; then
-		if [ "$module_name" = "zygisksu" ]; then
-			if grep -q NeoZygisk /data/adb/modules/zygisksu/module.prop; then
-				module_name="NeoZygisk"
-			else
-				continue;
-			fi
-		fi
-		echo "bindhosts: post-fs-data.sh - $module_name found" >> /dev/kmsg
+		echo "bindhosts: post-fs-data.sh - $module_name found!" >> /dev/kmsg
 		mode=2
 	fi
 done
@@ -64,6 +59,12 @@ if [ -d "$zygisksu_dir" ] && [ ! -f "$zygisksu_dir/remove" ] && [ ! -f "$zygisks
 	enforce_denylist_mode=$(cat /data/adb/zygisksu/denylist_enforce)
 	if [ "$enforce_denylist_mode" -gt 0 ]; then 
 		echo "bindhosts: post-fs-data.sh - ZygiskNext 1.3.0+ found with enforce_denylist $enforce_denylist_mode" >> /dev/kmsg
+		mode=2
+	fi
+# we move NeoZygisk handling here
+# nz uses the same module id but different module name
+	if grep -q "NeoZygisk" "$zygisksu_dir/module.prop"; then
+		echo "bindhosts: post-fs-data.sh - NeoZygisk found!" >> /dev/kmsg
 		mode=2
 	fi
 fi
