@@ -6,7 +6,6 @@
     <!-- Global -->
     <string name="global_dev_opt">開発者オプションが有効になりました</string>
     <string name="global_dev_opt_true">開発者オプションは既に有効化されています</string>
-    <string name="global_reboot">反映させるには再起動が必要です。タップして再起動</string>
     <string name="global_save">保存</string>
     <string name="global_saved">ファイルの保存先</string>
     <string name="global_save_fail">ファイルの保存に失敗</string>

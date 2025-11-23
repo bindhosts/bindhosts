@@ -6,7 +6,6 @@
     <!-- Global -->
     <string name="global_dev_opt">Налаштування розробника ввімкнено</string>
     <string name="global_dev_opt_true">Налаштування розробника вже ввімкнено</string>
-    <string name="global_reboot">Перезавантажтеся для застосування змін, натисніть для перезавантаження</string>
     <string name="global_save">Зберегти</string>
     <string name="global_saved">Файл збережено в</string>
     <string name="global_save_fail">Помилка збереження файлу</string>

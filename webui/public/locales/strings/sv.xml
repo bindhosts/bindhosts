@@ -6,7 +6,6 @@
     <!-- Global -->
     <string name="global_dev_opt">Utvecklaralternativ aktiverat</string>
     <string name="global_dev_opt_true">Utvecklaralternativet är redan aktiverat</string>
-    <string name="global_reboot">Starta om för att verkställa, tryck för att starta om</string>
     <string name="global_save">Spara</string>
     <string name="global_saved">Filen sparad till</string>
     <string name="global_save_fail">Det gick inte att spara filen</string>

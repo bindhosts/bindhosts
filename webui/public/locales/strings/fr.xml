@@ -6,7 +6,6 @@
     <!-- Global -->
     <string name="global_dev_opt">Option développeur activée</string>
     <string name="global_dev_opt_true">Option développeur activée</string>
-    <string name="global_reboot">Redémarrez pour prendre effet, appuyez pour redémarrer</string>
     <string name="global_save">Enregistrer</string>
     <string name="global_saved">Fichier enregistré sous</string>
     <string name="global_save_fail">Échec d\'enregistrement du fichier</string>
