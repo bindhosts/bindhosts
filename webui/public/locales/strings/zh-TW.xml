@@ -6,7 +6,9 @@
     <!-- Global -->
     <string name="global_dev_opt">開發者模式已啟用</string>
     <string name="global_dev_opt_true">您已處於開發者模式</string>
-    <string name="global_reboot">重啟生效，點擊重啟</string>
+    <string name="global_reboot_now">重啟生效</string>
+    <string name="global_reboot">重啟</string>
+    <string name="global_rebooting">正在重啟...</string>
     <string name="global_save">儲存</string>
     <string name="global_saved">文件已儲存至</string>
     <string name="global_save_fail">文件儲存失敗</string>
@@ -93,6 +95,10 @@
     <string name="more_support_update_canary">下載最新測試版</string>
     <string name="more_support_update_success">更新成功，重啟生效</string>
     <string name="more_support_update_fail">更新失敗， 請到 GitHub 下載並安裝</string>
+    <string name="more_support_checking_update">檢查更新中...</string>
+    <string name="more_support_no_update">當前已是最新版本</string>
+    <string name="more_support_update_locales">更新翻譯包</string>
+    <string name="more_support_update_locales_failed">翻譯包更新失敗</string>
     <!-- Confirmation -->
     <string name="confirmation_title">確認刪除？</string>
     <string name="confirmation_message">確認刪除</string>
