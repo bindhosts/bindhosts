@@ -8,7 +8,7 @@ on:
       - 'crowdin_xml.yml'
       - '.github/workflows/crowdin.yml'
       - 'webui/public/locales/strings/*.xml'
-      - '*.md'
+      - '**.md'
   schedule:
     - cron: '0 0 * * 0'
   workflow_dispatch:
