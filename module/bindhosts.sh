@@ -482,13 +482,20 @@ action () {
 	# as the script sometimes takes some time processing
 	# we implement a simple lockfile logic around here to
 	# prevent multiple instances.
-	# warn and dont run if lockfile exists
-	[ -f "$rwdir/bindhosts_lockfile" ] && {
-		echo "[*] already running!"
-		exit 1
-		}
-	# if lockfile isnt there, we create one
-	[ ! -f "$rwdir/bindhosts_lockfile" ] && touch "$rwdir/bindhosts_lockfile"
+	# if the file is there and pid is still up then thats shady
+	if [ -f "$rwdir/bindhosts_lockfile" ]; then
+		bindhosts_old_pid=$(cat $rwdir/bindhosts_lockfile)
+		# now check and fucking kill old instance
+		if [ -d "/proc/$bindhosts_old_pid" ] && grep -q "bindhosts" "/proc/$bindhosts_old_pid/cmdline" >/dev/null 2>&1; then
+			echo "[*] bindhosts with pid: $bindhosts_old_pid is still running!"
+			busybox kill -9 $bindhosts_old_pid
+			echo "[*] killing $bindhosts_old_pid"
+			rm "$rwdir/bindhosts_lockfile" >/dev/null 2>&1
+			exit 1
+		fi
+	fi
+	# now make sure its not there and write our own pid to it
+	rm "$rwdir/bindhosts_lockfile" >/dev/null 2>&1 ; echo $$ > "$rwdir/bindhosts_lockfile"
 
 	# toggle start!
 	if [ -f $PERSISTENT_DIR/bindhosts_state ]; then
