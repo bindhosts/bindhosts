@@ -6,12 +6,11 @@ Hiding in APatch should just work, provided you are on [latest release](https://
 
 - 'Exclude Modifications' to apps you want to hide root from.
 - Install either NeoZygisk or ReZygisk as denylist handler
-- OR if you use ZygiskNext, enable enforce denylist
-- OR you can install either NoHello or Zygisk Assistant on top of Zygisk Next
+- OR if you use ZygiskNext, enable umount only
 
 Legacy APatch is discouraged due to potential issues. However, you can try the following:
 
-- exclude modifications plus either NeoZygisk, ReZygisk OR ZygiskNext's enforce denylist
+- exclude modifications plus either NeoZygisk, ReZygisk OR ZygiskNext's umount only
 - OR you can install either NoHello or Zygisk Assistant
 - while this is not recommended anymore, you can still try to use hosts_file_redirect kpm. [Tutorial](https://github.com/bindhosts/bindhosts/issues/3)
 - if hosts_file_redirect fails, install [ZN-hostsredirect](https://github.com/aviraxp/ZN-hostsredirect/releases)
@@ -27,8 +26,7 @@ Recommendations:
 
 - if kernel is non-gki and kernel lacks path_umount, ask kernel dev to [backport this feature](https://github.com/tiann/KernelSU/pull/1464)
 - Install NeoZygisk or ReZygisk as denylist handler
-- OR if you use ZygiskNext, enable enforce denylist
-- OR you can install either NoHello, Shamiko or Zygisk Assistant on top of Zygisk Next
+- OR if you use ZygiskNext, enable umount only
 - alternatively, just install [ZN-hostsredirect](https://github.com/aviraxp/ZN-hostsredirect/releases)
 
 ### Variants (MKSU, KernelSU-NEXT)
@@ -62,8 +60,3 @@ Hiding in Magisk (and clones, Alpha, Kitsune) should just work as is.
 - [NeoZygisk](https://github.com/JingMatrix/NeoZygisk)
 - [ReZygisk](https://github.com/PerformanC/ReZygisk)
 - [ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext)
-
-### Zygisk addons
-- [NoHello](https://github.com/MhmRdd/NoHello)
-- [Shamiko](https://github.com/LSPosed/LSPosed.github.io/releases/)
-- [Zygisk Assistant](https://github.com/snake-4/Zygisk-Assistant)

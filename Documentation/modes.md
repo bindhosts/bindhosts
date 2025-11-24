@@ -13,7 +13,7 @@
  - **APatch** 
    - bind mount (magic mount)
    - Adaway compatible
-   - Hiding: Exclude Modifications + [ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext)'s enforce denylist
+   - Hiding: Exclude Modifications + [ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext)'s umount only
  - **Magisk** 
    - magic mount  
    - Adaway compatible  
