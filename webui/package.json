@@ -13,9 +13,11 @@
   "license": "WTFPL-2.0",
   "type": "module",
   "dependencies": {
-    "kernelsu-alt": "^1.0.1",
-    "marked": "^16.1.1",
-    "vite": "^7.1.12",
-    "webuix": "^0.0.16"
+    "kernelsu-alt": "^2.1.2",
+    "marked": "^17.0.1",
+    "webuix": "^0.0.18"
+  },
+  "devDependencies": {
+    "vite": "^7.2.4"
   }
 }
