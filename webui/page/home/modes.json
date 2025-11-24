@@ -1,0 +1,46 @@
+[
+    {
+        "value": "0",
+        "description": "Default"
+    },
+    {
+        "value": "1",
+        "description": "ksu_susfs_bind"
+    },
+    {
+        "value": "2",
+        "description": "plain bindhosts"
+    },
+    {
+        "value": "3",
+        "description": "apatch_hfr, hosts_file_redirect"
+    },
+    {
+        "value": "4",
+        "description": "zn_hostsredirect"
+    },
+    {
+        "value": "5",
+        "description": "ksu_susfs_open_redirect"
+    },
+    {
+        "value": "6",
+        "description": "ksu_source_mod"
+    },
+    {
+        "value": "7",
+        "description": "generic_overlay"
+    },
+    {
+        "value": "8",
+        "description": "ksu_susfs_overlay"
+    },
+    {
+        "value": "9",
+        "description": "ksu_susfs_bind_kstat"
+    },
+    {
+        "value": "10",
+        "description": "ksud_kernel_umount"
+    }
+]

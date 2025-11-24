@@ -197,13 +197,19 @@
 
 .radio-label {
     padding-left: 15px;
-    display: inline-block;
+    display: flex;
+    flex-direction: column;
     line-height: 1;
 }
 
 [dir="rtl"] .radio-label {
     padding-left: unset;
     padding-right: 15px;
+}
+
+.radio-label-title {
+    display: flex;
+    gap: 4px;
 }
 
 .radio-label small {

@@ -2,6 +2,7 @@ import { exec } from 'kernelsu-alt';
 import { showPrompt, reboot, basePath, developerOption, setDeveloperOption, setLearnMore, moduleDirectory, createEventManager } from '../../utils/util.js';
 import { setupDocsMenu } from '../../utils/docs.js';
 import { translations } from '../../utils/language.js';
+import modes from './modes.json';
 
 let em = createEventManager();
 
@@ -85,6 +86,27 @@ function setupModeBtn() {
     const modeMenu = document.getElementById("mode-menu");
     const overlayContent = document.querySelector(".overlay-content");
 
+    function createModeOptions() {
+        const modeOptionsForm = document.getElementById("mode-options");
+        modeOptionsForm.innerHTML = '';
+        modes.forEach(mode => {
+            const label = document.createElement('label');
+            label.className = 'custom-radio';
+            label.innerHTML = `
+                <input type="radio" name="mode" value="${mode.value}">
+                <span class="radio-circle"></span>
+                <div class="radio-label">
+                    <div class="radio-label-title">
+                        <span>${translations.mode_button}</span>
+                        <span>${mode.value}</span>
+                    </div>
+                    <small>${mode.description}</small>
+                </div>
+            `;
+            modeOptionsForm.appendChild(label);
+        });
+    }
+
     em.on(modeBtn, 'click', async () => {
         if (developerOption) {
             modeMenu.style.display = "flex";
@@ -146,6 +168,7 @@ function setupModeBtn() {
 
         if (!setupModeMenu) {
             setupModeMenu = true;
+            createModeOptions();
             modeMenu.querySelector(".close-btn").onclick = closeOverlay;
             em.on(document.getElementById("learn-btn"), 'click', () => closeOverlay());
             em.on(modeMenu, 'click', (event) => {
@@ -160,6 +183,8 @@ function setupModeBtn() {
             // Attach event listener for reset button
             document.getElementById("reset-mode").onclick = () => saveModeSelection("reset");
         }
+
+        await updateModeSelection();
     });
 }
 
