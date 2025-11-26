@@ -31,7 +31,7 @@
 - KernelSU only  
 - Requires susfs-patched kernel and userspace tool  
 - Adaway compatible  
-- Hiding: **best in its class as SuSFS handles the unmount**
+- Hiding: SuSFS handles the unmount
 
 ---
 
@@ -129,7 +129,7 @@
 - Requires susfs-patched kernel and userspace tool  
 - **OPT-IN** only due to it being niche
 - Adaway compatible  
-- Hiding: **best in its class as SuSFS handles the unmount**
+- Hiding: SuSFS handles the unmount
 
 ---
 
@@ -139,5 +139,5 @@
 - KernelSU only  
 - Requires KernelSU 22106+
 - Adaway compatible  
-- Hiding: Its fine. KernelSU handles the unmount, but it does not handle isoservice.
+- Hiding: KernelSU handles the unmount.
 
