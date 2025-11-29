@@ -55,13 +55,13 @@
     <!-- Import -->
     <string name="import_custom_title">匯入自訂規則</string>
     <!-- Source -->
-    <string name="source_title">規則（源）</string>
-    <string name="source_guide1">黑名單</string>
+    <string name="source_title">規則集</string>
+    <string name="source_guide1">黑名單集</string>
     <string name="source_guide2">自訂規則</string>
     <string name="source_format">格式</string>
     <string name="source_example">例如：</string>
-    <string name="source_source_page">更多規則（源）</string>
-    <string name="source_prompt_fail">已存在於規則內</string>
+    <string name="source_source_page">更多規則集</string>
+    <string name="source_prompt_fail">已存在於規則集內</string>
     <!-- Blacklist -->
     <string name="blacklist_title">黑名單</string>
     <string name="blacklist_guide1">添加到此處的域名均會被封鎖</string>
@@ -73,11 +73,11 @@
     <string name="whitelist_example">例如：</string>
     <string name="whitelist_prompt_fail">已存在於白名單內</string>
     <!-- Sources -->
-    <string name="sources_whitelist_title">白名單源</string>
-    <string name="sources_whitelist_guide1">在此處添加白名單源</string>
+    <string name="sources_whitelist_title">白名單集</string>
+    <string name="sources_whitelist_guide1">在此處添加白名單集</string>
     <string name="sources_whitelist_format">格式</string>
     <string name="sources_whitelist_example">例如：</string>
-    <string name="sources_whitelist_prompt_fail">已存在於白名單源內</string>
+    <string name="sources_whitelist_prompt_fail">已存在於白名單集內</string>
     <!-- Mode -->
     <string name="mode_button">模式</string>
     <string name="mode_title">工作模式</string>
@@ -85,7 +85,7 @@
     <string name="mode_reset">重設（自動）</string>
     <!-- More -->
     <string name="more_documents">文件</string>
-    <string name="more_sources">規則（源）</string>
+    <string name="more_sources">規則集</string>
     <string name="more_usage">使用說明</string>
     <string name="more_modes">模式</string>
     <string name="more_hiding">隱藏</string>
