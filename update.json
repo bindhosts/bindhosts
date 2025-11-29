@@ -1,6 +1,6 @@
 {
-  "version": "v2.0.9",
-  "versionCode": 209,
+  "version": "v2.1.0",
+  "versionCode": 210,
   "zipUrl": "https://github.com/bindhosts/bindhosts/releases/latest/download/bindhosts.zip",
   "changelog": "https://raw.githubusercontent.com/bindhosts/bindhosts/master/CHANGELOG.md"
 }

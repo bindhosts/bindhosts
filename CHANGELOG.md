@@ -4,6 +4,13 @@ Systemless hosts for APatch, KernelSU and Magisk
 ---
 
 # Changelog
+### 2.1.0
+- module: remove skip_mount content
+- webui/js: Use WebUI X API for Intent (#158)
+- scripts/bindhosts: force kill old bindhosts instance
+- webui: append mode options dynamically
+- Documentation: update ZygiskNext information
+
 ### 2.0.9
 - webui/js: fix mirror link not loading
 - scripts/bindhosts: update translation bundle when installing canary
@@ -11,7 +18,6 @@ Systemless hosts for APatch, KernelSU and Magisk
 - webui/js: use crowdin branch for documentation
 - webui/js: fix multiple event listener
 - scripts: add mode 10 to support for KernelSU v2.1.2+
-
 
 ### 2.0.8
 - scripts/post-fs-data: add ZN 1.3.0 mode 2 support
