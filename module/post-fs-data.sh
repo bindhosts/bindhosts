@@ -31,6 +31,13 @@ if { [ "$APATCH" = "true" ] && [ ! "$APATCH_BIND_MOUNT" = "true" ]; } ||
 	mode=2
 fi
 
+# ksu next 12183
+# ksu next try_umount /system/etc/hosts
+# lower the priority of this as it now migrated to supercalls, atleast on dev branch
+if [ "$KSU_NEXT" = "true" ] && [ "$KSU_KERNEL_VER_CODE" -ge 12183 ] && [ "$KSU_KERNEL_VER_CODE" -lt 15000 ]; then
+	mode=6
+fi
+
 # ksud kernel umount
 # https://github.com/tiann/KernelSU/commit/4a18921bc00eb83ba3e60bec5672dfbc4d2bd9a2
 if [ "$KSU" = true ] && /data/adb/ksud kernel 2>&1 | grep -q "umount" >/dev/null 2>&1; then
@@ -67,13 +74,6 @@ if [ -d "$zygisksu_dir" ] && [ ! -f "$zygisksu_dir/remove" ] && [ ! -f "$zygisks
 		echo "bindhosts: post-fs-data.sh - NeoZygisk found!" >> /dev/kmsg
 		mode=2
 	fi
-fi
-
-# ksu next 12183
-# ksu next added try_umount /system/etc/hosts recently
-# lets try to add it onto the probe
-if [ "$KSU_NEXT" = "true" ] && [ "$KSU_KERNEL_VER_CODE" -ge 12183 ]; then
-	mode=6
 fi
 
 # ksu+susfs operating_mode
