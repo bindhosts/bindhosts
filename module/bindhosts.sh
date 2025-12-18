@@ -393,7 +393,7 @@ adblock() {
 	for i in $(sed '/#/d' $PERSISTENT_DIR/whitelist.txt); do echo "$i" ; done >> "$rwdir/tempwhitelist"
 	# sed strip out everything with # and !, double space to single space, delete empty lines, dos2unix (CRLF), replace all 127.0.0.1 to 0.0.0.0
 	# then sort uniq, then grep out whitelist.txt from it
-	sed -i '/#/d; /!/d; s/  */ /g; /^$/d; s/\r$//; s/127.0.0.1/0.0.0.0/g' "$rwdir/temphosts"
+	sed -i '/^#/d; /!/d; s/  */ /g; /^$/d; s/\r$//; s/127.0.0.1/0.0.0.0/g' "$rwdir/temphosts"
 	# no need to -x on grep, allow wildmatches! bindhosts/issue #112
 	sort -u "$rwdir/temphosts" | grep -Fvf "$rwdir/tempwhitelist" >> $target_hostsfile
 	# mark it, will be read by service.sh to deduce
