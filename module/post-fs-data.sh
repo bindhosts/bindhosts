@@ -22,12 +22,13 @@ mode=0
 
 # plain bindhosts operating mode, no hides at all
 # we enable this on apatch overlayfs, APatch litemode, MKSU nomount
-# we now also do this on ksu that supports metamodule
+# we now also do this on ksu/ap that supports metamodule
 # while it is basically hideless, this still works.
 if { [ "$APATCH" = "true" ] && [ ! "$APATCH_BIND_MOUNT" = "true" ]; } || 
 	{ [ "$APATCH_BIND_MOUNT" = "true" ] && [ -f /data/adb/.litemode_enable ]; } || 
 	{ [ "$KSU_MAGIC_MOUNT" = "true" ] && [ -f /data/adb/ksu/.nomount ]; } ||
-	{ [ "$KSU" = true ] && [ ! "$KSU_MAGIC_MOUNT" = true ] &&  [ "$KSU_VER_CODE" -ge 22098 ]; }; then
+	{ [ "$KSU" = true ] && [ ! "$KSU_MAGIC_MOUNT" = true ] &&  [ "$KSU_VER_CODE" -ge 22098 ]; } ||
+	{ [ "$APATCH" = true ] && [ "$APATCH_VER_CODE" -ge 11170 ]; }; then
 	mode=2
 fi
 
