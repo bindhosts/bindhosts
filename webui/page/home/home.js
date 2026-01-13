@@ -15,9 +15,9 @@ let clickCount = 0, clickTimeout = 0;
  */
 function updateStatus() {
     const status = [
-        { element : 'status-text', key : 'description', file: 'link/MODDIR/module.prop' },
-        { element : 'version-text', key : 'version', file: 'link/MODDIR/module.prop' },
-        { element : 'mode-text', key : 'mode', file: 'link/MODDIR/mode.sh' },
+        { element: 'status-text', key: 'description', file: 'link/MODDIR/module.prop' },
+        { element: 'version-text', key: 'version', file: 'link/MODDIR/module.prop' },
+        { element: 'mode-text', key: 'mode', file: 'link/MODDIR/mode.sh' },
     ]
 
     const fetchStatus = async (item) => {
@@ -28,8 +28,10 @@ function updateStatus() {
             const value = data.match(new RegExp(`${item.key}=(.*)`))[1].replace('status: ', '');
             document.getElementById(item.element).textContent = value;
         } catch (error) {
-            setupLink();
-            updateStatus();
+            if (error.message.includes('File not found')) {
+                setupLink();
+                updateStatus();
+            }
             throw error;
         }
     };
@@ -172,7 +174,7 @@ function setupModeBtn() {
             modeMenu.querySelector(".close-btn").onclick = closeOverlay;
             em.on(document.getElementById("learn-btn"), 'click', () => closeOverlay());
             em.on(modeMenu, 'click', (event) => {
-                if(!overlayContent.contains(event.target)) closeOverlay();
+                if (!overlayContent.contains(event.target)) closeOverlay();
             });
             // Attach event listeners for mode options
             const modeOption = document.getElementById("mode-options");
@@ -235,7 +237,7 @@ async function getHosts() {
             const scrollTop = hostList.scrollTop;
             const hostListHeight = hostList.clientHeight;
             const scrollHeight = hostList.scrollHeight;
-        
+
             if (scrollTop + hostListHeight >= scrollHeight - initialHeight) {
                 loadMoreHosts();
             }
@@ -288,8 +290,8 @@ function loadMoreHosts(callback) {
             em.on(removeBtn, 'click', (e) => handleRemove(e, domains));
         }
         em.on(hostItem, 'click', () => {
-            const isRTL = document.documentElement.getAttribute('dir') === 'rtl';    
-            hostItem.scrollTo({ 
+            const isRTL = document.documentElement.getAttribute('dir') === 'rtl';
+            hostItem.scrollTo({
                 left: isRTL ? -hostItem.scrollWidth : hostItem.scrollWidth,
                 behavior: 'smooth'
             });
@@ -340,8 +342,7 @@ function setupQueryInput() {
 
         // Always search from the original data
         const filteredHosts = originalHostLines.filter(([hostIp, ...domains]) => {
-            return hostIp.toLowerCase().includes(query) || 
-                domains.some(domain => domain.toLowerCase().includes(query));
+            return hostIp.toLowerCase().includes(query) || domains.some(domain => domain.toLowerCase().includes(query));
         });
 
         // Clear current list
