@@ -6,6 +6,9 @@
     <!-- Global -->
     <string name="global_dev_opt">Opzione sviluppatore abilitata</string>
     <string name="global_dev_opt_true">Opzione sviluppatore già abilitata</string>
+    <string name="global_reboot_now">Riavvia per rendere effettivo</string>
+    <string name="global_reboot">Riavvio</string>
+    <string name="global_rebooting">Riavvio in corso...</string>
     <string name="global_save">Salva</string>
     <string name="global_saved">File salvato in</string>
     <string name="global_save_fail">Errore nel salvataggio del file</string>
@@ -92,6 +95,10 @@
     <string name="more_support_update_canary">Aggiorna all\'ultima versione canary</string>
     <string name="more_support_update_success">Aggiornamento riuscito, riavvia per rendere effettivo</string>
     <string name="more_support_update_fail">Aggiornamento non riuscito, scaricare e installare manualmente da GitHub</string>
+    <string name="more_support_checking_update">Ricerca aggiornamenti...</string>
+    <string name="more_support_no_update">Al momento non è disponibile alcun aggiornamento</string>
+    <string name="more_support_update_locales">Aggiorna pacchetto di traduzione</string>
+    <string name="more_support_update_locales_failed">Impossibile aggiornare pacchetto di traduzione</string>
     <!-- Confirmation -->
     <string name="confirmation_title">Confermare la rimozione?</string>
     <string name="confirmation_message">Sei sicuro di voler rimuovere</string>
