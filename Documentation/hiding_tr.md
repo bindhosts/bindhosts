@@ -5,13 +5,13 @@
 APatch'te gizleme, [en son sürümde](https://github.com/bmax121/APatch/releases/latest) olduğunuz sürece sorunsuz çalışmalıdır:
 
 - Root'u gizlemek istediğiniz uygulamaları 'Değişiklikleri Hariç Tut' listesine ekleyin.
-- [ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext)'in kara liste uygulamasını etkinleştirin.
-- YA da [NoHello](https://github.com/MhmRdd/NoHello) veya [Zygisk Assistant](https://github.com/snake-4/Zygisk-Assistant) uygulamalarından birini kurabilirsiniz.
+- Denylist işleyicisi olarak NeoZygisk veya ReZygisk yükleyin
+- VEYA ZygiskNext kullanıyorsanız, "yalnızca bağlantıyı kes" (umount only) özelliğini etkinleştirin
 
 Eski APatch kullanımı, olası sorunlar nedeniyle önerilmez. Ancak şu adımları deneyebilirsiniz:
 
-- Değişiklikleri hariç tut + [ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext)'in enforce denylist'i etkinleştirin.
-- YA da [NoHello](https://github.com/MhmRdd/NoHello) veya [Zygisk Assistant](https://github.com/snake-4/Zygisk-Assistant) uygulamalarından birini kurabilirsiniz.
+- modifikasyonları ve ayrıca NeoZygisk, ReZygisk VEYA ZygiskNext'in "yalnızca bağlantı kesme" özelliğini hariç tutun
+- YA DA NoHello veya Zygisk Assistant yükleyebilirsiniz
 - Artık önerilmesede, hosts_file_redirect kpm kullanmayı deneyebilirsiniz. [Rehber](https://github.com/bindhosts/bindhosts/issues/3)
 - Eğer hosts_file_redirect başarısız olursa, [ZN-hostsredirect](https://github.com/aviraxp/ZN-hostsredirect/releases) kurun.
 
@@ -25,12 +25,13 @@ KernelSU'da gizleme şu şartlar sağlandığında sorunsuz çalışır:
 Öneriler:
 
 - Eğer kernel GKI değilse ve path_umount eksikse, çekirdek geliştiricisinden [bu özelliği backport etmesini](https://github.com/tiann/KernelSU/pull/1464) isteyin.
-- YA da [NoHello](https://github.com/MhmRdd/NoHello), [Shamiko](https://github.com/LSPosed/LSPosed.github.io/releases/) veya [Zygisk Assistant](https://github.com/snake-4/Zygisk-Assistant) uygulamalarından birini kurabilirsiniz.
+- Denylist işleyicisi olarak NeoZygisk veya ReZygisk yükleyin
+- VEYA ZygiskNext kullanıyorsanız, "yalnızca bağlantıyı kes" (umount only) özelliğini etkinleştirin
 - Alternatif olarak, sadece [ZN-hostsredirect](https://github.com/aviraxp/ZN-hostsredirect/releases) kurun.
 
 ### Varyantlar (MKSU, KernelSU-NEXT)
 
-- MKSU için [Shamiko](https://github.com/LSPosed/LSPosed.github.io/releases/) kullanabilirsiniz.
+- MKSU için, KernelSU ile aynı öneriler geçerlidir
 - KernelSU-NEXT için gizleme doğrudan çalışır (mod 6 ile).
 
 ### SuSFS
@@ -42,7 +43,7 @@ KernelSU'da gizleme şu şartlar sağlandığında sorunsuz çalışır:
 Magisk'te (ve klonlarında: Alpha, Kitsune) gizleme olduğu gibi çalışır.
 
 - Root'u gizlemek istediğiniz uygulamaları denylist'e ekleyin.
-- İsteğe bağlı olarak [Shamiko](https://github.com/LSPosed/LSPosed.github.io/releases/) da kullanabilirsiniz.
+- i̇steğe bağlı olarak Alpha sürümünde Shamiko da kullanabilirsiniz
 
 # SSS
 
@@ -51,8 +52,12 @@ Magisk'te (ve klonlarında: Alpha, Kitsune) gizleme olduğu gibi çalışır.
 - Tespitleri nasıl kontrol ederim?
   - [Tespit kontrolü nasıl yapılır](https://github.com/bindhosts/bindhosts/issues/4)'ı okuyun.
 - APatch'te bind mount'a nasıl geçerim?
-  - CI yapılarını [buradan](https://nightly.link/bmax121/APatch/workflows/build/main/APatch) alın.
+  - [son sürümü](https://github.com/bmax121/APatch/releases/latest) edinin
 
-## Terimler Sözlüğü
+## Bağlantılar
 
-- bind mount - APatch'in magic mount için kullandığı terim, esas olarak Magisk tarafından kullanılan montaj yöntemi.
+### Zygisk sağlayıcıları
+
+- [NeoZygisk](https://github.com/JingMatrix/NeoZygisk)
+- [ReZygisk](https://github.com/PerformanC/ReZygisk)
+- [ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext)'in kara liste uygulamasını etkinleştirin.

@@ -17,7 +17,7 @@
 - **APatch**
   - bind mount (magic mount)
   - Compatible con Adaway
-  - Ocultación: Excluir modificaciones + habilitar lista de negación de [ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext)
+  - Ocultación: Excluir Modificaciones + [ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext) umount only
 - **Magisk**
   - magic mount
   - Compatible con Adaway
@@ -25,7 +25,7 @@
 - **KernelSU**
   - OverlayFS + path_umount, (magic mount? pronto?)
   - Sin compatibilidad con Adaway
-  - Oculta: desmontar módulos (para no GKI, por favor haga backport path_umount)
+  - Ocultación: desmontar módulos (para no GKI, por favor haga backport path_umount)
 
 ---
 
@@ -37,7 +37,7 @@
 - Sólo KernelSU
 - Requiere susfs-parchado en el kernel y userspace tool
 - Compatible con Adaway
-- Ocultación: **lo mejor de su clase ya que SuSFS maneja el desmontaje**
+- Ocultación: SuSFS maneja el desmontaje
 
 ---
 
@@ -115,7 +115,7 @@
 - Compatible en KernelSU NEXT 12183+ [referencia](https://github.com/rifsxd/KernelSU-Next/commit/9f30b48e559fb5ddfd088c933af147714841d673)
 - **ADVERTENCIA**: Conflicto con SuSFS. No necesitas esto si puedes implementar SuSFS.
 - Compatible con Adaway
-- Ocultos: buen método, pero probablemente sólo se pueden implementar susfs.
+- Ocultación: buen método, pero probablemente sólo se pueden implementar susfs.
 
 ---
 
@@ -155,5 +155,17 @@
 - Requiere susfs-parchado en el kernel y userspace tool
 - **OPT-IN** sólo porque es agradable
 - Compatible con Adaway
-- Ocultación: **lo mejor de su clase ya que SuSFS maneja el desmontaje**
+- Ocultación: SuSFS maneja el desmontaje
+
+---
+
+## modo=10
+
+### ksud_kernel_umount
+
+- montar --bind + umount del kernel asistido
+- Sólo KernelSU
+- Requiere KernelSU 22106+
+- Compatible con Adaway
+- Ocultación: KernelSU maneja el desmontaje.
 

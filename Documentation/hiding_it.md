@@ -6,12 +6,11 @@ Nascondersi in APatch dovrebbe funzionare, a patto che tu sia sull'[ultima versi
 
 - 'Escludi modifiche' alle app da cui vuoi nascondere il root.
 - Installa NeoZygisk o ReZygisk come gestore della denylist
-- O se usi ZygiskNext, abilita l'opzione enforce denylist
-- O puoi installare NoHello o Zygisk Assistant su Zygisk Next
+- O se usi ZygiskNext, abilita solo umount
 
 APatch Legacy è sconsigliato a causa di potenziali problemi. Tuttavia, puoi provare quanto segue:
 
-- escludi modifiche + abilita la denylist di NeoZygisk, ReZygisk O ZygiskNext's
+- escludere le modifiche più NeoZygisk, ReZygisk OR ZygiskNext's solo umount
 - O puoi installare NoHello o Zygisk Assistant
 - sebbene questa soluzione non sia più consigliata, puoi comunque provare a utilizzare hosts_file_redirect kpm. [Tutorial](https://github.com/bindhosts/bindhosts/issues/3)
 - se hosts_file_redirect fallisce, installare [ZN-hostsredirect](https://github.com/aviraxp/ZN-hostsredirect/releases)
@@ -27,8 +26,7 @@ Raccomandazioni:
 
 - se il kernel non è gki e manca path_umount, chiedi allo sviluppatore del kernel di eseguire il [backport di questa funzionalità](https://github.com/tiann/KernelSU/pull/1464)
 - Installa NeoZygisk o ReZygisk come gestore della denylist
-- O se usi ZygiskNext, abilita l'opzione enforce denylist
-- O puoi installare NoHello, Shamiko o Zygisk Assistant su Zygisk Next
+- O se usi ZygiskNext, abilita solo umount
 - in alternativa, basta installare [ZN-hostsredirect](https://github.com/aviraxp/ZN-hostsredirect/releases)
 
 ### Varianti (MKSU, KernelSU-NEXT)
@@ -63,9 +61,3 @@ Nascondersi in Magisk (e cloni, Alpha e Kitsune) dovrebbe funzionare così com'�
 - [NeoZygisk](https://github.com/JingMatrix/NeoZygisk)
 - [ReZygisk](https://github.com/PerformanC/ReZygisk)
 - [ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext)
-
-### Componenti aggiuntivi Zygisk
-
-- [NoHello](https://github.com/MhmRdd/NoHello)
-- [Shamiko](https://github.com/LSPosed/LSPosed.github.io/releases/)
-- [Zygisk Assistant](https://github.com/snake-4/Zygisk-Assistant)

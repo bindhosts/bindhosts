@@ -17,7 +17,7 @@
 - **APatch**
   - bind mount (magic mount)
   - compatibile con Adaway
-  - Nascondersi: Escludi modifiche + Enforcement denylist di [ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext)
+  - Nascondi: Escludi le modifiche + [ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext) solo umount
 - **Magisk**
   - magic mount
   - compatibile con Adaway
@@ -37,7 +37,7 @@
 - solo KernelSU
 - richiede kernel con patch susfs e strumento userspace
 - Compatibile con Adaway
-- Nascondersi: **il migliore nella sua categoria poiché SuSFS gestisce lo smontaggio**
+- Nascondi: SuSFS gestisce lo smontaggio
 
 ---
 
@@ -155,5 +155,17 @@
 - richiede kernel con patch susfs e strumento userspace
 - **OPT-IN** solo perché è di nicchia
 - compatibile con Adaway
-- Nascondersi: **il migliore nella sua categoria poiché SuSFS gestisce lo smontaggio**
+- Nascondi: SuSFS gestisce lo smontaggio
+
+---
+
+## mode=10
+
+### ksud_kernel_umount
+
+- mount --bind + umount assistito dal kernel
+- Solo KernelSU
+- Richiede KernelSU 22106+
+- Compatibile con Adaway
+- Nascondi: KernelSU gestisce lo smontaggio.
 
