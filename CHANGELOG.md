@@ -4,6 +4,14 @@ Systemless hosts for APatch, KernelSU and Magisk
 ---
 
 # Changelog
+### 2.1.1
+- scripts/post-fs-data: reorder rules for ksun ksuv3 migration
+- scripts/bindhosts: ignore comments inline after entry
+- scripts/post-fs-data: move metamodule-capable APatch to mode 2
+- webui/home: setup link only when file not found
+- scripts/service: pre-calc module.prop values
+- webui/locales: updates
+
 ### 2.1.0
 - module: remove skip_mount content
 - webui/js: Use WebUI X API for Intent (#158)
