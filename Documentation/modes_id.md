@@ -17,7 +17,7 @@
 - **APatch**
   - bind mount (magic mount)
   - kompatibel dengan Adaway
-  - Penyembunyian: Kecualikan Modifikasi + [ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext) paksa daftar tolak
+  - Penyembunyian: Kecualikan Modifikasi + [ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext) hanya unmount
 - **Magisk**
   - magic mount
   - kompatibel dengan Adaway
@@ -37,7 +37,7 @@
 - KernelSU saja
 - Memerlukan kernel yang ditambal susfs dan alat userspace
 - kompatibel dengan Adaway
-- Penyembunyian: **terbaik di kelasnya karena SuSFS menangani unmount**
+- Penyembunyian: SuSFS menangani unmount
 
 ---
 
@@ -110,7 +110,7 @@
 
 ### ksu_source_mod
 
-- KernelSU try_umount dibantu mount --bind
+- mount --bind yang dibantu try_umount KernelSU
 - Memerlukan modifikasi sumber: [referensi](https://github.com/tiann/KernelSU/commit/2b2b0733d7c57324b742c017c302fc2c411fe0eb)
 - Didukung pada KernelSU NEXT 12183+: [referensi](https://github.com/rifsxd/KernelSU-Next/commit/9f30b48e559fb5ddfd088c933af147714841d673)
 - **PERINGATAN**: Konflik dengan SuSFS. Anda tidak memerlukan ini jika anda dapat mengimplementasikan SuSFS.
@@ -155,5 +155,17 @@
 - Memerlukan kernel yang ditambal susfs dan alat userspace
 - Hanya tersedia **OPT-IN** karena bersifat khusus
 - kompatibel dengan Adaway
-- Penyembunyian: **terbaik di kelasnya karena SuSFS menangani unmount**
+- Penyembunyian: SuSFS menangani unmount
+
+---
+
+## mode=10
+
+### ksud_kernel_umount
+
+- mount --bind + kernel bantuan umount
+- KernelSU saja
+- Membutuhkan KernelSU 22106+
+- kompatibel dengan Adaway
+- Penyembunyian: KernelSU menangani unmount.
 

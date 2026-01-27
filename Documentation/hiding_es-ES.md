@@ -6,12 +6,11 @@ Ocultar en APatch debería funcionar, siempre y cuando estés en la [última ver
 
 - 'Excluir modificaciones' a las aplicaciones de las que desea ocultar root.
 - Instalar NeoZygisk o ReZygisk como controlador de la lista de denegación
-- O si utiliza ZygiskNext, habilite la lista de denegacion
-- O puede instalar [NoHello](https://github.com/MhmRdd/NoHello) o [Zygisk Assistant](https://github.com/snake-4/Zygisk-Assistant)
+- O si utiliza ZygiskNext, active umount only
 
 APatch Legacy no se recomienda debido a problemas potenciales. Sin embargo, puedes probar lo siguiente:
 
-- Excluir modificaciones + habilitar lista de negación de [ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext)
+- excluir modificaciones más NeoZygisk, ReZygisk O ZygiskNext's umount
 - O puede instalar [NoHello](https://github.com/MhmRdd/NoHello) o [Zygisk Assistant](https://github.com/snake-4/Zygisk-Assistant)
 - Mientras que esto ya no se recomienda, todavía puede intentar usar hosts_file_redirect kpm. [Tutorial](https://github.com/bindhosts/bindhosts/issues/3)
 - si hosts_file_redirect falla, instala [ZN-hostsredirect](https://github.com/aviraxp/ZN-hostsredirect/releases)
@@ -27,8 +26,7 @@ Recomendaciones:
 
 - si el kernel no es gki y carece de path_umount, pregunte al dev del kernel que [haga backport a esta característica](https://github.com/tiann/KernelSU/pull/1464)
 - Instalar NeoZygisk o ReZygisk como controlador de la lista de denegación
-- O si utiliza ZygiskNext, habilite la lista de denegacion
-- O puedes instalar [NoHello](https://github.com/MhmRdd/NoHello), [Shamiko](https://github.com/LSPosed/LSPosed.github.io/releases/) o [Zygisk Assistant](https://github.com/snake-4/Zygisk-Assistant)
+- O si utiliza ZygiskNext, active umount only
 - Alternativamente, simplemente instale [ZN-hostsredirect](https://github.com/aviraxp/ZN-hostsredirect/releases)
 
 ### Variantes (MKSU, KernelSU-NEXT)
@@ -63,9 +61,3 @@ Ocultar en Magisk (y clones, Alpha, Kitsune) debe funcionar como es.
 - [NeoZygisk](https://github.com/JingMatrix/NeoZygisk)
 - [ReZygisk](https://github.com/PerformanC/ReZygisk)
 - Activa la lista de denegación de [ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext)
-
-### Zygisk addons
-
-- [NoHello](https://github.com/MhmRdd/NoHello)
-- opcionalmente también puedes usar [Shamiko](https://github.com/LSPosed/LSPosed.github.io/releases/)
-- Para MKSU, puedes usar [Shamiko](https://github.com/LSPosed/LSPosed.github.io/releases/)
