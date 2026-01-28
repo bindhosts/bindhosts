@@ -23,6 +23,9 @@ env:
 jobs:
   release:
     runs-on: ubuntu-latest
+    outputs:
+      version_changed: ${{ env.version_changed }}
+      VERSION: ${{ env.VERSION }}
     steps:
     - name: Checkout
       uses: actions/checkout@v5
@@ -99,3 +102,16 @@ jobs:
         files: "${{ env.MODULE_NAME }}.zip"
         tag_name: "${{ env.VERSION }}"
         name: "Release ${{ env.VERSION }}"
+
+  dispatch:
+    needs: release
+    if: ${{ needs.release.outputs.version_changed == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger workflow
+        uses: peter-evans/repository-dispatch@v4
+        with:
+          token: ${{ secrets.REPO_SYNC_PAT }}
+          repository: KernelSU-Modules-Repo/bindhosts
+          event-type: sync-release
+          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "version": "${{ needs.release.outputs.VERSION }}"}'
