@@ -17,7 +17,7 @@ Systemless хосты для APatch, KernelSU и Magisk
 
 - [APatch](https://github.com/bmax121/APatch)
 - [KernelSU](https://github.com/tiann/KernelSU)
-- [Magisk](https://github.com/topjohnwu/Magisk)  <sup>([no WebUI](https://github.com/topjohnwu/Magisk/issues/8609#event-15568590949)👀)</sup>
+- [Magisk](https://github.com/topjohnwu/Magisk)  <sup>([без WebUI](https://github.com/topjohnwu/Magisk/issues/8609#event-15568590949)👀)</sup>
 
 ### Также поддерживаются
 
