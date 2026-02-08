@@ -14,7 +14,10 @@
     <string name="global_file_too_large">文件編輯不支援大文件</string>
     <string name="global_file_name_empty">檔案名不能為空</string>
     <string name="global_show_all">顯示剩餘 %d 個</string>
+    <string name="global_close">關閉</string>
+    <string name="global_cancel">取消</string>
     <string name="global_action">執行</string>
+    <string name="global_unsupported">不支持</string>
     <!-- Query -->
     <string name="query_title">Host 查詢</string>
     <string name="query_search">搜尋</string>
@@ -97,10 +100,10 @@
     <string name="more_support_no_update">當前已是最新版本</string>
     <string name="more_support_update_locales">更新翻譯包</string>
     <string name="more_support_update_locales_failed">翻譯包更新失敗</string>
+    <string name="more_support_view_webui_log">查看 WebUI 日誌</string>
     <!-- Confirmation -->
     <string name="confirmation_title">確認刪除？</string>
     <string name="confirmation_message">確認刪除</string>
-    <string name="confirmation_cancel">取消</string>
     <string name="confirmation_remove">刪除</string>
     <!-- Footer -->
     <string name="footer_home">首頁</string>

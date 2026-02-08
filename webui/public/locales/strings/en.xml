@@ -104,7 +104,6 @@
     <!-- Confirmation -->
     <string name="confirmation_title">Confirm Remove?</string>
     <string name="confirmation_message">Are you sure you want to remove</string>
-    <string name="confirmation_cancel">Cancel</string>
     <string name="confirmation_remove">Remove</string>
     <!-- Footer -->
     <string name="footer_home">Home</string>

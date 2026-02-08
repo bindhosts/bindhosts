@@ -14,6 +14,8 @@
     <string name="global_file_too_large">Modifica file non supportata su file grandi</string>
     <string name="global_file_name_empty">Il nome del file non può essere vuoto</string>
     <string name="global_show_all">Mostra tutti %d altro</string>
+    <string name="global_close">Chiudi</string>
+    <string name="global_cancel">Annulla</string>
     <string name="global_action">Action</string>
     <!-- Query -->
     <string name="query_title">Query Host</string>
@@ -100,7 +102,6 @@
     <!-- Confirmation -->
     <string name="confirmation_title">Confermare la rimozione?</string>
     <string name="confirmation_message">Sei sicuro di voler rimuovere</string>
-    <string name="confirmation_cancel">Annulla</string>
     <string name="confirmation_remove">Rimuovi</string>
     <!-- Footer -->
     <string name="footer_home">Home</string>

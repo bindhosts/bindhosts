@@ -11,7 +11,10 @@
     <string name="global_file_too_large">Edição de arquivo não é suportado em arquivo grande</string>
     <string name="global_file_name_empty">Nome do arquivo não pode estar vazio</string>
     <string name="global_show_all">Exibir Tudo %d Mais</string>
+    <string name="global_close">Fechar</string>
+    <string name="global_cancel">Cancelar</string>
     <string name="global_action">Ação</string>
+    <string name="global_unsupported">Não suportado</string>
     <!-- Query -->
     <string name="query_title">Consulta de Hospedeiro</string>
     <string name="query_search">Pesquisar</string>
@@ -71,7 +74,6 @@
     <!-- Confirmation -->
     <string name="confirmation_title">Confirmar Remoção?</string>
     <string name="confirmation_message">Você tem certeza que quer remover</string>
-    <string name="confirmation_cancel">Cancelar</string>
     <string name="confirmation_remove">Remover</string>
     <!-- Footer -->
     <string name="footer_home">Início</string>
