@@ -1,91 +1,17 @@
 import { exec } from 'kernelsu-alt';
-import { applyRippleEffect, checkMMRL, setupScrollEvent, setFooterClick } from './utils/util.js';
-import { loadTranslations, applyTranslations } from './utils/language.js';
-import { WXEventHandler, WebUI, Intent } from "webuix";
+import { applyRippleEffect, checkMMRL } from './utils/util.js';
+import { loadTranslations } from './utils/language.js';
+import { router } from './route.js';
+import { WXEventHandler } from "webuix";
 
 window.wx = new WXEventHandler();
 
-let currentContent = '';
-let currentModule = null;
-
-const content = document.getElementById('content-container');
-const htmlModules = import.meta.glob('./page/*/*.html', { 
-    query: '?raw', 
-    import: 'default' 
-});
-const jsModules = import.meta.glob('./page/*/*.js');
-const cssModules = import.meta.glob('./page/*/*.css');
-
 /**
- * load html page content and corresponsing js, css
- * @param {string} contentName 
- * @returns {Promise<void>}
+ * Setup navigation
  */
-async function loadContent(contentName) {
-    if (contentName === currentContent) return;
-    currentContent = contentName;
-
-    // Cleanup
-    setFooterClick(true);
-    document.querySelector('.body-content')?.classList.remove('loaded');
-    document.querySelector('.back-button').click();
-    if (currentModule && currentModule?.destroy) {
-        currentModule.destroy();
-    }
-    await new Promise(resolve => setTimeout(resolve, 50));
-
-    // Update focued button
-    document.querySelectorAll('.footer-btn').forEach(btn => {
-        const footerBtnIcon = btn.querySelector('.footer-btn-icon');
-        const activeIcon = btn.querySelector('.active');
-        const inactiveIcon = btn.querySelector('.inactive');
-        if (btn.getAttribute('page') === contentName) {
-            footerBtnIcon.classList.add('focus');
-            footerBtnIcon.classList.add('loaded');
-            activeIcon.style.display = 'block';
-            inactiveIcon.style.display = 'none';
-
-        } else {
-            footerBtnIcon.classList.remove('loaded');
-            setTimeout(() => {
-                footerBtnIcon.classList.remove('focus');
-                activeIcon.style.display = 'none';
-                inactiveIcon.style.display = 'block';
-            }, 100);
-        }
-    });
-
-    // Load html
-    const htmlPath = `./page/${contentName}/${contentName}.html`;
-    if (htmlModules[htmlPath]) {
-        const html = await htmlModules[htmlPath]();
-        content.innerHTML = html;
-    }
-
-    // Load css
-    const cssPath = `./page/${contentName}/${contentName}.css`;
-    if (cssModules[cssPath]) {
-      await cssModules[cssPath]();
-    }
-
-    // Load js
-    const jsPath = `./page/${contentName}/${contentName}.js`;
-    if (jsModules[jsPath]) {
-        currentModule = await jsModules[jsPath]();
-        currentModule.init();
-    }
-
-    // Initialize content
-    setFooterClick(false);
-    document.querySelector('.body-content').classList.add('loaded');
-    setupScrollEvent();
-    applyRippleEffect();
-    applyTranslations();
-}
-
 document.querySelectorAll('.footer-btn').forEach(btn => {
     const page = btn.getAttribute('page');
-    btn.addEventListener('click', () => loadContent(page));
+    btn.addEventListener('click', () => router.navigate(page));
 });
 
 /**
@@ -104,7 +30,7 @@ function setupRickRoll() {
     const countDown = document.getElementById('rr-coundown');
     const closeRrButton = document.querySelector('.close-rr-btn');
     let redirect = true;
-    
+
     const lastRickRoll = localStorage.getItem('lastRickRoll');
     const shouldRickRoll = Math.random() < 0.7;
 
@@ -221,8 +147,8 @@ wx.on(window, 'back', () => {
         }
     }
     // Back to home page
-    if (currentContent !== 'home') {
-        document.getElementById('home').click();
+    if (router.currentView !== 'home') {
+        router.navigate('home');
     // Close webui
     } else {
         webui.exit();
@@ -235,7 +161,7 @@ wx.on(window, 'back', () => {
  */
 document.addEventListener('DOMContentLoaded', async () => {
     checkMMRL();
-    loadContent('home');
+    router.navigate('home');
     loadTranslations();
     setupUserCustomization();
     applyRippleEffect();

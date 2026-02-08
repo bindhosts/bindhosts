@@ -1,22 +1,3 @@
-.force-update-button {
-    padding: 8px;
-    margin-bottom: 12px;
-    margin-right: 29px;
-    border-radius: 20px;
-    transform: translateY(calc(100% + 12px)) scale(0.5);
-    transition: transform 0.2s ease, border-radius 0.4s ease, scale 0.4s ease;
-}
-
-[dir="rtl"] .force-update-button {
-    margin-right: unset;
-    margin-left: 29px;
-}
-
-.force-update-button.show {
-    border-radius: 10px;
-    transform: translate(0) scale(1);
-}
-
 .category-container {
     display: flex;
     position: relative;
@@ -70,7 +51,7 @@
 .import-button svg,
 .add-btn svg {
     fill: var(--btn-primary-text);
-    z-index: 1;
+    z-index: var(--z-index-base);
 }
 
 .edit-btn,
@@ -84,12 +65,12 @@
     flex-shrink: 0;
     border: none;
     border-radius: 8px;
-    font-size: 16px;
+    font-size: 1em;
     justify-content: center;
     align-items: center;
 
     svg {
-        z-index: 1;
+        z-index: var(--z-index-base);
     }
 }
 
@@ -110,10 +91,11 @@
     min-width: 100%;
     align-items: center;
     gap: 5px;
+    z-index: var(--z-index-base);
 }
 
 .link-text {
-    font-size: 14px;
+    font-size: 0.9em;
     word-break: break-all;
     word-wrap: break-word;
 }
@@ -273,7 +255,6 @@
     left: 10px;
 }
 
-
 [dir="rtl"] .format {
     direction: ltr !important;
     text-align: right !important;
@@ -322,7 +303,7 @@
 .confirm-btn {
     background-color: inherit;
     color: currentColor;
-    font-size: 14px;
+    font-size: 0.9em;
     border: none;
     border-radius: 30px;
     padding: 12px;
@@ -336,21 +317,23 @@
 }
 
 .line-numbers {
+    display: none;
     position: absolute;
     left: 0;
     top: 0;
     min-height: 100%;
     width: 30px;
-    padding: 75px 3px 30px 0;
+    z-index: var(--z-index-base);
+    padding: 5px 3px 30px 0;
     color: var(--text-primary);
     background-color: var(--scroll-bar-color);
     border-right: 1px solid var(--border-color);
     text-align: right;
     font-family: monospace;
-    font-size: 14px;
+    font-size: 0.9em;
     line-height: 1.5;
     overflow-x: hidden;
-    z-index: 1;
+    z-index: var(--z-index-base);
     transition: padding-bottom 0.2s ease;
     user-select: none;
 }
@@ -362,7 +345,7 @@
     height: 100%;
     width: 100%;
     color: inherit;
-    font-size: 14px;
+    font-size: 0.9em;
     line-height: 1.5;
     border: none;
     outline: none;

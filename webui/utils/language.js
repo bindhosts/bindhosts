@@ -12,8 +12,8 @@ const rtlLang = [
   'dv',  // Dhivehi
 ];
 
-export let translations = {};
 export let lang;
+let translations = {};
 let baseTranslations = {};
 let availableLanguages = ['en'];
 let languageNames = {};

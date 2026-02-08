@@ -13,7 +13,7 @@
 .box h3 {
     margin: 0;
     margin-bottom: 5px;
-    font-size: 12px;
+    font-size: 0.75em;
     color: var(--text-muted);
     user-select: none;
 }
@@ -38,7 +38,7 @@
 .support-title,
 .document-title,
 .toggle-text {
-    font-size: 17px;
+    font-size: 1em;
     white-space: wrap;
     flex-grow: 1;
     user-select: none;
@@ -69,7 +69,7 @@
     flex-shrink: 0;
     width: 40px;
     height: 25px;
-    z-index: 1;
+    z-index: var(--z-index-base);
 }
 
 .toggle-switch input {
@@ -161,7 +161,7 @@ input:checked+.slider:before {
 
 .language-option {
     display: block;
-    font-size: 18px;
+    font-size: 1em;
     padding: 8px 10px;
     color: var(--text-primary);
     background-color: transparent;
@@ -191,7 +191,7 @@ input:checked+.slider:before {
 
 .language-improve {
     margin: 0;
-    font-size: 14px;
+    font-size: 0.85em;
     text-align: center;
     color: var(--text-muted);
     user-select: none;

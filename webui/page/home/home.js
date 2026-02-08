@@ -1,10 +1,8 @@
 import { exec } from 'kernelsu-alt';
-import { showPrompt, reboot, basePath, developerOption, setDeveloperOption, setLearnMore, moduleDirectory, createEventManager } from '../../utils/util.js';
+import { showPrompt, basePath, moduleDirectory, setLearnMore, setDeveloperOption, developerOption } from '../../utils/util.js';
 import { setupDocsMenu } from '../../utils/docs.js';
 import { translations } from '../../utils/language.js';
 import modes from './modes.json';
-
-let em = createEventManager();
 
 let clickCount = 0, clickTimeout = 0;
 
@@ -15,24 +13,28 @@ let clickCount = 0, clickTimeout = 0;
  */
 function updateStatus() {
     const status = [
-        { element: 'status-text', key: 'description', file: 'link/MODDIR/module.prop' },
-        { element: 'version-text', key: 'version', file: 'link/MODDIR/module.prop' },
-        { element: 'mode-text', key: 'mode', file: 'link/MODDIR/mode.sh' },
+        { element: 'status-text', key: 'description', file: 'module.prop' },
+        { element: 'version-text', key: 'version', file: 'module.prop' },
+        { element: 'mode-text', key: 'mode', file: 'mode.sh' },
     ]
 
     const fetchStatus = async (item) => {
         try {
-            const response = await fetch(item.file);
+            const response = await fetch("link/MODDIR/" + item.file);
             if (!response.ok) throw new Error(`File not found: ${item.file}`);
             const data = await response.text();
             const value = data.match(new RegExp(`${item.key}=(.*)`))[1].replace('status: ', '');
             document.getElementById(item.element).textContent = value;
         } catch (error) {
-            if (error.message.includes('File not found')) {
-                setupLink();
-                updateStatus();
-            }
-            throw error;
+            exec(`cat ${basePath}/${item.file}`, (result) => {
+                let value;
+                if (result.errno !== 0) {
+                    value = 'Unknown';
+                } else {
+                    value = result.trim().match(new RegExp(`${item.key}=(.*)`))[1].replace('status: ', '');
+                }
+                document.getElementById(item.element).textContent = value;
+            });
         }
     };
 
@@ -51,7 +53,7 @@ function updateStatus() {
  */
 function setupDevOtp() {
     const statusBox = document.getElementById("status-box");
-    em.on(statusBox, 'click', async () => {
+    statusBox.addEventListener('click', async () => {
         clickCount++;
         clearTimeout(clickTimeout);
         clickTimeout = setTimeout(() => {
@@ -109,7 +111,7 @@ function setupModeBtn() {
         });
     }
 
-    em.on(modeBtn, 'click', async () => {
+    modeBtn.addEventListener('click', async () => {
         if (developerOption) {
             modeMenu.style.display = "flex";
             setTimeout(() => {
@@ -172,13 +174,12 @@ function setupModeBtn() {
             setupModeMenu = true;
             createModeOptions();
             modeMenu.querySelector(".close-btn").onclick = closeOverlay;
-            em.on(document.getElementById("learn-btn"), 'click', () => closeOverlay());
-            em.on(modeMenu, 'click', (event) => {
+            modeMenu.addEventListener('click', (event) => {
                 if (!overlayContent.contains(event.target)) closeOverlay();
             });
             // Attach event listeners for mode options
             const modeOption = document.getElementById("mode-options");
-            em.on(modeOption, 'change', (event) => {
+            modeOption.addEventListener('change', (event) => {
                 const selectedMode = event.target.value;
                 saveModeSelection(selectedMode);
             });
@@ -197,6 +198,7 @@ function setupModeBtn() {
  */
 let hostLines = [], originalHostLines = [], currentIndex = 0, initialHeight = 0;
 const batchSize = 30;
+let setupLinkRetries = 0;
 
 /**
  * Get hosts from hosts.txt and display them in the UI
@@ -210,6 +212,7 @@ async function getHosts() {
         const response = await fetch('link/hosts.txt');
         if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
         const hostsText = await response.text();
+        setupLinkRetries = 0;
 
         hostLines = hostsText
             .trim()
@@ -227,7 +230,7 @@ async function getHosts() {
         });
 
         // Scroll down to load more
-        em.on(hostList, 'scroll', () => {
+        hostList.addEventListener('scroll', () => {
             // Reset position
             document.querySelectorAll('.scrollable-list').forEach(el => {
                 el.scrollTo({ left: 0, behavior: 'smooth' });
@@ -243,7 +246,12 @@ async function getHosts() {
             }
         });
     } catch (error) {
+        if (setupLinkRetries > 2) {
+            console.error("Failed to setup link after multiple retries");
+            return;
+        }
         setupLink();
+        setupLinkRetries++;
         await getHosts();
     }
 }
@@ -287,9 +295,9 @@ function loadMoreHosts(callback) {
         // Add event listener to remove button if it exists
         if (dataType !== 'custom') {
             const removeBtn = hostItem.querySelector('.remove-btn');
-            em.on(removeBtn, 'click', (e) => handleRemove(e, domains));
+            removeBtn.addEventListener('click', (e) => handleRemove(e, domains));
         }
-        em.on(hostItem, 'click', () => {
+        hostItem.addEventListener('click', () => {
             const isRTL = document.documentElement.getAttribute('dir') === 'rtl';
             hostItem.scrollTo({
                 left: isRTL ? -hostItem.scrollWidth : hostItem.scrollWidth,
@@ -336,7 +344,7 @@ function setupQueryInput() {
     const clearBtn = document.querySelector('.clear-btn');
 
     // Search functionality
-    em.on(searchBtn, 'click', () => {
+    searchBtn.addEventListener('click', () => {
         const query = inputBox.value.trim().toLowerCase();
         if (!query) getHosts();
 
@@ -354,42 +362,41 @@ function setupQueryInput() {
     });
 
     // Search on enter
-    em.on(inputBox, 'keypress', (event) => {
+    inputBox.addEventListener('keypress', (event) => {
         if (event.key === 'Enter') searchBtn.click();
     })
 
     // Update clear button visibility on any input change
-    em.on(inputBox, 'input', () => {
+    inputBox.addEventListener('input', () => {
         clearBtn.style.display = inputBox.value.length > 0 ? 'flex' : 'none';
     })
 
     // Clear search functionality
-    em.on(clearBtn, 'click', async () => {
+    clearBtn.addEventListener('click', async () => {
         inputBox.value = '';
         clearBtn.style.display = 'none';
         await getHosts();
     })
 }
 
-// init content
-export function init() {
-    document.getElementById('title').textContent = 'bindhosts ';
-    document.getElementById('mode-btn').classList.add('show');
-    updateStatus();
-    checkDevOption();
+// Lifecycle: Initial mount to DOM
+export function mount() {
     setupDevOtp();
     setupModeBtn();
     setupQueryInput();
     setupDocsMenu();
 }
 
-// exit cleanup
-export function destroy() {
-    clickCount = 0, clickTimeout = 0, setupModeMenu = false;
-    hostLines = [], originalHostLines = [], currentIndex = 0, initialHeight = 0;
+// Lifecycle: Each time page becomes visible
+export function onShow() {
+    document.getElementById('title').textContent = 'bindhosts ';
+    document.getElementById('mode-btn').classList.add('show');
+    updateStatus();
+    getHosts();
+    checkDevOption();
+}
 
-    document.getElementById('version-text').textContent = '';
+// Lifecycle: Each time page is hidden
+export function onHide() {
     document.getElementById('mode-btn').classList.remove('show');
-
-    em?.removeAll();
 }

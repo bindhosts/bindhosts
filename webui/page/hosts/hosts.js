@@ -1,10 +1,8 @@
 import { exec, spawn } from 'kernelsu-alt';
-import { showPrompt, applyRippleEffect, basePath, setupSwipeToClose, moduleDirectory, filePaths, createEventManager } from '../../utils/util.js';
+import { showPrompt, applyRippleEffect, basePath, setupSwipeToClose, moduleDirectory, filePaths } from '../../utils/util.js';
 import { translations } from '../../utils/language.js';
-import { openFileSelector } from '../../utils/file_selector.js';
+import { FileSelector } from '../../utils/file_selector.js';
 import { setupDocsMenu } from '../../utils/docs.js';
-
-let em = createEventManager();
 
 /**
  * Read a file and display its content in the UI
@@ -84,7 +82,7 @@ function displayHostsList(lines, fileType) {
         `;
         // Click to show remove button
         listElement.appendChild(listItem);
-        em.on(listItem, 'click', (e) => {
+        listItem.addEventListener('click', (e) => {
             if (e.target.classList.contains("checkbox-wrapper")) return;
             const isRTL = document.documentElement.getAttribute('dir') === 'rtl';
             listItem.scrollTo({ 
@@ -110,34 +108,45 @@ function displayHostsList(lines, fileType) {
         }
         // Checkbox functionality for custom hosts
         const checkbox = listItem.querySelector(".checkbox");
-        if (checkbox) checkbox.checked = !line.startsWith('disabled|');
-        em.on(listItem.querySelector('.checkbox-wrapper'), 'click', () => {
-            const command = line.startsWith('disabled|') ? `s/${line}/${line.replace(/^disabled\|/, '')}/` : `s/^${line}/disabled|${line}/`;
-            exec(`sed -i '${command}' ${basePath}/${filePaths[fileType]}`);
-            loadFile(fileType);
-        });
-        // Remove line from file
-        em.on(deleteLine, 'click', async () => {
-            await exec(`
-                filtered=$(grep -vxF '${line}' ${basePath}/${filePaths[fileType]})
-                echo "$filtered" > ${basePath}/${filePaths[fileType]}
-            `);
-            listElement.removeChild(listItem);
-        });
-        // Remove file
-        em.on(deleteFile, 'click', async () => {
-            const fileName = listItem.querySelector(".link-text").textContent;
-            const remove = await removeCustomHostsFile(fileName);
-            if (remove) {
-                await exec(`rm -f "${basePath}/${fileName}"`);
-                listElement.removeChild(listItem);
+        if (checkbox) {
+            checkbox.checked = !line.startsWith('disabled|');
+            const checkboxWrapper = listItem.querySelector('.checkbox-wrapper');
+            if (checkboxWrapper) {
+                checkboxWrapper.addEventListener('click', () => {
+                    const command = line.startsWith('disabled|') ? `s/${line}/${line.replace(/^disabled\|/, '')}/` : `s/^${line}/disabled|${line}/`;
+                    exec(`sed -i '${command}' ${basePath}/${filePaths[fileType]}`);
+                    loadFile(fileType);
+                });
             }
-        });
+        }
+        // Remove line from file
+        if (deleteLine) {
+            deleteLine.addEventListener('click', async () => {
+                await exec(`
+                    filtered=$(grep -vxF '${line}' ${basePath}/${filePaths[fileType]})
+                    echo "$filtered" > ${basePath}/${filePaths[fileType]}
+                `);
+                listElement.removeChild(listItem);
+            });
+        }
+        // Remove file
+        if (deleteFile) {
+            deleteFile.addEventListener('click', async () => {
+                const fileName = listItem.querySelector(".link-text").textContent;
+                const remove = await removeCustomHostsFile(fileName);
+                if (remove) {
+                    await exec(`rm -f "${basePath}/${fileName}"`);
+                    listElement.removeChild(listItem);
+                }
+            });
+        }
         // Edit file
-        em.on(editFile, 'click', () => {
-            const line = listItem.querySelector(".link-text").textContent;
-            fileNameEditor(line);
-        });
+        if (editFile) {
+            editFile.addEventListener('click', () => {
+                const line = listItem.querySelector(".link-text").textContent;
+                fileNameEditor(line);
+            });
+        }
         return listItem;
     };
 
@@ -151,7 +160,7 @@ function displayHostsList(lines, fileType) {
         showMoreItem.innerHTML = `<span>${translations.global_show_all} ${lines.length - showInitialLimit} ${translations.global_more}</span>`;
         listElement.appendChild(showMoreItem);
         // Remove the "Show More" button and show remaining items
-        em.on(showMoreItem, 'click', () => {
+        showMoreItem.addEventListener('click', () => {
             listElement.removeChild(showMoreItem);
             lines.slice(showInitialLimit).forEach(line => createListItem(line));
             applyRippleEffect();
@@ -222,7 +231,7 @@ function removeCustomHostsFile(fileName) {
             resolve(false);
         }
         cancelButton.onclick = () => closeBtn.click();
-        em.on(confirmationOverlay, 'click', (e) => {
+        confirmationOverlay.addEventListener('click', (e) => {
             if (e.target === confirmationOverlay) closeBtn.click();
         });
         // Confirm file removal
@@ -243,21 +252,21 @@ function setupHelpMenu() {
     const helpButtons = document.querySelectorAll(".help-btn");
     const overlays = document.querySelectorAll(".overlay");
     helpButtons.forEach(button => {
-        em.on(button, 'click', () => {
+        button.onclick = () => {
             const type = button.dataset.type;
             const overlay = document.getElementById(`${type}-help`);
             if (overlay) openOverlay(overlay);
-        });
+        };
     });
     overlays.forEach(overlay => {
         const closeButton = overlay.querySelector(".close-btn");
-        const docsButtons = overlay.querySelector(".docs-btn");
         
-        em.on(closeButton, 'click', () => closeOverlay(overlay));
-        em.on(docsButtons, 'click', () => closeOverlay(overlay));
-        em.on(overlay, 'click', (e) => {
+        if (closeButton) {
+            closeButton.onclick = () => closeOverlay(overlay);
+        }
+        overlay.onclick = (e) => {
             if (e.target === overlay) closeOverlay(overlay);
-        });
+        };
     });
     function openOverlay(overlay) {
         if (activeOverlay) closeOverlay(activeOverlay);
@@ -278,18 +287,16 @@ function setupHelpMenu() {
 
 /**
  * Handle touch screen textarea experience: force single direction scroll, snap line
- * Prevent input box from being blocked by soft keyboard
- * Scoll up when focused input is at the bottom of the screen (60%)
  * @returns {void}
  */
-function setupKeyboardInset() {
-    const inputBox = document.querySelectorAll('.input-box');
+function setupInputEvent() {
+    const inputBoxes = document.querySelectorAll('.input-box');
 
-    inputBox.forEach(inputBoxes => {
+    inputBoxes.forEach(inputBox => {
         let startX, startY, isScrollingX, isScrollingY;
-        const lineHeight = parseFloat(window.getComputedStyle(inputBoxes).lineHeight);
+        const lineHeight = parseFloat(window.getComputedStyle(inputBox).lineHeight);
 
-        em.on(inputBoxes, 'touchstart', (event) => {
+        inputBox.addEventListener('touchstart', (event) => {
             const touch = event.touches[0];
             startX = touch.clientX;
             startY = touch.clientY;
@@ -297,7 +304,7 @@ function setupKeyboardInset() {
             isScrollingY = false;
             document.body.style.overflow = "hidden";
         });
-        em.on(inputBoxes, 'touchmove', (event) => {
+        inputBox.addEventListener('touchmove', (event) => {
             const touch = event.touches[0];
             const deltaX = touch.clientX - startX;
             const deltaY = touch.clientY - startY;
@@ -312,43 +319,19 @@ function setupKeyboardInset() {
                 if (!isScrollingY) {
                     isScrollingY = true;
                     isScrollingX = false;
-                    inputBoxes.scrollTo({ left: 0, behavior: 'smooth' });
+                    inputBox.scrollTo({ left: 0, behavior: 'smooth' });
                 }
                 if (isScrollingX) event.preventDefault();
             }
         });
-        em.on(inputBoxes, 'touchend', () => {
+        inputBox.addEventListener('touchend', () => {
             isScrollingX = false;
             isScrollingY = false;
             document.body.style.overflow = "";
             // Snap to the nearest line
-            const scrollTop = inputBoxes.scrollTop;
+            const scrollTop = inputBox.scrollTop;
             const nearestLine = Math.round(scrollTop / lineHeight) * lineHeight;
-            inputBoxes.scrollTo({ top: nearestLine, behavior: 'smooth' });
-        });
-        em.on(inputBoxes, 'focus', (event) => {
-            document.querySelector('.placeholder').classList.add('focused');
-            const wrapper = event.target.closest('.input-box-wrapper');
-            wrapper.classList.add('focus');
-            const inputBox = wrapper.querySelector('.input-box');
-            inputBox.style.padding = '0 9px';
-            setTimeout(() => {
-                const inputRect = event.target.getBoundingClientRect();
-                const viewportHeight = window.innerHeight;
-                const keyboardHeight = viewportHeight * 0.6;
-                const safeArea = 20;
-                if (inputRect.bottom > (viewportHeight - keyboardHeight)) {
-                    const scrollAmount = inputRect.bottom - (viewportHeight - keyboardHeight) + safeArea;
-                    document.querySelector('.body-content').scrollBy({ top: scrollAmount, behavior: 'smooth' });
-                }
-            }, 100);
-        });
-        em.on(inputBoxes, 'blur', () => {
-            document.querySelector('.placeholder').classList.remove('focused');
-            const wrapper = inputBoxes.closest('.input-box-wrapper');
-            wrapper.classList.remove('focus');
-            const inputBox = wrapper.querySelector('.input-box');
-            inputBox.style.paddingLeft = '10px';
+            inputBox.scrollTo({ top: nearestLine, behavior: 'smooth' });
         });
     });
 }
@@ -369,13 +352,13 @@ function attachAddButtonListeners() {
     elements.forEach(({ id, type, fail }) => {
         const inputElement = document.getElementById(id);
         const buttonElement = document.getElementById(`${type}-add`);
-        em.on(inputElement, 'keypress', (e) => {
+        inputElement.addEventListener('keypress', (e) => {
             if (e.key === "Enter") {
                 handleAdd(type, fail);
                 inputElement.blur();
             }
         });
-        em.on(buttonElement, 'click', () => handleAdd(type, fail));
+        buttonElement.addEventListener('click', () => handleAdd(type, fail));
     });
 }
 
@@ -393,15 +376,16 @@ function runBindhosts(args) {
     const header = document.querySelector('.title-container');
     const title = document.getElementById('title');
     const backButton = document.querySelector('.back-button');
-    const bodyContent = document.querySelector('.body-content');
-    const actionButton = document.querySelector('.float');
+    const bodyContent = document.getElementById('page-hosts');
+    const FabContainer = document.querySelector('.action-container');
+    const actionBtn = document.getElementById('action-btn');
     const closeBtn = document.getElementById('close-terminal');
     const forceUpdateButton = document.getElementById('force-update-btn');
 
     if (!setupActionTerminal) {
         setupSwipeToClose(terminal, cover);
-        em.on(closeBtn, 'click', () => closeTerminal());
-        em.on(backButton, 'click', () => closeTerminal());
+        closeBtn.addEventListener('click', () => closeTerminal());
+        backButton.addEventListener('click', () => closeTerminal());
         setupActionTerminal = true;
     }
 
@@ -411,12 +395,10 @@ function runBindhosts(args) {
         const output = spawn("sh", [`${moduleDirectory}/bindhosts.sh`, `${args}`]);
         output.stdout.on('data', (data) => appendOutput(data));
         output.stderr.on('data', (data) => appendOutput(data));
-        output.on('error', () => appendOutput(translations.global_execute_error));
         output.on('exit', () => {
             if (isTerminalOpen) {
-                closeBtn.style.opacity = '1';
-                closeBtn.style.pointerEvents = 'auto';
-                actionButton.classList.add('show');
+                closeBtn.classList.add('show');
+                FabContainer.classList.add('show');
             }
             actionRunning = false;
         });
@@ -431,15 +413,16 @@ function runBindhosts(args) {
     };
 
     const closeTerminal = () => {
+        if (!isTerminalOpen) return;
         terminal.style.transform = 'translateX(100%)';
         bodyContent.style.transform = 'translateX(0)';
         cover.style.opacity = '0';
         backButton.classList.remove('show');
-        actionButton.classList.add('show');
-        actionButton.classList.remove('inTerminal');
+        FabContainer.classList.add('show');
+        actionBtn.classList.add('show');
+        FabContainer.classList.remove('inTerminal');
         forceUpdateButton.classList.add('show');
-        closeBtn.style.opacity = '0';
-        closeBtn.style.pointerEvents = 'none';
+        closeBtn.classList.remove('show');
         header.classList.remove('back');
         title.textContent = translations.footer_hosts;
         setTimeout(() => {
@@ -455,8 +438,9 @@ function runBindhosts(args) {
         cover.style.opacity = '1';
         header.classList.add('back');
         backButton.classList.add('show');
-        actionButton.classList.remove('show');
-        actionButton.classList.add('inTerminal');
+        FabContainer.classList.remove('show');
+        actionBtn.classList.remove('show');
+        FabContainer.classList.add('inTerminal');
         forceUpdateButton.classList.remove('show');
         title.textContent = translations.global_action;
     }, 50);
@@ -468,21 +452,34 @@ function runBindhosts(args) {
  */
 function getCustomHostsList() {
     exec(`ls ${basePath} | grep "^custom.*\.txt$" | grep -vx "custom.txt"`)
-        .then(({ stdout, stderr, errno }) => {
-            if (errno === 0) {
-                const lines = stdout.split("\n");
-                displayHostsList(lines, "import_custom");
-            } else {
-                console.error("Failed to get custom hosts list:", stderr);
-            }
+        .then(({ stdout, errno }) => {
+            if (errno !== 0) return;
+            const lines = stdout.split("\n");
+            displayHostsList(lines, "import_custom");
         });
 }
 
+/**
+ * Import custom hosts with file selector
+ * @returns {void}
+ */
 async function importCustomHost() {
-    const file = await openFileSelector("txt");
-    if (file) {
-        await new Promise(resolve => setTimeout(resolve, 100));
-        getCustomHostsList();   
+    const filePath = await FileSelector.getFilePath("txt");
+    if (filePath) {
+        const fileName = filePath.split('/').pop().replace(/ /g, '_');
+        const destPath = `${basePath}/custom_${fileName}`;
+        const result = await exec(`
+            cp -f "${filePath}" "${destPath}"
+            chmod 644 "${destPath}"
+        `);
+        if (result.errno === 0) {
+            showPrompt(translations.global_saved + ` ${destPath}`);
+            await new Promise(resolve => setTimeout(resolve, 100));
+            getCustomHostsList();
+        } else {
+            showPrompt(translations.global_save_fail, false);
+            console.error('Error copying file:', result.stderr);
+        }
     }
 }
 
@@ -522,26 +519,27 @@ function openFileEditor(lastFileName, openEditor = true) {
     const fileName = document.querySelector('.file-name-editor');
     const backButton = document.querySelector('.back-button');
     const saveButton = document.getElementById('edit-save-btn');
-    const actionButton = document.querySelector('.float');
+    const FabContainer = document.querySelector('.action-container');
+    const actionBtn = document.getElementById('action-btn');
     const editorCover = document.querySelector('.document-cover');
     const editor = document.getElementById('edit-content');
     const lineNumbers = document.querySelector('.line-numbers');
-    const bodyContent = document.querySelector('.body-content');
+    const bodyContent = document.getElementById('page-hosts');
     const forceUpdateButton = document.getElementById('force-update-btn');
     const editorInput = document.getElementById("edit-input");
     const fileNameInput = document.getElementById('file-name-input');
 
     if (!setupEditor) {
         setupEditor = true;
-        em.on(fileNameInput, 'input', adjustFileNameWidth);
-        em.on(saveButton, 'click', saveFile);
-        em.on(editorInput, 'input', scrollSafeInset);
-        em.on(editorInput, 'blur', () => {
+        fileNameInput.addEventListener('input', adjustFileNameWidth);
+        saveButton.addEventListener('click', saveFile);
+        editorInput.addEventListener('input', scrollSafeInset);
+        editorInput.addEventListener('blur', () => {
             editorInput.style.paddingBottom = '30px';
             lineNumbers.style.paddingBottom = '30px';
         });
         // Set line numbers
-        em.on(editorInput, 'input', () => {
+        editorInput.addEventListener('input', () => {
             const lines = editorInput.value.split('\n').length;
             lineNumbers.innerHTML = Array.from({ length: lines }, (_, index) => 
                 `<div>${(index + 1).toString().padStart(2, ' ')}</div>`
@@ -549,13 +547,13 @@ function openFileEditor(lastFileName, openEditor = true) {
             // Sync scroll position
             lineNumbers.scrollTop = editorInput.scrollTop;
         });
-        em.on(editorInput, 'scroll', () => {
+        editorInput.addEventListener('scroll', () => {
             lineNumbers.style.top = `-${editorInput.scrollTop}px`;
             // Sync scroll position
             lineNumbers.scrollTop = editorInput.scrollTop;
         });
         editorInput.dispatchEvent(new Event('input'));
-        em.on(backButton, 'click', () => closeEditor());
+        backButton.addEventListener('click', () => closeEditor());
     }
 
     // Adjust width of fileName according to the length of text in input
@@ -581,11 +579,13 @@ function openFileEditor(lastFileName, openEditor = true) {
     header.classList.add('back', 'save');
     backButton.classList.add('show');
     saveButton.classList.add('show');
-    actionButton.classList.remove('show');
+    FabContainer.classList.remove('show');
+    actionBtn.classList.remove('show');
     forceUpdateButton.classList.remove('show');
     title.style.display = 'none';
     fileName.style.display = 'flex';
     bodyContent.style.overflowY = 'hidden';
+    lineNumbers.style.display = 'block'; // Added line
 
     // Open file editor
     if (openEditor) {
@@ -629,6 +629,11 @@ function openFileEditor(lastFileName, openEditor = true) {
 
     // Alternative way to close about docs with back button
     const closeEditor = () => {
+        // Check if editor is actually active
+        if (editor.style.transform !== 'translateX(0)' && fileName.style.display === 'none') return;
+        
+        const lineNumbers = document.querySelector('.line-numbers');
+        if (lineNumbers) lineNumbers.style.display = 'none';
         if (openEditor) { editor.style.transform = 'translateX(100%)'; }
         editorCover.style.opacity = '0';
         editorCover.style.pointerEvents = 'none';
@@ -637,7 +642,8 @@ function openFileEditor(lastFileName, openEditor = true) {
         saveButton.classList.remove('show');
         header.classList.remove('back', 'save');
         title.style.display = 'inline';
-        actionButton.classList.add('show');
+        FabContainer.classList.add('show');
+        actionBtn.classList.add('show');
         setTimeout(() => {
             forceUpdateButton.classList.add('show');
         }, 200);
@@ -693,45 +699,48 @@ window.replaceSpaces = function(input) {
     input.setSelectionRange(cursorPosition, cursorPosition);
 }
 
-/**
- * Initial load
- * @returns {void}
- */
-export function init() {
-    document.getElementById('title').textContent = translations.footer_hosts;
-    ["custom", "sources", "blacklist", "whitelist", "sources_whitelist"].forEach(loadFile);
-    getCustomHostsList();
+// Lifecycle: Initial mount to DOM
+export function mount() {
     attachAddButtonListeners();
     setupHelpMenu();
     setupDocsMenu();
-    setupKeyboardInset();
-    applyRippleEffect();
+    setupInputEvent();
+    
+    // One-time load of data
+    ["custom", "sources", "blacklist", "whitelist", "sources_whitelist"].forEach(loadFile);
+    getCustomHostsList();
 
-    // Action button and force update button click event
+    // Event listeners for action buttons
     const actionBtn = document.getElementById("action-btn");
     const forceUpdateButton = document.getElementById('force-update-btn');
-    const actionContainer = document.querySelector('.action-container');
-    em.on(actionBtn, 'click', () => runBindhosts("--action"));
-    em.on(forceUpdateButton, 'click', () => runBindhosts("--force-update"));
-    actionContainer.classList.add('show');
-    setTimeout(() => forceUpdateButton.classList.add('show'), 200);
+    const importBtn = document.getElementById("import-custom-button");
 
-    // Open file selector to import custom hosts file
-    em.on(document.getElementById("import-custom-button"), 'click', ()=> importCustomHost());
+    actionBtn.addEventListener('click', () => runBindhosts("--action"));
+    forceUpdateButton.addEventListener('click', () => runBindhosts("--force-update"));
+    importBtn.addEventListener('click', () => importCustomHost());
 }
 
-// Exit cleanup
-export function destroy() {
-    actionRunning = false, setupActionTerminal = false, isTerminalOpen = false;
-    activeOverlay = null, setupEditor = false, isSwipeToCloseSetup = false;
-
-    const forceUpdateButton = document.getElementById('force-update-btn');
+// Lifecycle: Each time page becomes visible
+export function onShow() {
+    document.getElementById('title').textContent = translations.footer_hosts;
     const actionContainer = document.querySelector('.action-container');
+    const actionBtn = document.getElementById('action-btn');
+    const forceUpdateButton = document.getElementById('force-update-btn');
+    
+    actionContainer?.classList.add('show');
+    actionBtn?.classList.add('show');
+    setTimeout(() => forceUpdateButton?.classList.add('show'), 200);
+}
+
+// Lifecycle: Each time page is hidden
+export function onHide() {
+    const actionContainer = document.querySelector('.action-container');
+    const actionBtn = document.getElementById('action-btn');
+    const forceUpdateButton = document.getElementById('force-update-btn');
     const saveBtn = document.getElementById('edit-save-btn');
 
-    setTimeout(() => actionContainer.classList.remove('show'), 50);
-    forceUpdateButton.classList.remove('show');
-    saveBtn.classList.remove('show');
-
-    em?.removeAll();
+    actionContainer?.classList.remove('show');
+    actionBtn?.classList.remove('show');
+    forceUpdateButton?.classList.remove('show');
+    saveBtn?.classList.remove('show');
 }
