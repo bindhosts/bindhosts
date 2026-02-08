@@ -11,6 +11,8 @@
     <string name="global_file_too_large">Редагування файлів не підтримується на великих файлах</string>
     <string name="global_file_name_empty">Ім&apos;я файлу не може бути порожнім</string>
     <string name="global_show_all">Показати всі %d ще</string>
+    <string name="global_close">Закрити</string>
+    <string name="global_cancel">Скасувати</string>
     <string name="global_action">Action</string>
     <!-- Query -->
     <string name="query_title">Запит хоста</string>
@@ -92,7 +94,6 @@
     <!-- Confirmation -->
     <string name="confirmation_title">Підтвердити видалення?</string>
     <string name="confirmation_message">Ви впевнені, що хочете видалити</string>
-    <string name="confirmation_cancel">Скасувати</string>
     <string name="confirmation_remove">Видалити</string>
     <!-- Footer -->
     <string name="footer_home">Головна</string>

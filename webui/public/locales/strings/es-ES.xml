@@ -14,6 +14,8 @@
     <string name="global_file_too_large">Edición de archivos grandes no es soportada</string>
     <string name="global_file_name_empty">El nombre del archivo no puede estar vacío</string>
     <string name="global_show_all">Mostrar todos %d más</string>
+    <string name="global_close">Cerrar</string>
+    <string name="global_cancel">Cancelar</string>
     <string name="global_action">Action</string>
     <!-- Query -->
     <string name="query_title">Consulta de Host</string>
@@ -100,7 +102,6 @@
     <!-- Confirmation -->
     <string name="confirmation_title">¿Confirmar eliminación?</string>
     <string name="confirmation_message">¿Está seguro de que desea eliminar</string>
-    <string name="confirmation_cancel">Cancelar</string>
     <string name="confirmation_remove">Eliminar</string>
     <!-- Footer -->
     <string name="footer_home">Inicio</string>

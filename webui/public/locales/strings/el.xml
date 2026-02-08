@@ -14,6 +14,8 @@
     <string name="global_file_too_large">Η επεξεργασία αρχείου δεν υποστηρίζεται σε μεγάλο αρχείο</string>
     <string name="global_file_name_empty">Το όνομα του αρχείου δεν μπορεί να είναι κενό</string>
     <string name="global_show_all">Εμφάνιση Όλων %d Περισσότερα</string>
+    <string name="global_close">Κλείσιμο</string>
+    <string name="global_cancel">Ακύρωση</string>
     <string name="global_action">Ενέργεια</string>
     <!-- Query -->
     <string name="query_title">Αναζήτηση Host</string>
@@ -100,7 +102,6 @@
     <!-- Confirmation -->
     <string name="confirmation_title">Επιβεβαίωση Αφαίρεσης?</string>
     <string name="confirmation_message">Είστε σίγουροι ότι θέλετε να αφαιρέσετε?</string>
-    <string name="confirmation_cancel">Ακύρωση</string>
     <string name="confirmation_remove">Αφαίρεση</string>
     <!-- Footer -->
     <string name="footer_home">Αρχική</string>

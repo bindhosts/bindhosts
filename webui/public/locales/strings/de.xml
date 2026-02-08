@@ -11,6 +11,8 @@
     <string name="global_file_too_large">Nur Umbenennung wird auf großen Dateien unterstützt</string>
     <string name="global_file_name_empty">Der Dateiname darf nicht leer sein</string>
     <string name="global_show_all">Alle anzeigen %d mehr</string>
+    <string name="global_close">Schließen</string>
+    <string name="global_cancel">Abbrechen</string>
     <string name="global_action">Action</string>
     <!-- Query -->
     <string name="query_title">Host-Abfrage</string>
@@ -93,7 +95,6 @@
     <!-- Confirmation -->
     <string name="confirmation_title">Löschen bestätigen?</string>
     <string name="confirmation_message">Sind Sie sicher, dass Sie entfernen möchten</string>
-    <string name="confirmation_cancel">Abbrechen</string>
     <string name="confirmation_remove">Entfernen</string>
     <!-- Footer -->
     <string name="footer_home">Startseite</string>

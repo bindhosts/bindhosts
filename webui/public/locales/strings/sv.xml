@@ -11,6 +11,8 @@
     <string name="global_file_too_large">Filredigering stöds inte på stora filer</string>
     <string name="global_file_name_empty">Filnamnet får inte vara tomt</string>
     <string name="global_show_all">Visa allt %d Mer</string>
+    <string name="global_close">Stäng</string>
+    <string name="global_cancel">Avbryt</string>
     <string name="global_action">Action</string>
     <!-- Query -->
     <string name="query_title">Värdförfrågan</string>
@@ -90,7 +92,6 @@
     <!-- Confirmation -->
     <string name="confirmation_title">Bekräfta ta bort?</string>
     <string name="confirmation_message">Är du säker på att du vill ta bort</string>
-    <string name="confirmation_cancel">Avbryt</string>
     <string name="confirmation_remove">Ta bort</string>
     <!-- Footer -->
     <string name="footer_home">Hem</string>

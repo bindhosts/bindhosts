@@ -11,6 +11,8 @@
     <string name="global_file_too_large">Edycja pliku nie jest obsługiwana w przypadku dużych plików</string>
     <string name="global_file_name_empty">Nazwa pliku nie może być pusta</string>
     <string name="global_show_all">Pokaż wszystko %d Więcej</string>
+    <string name="global_close">Zamknij</string>
+    <string name="global_cancel">Anuluj</string>
     <string name="global_action">Akcja</string>
     <!-- Query -->
     <string name="query_title">Zapytanie hosta</string>
@@ -90,7 +92,6 @@
     <!-- Confirmation -->
     <string name="confirmation_title">Potwierdzić usunięcie?</string>
     <string name="confirmation_message">Czy na pewno chcesz usunąć?</string>
-    <string name="confirmation_cancel">Anuluj</string>
     <string name="confirmation_remove">Usuń</string>
     <!-- Footer -->
     <string name="footer_home">Strona główna</string>

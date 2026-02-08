@@ -11,6 +11,8 @@
     <string name="global_file_too_large">大きいファイルの編集はサポートされていません</string>
     <string name="global_file_name_empty">ファイル名を空にすることはできません</string>
     <string name="global_show_all">全て表示 %d もっと見る</string>
+    <string name="global_close">閉じる</string>
+    <string name="global_cancel">キャンセル</string>
     <string name="global_action">アクション</string>
     <!-- Query -->
     <string name="query_title">ホストクエリ</string>
@@ -93,7 +95,6 @@
     <!-- Confirmation -->
     <string name="confirmation_title">削除の確認</string>
     <string name="confirmation_message">本当に削除しますか？</string>
-    <string name="confirmation_cancel">キャンセル</string>
     <string name="confirmation_remove">削除</string>
     <!-- Footer -->
     <string name="footer_home">ホーム</string>

@@ -14,6 +14,8 @@
     <string name="global_file_too_large">Редактирование файлов не поддерживается на больших файлах</string>
     <string name="global_file_name_empty">Имя файла не может быть пустым</string>
     <string name="global_show_all">Показать все %d еще</string>
+    <string name="global_close">Закрыть</string>
+    <string name="global_cancel">Отмена</string>
     <string name="global_action">Action</string>
     <!-- Query -->
     <string name="query_title">Запрос хоста</string>
@@ -86,7 +88,7 @@
     <string name="more_sources">Источники</string>
     <string name="more_usage">Использование</string>
     <string name="more_modes">Режимы</string>
-    <string name="more_hiding">Скрыть</string>
+    <string name="more_hiding">Скрытие</string>
     <string name="more_faq">FAQ</string>
     <string name="more_support">Поддержка</string>
     <string name="more_support_issue">Сообщить о проблеме</string>
@@ -100,7 +102,6 @@
     <!-- Confirmation -->
     <string name="confirmation_title">Подтвердить удаление?</string>
     <string name="confirmation_message">Вы уверены, что хотите удалить</string>
-    <string name="confirmation_cancel">Отмена</string>
     <string name="confirmation_remove">Удалить</string>
     <!-- Footer -->
     <string name="footer_home">Главная</string>

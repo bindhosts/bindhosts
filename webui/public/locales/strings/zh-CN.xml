@@ -14,6 +14,8 @@
     <string name="global_file_too_large">文件编辑不支持大文件</string>
     <string name="global_file_name_empty">文件名不能为空</string>
     <string name="global_show_all">显示剩余 %d 个</string>
+    <string name="global_close">关闭</string>
+    <string name="global_cancel">取消</string>
     <string name="global_action">执行</string>
     <!-- Query -->
     <string name="query_title">Host 查询</string>
@@ -100,7 +102,6 @@
     <!-- Confirmation -->
     <string name="confirmation_title">确认删除？</string>
     <string name="confirmation_message">确认删除</string>
-    <string name="confirmation_cancel">取消</string>
     <string name="confirmation_remove">删除</string>
     <!-- Footer -->
     <string name="footer_home">首页</string>

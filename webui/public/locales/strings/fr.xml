@@ -11,6 +11,8 @@
     <string name="global_file_too_large">L\'édition de fichier volumineux n\'est pas prise en charge</string>
     <string name="global_file_name_empty">Le nom du fichier ne peut pas être vide</string>
     <string name="global_show_all">Tout afficher %d Plus</string>
+    <string name="global_close">Fermer</string>
+    <string name="global_cancel">Annuler</string>
     <string name="global_action">Action</string>
     <!-- Query -->
     <string name="query_title">Requête d\'Hôte</string>
@@ -93,7 +95,6 @@
     <!-- Confirmation -->
     <string name="confirmation_title">Confirmer la suppression?</string>
     <string name="confirmation_message">Êtes-vous sûr de vouloir supprimer</string>
-    <string name="confirmation_cancel">Annuler</string>
     <string name="confirmation_remove">Supprimer</string>
     <!-- Footer -->
     <string name="footer_home">Page d’accueil</string>

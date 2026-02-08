@@ -14,6 +14,8 @@
     <string name="global_file_too_large">Dosya düzenleme desteği yok</string>
     <string name="global_file_name_empty">Dosya adı boş olamaz</string>
     <string name="global_show_all">Tümünü göster %d daha</string>
+    <string name="global_close">Kapat</string>
+    <string name="global_cancel">İptal</string>
     <string name="global_action">Action</string>
     <!-- Query -->
     <string name="query_title">Host Sorgulama</string>
@@ -100,7 +102,6 @@
     <!-- Confirmation -->
     <string name="confirmation_title">Kaldırmayı Onayla?</string>
     <string name="confirmation_message">Kaldırmak istediğinizden emin misiniz</string>
-    <string name="confirmation_cancel">İptal</string>
     <string name="confirmation_remove">Kaldır</string>
     <!-- Footer -->
     <string name="footer_home">Ana Sayfa</string>

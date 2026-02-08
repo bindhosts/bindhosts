@@ -6,11 +6,16 @@
     <!-- Global -->
     <string name="global_dev_opt">تم تفعيل خيار المطور</string>
     <string name="global_dev_opt_true">خيار المطور يعمل بالفعل</string>
+    <string name="global_reboot_now">إعادة التشغيل لتطبيق التغييرات</string>
+    <string name="global_reboot">إعادة تشغيل</string>
+    <string name="global_rebooting">جارٍ إعادة التشغيل...</string>
     <string name="global_saved">تم حفظ الملف في %s</string>
     <string name="global_save_fail">فشل حفظ الملف</string>
     <string name="global_file_too_large">التعديل على الملفات الكبيرة غير مدعوم</string>
     <string name="global_file_name_empty">لا يمكن أن يكون اسم الملف فارغًا</string>
     <string name="global_show_all">عرض %d المزيد</string>
+    <string name="global_close">غلق</string>
+    <string name="global_cancel">إلغاء</string>
     <string name="global_action">إجراء</string>
     <!-- Query -->
     <string name="query_title">استعلام المضيف</string>
@@ -90,10 +95,13 @@
     <string name="more_support_update_canary">تحديث إلى أحدث إصدار تجريبي</string>
     <string name="more_support_update_success">تم التحديث بنجاح، أعد التشغيل لتطبيق التغييرات</string>
     <string name="more_support_update_fail">فشل التحديث، الرجاء التحميل والتثبيت يدوياً من GitHub</string>
+    <string name="more_support_checking_update">التحقق من وجود تحديث...</string>
+    <string name="more_support_no_update">لا توجد تحديثات متوفرة حاليا</string>
+    <string name="more_support_update_locales">تحديث حزمة ملفات الترجمة</string>
+    <string name="more_support_update_locales_failed">فشل تحديث حزمة ملفات الترجمة</string>
     <!-- Confirmation -->
     <string name="confirmation_title">تأكيد الحذف</string>
     <string name="confirmation_message">هل أنت متأكد أنك تريد حذف</string>
-    <string name="confirmation_cancel">إلغاء</string>
     <string name="confirmation_remove">حذف</string>
     <!-- Footer -->
     <string name="footer_home">الرئيسية</string>

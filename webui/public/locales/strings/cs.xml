@@ -11,6 +11,8 @@
     <string name="global_file_too_large">Jen přejmenování je podporováno na velkých souborech</string>
     <string name="global_file_name_empty">Název souboru nesmí být prázdný</string>
     <string name="global_show_all">Zobrazit vše %d více</string>
+    <string name="global_close">Zavřít</string>
+    <string name="global_cancel">Zrušit</string>
     <string name="global_action">Action</string>
     <!-- Query -->
     <string name="query_title">Dotaz na hostitele</string>
@@ -90,7 +92,6 @@
     <!-- Confirmation -->
     <string name="confirmation_title">Potvrdit odstranění?</string>
     <string name="confirmation_message">Opravdu chcete odstranit</string>
-    <string name="confirmation_cancel">Zrušit</string>
     <string name="confirmation_remove">Odstranit</string>
     <!-- Footer -->
     <string name="footer_home">Domů</string>

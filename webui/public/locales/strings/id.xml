@@ -14,6 +14,8 @@
     <string name="global_file_too_large">Hanya edit file yang diizinkan pada file besar</string>
     <string name="global_file_name_empty">Nama file tidak boleh kosong</string>
     <string name="global_show_all">Tampilkan semua %d lagi</string>
+    <string name="global_close">Tutup</string>
+    <string name="global_cancel">Batal</string>
     <string name="global_action">Action</string>
     <!-- Query -->
     <string name="query_title">Kueri Host</string>
@@ -100,7 +102,6 @@
     <!-- Confirmation -->
     <string name="confirmation_title">Konfirmasi Hapus?</string>
     <string name="confirmation_message">Apakah Anda yakin ingin menghapus</string>
-    <string name="confirmation_cancel">Batal</string>
     <string name="confirmation_remove">Hapus</string>
     <!-- Footer -->
     <string name="footer_home">Beranda</string>
