@@ -1,8 +1,6 @@
 import { exec } from 'kernelsu-alt';
-import { basePath, applyRippleEffect, showPrompt, createEventManager } from './util.js';
-import { translations } from './language.js';
+import { applyRippleEffect } from './util.js';
 
-let em = createEventManager();
 let fileType;
 
 // File selector
@@ -42,18 +40,16 @@ async function listFiles(path, skipAnimation = false) {
         fileList.classList.add('switching');
         await new Promise(resolve => setTimeout(resolve, 150));
     }
-    // Limit to .txt files and directories only, theoretically symlinks supported
+    // List files and directories
     const result = await exec(`
         cd "${path}"
-        find . -maxdepth 1 -type f -name "*.${fileType}" -o -type d ! -name ".*" -o -type l | sort
+        # List directories and filtered files
+        for f in *; do
+            [ -d "$f" ] && echo "d|$f" || { [[ "$f" == *.${fileType} ]] && echo "f|$f"; }
+        done | sort
     `);
+    
     if (result.errno === 0) {
-        const items = result.stdout.split('\n').filter(Boolean).map(item => ({
-            path: path + '/' + item.replace(/^\.\//, ''),
-            name: item.split('/').pop(),
-            isDirectory: !item.endsWith('.' + fileType),
-            isTextFile: item.endsWith('.txt')
-        }));
         fileList.innerHTML = '';
 
         // Add back button item if not in root directory
@@ -66,14 +62,22 @@ async function listFiles(path, skipAnimation = false) {
                 </svg>
                 <span>..</span>
             `;
-            em.on(backItem, 'click', () => {
+            backItem.addEventListener('click', () => {
                 document.querySelector('.file-selector-back-button').click();
             });
             fileList.appendChild(backItem);
         }
-        // Add folder and file file selector
-        items.forEach(item => {
-            if (item.path === path) return;
+
+        const processedItems = result.stdout.split('\n').filter(Boolean).map(line => {
+            const [type, name] = [line.slice(0, 1), line.slice(2)];
+            return {
+                name,
+                path: path + '/' + name,
+                isDirectory: type === 'd'
+            };
+        });
+
+        processedItems.forEach(item => {
             const itemElement = document.createElement('div');
             itemElement.className = 'file-item ripple-element';
             itemElement.innerHTML = `
@@ -84,33 +88,17 @@ async function listFiles(path, skipAnimation = false) {
                 </svg>
                 <span>${item.name}</span>
             `;
-            // Attach click event
-            em.on(itemElement, 'click', async () => {
+            itemElement.addEventListener('click', async () => {
                 if (item.isDirectory) {
-                    // Go into directory
                     currentPath = item.path;
-                    const currentPathElement = document.querySelector('.current-path');
-                    currentPathElement.innerHTML = currentPath.split('/').filter(Boolean).join('<span class="separator">›</span>');
-                    currentPathElement.scrollTo({ 
-                        left: currentPathElement.scrollWidth,
-                        behavior: 'smooth'
-                    });
+                    updateCurrentPath();
                     await listFiles(item.path);
-                } else if (item.isTextFile) {
-                    // Select file
-                    const fileName = item.name.replace(/ /g, '_');
-                    exec(`
-                        cp -f "${item.path}" ${basePath}/custom_${fileName}
-                        chmod 644 ${basePath}/custom_${fileName}
-                    `).then(({ errno, stderr }) => {
-                        if (errno === 0) {
-                            closeFileSelector();
-                            showPrompt(translations.global_saved + ` ${basePath}/custom_${fileName}`);
-                        } else {
-                            showPrompt(translations.global_save_fail, false);
-                            console.error('Error copying file:', stderr);
-                        }
-                    });
+                } else {
+                    if (window.fileSelectorResolve) {
+                        window.fileSelectorResolve(item.path);
+                        window.fileSelectorResolve = null;
+                        closeFileSelector();
+                    }
                 }
             });
             fileList.appendChild(itemElement);
@@ -129,54 +117,73 @@ async function listFiles(path, skipAnimation = false) {
     updateCurrentPath();
 }
 
+let listenersSetup = false;
+
 /**
  * Setup init listener
  * @returns {void}
  */
 function setupListeners() {
-    em.on(document.querySelector('.current-path'), 'click', async (event) => {
-        const segment = event.target.closest('.path-segment');
-        if (!segment) return;
+    if (listenersSetup) return;
+    listenersSetup = true;
 
-        const targetPath = segment.dataset.path;
-        if (!targetPath || targetPath === currentPath) return;
+    const currentPathElement = document.querySelector('.current-path');
+    if (currentPathElement) {
+        currentPathElement.addEventListener('click', async (event) => {
+            const segment = event.target.closest('.path-segment');
+            if (!segment) return;
 
-        // Return if already at /storage/emulated/0
-        const clickedSegment = segment.textContent;
-        if ((clickedSegment === 'storage' || clickedSegment === 'emulated') && 
-            currentPath === '/storage/emulated/0') {
-            return;
-        }
+            const targetPath = segment.dataset.path;
+            if (!targetPath || targetPath === currentPath) return;
 
-        // Always stay within /storage/emulated/0
-        if (targetPath.split('/').length <= 3) {
-            currentPath = '/storage/emulated/0';
-        } else {
-            currentPath = targetPath;
-        }
-        updateCurrentPath();
-        await listFiles(currentPath);
-    });
+            // Return if already at /storage/emulated/0
+            const clickedSegment = segment.textContent;
+            if ((clickedSegment === 'storage' || clickedSegment === 'emulated') && 
+                currentPath === '/storage/emulated/0') {
+                return;
+            }
+
+            // Always stay within /storage/emulated/0
+            if (targetPath.split('/').length <= 3) {
+                currentPath = '/storage/emulated/0';
+            } else {
+                currentPath = targetPath;
+            }
+            updateCurrentPath();
+            await listFiles(currentPath);
+        });
+    }
 
     // Back button
-    em.on(document.querySelector('.file-selector-back-button'), 'click', async () => {
-        if (currentPath === '/storage/emulated/0') return;
-        currentPath = currentPath.split('/').slice(0, -1).join('/');
-        if (currentPath === '') currentPath = '/storage/emulated/0';
-        const currentPathElement = document.querySelector('.current-path');
-        currentPathElement.innerHTML = currentPath.split('/').filter(Boolean).join('<span class="separator">›</span>');
-        currentPathElement.scrollTo({ 
-            left: currentPathElement.scrollWidth,
-            behavior: 'smooth'
+    const backButton = document.querySelector('.file-selector-back-button');
+    if (backButton) {
+        backButton.addEventListener('click', async () => {
+            if (currentPath === '/storage/emulated/0') return;
+            currentPath = currentPath.split('/').slice(0, -1).join('/');
+            if (currentPath === '') currentPath = '/storage/emulated/0';
+            const currentPathElement = document.querySelector('.current-path');
+            if (currentPathElement) {
+                currentPathElement.innerHTML = currentPath.split('/').filter(Boolean).join('<span class="separator">›</span>');
+                currentPathElement.scrollTo({ 
+                    left: currentPathElement.scrollWidth,
+                    behavior: 'smooth'
+                });
+            }
+            await listFiles(currentPath);
         });
-        await listFiles(currentPath);
-    });
+    }
 
     // Close file selector overlay
-    em.on(document.querySelector('.close-selector'), 'click', () => closeFileSelector());
-    em.on(fileSelector, 'click', (event) => {
-        if (event.target === fileSelector) closeFileSelector();
-    });
+    const closeBtn = document.querySelector('.close-selector');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', () => closeFileSelector());
+    }
+    
+    if (fileSelector) {
+        fileSelector.addEventListener('click', (event) => {
+            if (event.target === fileSelector) closeFileSelector();
+        });
+    }
 }
 
 /**
@@ -189,48 +196,61 @@ function closeFileSelector() {
     setTimeout(() => {
         fileSelector.style.display = 'none';
     }, 300);
-    em?.removeAll();
+    if (window.fileSelectorResolve) {
+        window.fileSelectorResolve(null);
+        window.fileSelectorResolve = null;
+    }
 }
 
 /**
- * Open file selector overlay
- * @param {string} type - Type of file to display (e.g., "json")
- * @returns {Promise<string>} Resolves with the content of the selected JSON file or true in txt file
+ * FileSelector namespace for handling file selection tasks.
+ * @namespace
  */
-export async function openFileSelector(type) {
-    fileType = type;
-    currentPath = '/storage/emulated/0/Download';
+export const FileSelector = {
+    /**
+     * Open file selector overlay and return the selected file path.
+     * @param {string} type - Type of file to display (e.g., "json", "txt").
+     * @returns {Promise<string|null>} Resolves with the selected file path or null if closed.
+     */
+    getFilePath: async function (type) {
+        fileType = type;
+        currentPath = '/storage/emulated/0/Download';
 
-    // Show file selector overlay
-    fileSelector.style.display = 'flex';
-    fileSelector.offsetHeight;
-    fileSelector.style.opacity = '1';
-    document.body.classList.add("no-scroll");
-    setupListeners();
+        // Show file selector overlay
+        fileSelector.style.display = 'flex';
+        fileSelector.offsetHeight;
+        fileSelector.style.opacity = '1';
+        document.body.classList.add("no-scroll");
+        setupListeners();
 
-    const currentPathElement = document.querySelector('.current-path');
-    currentPathElement.innerHTML = currentPath.split('/').filter(Boolean).join('<span class="separator">›</span>');
-    currentPathElement.scrollTo({ 
-        left: currentPathElement.scrollWidth,
-        behavior: 'smooth'
-    });
-    await listFiles(currentPath, true);
-
-    // Return a promise that resolves with the selected JSON content
-    return new Promise((resolve, reject) => {
-        const fileList = document.querySelector('.file-list');
-        em.on(fileList, 'click', (event) => {
-            const item = event.target.closest('.file-item');
-            if (item && item.querySelector('span').textContent.endsWith('.json')) {
-                exec(`cat ${currentPath}/${item.querySelector('span').textContent}`)
-                    .then(({ errno, stdout, stderr }) => {
-                        errno === 0 ? resolve(stdout) : reject(stderr);
-                        closeFileSelector();
-                    });
-            } else if (item && item.querySelector('span').textContent.endsWith('.txt')) {
-                closeFileSelector();
-                resolve(true);
-            }
+        const currentPathElement = document.querySelector('.current-path');
+        currentPathElement.innerHTML = currentPath.split('/').filter(Boolean).join('<span class="separator">›</span>');
+        currentPathElement.scrollTo({
+            left: currentPathElement.scrollWidth,
+            behavior: 'smooth'
         });
-    });
-}
+        await listFiles(currentPath, true);
+
+        return new Promise((resolve) => {
+            window.fileSelectorResolve = resolve;
+        });
+    },
+
+    /**
+     * Open file selector overlay and return the content of the selected file.
+     * @param {string} type - Type of file to display (e.g., "json", "txt").
+     * @returns {Promise<string|null>} Resolves with the file content or null if closed/failed.
+     */
+    getFileContent: async function (type) {
+        const filePath = await this.getFilePath(type);
+        if (!filePath) return null;
+
+        const result = await exec(`cat "${filePath}"`);
+        if (result.errno === 0) {
+            return result.stdout;
+        } else {
+            console.error(`Failed to read file content: ${result.stderr}`);
+            return null;
+        }
+    }
+};

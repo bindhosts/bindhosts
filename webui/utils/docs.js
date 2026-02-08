@@ -1,9 +1,7 @@
 import { toast } from 'kernelsu-alt';
-import { linkRedirect, applyRippleEffect, developerOption, learnMore, setupSwipeToClose, createEventManager } from './util.js';
+import { linkRedirect, applyRippleEffect, developerOption, learnMore, setLearnMore, setupSwipeToClose } from './util.js';
 import { translations, lang } from './language.js';
 import { marked } from "marked";
-
-let em = createEventManager();
 
 const main = "https://raw.githubusercontent.com";
 const mirror = "https://hub.gitmirror.com/raw.githubusercontent.com";
@@ -76,7 +74,7 @@ export function addCopyToClipboardListeners() {
     const sourceLinks = document.querySelectorAll("#copy-link");
     sourceLinks.forEach((element) => {
         if (element.dataset.copyListener !== "true") {
-            em.on(element, 'click', () => {
+            element.addEventListener('click', () => {
                 // Try the modern Clipboard API first
                 if (navigator.clipboard && navigator.clipboard.writeText) {
                     navigator.clipboard.writeText(element.innerText)
@@ -126,9 +124,6 @@ let activeDocs = null;
  * @returns {Promise<void>}
  */
 export async function setupDocsMenu() {
-    // Cleanup
-    em?.removeAll();
-
     let langCode = lang === 'en' ? '' : '_' + lang;
     const docsData = {
         source: {
@@ -169,14 +164,22 @@ export async function setupDocsMenu() {
 
     if (docsButtons) {
         docsButtons.forEach(button => {
-            em.on(button, 'click', () => {
+            button.onclick = () => {
                 const type = button.dataset.type;
                 const overlay = document.getElementById(`${type}-docs`);
                 if (type === 'modes' && developerOption && !learnMore) return;
+
+                // Close parent overlay if it exists
+                const parentOverlay = button.closest('.overlay');
+                if (parentOverlay) {
+                    closeOverlay(parentOverlay);
+                    if (type === 'modes') setLearnMore(false);
+                }
+
                 openOverlay(overlay);
                 const { link, fallback, element } = docsData[type] || {};
                 getDocuments(element, link, fallback);
-            });
+            };
         });
     }
 
@@ -186,11 +189,11 @@ export async function setupDocsMenu() {
             if (closeButton) {
                 closeButton.onclick = () => closeOverlay(overlay);
             }
-            em.on(overlay, 'click', (e) => {
+            overlay.onclick = (e) => {
                 if (e.target === overlay) {
                     closeOverlay(overlay);
                 }
-            });
+            };
         });
     }
 
@@ -214,12 +217,12 @@ export async function setupDocsMenu() {
             */
             let touchMoved = false;
             
-            em.on(element, 'mousedown', () => touchMoved = false);
-            em.on(element, 'touchstart', () => touchMoved = false);
-            em.on(element, 'mousemove', () => touchMoved = true);
-            em.on(element, 'touchmove', () => touchMoved = true);
-            em.on(element, 'mouseup', () => handleClick());
-            em.on(element, 'touchend', () => handleClick());
+            element.addEventListener('mousedown', () => touchMoved = false);
+            element.addEventListener('touchstart', () => touchMoved = false);
+            element.addEventListener('mousemove', () => touchMoved = true);
+            element.addEventListener('touchmove', () => touchMoved = true);
+            element.addEventListener('mouseup', () => handleClick());
+            element.addEventListener('touchend', () => handleClick());
 
             function handleClick() {
                 if (!touchMoved) {
@@ -239,14 +242,16 @@ export async function setupDocsMenu() {
             }
 
             // Alternative way to close about docs with back button
-            em.on(backButton, 'click', () => {
-                aboutContent.style.transform = 'translateX(100%)';
-                bodyContent.style.transform = 'translateX(0)';
-                documentCover.style.opacity = '0';
-                backButton.classList.remove('show');
-                header.classList.remove('back');
-                title.textContent = translations.footer_more;
-            });
+            if (backButton) {
+                backButton.addEventListener('click', () => {
+                    aboutContent.style.transform = 'translateX(100%)';
+                    bodyContent.style.transform = 'translateX(0)';
+                    documentCover.style.opacity = '0';
+                    backButton.classList.remove('show');
+                    header.classList.remove('back');
+                    title.textContent = translations.footer_more;
+                });
+            }
         });
     } // End of about docs
 }

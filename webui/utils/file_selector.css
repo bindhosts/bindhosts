@@ -1,7 +1,7 @@
 .file-selector {
     width: 90%;
     max-width: 600px;
-    height: 80vh;
+    height: 60vh;
     background-color: var(--bg-secondary);
     color: var(--text-primary);
     border-radius: 15px;
@@ -36,7 +36,7 @@
 
 .current-path {
     flex-grow: 1;
-    font-size: 16px;
+    font-size: 1em;
     overflow: scroll;
     white-space: nowrap;
 }
@@ -45,7 +45,7 @@
     position: static !important;
     background: none;
     border: none;
-    font-size: 20px;
+    font-size: 1.25em;
     color: #ccc;
     padding: 0 5px;
     user-select: none;

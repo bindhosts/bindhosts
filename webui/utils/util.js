@@ -284,25 +284,29 @@ export function setupSwipeToClose(element, cover) {
     element.addEventListener('mouseup', handleEnd);
 }
 
-let em;
 let isScrolling = false;
 let lastScrollY = 0;
 let scrollTimeout;
 const scrollThreshold = 25;
 
 // Scroll event
-export function setupScrollEvent() {
-    em?.removeAll();
-    em = createEventManager();
-
-    const content = document.querySelector('.body-content');
-    const floatBtn = document.querySelector('.float');
-    const forceUpdateButton = document.getElementById('force-update-btn');
-    const isNotTcpBtn = floatBtn && !floatBtn.classList.contains('tcpdump-btn');
-
+export function setupScrollEvent(content) {
+    if (!content) return;
+    
+    // Reset scroll state for the new current content
     lastScrollY = content.scrollTop;
 
-    em.on(content, 'scroll', () => {
+    // Only attach listener once
+    if (content.dataset.scrollListener === 'true') return;
+    content.dataset.scrollListener = 'true';
+
+    const floatBtn = content.id === 'page-hosts' ? document.querySelector('.action-container') : document.querySelector('.tcpdump-btn');
+    const actionBtn = content.id === 'page-hosts' ? document.getElementById('action-btn') : null;
+    const forceUpdateButton = document.getElementById('force-update-btn');
+
+    content.addEventListener('scroll', () => {
+        if (!floatBtn) return;
+        const isNotTcpBtn = !floatBtn.classList.contains('tcpdump-btn');
         isScrolling = true;
         clearTimeout(scrollTimeout);
         scrollTimeout = setTimeout(() => {
@@ -311,11 +315,17 @@ export function setupScrollEvent() {
 
         // Scroll down
         if (content.scrollTop > lastScrollY && content.scrollTop > scrollThreshold) {
-            if (isNotTcpBtn) floatBtn.classList.remove('show');
+            if (isNotTcpBtn) {
+                floatBtn.classList.remove('show');
+                actionBtn?.classList.remove('show');
+            }
             forceUpdateButton?.classList.remove('show');
         // Scroll up
         } else if (content.scrollTop < lastScrollY) {
-            if (isNotTcpBtn) floatBtn.classList.add('show');
+            if (isNotTcpBtn) {
+                floatBtn.classList.add('show');
+                actionBtn?.classList.add('show');
+            }
             setTimeout(() => forceUpdateButton?.classList.add('show'), 200);
         }
 
@@ -330,7 +340,7 @@ export function setupScrollEvent() {
     if (!floatBtn) return;
 
     document.querySelectorAll('.terminal').forEach(terminal => {
-        em.on(terminal, 'scroll', () => {
+        terminal.addEventListener('scroll', () => {
             isScrolling = true;
             clearTimeout(scrollTimeout);
             scrollTimeout = setTimeout(() => {
@@ -341,7 +351,11 @@ export function setupScrollEvent() {
 
             // At top
             if (terminal.scrollTop === 0 && floatBtn.classList.contains('tcpdump-btn')) {
-                setTimeout(() => floatBtn.classList.remove('show'), 100); // Hide go-top button
+                const scrollTopBtn = document.getElementById('scroll-top');
+                if (scrollTopBtn) setTimeout(() => scrollTopBtn.classList.remove('show'), 100);
+            } else if (floatBtn.classList.contains('tcpdump-btn')) {
+                const scrollTopBtn = document.getElementById('scroll-top');
+                if (scrollTopBtn) scrollTopBtn.classList.add('show');
             } else {
                 floatBtn.classList.add('show'); // Show button on scroll
             }
@@ -350,43 +364,3 @@ export function setupScrollEvent() {
     });
 }
 
-/**
- * Event listener manager to simplify the process of registering and cleaning up event listeners.
- * 
- * Example usage:
- * const events = createEventManager();
- * 
- * const button = document.getElementById('myBtn');
- * events.on(button, 'click', () => console.log('clicked'));
- * 
- * events.removeAll();
- * 
- * @returns {{
-*   on: (target: EventTarget, type: string, handler: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions) => void,
-*   off: (target: EventTarget, type: string, handler: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions) => void,
-*   removeAll: () => void
-* }} An object with methods to register 'on', remove 'off', and batch remove 'removeAll' event listeners.
-*/
-export function createEventManager() {
-    const listeners = [];
-
-    function on(target, type, handler, options) {
-        if (!target || typeof target.addEventListener !== 'function') return;
-
-        target.addEventListener(type, handler, options);
-        listeners.push({ target, type, handler, options });
-    }
-
-    function off(target, type, handler, options) {
-        target.removeEventListener(type, handler, options);
-    }
-
-    function removeAll() {
-        for (const { target, type, handler, options } of listeners) {
-            target.removeEventListener(type, handler, options);
-        }
-        listeners.length = 0;
-    }
-
-    return { on, off, removeAll };
-}

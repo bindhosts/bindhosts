@@ -1,10 +1,8 @@
 import { exec, spawn } from 'kernelsu-alt';
-import { showPrompt, reboot, applyRippleEffect, basePath, moduleDirectory, linkRedirect, filePaths, setupSwipeToClose, createEventManager } from '../../utils/util.js';
+import { showPrompt, reboot, applyRippleEffect, basePath, moduleDirectory, linkRedirect, filePaths, setupSwipeToClose } from '../../utils/util.js';
 import { translations, generateLanguageMenu } from '../../utils/language.js';
-import { openFileSelector } from '../../utils/file_selector.js';
+import { FileSelector } from '../../utils/file_selector.js';
 import { addCopyToClipboardListeners, setupDocsMenu } from '../../utils/docs.js';
-
-let em = createEventManager();
 let isDownloading = false;
 
 /**
@@ -294,8 +292,7 @@ function openLanguageMenu() {
         const infoBtn = document.getElementById('translate-btn');
 
         closeBtn.onclick = () => closeOverlay();
-        infoBtn.onclick = () => closeOverlay();
-        em.on(languageOverlay, 'click', (event) => {
+        languageOverlay.addEventListener('click', (event) => {
             if (event.target === languageOverlay) closeOverlay();
         });
     }
@@ -306,6 +303,7 @@ function openLanguageMenu() {
  * @returns {void}
  */
 function checkTcpdump() {
+    if (import.meta.env.DEV) return; // vite debug
     exec("command -v tcpdump")
         .then(({ errno }) => {
             if (errno !== 0) document.getElementById('tcpdump-container').style.display = 'none';
@@ -326,8 +324,8 @@ function openTcpdumpTerminal() {
     const header = document.querySelector('.title-container');
     const title = document.getElementById('title');
     const backButton = document.querySelector('.back-button');
-    const bodyContent = document.querySelector('.body-content');
-    const floatBtn = document.querySelector('.float');
+    const bodyContent = document.getElementById('page-more');
+    const floatBtn = document.querySelector('.tcpdump-btn');
     const stopBtn = document.getElementById('stop-tcpdump');
     const scrollTopBtn = document.getElementById('scroll-top');
 
@@ -341,10 +339,10 @@ function openTcpdumpTerminal() {
 
     if (!setupTcpdumpTerminal) {
         setupSwipeToClose(terminal, cover);
-        em.on(stopBtn, 'click', () => stopTcpdump());
-        em.on(backButton, 'click', () => closeTcpdumpTerminal());
+        stopBtn.addEventListener('click', () => stopTcpdump());
+        backButton.addEventListener('click', () => closeTcpdumpTerminal());
         const searchInput = document.getElementById('tcpdump-search-input');
-        em.on(searchInput, 'input', () => {
+        searchInput.addEventListener('input', () => {
             const searchTerm = searchInput.value.toLowerCase();
             const tcpdumpLines = document.querySelectorAll('.tcpdump-line');
             tcpdumpLines.forEach(line => {
@@ -353,7 +351,7 @@ function openTcpdumpTerminal() {
                 line.style.display = domain.textContent.toLowerCase().includes(searchTerm) ? 'flex': 'none';
             });
         });
-        em.on(scrollTopBtn, 'click', () => {
+        scrollTopBtn.addEventListener('click', () => {
             terminalContent.scrollTo({ top: 0, behavior: 'smooth' });
         });
         setupTcpdumpTerminal = true;
@@ -415,10 +413,9 @@ function openTcpdumpTerminal() {
         if (contentBox) {
             document.getElementById('tcpdump-search').style.display = 'block';
         }
-        floatBtn.classList.remove('show');
+        stopBtn.classList.remove('show');
         if (terminalContent.scrollHeight > 1.5 * terminal.clientHeight) {
-            scrollTopBtn.style.pointerEvents = 'auto';
-            scrollTopBtn.style.opacity = '1';
+            scrollTopBtn.classList.add('show');
             floatBtn.classList.add('show');
             setTimeout(() => floatBtn.classList.add('inTerminal'), 100);
         }
@@ -428,8 +425,8 @@ function openTcpdumpTerminal() {
         stopTcpdump();
         floatBtn.classList.remove('show');
         floatBtn.classList.remove('inTerminal');
-        scrollTopBtn.style.pointerEvents = 'none';
-        scrollTopBtn.style.opacity = '0';
+        scrollTopBtn.classList.remove('show');
+        stopBtn.classList.remove('show');
         terminal.style.transform = 'translateX(100%)';
         bodyContent.style.transform = 'translateX(0)';
         cover.style.opacity = '0';
@@ -446,6 +443,7 @@ function openTcpdumpTerminal() {
         header.classList.add('back');
         backButton.classList.add('show');
         floatBtn.classList.add('show');
+        stopBtn.classList.add('show');
         title.textContent = translations.control_panel_monitor_network_activity;
         setTimeout(() => stopTcpdump(), 60000);
     }, 50);
@@ -499,8 +497,10 @@ echo "$FILENAME"
  * @see controlPanelEventlistener - Calling this function
  */
 async function restoreConfig() {
-    const jsonConfig = await openFileSelector("json");
-    const config = JSON.parse(jsonConfig);
+    const fileContent = await FileSelector.getFileContent("json");
+    if (!fileContent) return;
+    
+    const config = JSON.parse(fileContent);
 
     // Validate using metadata
     const isValid = config.metadata && config.metadata.description === "bindhosts config backup";
@@ -570,42 +570,38 @@ function controlPanelEventlistener(event) {
             };
 
             // Touch event
-            em.on(el, 'touchstart', () => touchMoved = false);
-            em.on(el, 'touchmove', () => touchMoved = true);
-            em.on(el, 'touchend', handleEndEvent);
+            el.addEventListener('touchstart', () => touchMoved = false);
+            el.addEventListener('touchmove', () => touchMoved = true);
+            el.addEventListener('touchend', handleEndEvent);
 
             // Mouse event
-            em.on(el, 'mousedown', () => touchMoved = false);
-            em.on(el, 'mousemove', () => touchMoved = true);
-            em.on(el, 'mouseup', handleEndEvent);
+            el.addEventListener('mousedown', () => touchMoved = false);
+            el.addEventListener('mousemove', () => touchMoved = true);
+            el.addEventListener('mouseup', handleEndEvent);
         }
     });
 }
 
-/**
- * Initial load event listener
- * @returns {void}
- */
-export function init() {
+// Lifecycle: Initial mount to DOM
+export function mount() {
+    controlPanelEventlistener();
+    setupDocsMenu();
+    generateLanguageMenu();
+}
+
+// Lifecycle: Each time page becomes visible
+export function onShow() {
     document.getElementById('title').textContent = translations.footer_more;
     checkUpdateStatus();
     checkBindhostsApp();
     checkMagisk();
     checkCronStatus();
     checkTcpdump();
-    controlPanelEventlistener();
-    setupDocsMenu();
-    generateLanguageMenu();
-    applyRippleEffect();
 }
 
-export function destroy() {
-    languageMenuListener = false;
-    setupTcpdumpTerminal = false, contentBox = false;
-
-    const floatBtn = document.querySelector('.float');
-    floatBtn.classList.remove('show');
-    floatBtn.classList.remove('inTerminal');
-
-    em?.removeAll();
+// Lifecycle: Each time page is hidden
+export function onHide() {
+    const floatBtn = document.querySelector('.tcpdump-btn');
+    floatBtn?.classList.remove('show');
+    floatBtn?.classList.remove('inTerminal');
 }

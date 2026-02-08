@@ -1,6 +1,11 @@
+@import url('https://mui.kernelsu.org/internal/insets.css');
 @import url('https://mui.kernelsu.org/internal/colors.css');
 
 :root {
+    /* Inset */
+    --top-inset: var(--window-inset-top, 0px);
+    --bottom-inset: var(--window-inset-bottom, 0px);
+
     /* Background colors */
     --bg-primary: var(--background, #fbf8ff);
     --bg-secondary: var(--tonalSurface, #f3f0f9);
@@ -36,6 +41,19 @@
     /* Shadow colors */
     --shadow-light: rgba(0, 0, 0, 0.2);
     --shadow-medium: rgba(0, 0, 0, 0.5);
+
+    /* Z-index layers */
+    --z-index-base: 1;
+    --z-index-content: 2;
+    --z-index-slide-menu: 10;
+    --z-index-float: 20;
+    --z-index-header: 100;
+    --z-index-footer: 100;
+    --z-index-prompt: 200;
+    --z-index-document-cover: 300;
+    --z-index-header-desktop: 500;
+    --z-index-footer-desktop: 500;
+    --z-index-overlay: 1000;
 }
 
 @media (prefers-color-scheme: dark) {
