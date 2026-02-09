@@ -1,6 +1,6 @@
 import { exec, spawn } from 'kernelsu-alt';
 import { showPrompt, applyRippleEffect, basePath, setupSwipeToClose, moduleDirectory, filePaths } from '../../utils/util.js';
-import { translations } from '../../utils/language.js';
+import { getString } from '../../utils/language.js';
 import { FileSelector } from '../../utils/file_selector.js';
 import { setupDocsMenu } from '../../utils/docs.js';
 
@@ -157,7 +157,7 @@ function displayHostsList(lines, fileType) {
         const showMoreItem = document.createElement("li");
         showMoreItem.className = "show-more-item";
         // Special styling to make it visually distinct
-        showMoreItem.innerHTML = `<span>${translations.global_show_all} ${lines.length - showInitialLimit} ${translations.global_more}</span>`;
+        showMoreItem.innerHTML = `<span>${getString('global_show_all', lines.length - showInitialLimit)}</span>`;
         listElement.appendChild(showMoreItem);
         // Remove the "Show More" button and show remaining items
         showMoreItem.addEventListener('click', () => {
@@ -187,7 +187,7 @@ async function handleAdd(fileType, prompt) {
 
         for (const line of inputLines) {
             if (existingLines.includes(line)) {
-                showPrompt(line + ' ' + translations[prompt], false, 2000);
+                showPrompt(getString(prompt, line), false, 2000);
                 continue;
             }
             await exec(`echo "${line}" >> ${basePath}/${filePaths[fileType]}`);
@@ -424,7 +424,7 @@ function runBindhosts(args) {
         forceUpdateButton.classList.add('show');
         closeBtn.classList.remove('show');
         header.classList.remove('back');
-        title.textContent = translations.footer_hosts;
+        title.textContent = getString('footer_hosts');
         setTimeout(() => {
             isTerminalOpen = false;
         }, 100);
@@ -442,7 +442,7 @@ function runBindhosts(args) {
         actionBtn.classList.remove('show');
         FabContainer.classList.add('inTerminal');
         forceUpdateButton.classList.remove('show');
-        title.textContent = translations.global_action;
+        title.textContent = getString('global_action');
     }, 50);
 }
 
@@ -473,11 +473,11 @@ async function importCustomHost() {
             chmod 644 "${destPath}"
         `);
         if (result.errno === 0) {
-            showPrompt(translations.global_saved + ` ${destPath}`);
+            showPrompt(getString('global_saved', destPath));
             await new Promise(resolve => setTimeout(resolve, 100));
             getCustomHostsList();
         } else {
-            showPrompt(translations.global_save_fail, false);
+            showPrompt(getString('global_save_fail'), false);
             console.error('Error copying file:', result.stderr);
         }
     }
@@ -502,7 +502,7 @@ async function fileNameEditor(fileName) {
     } else {
         // Only rename is supported for large files
         openFileEditor(fileName, false);
-        showPrompt(translations.global_file_too_large);
+        showPrompt(getString('global_file_too_large'));
     }
 }
 
@@ -660,7 +660,7 @@ function openFileEditor(lastFileName, openEditor = true) {
         const newFileName = fileNameInput.value;
         const content = editorInput.value.trim();
         if (newFileName === "") {
-            showPrompt(translations.global_file_name_empty, false);
+            showPrompt(getString('global_file_name_empty'), false);
             return;
         }
         let command;
@@ -678,9 +678,9 @@ HostEditorEOF
         }
         const result = await exec(command);
         if (result.errno === 0) {
-            showPrompt(translations.global_saved + ` ${basePath}/custom${newFileName}.txt`);
+            showPrompt(getString('global_saved', `${basePath}/custom${newFileName}.txt`));
         } else {
-            showPrompt(translations.global_save_fail, false);
+            showPrompt(getString('global_save_fail'), false);
             console.error("Failed to save file:", result.stderr);
         }
         getCustomHostsList();
@@ -722,7 +722,7 @@ export function mount() {
 
 // Lifecycle: Each time page becomes visible
 export function onShow() {
-    document.getElementById('title').textContent = translations.footer_hosts;
+    document.getElementById('title').textContent = getString('footer_hosts');
     const actionContainer = document.querySelector('.action-container');
     const actionBtn = document.getElementById('action-btn');
     const forceUpdateButton = document.getElementById('force-update-btn');

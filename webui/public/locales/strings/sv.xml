@@ -7,12 +7,11 @@
     <string name="global_dev_opt">Utvecklaralternativ aktiverat</string>
     <string name="global_dev_opt_true">Utvecklaralternativet är redan aktiverat</string>
     <string name="global_save">Spara</string>
-    <string name="global_saved">Filen sparad till</string>
+    <string name="global_saved">Filen sparad till %s</string>
     <string name="global_save_fail">Det gick inte att spara filen</string>
     <string name="global_file_too_large">Filredigering stöds inte på stora filer</string>
     <string name="global_file_name_empty">Filnamnet får inte vara tomt</string>
-    <string name="global_show_all">Visa allt</string>
-    <string name="global_more">Mer</string>
+    <string name="global_show_all">Visa allt %d Mer</string>
     <string name="global_action">Action</string>
     <!-- Query -->
     <string name="query_title">Värdförfrågan</string>
@@ -20,8 +19,8 @@
     <string name="query_host_ip">IP</string>
     <string name="query_host_type">Typ</string>
     <string name="query_host_domain">Domän</string>
-    <string name="query_remove_prompt">Vitlistad</string>
-    <string name="query_remove_error">Det gick inte att vitlista</string>
+    <string name="query_remove_prompt">Vitlistad %s</string>
+    <string name="query_remove_error">Det gick inte att vitlista %s</string>
     <!-- Control Panel -->
     <string name="control_panel_title">Kontrollpanel</string>
     <string name="control_panel_language">Språk</string>
@@ -48,7 +47,7 @@
     <string name="custom_example">Exempel:</string>
     <string name="custom_format">Format:</string>
     <string name="custom_warning">VARNING: Anpassade regler laddas vid både körning och återställning!</string>
-    <string name="custom_prompt_fail">är redan i anpassade regler</string>
+    <string name="custom_prompt_fail">%s är redan i anpassade regler</string>
     <!-- Import -->
     <string name="import_custom_title">Importera anpassade regler</string>
     <!-- Source -->
@@ -58,23 +57,23 @@
     <string name="source_format">Format:</string>
     <string name="source_example">Exempel:</string>
     <string name="source_source_page">Fler källor</string>
-    <string name="source_prompt_fail">finns redan i källor</string>
+    <string name="source_prompt_fail">%s finns redan i källor</string>
     <!-- Blacklist -->
     <string name="blacklist_title">Svartlista</string>
     <string name="blacklist_guide1">Everything you add here will be blacklisted</string>
     <string name="blacklist_example">Exempel:</string>
-    <string name="blacklist_prompt_fail">finns redan i svartlistan</string>
+    <string name="blacklist_prompt_fail">%s finns redan i svartlistan</string>
     <!-- Whitelist -->
     <string name="whitelist_title">Vitlista</string>
     <string name="whitelist_guide1">Allt du lägger till här kommer inte att svartlistas</string>
     <string name="whitelist_example">Exempel:</string>
-    <string name="whitelist_prompt_fail">finns redan i vitlistan</string>
+    <string name="whitelist_prompt_fail">%s finns redan i vitlistan</string>
     <!-- Sources -->
     <string name="sources_whitelist_title">Vitlistkällor</string>
     <string name="sources_whitelist_guide1">Lägg till vitlistkällor här</string>
     <string name="sources_whitelist_format">Format:</string>
     <string name="sources_whitelist_example">Exempel:</string>
-    <string name="sources_whitelist_prompt_fail">finns redan i vitlistkällan</string>
+    <string name="sources_whitelist_prompt_fail">%s finns redan i vitlistkällan</string>
     <!-- Mode -->
     <string name="mode_button">Läge</string>
     <string name="mode_title">Driftläge</string>
@@ -102,7 +101,7 @@
     <string name="backup_restore_backup_and_restore">Säkerhetskopiera och återställa</string>
     <string name="backup_restore_export">Exportera konfiguration</string>
     <string name="backup_restore_restore">Återställ konfiguration</string>
-    <string name="backup_restore_exported">Konfiguration sparad till</string>
+    <string name="backup_restore_exported">Konfiguration sparad till %s</string>
     <string name="backup_restore_export_fail">Det gick inte att exportera konfiguration</string>
     <string name="backup_restore_invalid_config">Ogiltig bindhosts-konfiguration</string>
     <string name="backup_restore_restored">Konfiguration återställd</string>

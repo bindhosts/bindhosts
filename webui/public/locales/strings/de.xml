@@ -7,12 +7,11 @@
     <string name="global_dev_opt">Entwickler-Option aktiviert</string>
     <string name="global_dev_opt_true">Entwickler-Option bereits aktiviert</string>
     <string name="global_save">Speichern</string>
-    <string name="global_saved">Datei gespeichert in</string>
+    <string name="global_saved">Datei gespeichert in %s</string>
     <string name="global_save_fail">Fehler beim Speichern der Datei</string>
     <string name="global_file_too_large">Nur Umbenennung wird auf großen Dateien unterstützt</string>
     <string name="global_file_name_empty">Der Dateiname darf nicht leer sein</string>
-    <string name="global_show_all">Alle anzeigen</string>
-    <string name="global_more">mehr</string>
+    <string name="global_show_all">Alle anzeigen %d mehr</string>
     <string name="global_action">Action</string>
     <!-- Query -->
     <string name="query_title">Host-Abfrage</string>
@@ -20,8 +19,8 @@
     <string name="query_host_ip">IP</string>
     <string name="query_host_type">Typ</string>
     <string name="query_host_domain">Domain</string>
-    <string name="query_remove_prompt">Whitelist</string>
-    <string name="query_remove_error">Fehler beim Hinzufügen zur Whitelist</string>
+    <string name="query_remove_prompt">Whitelist %s</string>
+    <string name="query_remove_error">Fehler beim Hinzufügen zur Whitelist %s</string>
     <!-- Control Panel -->
     <string name="control_panel_title">Kontrollzentrum</string>
     <string name="control_panel_language">Sprache</string>
@@ -48,7 +47,7 @@
     <string name="custom_example">Beispiel:</string>
     <string name="custom_format">Format:</string>
     <string name="custom_warning">WARNUNG: Benutzerdefinierte Regeln werden sowohl beim Start als auch beim Zurücksetzen geladen!</string>
-    <string name="custom_prompt_fail">ist bereits in der benutzerdefinierten Regel</string>
+    <string name="custom_prompt_fail">%s ist bereits in der benutzerdefinierten Regel</string>
     <!-- Import -->
     <string name="import_custom_title">Benutzerdefinierte Regeln importieren</string>
     <!-- Source -->
@@ -58,23 +57,23 @@
     <string name="source_format">Format:</string>
     <string name="source_example">Beispiel:</string>
     <string name="source_source_page">Mehr Quellen</string>
-    <string name="source_prompt_fail">Ist bereits in der Quelle enthalten</string>
+    <string name="source_prompt_fail">%s Ist bereits in der Quelle enthalten</string>
     <!-- Blacklist -->
     <string name="blacklist_title">Schwarze Liste</string>
     <string name="blacklist_guide1">Alles, was Sie hier eintragen, kommt auf die schwarze Liste.</string>
     <string name="blacklist_example">Beispiel:</string>
-    <string name="blacklist_prompt_fail">Ist bereits auf der schwarzen Liste</string>
+    <string name="blacklist_prompt_fail">%s Ist bereits auf der schwarzen Liste</string>
     <!-- Whitelist -->
     <string name="whitelist_title">Ausnahmeliste</string>
     <string name="whitelist_guide1">Alles, was Sie hier hinzufügen, wird nicht in die schwarze Liste aufgenommen.</string>
     <string name="whitelist_example">Beispiel:</string>
-    <string name="whitelist_prompt_fail">Ist bereits in der Ausnahmeliste</string>
+    <string name="whitelist_prompt_fail">%s Ist bereits in der Ausnahmeliste</string>
     <!-- Sources -->
     <string name="sources_whitelist_title">Ausnahmeliste Quellen</string>
     <string name="sources_whitelist_guide1">Fügen Sie hier Ausnahmeliste-Quellen hinzu</string>
     <string name="sources_whitelist_format">Format:</string>
     <string name="sources_whitelist_example">Beispiel:</string>
-    <string name="sources_whitelist_prompt_fail">Ist bereits in der Ausnahmeliste-Quelle</string>
+    <string name="sources_whitelist_prompt_fail">%s Ist bereits in der Ausnahmeliste-Quelle</string>
     <!-- Mode -->
     <string name="mode_button">Modus</string>
     <string name="mode_title">Betriebsmodus</string>
@@ -105,7 +104,7 @@
     <string name="backup_restore_backup_and_restore">Sicherung &amp; Wiederherstellung</string>
     <string name="backup_restore_export">Konfiguration exportieren</string>
     <string name="backup_restore_restore">Konfiguration wiederherstellen</string>
-    <string name="backup_restore_exported">Konfiguration gespeichert in</string>
+    <string name="backup_restore_exported">Konfiguration gespeichert in %s</string>
     <string name="backup_restore_export_fail">Fehler beim Exportieren der Konfiguration</string>
     <string name="backup_restore_invalid_config">Ungültige Bindhosts-Konfiguration</string>
     <string name="backup_restore_restored">Konfiguration erfolgreich wiederhergestellt</string>

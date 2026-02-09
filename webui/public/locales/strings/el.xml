@@ -10,12 +10,11 @@
     <string name="global_reboot">Επανεκκίνηση</string>
     <string name="global_rebooting">Επανεκκίνηση…</string>
     <string name="global_save">Αποθήκευση</string>
-    <string name="global_saved">Το αρχείο αποθηκεύτηκε σε</string>
+    <string name="global_saved">Το αρχείο αποθηκεύτηκε σε %s</string>
     <string name="global_save_fail">Αποτυχία αποθήκευσης αρχείου</string>
     <string name="global_file_too_large">Η επεξεργασία αρχείου δεν υποστηρίζεται σε μεγάλο αρχείο</string>
     <string name="global_file_name_empty">Το όνομα του αρχείου δεν μπορεί να είναι κενό</string>
-    <string name="global_show_all">Εμφάνιση Όλων</string>
-    <string name="global_more">Περισσότερα</string>
+    <string name="global_show_all">Εμφάνιση Όλων %d Περισσότερα</string>
     <string name="global_action">Ενέργεια</string>
     <!-- Query -->
     <string name="query_title">Αναζήτηση Host</string>
@@ -23,8 +22,8 @@
     <string name="query_host_ip">IP</string>
     <string name="query_host_type">Τύπος</string>
     <string name="query_host_domain">Όνομα τομέα</string>
-    <string name="query_remove_prompt">Λευκή λίστα</string>
-    <string name="query_remove_error">Αποτυχία προσθήκης στη λευκή λίστα</string>
+    <string name="query_remove_prompt">Λευκή λίστα %s</string>
+    <string name="query_remove_error">Αποτυχία προσθήκης στη λευκή λίστα %s</string>
     <!-- Control Panel -->
     <string name="control_panel_title">Πίνακας Ελέγχου</string>
     <string name="control_panel_language">Γλώσσα</string>
@@ -51,7 +50,7 @@
     <string name="custom_example">Παράδειγμα:</string>
     <string name="custom_format">Μορφή:</string>
     <string name="custom_warning">ΠΡΟΕΙΔΟΠΟΙΗΣΗ: Οι προσαρμοσμένοι κανόνες φορτώνονται τόσο κατά την εκτέλεση όσο και κατά την επαναφορά!</string>
-    <string name="custom_prompt_fail">είναι ήδη σε προσαρμοσμένο κανόνα</string>
+    <string name="custom_prompt_fail">%s είναι ήδη σε προσαρμοσμένο κανόνα</string>
     <!-- Import -->
     <string name="import_custom_title">Εισαγωγή Προσαρμοσμένων Κανόνων</string>
     <!-- Source -->
@@ -61,23 +60,23 @@
     <string name="source_format">Μορφή:</string>
     <string name="source_example">Παράδειγμα:</string>
     <string name="source_source_page">Περισσότερες Πηγές</string>
-    <string name="source_prompt_fail">είναι ήδη στην πηγή</string>
+    <string name="source_prompt_fail">%s είναι ήδη στην πηγή</string>
     <!-- Blacklist -->
     <string name="blacklist_title">Μαύρη Λίστα</string>
     <string name="blacklist_guide1">Όλα όσα προσθέτετε εδώ θα μπουν στη μαύρη λίστα</string>
     <string name="blacklist_example">Παράδειγμα:</string>
-    <string name="blacklist_prompt_fail">είναι ήδη στη μαύρη λίστα</string>
+    <string name="blacklist_prompt_fail">%s είναι ήδη στη μαύρη λίστα</string>
     <!-- Whitelist -->
     <string name="whitelist_title">Λευκή Λίστα</string>
     <string name="whitelist_guide1">Όλα όσα προσθέτετε εδώ δεν θα μπουν στη μαύρη λίστα</string>
     <string name="whitelist_example">Παράδειγμα:</string>
-    <string name="whitelist_prompt_fail">είναι ήδη στη λευκή λίστα</string>
+    <string name="whitelist_prompt_fail">%s είναι ήδη στη λευκή λίστα</string>
     <!-- Sources -->
     <string name="sources_whitelist_title">Πηγές Λευκής Λίστας</string>
     <string name="sources_whitelist_guide1">Προσθέστε πηγές λευκής λίστας εδώ</string>
     <string name="sources_whitelist_format">Μορφή:</string>
     <string name="sources_whitelist_example">Παράδειγμα:</string>
-    <string name="sources_whitelist_prompt_fail">είναι ήδη στις πηγές λευκής λίστας</string>
+    <string name="sources_whitelist_prompt_fail">%s είναι ήδη στις πηγές λευκής λίστας</string>
     <!-- Mode -->
     <string name="mode_button">Λειτουργία</string>
     <string name="mode_title">Τρόπος Λειτουργίας</string>
@@ -112,7 +111,7 @@
     <string name="backup_restore_backup_and_restore">Αντίγραφο ασφαλείας &amp; Επαναφορά</string>
     <string name="backup_restore_export">Εξαγωγή ρυθμίσεων</string>
     <string name="backup_restore_restore">Επαναφορά ρυθμίσεων</string>
-    <string name="backup_restore_exported">Οι ρυθμίσεις αποθηκεύτηκαν σε</string>
+    <string name="backup_restore_exported">Οι ρυθμίσεις αποθηκεύτηκαν σε %s</string>
     <string name="backup_restore_export_fail">Αποτυχία εξαγωγής ρυθμίσεων</string>
     <string name="backup_restore_invalid_config">Μη έγκυρη ρύθμιση bindhosts</string>
     <string name="backup_restore_restored">Οι ρυθμίσεις επαναφέρθηκαν με επιτυχία</string>

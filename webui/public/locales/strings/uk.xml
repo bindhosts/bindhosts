@@ -7,12 +7,11 @@
     <string name="global_dev_opt">Налаштування розробника ввімкнено</string>
     <string name="global_dev_opt_true">Налаштування розробника вже ввімкнено</string>
     <string name="global_save">Зберегти</string>
-    <string name="global_saved">Файл збережено в</string>
+    <string name="global_saved">Файл збережено в %s</string>
     <string name="global_save_fail">Помилка збереження файлу</string>
     <string name="global_file_too_large">Редагування файлів не підтримується на великих файлах</string>
     <string name="global_file_name_empty">Ім&apos;я файлу не може бути порожнім</string>
-    <string name="global_show_all">Показати всі</string>
-    <string name="global_more">ще</string>
+    <string name="global_show_all">Показати всі %d ще</string>
     <string name="global_action">Action</string>
     <!-- Query -->
     <string name="query_title">Запит хоста</string>
@@ -20,8 +19,8 @@
     <string name="query_host_ip">IP</string>
     <string name="query_host_type">Тип</string>
     <string name="query_host_domain">Домен</string>
-    <string name="query_remove_prompt">Білий список</string>
-    <string name="query_remove_error">Помилка додавання до білого списку</string>
+    <string name="query_remove_prompt">Білий список %s</string>
+    <string name="query_remove_error">Помилка додавання до білого списку %s</string>
     <!-- Control Panel -->
     <string name="control_panel_title">Панель управління</string>
     <string name="control_panel_language">Мова</string>
@@ -48,7 +47,7 @@
     <string name="custom_example">Приклад:</string>
     <string name="custom_format">Формат:</string>
     <string name="custom_warning">УВАГА: Користувацькі правила завантажуються як при запуску, так і при скиданні!</string>
-    <string name="custom_prompt_fail">вже в списку користувацьких правил</string>
+    <string name="custom_prompt_fail">%s вже в списку користувацьких правил</string>
     <!-- Import -->
     <string name="import_custom_title">Імпорт користувацьких правил</string>
     <!-- Source -->
@@ -58,23 +57,23 @@
     <string name="source_format">Формат:</string>
     <string name="source_example">Приклад:</string>
     <string name="source_source_page">Більше джерел</string>
-    <string name="source_prompt_fail">вже є в списку джерел</string>
+    <string name="source_prompt_fail">%s вже є в списку джерел</string>
     <!-- Blacklist -->
     <string name="blacklist_title">Чорний список</string>
     <string name="blacklist_guide1">Все, що ви додасте сюди, буде в чорному списку</string>
     <string name="blacklist_example">Приклад:</string>
-    <string name="blacklist_prompt_fail">вже в чорному списку</string>
+    <string name="blacklist_prompt_fail">%s вже в чорному списку</string>
     <!-- Whitelist -->
     <string name="whitelist_title">Білий список</string>
     <string name="whitelist_guide1">Все, що ви додасте сюди, не буде в чорному списку</string>
     <string name="whitelist_example">Приклад:</string>
-    <string name="whitelist_prompt_fail">вже в білому списку</string>
+    <string name="whitelist_prompt_fail">%s вже в білому списку</string>
     <!-- Sources -->
     <string name="sources_whitelist_title">Джерела білого списку</string>
     <string name="sources_whitelist_guide1">Додайте джерела білого списку сюди</string>
     <string name="sources_whitelist_format">Формат:</string>
     <string name="sources_whitelist_example">Приклад:</string>
-    <string name="sources_whitelist_prompt_fail">вже в джерелі білого списку</string>
+    <string name="sources_whitelist_prompt_fail">%s вже в джерелі білого списку</string>
     <!-- Mode -->
     <string name="mode_button">Режим</string>
     <string name="mode_title">Режим роботи</string>
@@ -104,7 +103,7 @@
     <string name="backup_restore_backup_and_restore">Резервне копіювання та відновлення</string>
     <string name="backup_restore_export">Експорт конфігурації</string>
     <string name="backup_restore_restore">Відновлення конфігурації</string>
-    <string name="backup_restore_exported">Конфігурація збережена в</string>
+    <string name="backup_restore_exported">Конфігурація збережена в %s</string>
     <string name="backup_restore_export_fail">Помилка експорту конфігурації</string>
     <string name="backup_restore_invalid_config">Невірна конфігурація bindhosts</string>
     <string name="backup_restore_restored">Конфігурація успішно відновлена</string>

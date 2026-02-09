@@ -10,12 +10,11 @@
     <string name="global_reboot">Reboot</string>
     <string name="global_rebooting">Rebooting...</string>
     <string name="global_save">Save</string>
-    <string name="global_saved">File saved to</string>
+    <string name="global_saved">File saved to %s</string>
     <string name="global_save_fail">Failed to save file</string>
     <string name="global_file_too_large">File edit is not supported on large file</string>
     <string name="global_file_name_empty">File name cannot be empty</string>
-    <string name="global_show_all">Show All</string>
-    <string name="global_more">More</string>
+    <string name="global_show_all">Show All %d More</string>
     <string name="global_action">Action</string>
     <!-- Query -->
     <string name="query_title">Host Query</string>
@@ -23,8 +22,8 @@
     <string name="query_host_ip">IP</string>
     <string name="query_host_type">Type</string>
     <string name="query_host_domain">Domain</string>
-    <string name="query_remove_prompt">Whitelisted</string>
-    <string name="query_remove_error">Failed to whitelist</string>
+    <string name="query_remove_prompt">Whitelisted %s</string>
+    <string name="query_remove_error">Failed to whitelist %s</string>
     <!-- Control Panel -->
     <string name="control_panel_title">Control Panel</string>
     <string name="control_panel_language">Language</string>
@@ -51,7 +50,7 @@
     <string name="custom_example">Example:</string>
     <string name="custom_format">Format:</string>
     <string name="custom_warning">WARNING: Custom rules are loaded on both run and reset!</string>
-    <string name="custom_prompt_fail">is already in custom rule</string>
+    <string name="custom_prompt_fail">%s is already in custom rule</string>
     <!-- Import -->
     <string name="import_custom_title">Import Custom Rules</string>
     <!-- Source -->
@@ -61,23 +60,23 @@
     <string name="source_format">Format:</string>
     <string name="source_example">Example:</string>
     <string name="source_source_page">More Sources</string>
-    <string name="source_prompt_fail">is already in source</string>
+    <string name="source_prompt_fail">%s is already in source</string>
     <!-- Blacklist -->
     <string name="blacklist_title">Blacklist</string>
     <string name="blacklist_guide1">Everything you add here will be blacklisted</string>
     <string name="blacklist_example">Example:</string>
-    <string name="blacklist_prompt_fail">is already in blacklist</string>
+    <string name="blacklist_prompt_fail">%s is already in blacklist</string>
     <!-- Whitelist -->
     <string name="whitelist_title">Whitelist</string>
     <string name="whitelist_guide1">Everything you add here won&apos;t be blacklisted</string>
     <string name="whitelist_example">Example:</string>
-    <string name="whitelist_prompt_fail">is already in whitelist</string>
+    <string name="whitelist_prompt_fail">%s is already in whitelist</string>
     <!-- Sources -->
     <string name="sources_whitelist_title">Whitelist Sources</string>
     <string name="sources_whitelist_guide1">Add whitelist sources here</string>
     <string name="sources_whitelist_format">Format:</string>
     <string name="sources_whitelist_example">Example:</string>
-    <string name="sources_whitelist_prompt_fail">is already in whitelist source</string>
+    <string name="sources_whitelist_prompt_fail">%s is already in whitelist source</string>
     <!-- Mode -->
     <string name="mode_button">Mode</string>
     <string name="mode_title">Operation Mode</string>
@@ -112,7 +111,7 @@
     <string name="backup_restore_backup_and_restore">Backup &amp; Restore</string>
     <string name="backup_restore_export">Export config</string>
     <string name="backup_restore_restore">Restore config</string>
-    <string name="backup_restore_exported">Config saved to</string>
+    <string name="backup_restore_exported">Config saved to %s</string>
     <string name="backup_restore_export_fail">Fail to export config</string>
     <string name="backup_restore_invalid_config">Invalid bindhosts config</string>
     <string name="backup_restore_restored">Config restored succesfully</string>

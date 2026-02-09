@@ -19,6 +19,29 @@ let availableLanguages = ['en'];
 let languageNames = {};
 
 /**
+ * Get a formatted string based on the language key and optional arguments
+ * Supported formats: %s, %d, %f, %x, %1$s, %2$d, etc.
+ * @param {string} id - The translation key
+ * @param {...any} args - Arguments to format into the string
+ * @returns {string} - The formatted translation
+ */
+export function getString(id, ...args) {
+    let translation = translations[id] || (baseTranslations && baseTranslations[id]) || id;
+    if (args.length === 0) return translation;
+
+    let argIndex = 0;
+    return translation.replace(/%(?:(\d+)\$)?([%sdfx])/g, (match, index, type) => {
+        if (type === '%') return '%';
+        if (index) {
+            const i = parseInt(index) - 1;
+            return args[i] !== undefined ? args[i] : match;
+        } else {
+            return args[argIndex++] !== undefined ? args[argIndex - 1] : match;
+        }
+    });
+}
+
+/**
  * Parse XML translation file into a JavaScript object
  * @param {string} xmlText - The XML content as string
  * @returns {Object} - Parsed translations
@@ -32,7 +55,7 @@ function parseTranslationsXML(xmlText) {
     for (let i = 0; i < strings.length; i++) {
         const string = strings[i];
         const name = string.getAttribute('name');
-        const value = string.textContent;
+        const value = string.textContent.replace(/\\n/g, '\n');
         translations[name] = value;
     }
 
@@ -122,8 +145,8 @@ export async function loadTranslations() {
 export function applyTranslations() {
     document.querySelectorAll("[data-i18n]").forEach((el) => {
         const key = el.getAttribute("data-i18n");
-        const translation = translations[key];
-        if (translation) {
+        const translation = getString(key);
+        if (translation !== key) {
             if (el.hasAttribute("placeholder")) {
                 el.setAttribute("placeholder", translation);
             } else {

@@ -10,12 +10,11 @@
     <string name="global_reboot">重啟</string>
     <string name="global_rebooting">正在重啟...</string>
     <string name="global_save">儲存</string>
-    <string name="global_saved">文件已儲存至</string>
+    <string name="global_saved">文件已儲存至 %s</string>
     <string name="global_save_fail">文件儲存失敗</string>
     <string name="global_file_too_large">文件編輯不支援大文件</string>
     <string name="global_file_name_empty">檔案名不能為空</string>
-    <string name="global_show_all">顯示剩餘</string>
-    <string name="global_more">個</string>
+    <string name="global_show_all">顯示剩餘 %d 個</string>
     <string name="global_action">執行</string>
     <!-- Query -->
     <string name="query_title">Host 查詢</string>
@@ -23,8 +22,8 @@
     <string name="query_host_ip">IP</string>
     <string name="query_host_type">類型</string>
     <string name="query_host_domain">域名</string>
-    <string name="query_remove_prompt">已移除</string>
-    <string name="query_remove_error">移除失敗</string>
+    <string name="query_remove_prompt">已移除 %s</string>
+    <string name="query_remove_error">移除失敗 %s</string>
     <!-- Control Panel -->
     <string name="control_panel_title">控制面板</string>
     <string name="control_panel_language">語言</string>
@@ -51,7 +50,7 @@
     <string name="custom_example">例如：</string>
     <string name="custom_format">格式</string>
     <string name="custom_warning">警告：自訂規則在模組執行期間和重設後均會載入！</string>
-    <string name="custom_prompt_fail">已存在於自訂規則內</string>
+    <string name="custom_prompt_fail">%s 已存在於自訂規則內</string>
     <!-- Import -->
     <string name="import_custom_title">匯入自訂規則</string>
     <!-- Source -->
@@ -61,23 +60,23 @@
     <string name="source_format">格式</string>
     <string name="source_example">例如：</string>
     <string name="source_source_page">更多規則集</string>
-    <string name="source_prompt_fail">已存在於規則集內</string>
+    <string name="source_prompt_fail">%s 已存在於規則集內</string>
     <!-- Blacklist -->
     <string name="blacklist_title">黑名單</string>
     <string name="blacklist_guide1">添加到此處的域名均會被封鎖</string>
     <string name="blacklist_example">例如：</string>
-    <string name="blacklist_prompt_fail">已存在於黑名單內</string>
+    <string name="blacklist_prompt_fail">%s 已存在於黑名單內</string>
     <!-- Whitelist -->
     <string name="whitelist_title">白名單</string>
     <string name="whitelist_guide1">添加到此處的域名均會被放行</string>
     <string name="whitelist_example">例如：</string>
-    <string name="whitelist_prompt_fail">已存在於白名單內</string>
+    <string name="whitelist_prompt_fail">%s 已存在於白名單內</string>
     <!-- Sources -->
     <string name="sources_whitelist_title">白名單集</string>
     <string name="sources_whitelist_guide1">在此處添加白名單集</string>
     <string name="sources_whitelist_format">格式</string>
     <string name="sources_whitelist_example">例如：</string>
-    <string name="sources_whitelist_prompt_fail">已存在於白名單集內</string>
+    <string name="sources_whitelist_prompt_fail">%s 已存在於白名單集內</string>
     <!-- Mode -->
     <string name="mode_button">模式</string>
     <string name="mode_title">工作模式</string>
@@ -112,7 +111,7 @@
     <string name="backup_restore_backup_and_restore">備份與復原</string>
     <string name="backup_restore_export">匯出配置</string>
     <string name="backup_restore_restore">復原配置</string>
-    <string name="backup_restore_exported">配置已儲存至</string>
+    <string name="backup_restore_exported">配置已儲存至 %s</string>
     <string name="backup_restore_export_fail">配置匯出失敗</string>
     <string name="backup_restore_invalid_config">無效的 bindhosts 配置</string>
     <string name="backup_restore_restored">配置復原成功</string>

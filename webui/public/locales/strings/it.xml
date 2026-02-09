@@ -10,12 +10,11 @@
     <string name="global_reboot">Riavvio</string>
     <string name="global_rebooting">Riavvio in corso...</string>
     <string name="global_save">Salva</string>
-    <string name="global_saved">File salvato in</string>
+    <string name="global_saved">File salvato in %s</string>
     <string name="global_save_fail">Errore nel salvataggio del file</string>
     <string name="global_file_too_large">Modifica file non supportata su file grandi</string>
     <string name="global_file_name_empty">Il nome del file non può essere vuoto</string>
-    <string name="global_show_all">Mostra tutti</string>
-    <string name="global_more">altro</string>
+    <string name="global_show_all">Mostra tutti %d altro</string>
     <string name="global_action">Action</string>
     <!-- Query -->
     <string name="query_title">Query Host</string>
@@ -23,8 +22,8 @@
     <string name="query_host_ip">IP</string>
     <string name="query_host_type">Tipo</string>
     <string name="query_host_domain">Dominio</string>
-    <string name="query_remove_prompt">Whitelist</string>
-    <string name="query_remove_error">Errore nell&apos;aggiunta alla whitelist</string>
+    <string name="query_remove_prompt">Whitelist %s</string>
+    <string name="query_remove_error">Errore nell&apos;aggiunta alla whitelist %s</string>
     <!-- Control Panel -->
     <string name="control_panel_title">Panello di Controllo</string>
     <string name="control_panel_language">Lingua</string>
@@ -51,7 +50,7 @@
     <string name="custom_example">Esempio:</string>
     <string name="custom_format">Formato:</string>
     <string name="custom_warning">ATTENZIONE: le regole personalizzate vengono caricate sia durante l&apos;esecuzione che durante il reset!</string>
-    <string name="custom_prompt_fail">è già nella regola personalizzata</string>
+    <string name="custom_prompt_fail">%s è già nella regola personalizzata</string>
     <!-- Import -->
     <string name="import_custom_title">Importa Regole Personalizzate</string>
     <!-- Source -->
@@ -61,23 +60,23 @@
     <string name="source_format">Formato:</string>
     <string name="source_example">Esempio:</string>
     <string name="source_source_page">Altre Fonti</string>
-    <string name="source_prompt_fail">è già nella fonte</string>
+    <string name="source_prompt_fail">%s è già nella fonte</string>
     <!-- Blacklist -->
     <string name="blacklist_title">Blacklist</string>
     <string name="blacklist_guide1">Tutto ciò che aggiungi qui verrà inserito nella blacklist</string>
     <string name="blacklist_example">Esempio:</string>
-    <string name="blacklist_prompt_fail">è già nella blacklist</string>
+    <string name="blacklist_prompt_fail">%s è già nella blacklist</string>
     <!-- Whitelist -->
     <string name="whitelist_title">Whitelist</string>
     <string name="whitelist_guide1">Tutto ciò che aggiungi qui non verrà inserito nella blacklist</string>
     <string name="whitelist_example">Esempio:</string>
-    <string name="whitelist_prompt_fail">è già nella whitelist</string>
+    <string name="whitelist_prompt_fail">%s è già nella whitelist</string>
     <!-- Sources -->
     <string name="sources_whitelist_title">Fonti Whitelist</string>
     <string name="sources_whitelist_guide1">Aggiungi qui le fonti della whitelist</string>
     <string name="sources_whitelist_format">Formato:</string>
     <string name="sources_whitelist_example">Esempio:</string>
-    <string name="sources_whitelist_prompt_fail">è già nella fonte whitelist</string>
+    <string name="sources_whitelist_prompt_fail">%s è già nella fonte whitelist</string>
     <!-- Mode -->
     <string name="mode_button">Modalità</string>
     <string name="mode_title">Modalità di funzionamento</string>
@@ -112,7 +111,7 @@
     <string name="backup_restore_backup_and_restore">Backup &amp; Ripristino</string>
     <string name="backup_restore_export">Esporta configurazione</string>
     <string name="backup_restore_restore">Ripristina configurazione</string>
-    <string name="backup_restore_exported">Configurazione salvata in</string>
+    <string name="backup_restore_exported">Configurazione salvata in %s</string>
     <string name="backup_restore_export_fail">Errore durante l&apos;esportazione della configurazione</string>
     <string name="backup_restore_invalid_config">Configurazione bindhosts non valida</string>
     <string name="backup_restore_restored">Configurazione ripristinata con successo</string>

@@ -1,6 +1,6 @@
 import { exec, spawn } from 'kernelsu-alt';
 import { showPrompt, reboot, applyRippleEffect, basePath, moduleDirectory, linkRedirect, filePaths, setupSwipeToClose } from '../../utils/util.js';
-import { translations, generateLanguageMenu } from '../../utils/language.js';
+import { getString, generateLanguageMenu } from '../../utils/language.js';
 import { FileSelector } from '../../utils/file_selector.js';
 import { addCopyToClipboardListeners, setupDocsMenu } from '../../utils/docs.js';
 let isDownloading = false;
@@ -28,17 +28,17 @@ function checkBindhostsApp() {
 function installBindhostsApp() {
     if (isDownloading) return;
     isDownloading = true;
-    showPrompt(translations.control_panel_installing, true, 10000);
+    showPrompt(getString('control_panel_installing'), true, 10000);
     const tilesContainer = document.getElementById('tiles-container');
     const output = spawn("sh", [`${moduleDirectory}/bindhosts-app.sh`], { env: { WEBUI_QUIET: "true" }});
     output.stdout.on('data', (data) => {
         if (data.includes("[+]")) {
-            showPrompt(translations.control_panel_installed, true, 5000);
+            showPrompt(getString('control_panel_installed'), true, 5000);
             tilesContainer.style.display = "none";
         } else if (data.includes("[x] Failed to download")) {
-            showPrompt(translations.control_panel_download_fail, false);
+            showPrompt(getString('control_panel_download_fail'), false);
         } else if (data.includes("[*]")) {
-            showPrompt(translations.control_panel_install_fail, false, 5000);
+            showPrompt(getString('control_panel_install_fail'), false, 5000);
         }
     });
     output.on('exit', () => {
@@ -72,9 +72,9 @@ async function toggleModuleUpdate() {
         const lines = result.stdout.split("\n");
         lines.forEach(line => {
             if (line.includes("[+]")) {
-                showPrompt(translations.control_panel_update_true);
+                showPrompt(getString('control_panel_update_true'));
             } else if (line.includes("[x]")) {
-                showPrompt(translations.control_panel_update_false, false);
+                showPrompt(getString('control_panel_update_false'), false);
             }
         });
         checkUpdateStatus();
@@ -111,9 +111,9 @@ async function toggleActionRedirectWebui() {
     `);
     if (result.errno === 0) {
         if (actionRedirectStatus.checked) {
-            showPrompt(translations.control_panel_action_prompt_false, false);
+            showPrompt(getString('control_panel_action_prompt_false'), false);
         } else {
-            showPrompt(translations.control_panel_action_prompt_true);
+            showPrompt(getString('control_panel_action_prompt_true'));
         }
         checkRedirectStatus();
     } else {
@@ -180,9 +180,9 @@ async function toggleCron() {
         const lines = result.stdout.split("\n");
         lines.forEach(line => {
             if (line.includes("[+]")) {
-                showPrompt(translations.control_panel_cron_true);
+                showPrompt(getString('control_panel_cron_true'));
             } else if (line.includes("[x]")) {
-                showPrompt(translations.control_panel_cron_false, false);
+                showPrompt(getString('control_panel_cron_false'), false);
             }
         });
         checkCronStatus();
@@ -210,9 +210,9 @@ function canaryUpdate() {
     result.on('exit', (code) => {
         isDownloading = false;
         if (code === 0) {
-            showPrompt(translations.more_support_update_success, true, 4000, translations.global_reboot, reboot);
+            showPrompt(getString('more_support_update_success'), true, 4000, getString('global_reboot'), reboot);
         } else {
-            showPrompt(translations.more_support_update_fail, false);
+            showPrompt(getString('more_support_update_fail'), false);
         }
     });
 }
@@ -226,7 +226,7 @@ function localesUpdate() {
     if (isDownloading) return;
     isDownloading = true;
 
-    showPrompt(translations.more_support_checking_update, true, 10000);
+    showPrompt(getString('more_support_checking_update'), true, 10000);
     fetch("https://raw.githubusercontent.com/bindhosts/bindhosts/bot/locales_version")
         .then(response => {
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
@@ -244,7 +244,7 @@ function localesUpdate() {
             const local_version = await fetch('locales/version').then(response => response.text()).then(text => text.trim());
 
             if (Number(remote_version) <= Number(local_version)) {
-                showPrompt(translations.more_support_no_update, true);
+                showPrompt(getString('more_support_no_update'), true);
                 isDownloading = false;
             } else {
                 const result = spawn('sh', [`${moduleDirectory}/bindhosts.sh`, '--update-locales'], { env: { WEBUI_QUIET: "true" }});
@@ -259,7 +259,7 @@ function localesUpdate() {
             }
         })
         .catch(error => {
-            showPrompt(translations.more_support_update_locales_failed, false);
+            showPrompt(getString('more_support_update_locales_failed'), false);
             isDownloading = false;
         });
 }
@@ -332,8 +332,8 @@ function openTcpdumpTerminal() {
     terminalContent.innerHTML = `
         <div class="tcpdump-header" id="tcpdump-header"></div>
         <div class="box tcpdump-search translucent" id="tcpdump-search">
-            <h2>${ translations.query_search }</h2>
-            <input class="query-input translucent" type="text" id="tcpdump-search-input" placeholder="${ translations.query_search }" autocapitalize="off">
+            <h2>${ getString('query_search') }</h2>
+            <input class="query-input translucent" type="text" id="tcpdump-search-input" placeholder="${ getString('query_search') }" autocapitalize="off">
         </div>
     `;
 
@@ -390,8 +390,8 @@ function openTcpdumpTerminal() {
         div.classList.add('translucent');
         div.innerHTML = `
             <div class="tcpdump-line tcpdump-line-header">
-                <div class="tcpdump-type">${translations.query_host_type}</div>
-                <div class="tcpdump-domain">${translations.query_host_domain}</div>
+                <div class="tcpdump-type">${getString('query_host_type')}</div>
+                <div class="tcpdump-domain">${getString('query_host_domain')}</div>
             <div>
         `;
         terminalContent.appendChild(div);
@@ -432,7 +432,7 @@ function openTcpdumpTerminal() {
         cover.style.opacity = '0';
         backButton.classList.remove('show');
         header.classList.remove('back');
-        title.textContent = translations.footer_more;
+        title.textContent = getString('footer_more');
     }
 
     // Open output terminal
@@ -444,7 +444,7 @@ function openTcpdumpTerminal() {
         backButton.classList.add('show');
         floatBtn.classList.add('show');
         stopBtn.classList.add('show');
-        title.textContent = translations.control_panel_monitor_network_activity;
+        title.textContent = getString('control_panel_monitor_network_activity');
         setTimeout(() => stopTcpdump(), 60000);
     }, 50);
 }
@@ -483,10 +483,10 @@ JSON_EOF
 echo "$FILENAME"
         `);
     if (result.errno === 0) {
-        showPrompt(translations.backup_restore_exported + " " + result.stdout.trim());
+        showPrompt(getString('backup_restore_exported', result.stdout.trim()));
     } else {
         console.error("Backup failed:", result.stderr);
-        showPrompt(translations.backup_restore_export_fail, false);
+        showPrompt(getString('backup_restore_export_fail'), false);
     }
 }
 
@@ -505,7 +505,7 @@ async function restoreConfig() {
     // Validate using metadata
     const isValid = config.metadata && config.metadata.description === "bindhosts config backup";
     if (!isValid) {
-        showPrompt(translations.backup_restore_invalid_config, false);
+        showPrompt(getString('backup_restore_invalid_config'), false);
         return;
     }
 
@@ -521,10 +521,10 @@ RESTORE_EOF
 chmod 644 ${basePath}/${fileData.path} || true
             `);
             if (result.errno === 0) {
-                showPrompt(translations.backup_restore_restored);
+                showPrompt(getString('backup_restore_restored'));
             } else {
                 console.error("Restore failed:", result.stderr);
-                showPrompt(translations.backup_restore_restore_fail, false);
+                showPrompt(getString('backup_restore_restore_fail'), false);
             }
         }
     }
@@ -591,7 +591,7 @@ export function mount() {
 
 // Lifecycle: Each time page becomes visible
 export function onShow() {
-    document.getElementById('title').textContent = translations.footer_more;
+    document.getElementById('title').textContent = getString('footer_more');
     checkUpdateStatus();
     checkBindhostsApp();
     checkMagisk();

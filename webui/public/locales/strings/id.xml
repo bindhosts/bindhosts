@@ -10,12 +10,11 @@
     <string name="global_reboot">Mulai ulang</string>
     <string name="global_rebooting">Memulai ulang...</string>
     <string name="global_save">Simpan</string>
-    <string name="global_saved">File disimpan ke</string>
+    <string name="global_saved">File disimpan ke %s</string>
     <string name="global_save_fail">Gagal menyimpan file</string>
     <string name="global_file_too_large">Hanya edit file yang diizinkan pada file besar</string>
     <string name="global_file_name_empty">Nama file tidak boleh kosong</string>
-    <string name="global_show_all">Tampilkan semua</string>
-    <string name="global_more">lagi</string>
+    <string name="global_show_all">Tampilkan semua %d lagi</string>
     <string name="global_action">Action</string>
     <!-- Query -->
     <string name="query_title">Kueri Host</string>
@@ -23,8 +22,8 @@
     <string name="query_host_ip">IP</string>
     <string name="query_host_type">Tipe</string>
     <string name="query_host_domain">Domain</string>
-    <string name="query_remove_prompt">Hapus dari daftar putih</string>
-    <string name="query_remove_error">Gagal menambahkan ke daftar putih</string>
+    <string name="query_remove_prompt">Hapus dari daftar putih %s</string>
+    <string name="query_remove_error">Gagal menambahkan ke daftar putih %s</string>
     <!-- Control Panel -->
     <string name="control_panel_title">Panel Kontrol</string>
     <string name="control_panel_language">Bahasa</string>
@@ -51,7 +50,7 @@
     <string name="custom_example">Contoh:</string>
     <string name="custom_format">Format:</string>
     <string name="custom_warning">PERINGATAN: Aturan khusus dimuat saat dijalankan dan disetel ulang!</string>
-    <string name="custom_prompt_fail">sudah ada di aturan kustom</string>
+    <string name="custom_prompt_fail">%s sudah ada di aturan kustom</string>
     <!-- Import -->
     <string name="import_custom_title">Impor Aturan Kustom</string>
     <!-- Source -->
@@ -61,23 +60,23 @@
     <string name="source_format">Format:</string>
     <string name="source_example">Contoh:</string>
     <string name="source_source_page">Sumber lainnya</string>
-    <string name="source_prompt_fail">sudah ada di sumber</string>
+    <string name="source_prompt_fail">%s sudah ada di sumber</string>
     <!-- Blacklist -->
     <string name="blacklist_title">Daftar hitam</string>
     <string name="blacklist_guide1">Apapun yang anda tambahkan di sini akan masuk ke daftar hitam</string>
     <string name="blacklist_example">Contoh:</string>
-    <string name="blacklist_prompt_fail">sudah ada di daftar hitam</string>
+    <string name="blacklist_prompt_fail">%s sudah ada di daftar hitam</string>
     <!-- Whitelist -->
     <string name="whitelist_title">Daftar putih</string>
     <string name="whitelist_guide1">Apapun yang Anda tambahkan di sini tidak akan masuk ke daftar hitam</string>
     <string name="whitelist_example">Contoh:</string>
-    <string name="whitelist_prompt_fail">sudah ada di daftar putih</string>
+    <string name="whitelist_prompt_fail">%s sudah ada di daftar putih</string>
     <!-- Sources -->
     <string name="sources_whitelist_title">Sumber Daftar Putih</string>
     <string name="sources_whitelist_guide1">Tambahkan sumber daftar putih disini</string>
     <string name="sources_whitelist_format">Format:</string>
     <string name="sources_whitelist_example">Contoh:</string>
-    <string name="sources_whitelist_prompt_fail">sudah ada di sumber daftar putih</string>
+    <string name="sources_whitelist_prompt_fail">%s sudah ada di sumber daftar putih</string>
     <!-- Mode -->
     <string name="mode_button">Mode</string>
     <string name="mode_title">Mode Operasi</string>
@@ -112,7 +111,7 @@
     <string name="backup_restore_backup_and_restore">Cadangkan &amp; Pulihkan</string>
     <string name="backup_restore_export">Ekspor konfigurasi</string>
     <string name="backup_restore_restore">Pulihkan konfigurasi</string>
-    <string name="backup_restore_exported">Konfigurasi disimpan ke</string>
+    <string name="backup_restore_exported">Konfigurasi disimpan ke %s</string>
     <string name="backup_restore_export_fail">Gagal mengekspor konfigurasi</string>
     <string name="backup_restore_invalid_config">Konfigurasi bindhosts tidak valid</string>
     <string name="backup_restore_restored">Konfigurasi berhasil dipulihkan</string>

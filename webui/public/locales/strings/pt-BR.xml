@@ -7,12 +7,11 @@
     <string name="global_dev_opt">Opções do Desenvolvedor ativada</string>
     <string name="global_dev_opt_true">Opções do Desenvolvedor já ativada</string>
     <string name="global_save">Salvar</string>
-    <string name="global_saved">Arquivo salvo em</string>
+    <string name="global_saved">Arquivo salvo em %s</string>
     <string name="global_save_fail">Falha ao salvar arquivo</string>
     <string name="global_file_too_large">Edição de arquivo não é suportado em arquivo grande</string>
     <string name="global_file_name_empty">Nome do arquivo não pode estar vazio</string>
-    <string name="global_show_all">Exibir Tudo</string>
-    <string name="global_more">Mais</string>
+    <string name="global_show_all">Exibir Tudo %d Mais</string>
     <string name="global_action">Ação</string>
     <!-- Query -->
     <string name="query_title">Consulta de Hospedeiro</string>
@@ -20,8 +19,8 @@
     <string name="query_host_ip">IP</string>
     <string name="query_host_type">Tipo</string>
     <string name="query_host_domain">Domínio</string>
-    <string name="query_remove_prompt">Na lista branca</string>
-    <string name="query_remove_error">Falha ao incluir na lista branca</string>
+    <string name="query_remove_prompt">Na lista branca %s</string>
+    <string name="query_remove_error">Falha ao incluir na lista branca %s</string>
     <!-- Control Panel -->
     <string name="control_panel_title">Painel de Controle</string>
     <string name="control_panel_language">Idioma</string>
@@ -48,7 +47,7 @@
     <string name="custom_example">Exemplo:</string>
     <string name="custom_format">Formato:</string>
     <string name="custom_warning">ATENÇÃO: Regras customizadas são carregadas na execução e na redefinição!</string>
-    <string name="custom_prompt_fail">já está na regra customizada</string>
+    <string name="custom_prompt_fail">%s já está na regra customizada</string>
     <!-- Import -->
     <string name="import_custom_title">Importar Regras Customizadas</string>
     <!-- Source -->
@@ -58,12 +57,12 @@
     <string name="source_format">Formato:</string>
     <string name="source_example">Exemplo:</string>
     <string name="source_source_page">Mais fontes</string>
-    <string name="source_prompt_fail">já está na fonte</string>
+    <string name="source_prompt_fail">%s já está na fonte</string>
     <!-- Blacklist -->
     <string name="blacklist_title">Lista negra</string>
     <string name="blacklist_guide1">Tudo que você adiciona aqui vai ser colocado na lista negra</string>
     <string name="blacklist_example">Exemplo:</string>
-    <string name="blacklist_prompt_fail">já está na lista negra</string>
+    <string name="blacklist_prompt_fail">%s já está na lista negra</string>
     <!-- Whitelist -->
     <string name="whitelist_title">Lista de permissões</string>
     <!-- Sources -->
@@ -81,7 +80,7 @@
     <string name="backup_restore_backup_and_restore">Backup &amp; Restaurar</string>
     <string name="backup_restore_export">Exportar configuração</string>
     <string name="backup_restore_restore">Restaurar configuração</string>
-    <string name="backup_restore_exported">Configuração salvada em</string>
+    <string name="backup_restore_exported">Configuração salvada em %s</string>
     <string name="backup_restore_export_fail">Falha ao exportar configuração</string>
     <string name="backup_restore_invalid_config">Configuração bindhosts inválida</string>
     <string name="backup_restore_restored">Configuração restaurada com sucesso</string>
