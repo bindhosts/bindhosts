@@ -1,6 +1,6 @@
 import { exec, toast } from 'kernelsu-alt';
 import { WebUI, Intent } from 'webuix'
-import { translations } from './language.js';
+import { getString } from './language.js';
 
 export let developerOption = false;
 export let learnMore = false;
@@ -165,7 +165,7 @@ export function showPrompt(message, isSuccess = true, duration = 2000, callbackN
  * @returns {void}
  */
 export function reboot() {
-    setTimeout(() => showPrompt(translations.global_rebooting), 200);
+    setTimeout(() => showPrompt(getString('global_rebooting')), 200);
     setTimeout(() => exec("svc power reboot").catch(() => {}), 2000);
 }
 

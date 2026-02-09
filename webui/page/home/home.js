@@ -1,7 +1,7 @@
 import { exec } from 'kernelsu-alt';
 import { showPrompt, basePath, moduleDirectory, setLearnMore, setDeveloperOption, developerOption } from '../../utils/util.js';
 import { setupDocsMenu } from '../../utils/docs.js';
-import { translations } from '../../utils/language.js';
+import { getString } from '../../utils/language.js';
 import modes from './modes.json';
 
 let clickCount = 0, clickTimeout = 0;
@@ -63,9 +63,9 @@ function setupDevOtp() {
             clickCount = 0;
             if (!developerOption) {
                 setDeveloperOption(true);
-                showPrompt(translations.global_dev_opt);
+                showPrompt(getString('global_dev_opt'));
             } else {
-                showPrompt(translations.global_dev_opt_true);
+                showPrompt(getString('global_dev_opt_true'));
             }
         }
     });
@@ -101,7 +101,7 @@ function setupModeBtn() {
                 <span class="radio-circle"></span>
                 <div class="radio-label">
                     <div class="radio-label-title">
-                        <span>${translations.mode_button}</span>
+                        <span>${getString('mode_button')}</span>
                         <span>${mode.value}</span>
                     </div>
                     <small>${mode.description}</small>
@@ -146,7 +146,7 @@ function setupModeBtn() {
                     closeOverlay();
                     setLearnMore(false);
                 }
-                showPrompt(translations.global_reboot_now, true, 5000, translations.global_reboot, reboot);
+                showPrompt(getString('global_reboot_now'), true, 5000, getString('global_reboot'), reboot);
                 await updateModeSelection();
             } else {
                 console.error("Error saving mode selection:", result.stderr);
@@ -325,10 +325,10 @@ async function handleRemove(event, domains) {
         if (hostItem) {
             hostList.removeChild(hostItem);
         }
-        showPrompt(translations.query_remove_prompt + ' ' + domains.join(' '));
+        showPrompt(getString('query_remove_prompt', domains.join(' ')));
     } else {
         console.error("Error removing host:", result.stderr);
-        showPrompt(translations.query_remove_error + ' ' + domains.join(' '), false);
+        showPrompt(getString('query_remove_error', domains.join(' ')), false);
     }
 }
 

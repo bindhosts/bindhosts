@@ -10,12 +10,11 @@
     <string name="global_reboot">Yeniden Başlat</string>
     <string name="global_rebooting">Yeniden başlatılıyor...</string>
     <string name="global_save">Kaydet</string>
-    <string name="global_saved">Dosya kaydedildi</string>
+    <string name="global_saved">Dosya kaydedildi %s</string>
     <string name="global_save_fail">Dosya kaydedilemedi</string>
     <string name="global_file_too_large">Dosya düzenleme desteği yok</string>
     <string name="global_file_name_empty">Dosya adı boş olamaz</string>
-    <string name="global_show_all">Tümünü göster</string>
-    <string name="global_more">daha</string>
+    <string name="global_show_all">Tümünü göster %d daha</string>
     <string name="global_action">Action</string>
     <!-- Query -->
     <string name="query_title">Host Sorgulama</string>
@@ -23,8 +22,8 @@
     <string name="query_host_ip">IP</string>
     <string name="query_host_type">Tür</string>
     <string name="query_host_domain">Domain</string>
-    <string name="query_remove_prompt">Beyaz Liste</string>
-    <string name="query_remove_error">Beyaz listeye ekleme başarısız</string>
+    <string name="query_remove_prompt">Beyaz Liste %s</string>
+    <string name="query_remove_error">Beyaz listeye ekleme başarısız %s</string>
     <!-- Control Panel -->
     <string name="control_panel_title">Kontrol Paneli</string>
     <string name="control_panel_language">Dil</string>
@@ -51,7 +50,7 @@
     <string name="custom_example">Örnek:</string>
     <string name="custom_format">Format:</string>
     <string name="custom_warning">UYARI: Özel kurallar hem çalıştırmada hem de sıfırlamada yüklenir!</string>
-    <string name="custom_prompt_fail">Zaten özel kuralda mevcut</string>
+    <string name="custom_prompt_fail">%s Zaten özel kuralda mevcut</string>
     <!-- Import -->
     <string name="import_custom_title">Özel Kuralları İçe Aktar</string>
     <!-- Source -->
@@ -61,23 +60,23 @@
     <string name="source_format">Format:</string>
     <string name="source_example">Örnek:</string>
     <string name="source_source_page">Daha Fazla Kaynak</string>
-    <string name="source_prompt_fail">Zaten kaynakta mevcut</string>
+    <string name="source_prompt_fail">%s Zaten kaynakta mevcut</string>
     <!-- Blacklist -->
     <string name="blacklist_title">Kara liste</string>
     <string name="blacklist_guide1">Buraya eklediğiniz her şey kara listeye alınacaktır</string>
     <string name="blacklist_example">Örnek:</string>
-    <string name="blacklist_prompt_fail">Zaten kara listede mevcut</string>
+    <string name="blacklist_prompt_fail">%s Zaten kara listede mevcut</string>
     <!-- Whitelist -->
     <string name="whitelist_title">Beyaz liste</string>
     <string name="whitelist_guide1">Buraya eklediğiniz her şey kara listeye alınmayacaktır</string>
     <string name="whitelist_example">Örnek:</string>
-    <string name="whitelist_prompt_fail">Zaten beyaz listede mevcut</string>
+    <string name="whitelist_prompt_fail">%s Zaten beyaz listede mevcut</string>
     <!-- Sources -->
     <string name="sources_whitelist_title">Beyaz Liste Kaynakları</string>
     <string name="sources_whitelist_guide1">Buraya beyaz liste kaynakları ekleyin</string>
     <string name="sources_whitelist_format">Format:</string>
     <string name="sources_whitelist_example">Örnek:</string>
-    <string name="sources_whitelist_prompt_fail">Zaten beyaz liste kaynağında mevcut</string>
+    <string name="sources_whitelist_prompt_fail">%s Zaten beyaz liste kaynağında mevcut</string>
     <!-- Mode -->
     <string name="mode_button">Mod</string>
     <string name="mode_title">Çalışma Modu</string>
@@ -112,7 +111,7 @@
     <string name="backup_restore_backup_and_restore">Yedekleme &amp; Geri Yükleme</string>
     <string name="backup_restore_export">Yapılandırmayı dışa aktar</string>
     <string name="backup_restore_restore">Yapılandırmayı geri yükle</string>
-    <string name="backup_restore_exported">Yapılandırma şuraya kaydedildi</string>
+    <string name="backup_restore_exported">Yapılandırma şuraya kaydedildi %s</string>
     <string name="backup_restore_export_fail">Yapılandırma dışa aktarılamadı</string>
     <string name="backup_restore_invalid_config">Geçersiz bindhosts yapılandırması</string>
     <string name="backup_restore_restored">Yapılandırma başarıyla geri yüklendi</string>

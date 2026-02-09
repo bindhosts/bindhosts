@@ -1,6 +1,6 @@
 import { toast } from 'kernelsu-alt';
 import { linkRedirect, applyRippleEffect, developerOption, learnMore, setLearnMore, setupSwipeToClose } from './util.js';
-import { translations, lang } from './language.js';
+import { getString, lang } from './language.js';
 import { marked } from "marked";
 
 const main = "https://raw.githubusercontent.com";
@@ -249,7 +249,7 @@ export async function setupDocsMenu() {
                     documentCover.style.opacity = '0';
                     backButton.classList.remove('show');
                     header.classList.remove('back');
-                    title.textContent = translations.footer_more;
+                    title.textContent = getString('footer_more');
                 });
             }
         });
