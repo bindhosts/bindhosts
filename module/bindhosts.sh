@@ -578,10 +578,11 @@ instant_whitelist() {
 
 setup_link() {
     # Backend for WebUI: locate target hosts file for querying and file fetching
-    mkdir -p $MODDIR/webroot/link
+	rm -rf $MODDIR/webroot/link
+    mkdir $MODDIR/webroot/link
     ln -sf "$target_hostsfile" "$MODDIR/webroot/link/hosts.txt"
-    [ -L "$MODDIR/webroot/link/MODDIR" ] || ln -s "$MODDIR" "$MODDIR/webroot/link/MODDIR"
-    [ -L "$MODDIR/webroot/link/PERSISTENT_DIR" ] || ln -s "$PERSISTENT_DIR" "$MODDIR/webroot/link/PERSISTENT_DIR"
+    ln -s "$MODDIR" "$MODDIR/webroot/link/MODDIR"
+    ln -s "$PERSISTENT_DIR" "$MODDIR/webroot/link/PERSISTENT_DIR"
 }
 
 manager_install_zip() {

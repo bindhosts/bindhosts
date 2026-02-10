@@ -9,7 +9,6 @@
     <string name="global_reboot_now">Reinicia para aplicar cambios</string>
     <string name="global_reboot">Reiniciar</string>
     <string name="global_rebooting">Reiniciando...</string>
-    <string name="global_save">Guardar</string>
     <string name="global_saved">Archivo guardado en %s</string>
     <string name="global_save_fail">Error al guardar el archivo</string>
     <string name="global_file_too_large">Edición de archivos grandes no es soportada</string>
@@ -78,7 +77,7 @@
     <string name="sources_whitelist_example">Ejemplo:</string>
     <string name="sources_whitelist_prompt_fail">%s ya está en la fuente de lista blanca</string>
     <!-- Mode -->
-    <string name="mode_button">Modo</string>
+    <string name="mode_button">Modo %s</string>
     <string name="mode_title">Modo de Operación</string>
     <string name="mode_detail">Más información</string>
     <string name="mode_reset">Restablecer (automático)</string>

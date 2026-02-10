@@ -6,7 +6,6 @@
     <!-- Global -->
     <string name="global_dev_opt">Opções do Desenvolvedor ativada</string>
     <string name="global_dev_opt_true">Opções do Desenvolvedor já ativada</string>
-    <string name="global_save">Salvar</string>
     <string name="global_saved">Arquivo salvo em %s</string>
     <string name="global_save_fail">Falha ao salvar arquivo</string>
     <string name="global_file_too_large">Edição de arquivo não é suportado em arquivo grande</string>
@@ -67,6 +66,7 @@
     <string name="whitelist_title">Lista de permissões</string>
     <!-- Sources -->
     <!-- Mode -->
+    <string name="mode_button">Modo %s</string>
     <!-- More -->
     <!-- Confirmation -->
     <string name="confirmation_title">Confirmar Remoção?</string>

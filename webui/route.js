@@ -1,4 +1,4 @@
-import { setupScrollEvent, applyRippleEffect, setFooterClick } from './utils/util.js';
+import { setupScrollEvent } from './utils/util.js';
 import { applyTranslations } from './utils/language.js';
 
 // Static imports for single bundle
@@ -28,11 +28,10 @@ class Router {
      * Navigate to a page
      * @param {string} name - Page name (e.g., 'home', 'hosts')
      */
-    async navigate(name) {
+    navigate(name) {
         if (this.currentView === name) return;
 
         // Cleanup before transition
-        setFooterClick(true);
         document.querySelector('.back-button')?.click();
 
         // Get or create view
@@ -42,13 +41,8 @@ class Router {
             this.views.set(name, viewData);
         }
 
-        // Perform transition
-        if (document.startViewTransition) {
-            document.startViewTransition(() => this.switchTo(name, viewData));
-        } else {
-            this.switchTo(name, viewData);
-        }
-
+        // Switch synchronously
+        this.switchTo(name, viewData);
         this.currentView = name;
     }
 
@@ -59,15 +53,18 @@ class Router {
         // Hide all views
         this.views.forEach((v, k) => {
             if (k !== name) {
-                v.element.style.display = 'none';
                 v.element.setAttribute('data-active', 'false');
                 if (v.module?.onHide) v.module.onHide();
             }
         });
 
-        // Show target view
-        viewData.element.style.display = 'flex';
-        viewData.element.setAttribute('data-active', 'true');
+        // Force clean fade-in: reset to opacity 0, commit, then animate to 1
+        const el = viewData.element;
+        el.style.transition = 'none';
+        el.setAttribute('data-active', 'false');
+        el.offsetHeight;
+        el.style.transition = '';
+        el.setAttribute('data-active', 'true');
 
         // Hide version text on not-home page
         const versionText = document.getElementById('version-text');
@@ -83,9 +80,7 @@ class Router {
             viewData.module.onShow();
         }
 
-        setFooterClick(false);
         setupScrollEvent(viewData.element);
-        applyRippleEffect();
         applyTranslations();
     }
 
@@ -99,7 +94,6 @@ class Router {
         const section = document.createElement('section');
         section.id = `page-${name}`;
         section.className = 'page-view body-content';
-        section.style.display = 'none';
         
         // Use pre-loaded HTML
         section.innerHTML = entry.html;
@@ -111,30 +105,17 @@ class Router {
             module.mount(section);
         }
 
-        // Add small delay to ensure DOM is ready for classes
-        requestAnimationFrame(() => section.classList.add('loaded'));
-
         return { element: section, module };
     }
 
     updateFooter(name) {
-        document.querySelectorAll('.footer-btn').forEach(btn => {
-            const footerBtnIcon = btn.querySelector('.footer-btn-icon');
-            const activeIcon = btn.querySelector('.active');
-            const inactiveIcon = btn.querySelector('.inactive');
-            const isTarget = btn.getAttribute('page') === name;
-
+        document.querySelectorAll('.bottom-bar-item').forEach(item => {
+            const isTarget = item.getAttribute('page') === name;
+            
             if (isTarget) {
-                footerBtnIcon.classList.add('focus', 'loaded');
-                if (activeIcon) activeIcon.style.display = 'block';
-                if (inactiveIcon) inactiveIcon.style.display = 'none';
+                item.setAttribute('selected', '');
             } else {
-                footerBtnIcon.classList.remove('loaded');
-                setTimeout(() => {
-                    footerBtnIcon.classList.remove('focus');
-                    if (activeIcon) activeIcon.style.display = 'none';
-                    if (inactiveIcon) inactiveIcon.style.display = 'block';
-                }, 100);
+                item.removeAttribute('selected');
             }
         });
     }

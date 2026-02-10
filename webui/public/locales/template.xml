@@ -9,12 +9,13 @@
     <string name="global_reboot_now">Reboot to take effect</string>
     <string name="global_reboot">Reboot</string>
     <string name="global_rebooting">Rebooting...</string>
-    <string name="global_save">Save</string>
     <string name="global_saved">File saved to %s</string>
     <string name="global_save_fail">Failed to save file</string>
     <string name="global_file_too_large">File edit is not supported on large file</string>
     <string name="global_file_name_empty">File name cannot be empty</string>
     <string name="global_show_all">Show All %d More</string>
+    <string name="global_close">Close</string>
+    <string name="global_cancel">Cancel</string>
     <string name="global_action">Action</string>
     <!-- Query -->
     <string name="query_title">Host Query</string>
@@ -78,7 +79,7 @@
     <string name="sources_whitelist_example">Example:</string>
     <string name="sources_whitelist_prompt_fail">%s is already in whitelist source</string>
     <!-- Mode -->
-    <string name="mode_button">Mode</string>
+    <string name="mode_button">Mode %s</string>
     <string name="mode_title">Operation Mode</string>
     <string name="mode_detail">Learn More</string>
     <string name="mode_reset">Reset (auto)</string>

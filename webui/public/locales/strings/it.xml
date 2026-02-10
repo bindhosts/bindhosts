@@ -9,7 +9,6 @@
     <string name="global_reboot_now">Riavvia per rendere effettivo</string>
     <string name="global_reboot">Riavvio</string>
     <string name="global_rebooting">Riavvio in corso...</string>
-    <string name="global_save">Salva</string>
     <string name="global_saved">File salvato in %s</string>
     <string name="global_save_fail">Errore nel salvataggio del file</string>
     <string name="global_file_too_large">Modifica file non supportata su file grandi</string>
@@ -78,7 +77,7 @@
     <string name="sources_whitelist_example">Esempio:</string>
     <string name="sources_whitelist_prompt_fail">%s è già nella fonte whitelist</string>
     <!-- Mode -->
-    <string name="mode_button">Modalità</string>
+    <string name="mode_button">Modalità %s</string>
     <string name="mode_title">Modalità di funzionamento</string>
     <string name="mode_detail">Saperne di più</string>
     <string name="mode_reset">Reset (auto)</string>

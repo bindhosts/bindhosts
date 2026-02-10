@@ -6,7 +6,6 @@
     <!-- Global -->
     <string name="global_dev_opt">Option développeur activée</string>
     <string name="global_dev_opt_true">Option développeur activée</string>
-    <string name="global_save">Enregistrer</string>
     <string name="global_saved">Fichier enregistré sous %s</string>
     <string name="global_save_fail">Échec d\'enregistrement du fichier</string>
     <string name="global_file_too_large">L\'édition de fichier volumineux n\'est pas prise en charge</string>
@@ -75,7 +74,7 @@
     <string name="sources_whitelist_example">Exemple :</string>
     <string name="sources_whitelist_prompt_fail">%s est déjà dans la liste blanche</string>
     <!-- Mode -->
-    <string name="mode_button">Mode</string>
+    <string name="mode_button">Mode %s</string>
     <string name="mode_title">Mode fonctionnement</string>
     <string name="mode_detail">Pour en savoir plus</string>
     <string name="mode_reset">Reset (auto)</string>

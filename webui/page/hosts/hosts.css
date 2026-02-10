@@ -1,16 +1,28 @@
 .category-container {
     display: flex;
-    position: relative;
     width: 100%;
     align-items: center;
     gap: 5px;
     margin-bottom: 10px;
 }
 
+.box-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.box-header md-outlined-icon-button {
+    flex-shrink: 0;
+    height: 24px;
+    width: 24px;
+    --md-outlined-icon-button-icon-size: 16px;
+}
+
 .input-box-wrapper {
-    background-color: var(--bg-input);
+    background-color: var(--md-sys-color-surface-container-low);
     border-radius: 10px;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--md-sys-color-outline-variant);
     box-sizing: border-box;
     display: flex;
     justify-content: flex-start;
@@ -20,7 +32,7 @@
 }
 
 .input-box-wrapper.focus {
-    border: 2px solid var(--btn-primary);
+    border: 2px solid var(--md-sys-color-primary);
 }
 
 .input-box {
@@ -30,74 +42,67 @@
     padding: 0 10px;
     font-family: inherit;
     line-height: 1.5;
-    color: var(--text-primary);
+    font-size: 0.9em;
+    color: var(--md-sys-color-on-surface);
     background-color: transparent;
     resize: none;
     white-space: nowrap;
     word-wrap: break-word;
 }
 
+.import-button,
 .add-btn {
-    display: flex;
-    border-radius: 8px;
-    height: 35px;
-    width: 35px;
-    background-color: var(--btn-primary);
-    border: none;
-    justify-content: center;
-    align-items: center;
-}
-
-.import-button svg,
-.add-btn svg {
-    fill: var(--btn-primary-text);
-    z-index: var(--z-index-base);
+    --md-filled-icon-button-container-width: 35px;
+    --md-filled-icon-button-container-height: 35px;
+    --md-filled-icon-button-container-shape: 8px;
 }
 
 .edit-btn,
 .delete-btn {
-    height: 35px;
-    width: 35px;
-    right: 0;
-    margin-left: 5px;
-    background-color: var(--btn-delete);
-    display: flex;
+    max-height: 32px;
+    max-width: 32px;
+    overflow: hidden;
     flex-shrink: 0;
-    border: none;
-    border-radius: 8px;
-    font-size: 1em;
-    justify-content: center;
-    align-items: center;
 
-    svg {
-        z-index: var(--z-index-base);
-    }
-}
-
-[dir="rtl"] .edit-btn,
-[dir="rtl"] .delete-btn {
-    right: unset;
-    left: 0;
-    margin-left: unset;
-    margin-right: 5px;
+    --md-filled-icon-button-icon-size: 20px;
+    --md-filled-icon-button-container-height: 32px;
+    --md-filled-icon-button-container-width: 32px;
+    --md-filled-icon-button-container-shape: 7px;
+    --md-sys-color-primary: var(--md-sys-color-error);
+    --md-sys-color-on-primary: var(--md-sys-color-on-error);
 }
 
 .edit-btn {
-    background-color: var(--btn-edit);
+    --md-sys-color-primary: var(--md-sys-color-tertiary);
+    --md-sys-color-on-primary: var(--md-sys-color-on-tertiary);
 }
 
 .link-box {
     display: flex;
-    min-width: 100%;
     align-items: center;
-    gap: 5px;
-    z-index: var(--z-index-base);
+    gap: 8px;
+    flex-grow: 1;
+    min-width: 100%;
+}
+
+.link-box md-checkbox {
+    flex-shrink: 0;
+    margin-inline-end: 8px;
+    max-height: 32px;
+    overflow: hidden;
 }
 
 .link-text {
+    flex-grow: 1;
     font-size: 0.9em;
     word-break: break-all;
     word-wrap: break-word;
+}
+
+.link-button {
+    flex-shrink: 0;
+    display: flex;
+    gap: 8px;
 }
 
 .favicon-wrapper {
@@ -112,14 +117,14 @@
     svg {
         padding: 5px;
         box-sizing: border-box;
-        fill: var(--border-alt-text);
+        fill: var(--md-sys-color-on-secondary-container);
     }
 }
 
 .favicon {
     width: 100%;
     height: 100%;
-    background-color: var(--border-alt);
+    background-color: var(--md-sys-color-secondary-container);
     border-radius: 8px;
 }
 
@@ -144,115 +149,12 @@
     to { transform: rotate(360deg); }
 }
 
-.checkbox-wrapper {
-    flex-shrink: 0;
-    position: relative;
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    padding: 7px;
-    margin-left: auto;
-}
-
-[dir="rtl"] .checkbox-wrapper {
-    margin-left: unset;
-    margin-right: auto;
-}
-
-.checkbox {
-    opacity: 0;
-    position: absolute;
-    width: 0;
-    height: 0;
-}
-
-.custom-checkbox {
-    position: relative;
-    display: inline-block;
-    width: 100%;
-    height: 100%;
-    border: 2px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    transition: border-color 1s ease, transform 0.3s ease, background-color 0.2s ease;
-}
-
-.tick-symbol {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0);
-    opacity: 0;
-    transition: transform 0.2s ease-out, opacity 0.3s ease;
-
-    svg {
-        fill: var(--btn-primary-text);
-    }
-}
-
-.checkbox:checked + .custom-checkbox {
-    border-color: var(--btn-primary);
-    background-color: var(--btn-primary);
-    transition: border-color 0.1s ease;
-    animation: checked-bounce 0.3s ease-out;
-}
-
-.checkbox:not(:checked) + .custom-checkbox {
-    animation: unchecked-bounce 0.3s ease-out;
-}
-
-.checkbox:checked + .custom-checkbox .tick-symbol {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 1;
-}
-
-@keyframes checked-bounce {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(0.8);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
-@keyframes unchecked-bounce {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(0.8);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
-.show-more-item span {
+.show-more-item {
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: 0.9em;
     text-align: center;
     width: 100%;
     user-select: none;
-}
-
-.help-btn {
-    background-color: transparent;
-    height: fit-content;
-    width: fit-content;
-    border: none;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-
-    svg {
-        fill: var(--text-primary);
-    }
-}
-
-[dir="rtl"] .help-btn {
-    right: unset;
-    left: 10px;
 }
 
 [dir="rtl"] .format {
@@ -260,53 +162,10 @@
     text-align: right !important;
 }
 
-.import-button-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-}
-
 .import-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--btn-primary);
-    width: 100%;
-    height: 35px;
-    border-radius: 8px;
-    border: none;
     margin: 5px 0;
-    text-decoration: none;
-}
 
-.source-btn-wrapper {
-    margin-top: 10px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-}
-
-#source-btn {
-    color: var(--text-muted);
-    border: 1px solid var(--text-muted);
-}
-
-.confirm-btn-container {
-    display: flex;
-    justify-content: flex-end;
-    width: 100%;
-    gap: 5px;
-    user-select: none;
-}
-
-.confirm-btn {
-    background-color: inherit;
-    color: currentColor;
-    font-size: 0.9em;
-    border: none;
-    border-radius: 30px;
-    padding: 12px;
+    --md-filled-icon-button-container-width: 100%;
 }
 
 /* editor workpace */
@@ -323,25 +182,38 @@
     top: 0;
     min-height: 100%;
     width: 30px;
-    z-index: var(--z-index-base);
+    z-index: calc(var(--z-index-base) + 1);
     padding: 5px 3px 30px 0;
-    color: var(--text-primary);
-    background-color: var(--scroll-bar-color);
-    border-right: 1px solid var(--border-color);
+    color: var(--md-sys-color-outline);
+    background-color: var(--md-sys-color-outline-variant);
     text-align: right;
     font-family: monospace;
     font-size: 0.9em;
     line-height: 1.5;
     overflow-x: hidden;
-    z-index: var(--z-index-base);
     transition: padding-bottom 0.2s ease;
     user-select: none;
+}
+
+.active-line {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 1.5em;
+    background-color: var(--md-sys-color-outline);
+    opacity: 0.2;
+    pointer-events: none;
+    z-index: var(--z-index-base);
+}
+
+#edit-content {
+    background-color: var(--md-sys-color-surface-container-high);
 }
 
 .edit-input {
     direction: ltr !important;
     position: relative;
-    background-color: var(--bg-primary);
+    background-color: transparent;
     height: 100%;
     width: 100%;
     color: inherit;
@@ -357,7 +229,7 @@
     transition: padding-bottom 0.2s ease;
     overflow-y: auto;
     white-space: nowrap;
-    scrollbar-color: var(--scroll-bar-color) var(--bg-secondary);
+    scrollbar-color: var(--md-sys-color-outline) var(--md-sys-color-tonal-surface);
 }
 
 #edit-input::-webkit-scrollbar {
@@ -366,11 +238,11 @@
 }
 
 #edit-input::-webkit-scrollbar-track {
-    background-color: var(--bg-input);
+    background-color: var(--md-sys-color-surface-container-low);
 }
 
 #edit-input::-webkit-scrollbar-thumb {
     min-height: 40px;
-    background-color: var(--scroll-bar-color);
+    background-color: var(--md-sys-color-outline);
     border-radius: 5px;
 }

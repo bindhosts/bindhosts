@@ -6,7 +6,6 @@
     <!-- Global -->
     <string name="global_dev_opt">開発者オプションが有効になりました</string>
     <string name="global_dev_opt_true">開発者オプションは既に有効化されています</string>
-    <string name="global_save">保存</string>
     <string name="global_saved">ファイルの保存先 %s</string>
     <string name="global_save_fail">ファイルの保存に失敗</string>
     <string name="global_file_too_large">大きいファイルの編集はサポートされていません</string>
@@ -75,7 +74,7 @@
     <string name="sources_whitelist_example">例:</string>
     <string name="sources_whitelist_prompt_fail">%s は、すでにホワイトリストのソースに存在します</string>
     <!-- Mode -->
-    <string name="mode_button">モード</string>
+    <string name="mode_button">モード %s</string>
     <string name="mode_title">動作モード</string>
     <string name="mode_detail">もっと詳しく知る</string>
     <string name="mode_reset">リセット (自動)</string>

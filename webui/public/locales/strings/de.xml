@@ -6,7 +6,6 @@
     <!-- Global -->
     <string name="global_dev_opt">Entwickler-Option aktiviert</string>
     <string name="global_dev_opt_true">Entwickler-Option bereits aktiviert</string>
-    <string name="global_save">Speichern</string>
     <string name="global_saved">Datei gespeichert in %s</string>
     <string name="global_save_fail">Fehler beim Speichern der Datei</string>
     <string name="global_file_too_large">Nur Umbenennung wird auf großen Dateien unterstützt</string>
@@ -75,7 +74,7 @@
     <string name="sources_whitelist_example">Beispiel:</string>
     <string name="sources_whitelist_prompt_fail">%s Ist bereits in der Ausnahmeliste-Quelle</string>
     <!-- Mode -->
-    <string name="mode_button">Modus</string>
+    <string name="mode_button">Modus %s</string>
     <string name="mode_title">Betriebsmodus</string>
     <string name="mode_detail">Erfahren Sie mehr</string>
     <string name="mode_reset">Zurücksetzen (Auto)</string>

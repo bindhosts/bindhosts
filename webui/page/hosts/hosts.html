@@ -1,113 +1,111 @@
 <div class="body-content constant-height">
     <!-- Source box -->
     <div class="box translucent">
-        <div>
+        <div class="box-header">
             <h2 data-i18n="source_title"></h2>
-            <button class="help-btn" data-type="sources">
-                <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"><path d="M475-240q25 0 43-18t18-43.14q0-25.14-18-42.5T475-361q-25 0-43 17.36t-18 42.5Q414-276 432-258t43 18Zm-47-154h94q0-29 8-49t38-49q23-22 37.5-47.06 14.5-25.05 14.5-60.23 0-59.71-39-91.21-39-31.5-95-31.5-61 0-101.5 35T328-604l88 33q7-20 22-40t43-20q20 0 31 12.5t11 27.5q0 15-10.5 31T491-535q-40 37-51.5 60.5T428-394Zm52 348q-91 0-169.99-34.08-78.98-34.09-137.41-92.52-58.43-58.43-92.52-137.41Q46-389 46-480q0-91 34.08-169.99 34.09-78.98 92.52-137.41 58.43-58.43 137.41-92.52Q389-914 480-914q91 0 169.99 34.08 78.98 34.09 137.41 92.52 58.43 58.43 92.52 137.41Q914-571 914-480q0 91-34.08 169.99-34.09 78.98-92.52 137.41-58.43 58.43-137.41 92.52Q571-46 480-46Z"/></svg>
-            </button>
+            <md-outlined-icon-button class="help-btn" data-type="sources">
+                <md-icon><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M424-320q0-81 14.5-116.5T500-514q41-36 62.5-62.5T584-637q0-41-27.5-68T480-732q-51 0-77.5 31T365-638l-103-44q21-64 77-111t141-47q105 0 161.5 58.5T698-641q0 50-21.5 85.5T609-475q-49 47-59.5 71.5T539-320H424Zm56 240q-33 0-56.5-23.5T400-160q0-33 23.5-56.5T480-240q33 0 56.5 23.5T560-160q0 33-23.5 56.5T480-80Z"/></svg></md-icon>
+            </md-outlined-icon-button>
         </div>
         <div class="category-container">
             <div class="input-box-wrapper translucent">
                 <textarea autocapitalize="off" class="input-box" rows="1" id="sources-input" type="text" placeholder="https://adaway.org/hosts.txt"></textarea>
             </div>
-            <button class="add-btn ripple-element" id="sources-add">
-                <svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960" width="22px"><path d="M417-417H166v-126h251v-251h126v251h251v126H543v251H417v-251Z"/></svg>
-            </button>
+            <md-filled-icon-button class="add-btn" id="sources-add">
+                <md-icon><svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960" width="22px"><path d="M417-417H166v-126h251v-251h126v251h251v126H543v251H417v-251Z"/></svg></md-icon>
+            </md-filled-icon-button>
         </div>
-        <ul id="sources-list"></ul>
+        <div id="sources-list"></div>
     </div>
 
     <!-- Whitelist source box -->
     <div class="box translucent">
-        <div>
+        <div class="box-header">
             <h2 data-i18n="sources_whitelist_title"></h2>
-            <button class="help-btn" data-type="sources_whitelist">
-                <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"><path d="M475-240q25 0 43-18t18-43.14q0-25.14-18-42.5T475-361q-25 0-43 17.36t-18 42.5Q414-276 432-258t43 18Zm-47-154h94q0-29 8-49t38-49q23-22 37.5-47.06 14.5-25.05 14.5-60.23 0-59.71-39-91.21-39-31.5-95-31.5-61 0-101.5 35T328-604l88 33q7-20 22-40t43-20q20 0 31 12.5t11 27.5q0 15-10.5 31T491-535q-40 37-51.5 60.5T428-394Zm52 348q-91 0-169.99-34.08-78.98-34.09-137.41-92.52-58.43-58.43-92.52-137.41Q46-389 46-480q0-91 34.08-169.99 34.09-78.98 92.52-137.41 58.43-58.43 137.41-92.52Q389-914 480-914q91 0 169.99 34.08 78.98 34.09 137.41 92.52 58.43 58.43 92.52 137.41Q914-571 914-480q0 91-34.08 169.99-34.09 78.98-92.52 137.41-58.43 58.43-137.41 92.52Q571-46 480-46Z"/></svg>
-            </button>
+            <md-outlined-icon-button class="help-btn" data-type="sources_whitelist">
+                <md-icon><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M424-320q0-81 14.5-116.5T500-514q41-36 62.5-62.5T584-637q0-41-27.5-68T480-732q-51 0-77.5 31T365-638l-103-44q21-64 77-111t141-47q105 0 161.5 58.5T698-641q0 50-21.5 85.5T609-475q-49 47-59.5 71.5T539-320H424Zm56 240q-33 0-56.5-23.5T400-160q0-33 23.5-56.5T480-240q33 0 56.5 23.5T560-160q0 33-23.5 56.5T480-80Z"/></svg></md-icon>
+            </md-outlined-icon-button>
         </div>
         <div class="category-container">
             <div class="input-box-wrapper translucent">
                 <textarea autocapitalize="off" class="input-box" rows="1" id="sources_whitelist-input" type="text" placeholder="https://example.com/whitelist_txt"></textarea>
             </div>
-            <button class="add-btn ripple-element" id="sources_whitelist-add">
-                <svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960" width="22px"><path d="M417-417H166v-126h251v-251h126v251h251v126H543v251H417v-251Z"/></svg>
-            </button>
+            <md-filled-icon-button class="add-btn" id="sources_whitelist-add">
+                <md-icon><svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960" width="22px"><path d="M417-417H166v-126h251v-251h126v251h251v126H543v251H417v-251Z"/></svg></md-icon>
+            </md-filled-icon-button>
         </div>
-        <ul id="sources_whitelist-list"></ul>
+        <div id="sources_whitelist-list"></div>
     </div>
 
     <!-- Whitelist box -->
     <div class="box translucent">
-        <div>
+        <div class="box-header">
             <h2 data-i18n="whitelist_title"></h2>
-            <button class="help-btn" data-type="whitelist">
-                <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"><path d="M475-240q25 0 43-18t18-43.14q0-25.14-18-42.5T475-361q-25 0-43 17.36t-18 42.5Q414-276 432-258t43 18Zm-47-154h94q0-29 8-49t38-49q23-22 37.5-47.06 14.5-25.05 14.5-60.23 0-59.71-39-91.21-39-31.5-95-31.5-61 0-101.5 35T328-604l88 33q7-20 22-40t43-20q20 0 31 12.5t11 27.5q0 15-10.5 31T491-535q-40 37-51.5 60.5T428-394Zm52 348q-91 0-169.99-34.08-78.98-34.09-137.41-92.52-58.43-58.43-92.52-137.41Q46-389 46-480q0-91 34.08-169.99 34.09-78.98 92.52-137.41 58.43-58.43 137.41-92.52Q389-914 480-914q91 0 169.99 34.08 78.98 34.09 137.41 92.52 58.43 58.43 92.52 137.41Q914-571 914-480q0 91-34.08 169.99-34.09 78.98-92.52 137.41-58.43 58.43-137.41 92.52Q571-46 480-46Z"/></svg>
-            </button>
+            <md-outlined-icon-button class="help-btn" data-type="whitelist">
+                <md-icon><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M424-320q0-81 14.5-116.5T500-514q41-36 62.5-62.5T584-637q0-41-27.5-68T480-732q-51 0-77.5 31T365-638l-103-44q21-64 77-111t141-47q105 0 161.5 58.5T698-641q0 50-21.5 85.5T609-475q-49 47-59.5 71.5T539-320H424Zm56 240q-33 0-56.5-23.5T400-160q0-33 23.5-56.5T480-240q33 0 56.5 23.5T560-160q0 33-23.5 56.5T480-80Z"/></svg></md-icon>
+            </md-outlined-icon-button>
         </div>
         <div class="category-container">
             <div class="input-box-wrapper translucent">
                 <textarea autocapitalize="off" class="input-box" rows="1" id="whitelist-input" type="text" placeholder="s.youtube.com"></textarea>
             </div>
-            <button class="add-btn ripple-element" id="whitelist-add">
-                <svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960" width="22px"><path d="M417-417H166v-126h251v-251h126v251h251v126H543v251H417v-251Z"/></svg>
-            </button>
+            <md-filled-icon-button class="add-btn" id="whitelist-add">
+                <md-icon><svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960" width="22px"><path d="M417-417H166v-126h251v-251h126v251h251v126H543v251H417v-251Z"/></svg></md-icon>
+            </md-filled-icon-button>
         </div>
-        <ul id="whitelist-list"></ul>
+        <div id="whitelist-list"></div>
     </div>
 
     <!-- Blacklist box -->
     <div class="box translucent">
-        <div>
+        <div class="box-header">
             <h2 data-i18n="blacklist_title"></h2>
-            <button class="help-btn" data-type="blacklist">
-                <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"><path d="M475-240q25 0 43-18t18-43.14q0-25.14-18-42.5T475-361q-25 0-43 17.36t-18 42.5Q414-276 432-258t43 18Zm-47-154h94q0-29 8-49t38-49q23-22 37.5-47.06 14.5-25.05 14.5-60.23 0-59.71-39-91.21-39-31.5-95-31.5-61 0-101.5 35T328-604l88 33q7-20 22-40t43-20q20 0 31 12.5t11 27.5q0 15-10.5 31T491-535q-40 37-51.5 60.5T428-394Zm52 348q-91 0-169.99-34.08-78.98-34.09-137.41-92.52-58.43-58.43-92.52-137.41Q46-389 46-480q0-91 34.08-169.99 34.09-78.98 92.52-137.41 58.43-58.43 137.41-92.52Q389-914 480-914q91 0 169.99 34.08 78.98 34.09 137.41 92.52 58.43 58.43 92.52 137.41Q914-571 914-480q0 91-34.08 169.99-34.09 78.98-92.52 137.41-58.43 58.43-137.41 92.52Q571-46 480-46Z"/></svg>
-            </button>
+            <md-outlined-icon-button class="help-btn" data-type="blacklist">
+                <md-icon><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M424-320q0-81 14.5-116.5T500-514q41-36 62.5-62.5T584-637q0-41-27.5-68T480-732q-51 0-77.5 31T365-638l-103-44q21-64 77-111t141-47q105 0 161.5 58.5T698-641q0 50-21.5 85.5T609-475q-49 47-59.5 71.5T539-320H424Zm56 240q-33 0-56.5-23.5T400-160q0-33 23.5-56.5T480-240q33 0 56.5 23.5T560-160q0 33-23.5 56.5T480-80Z"/></svg></md-icon>
+            </md-outlined-icon-button>
         </div>
         <div class="category-container">
             <div class="input-box-wrapper translucent">
                 <textarea autocapitalize="off" class="input-box" rows="1" id="blacklist-input" type="text" placeholder="online-casino.com"></textarea>
             </div>
-            <button class="add-btn ripple-element" id="blacklist-add">
-                <svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960" width="22px"><path d="M417-417H166v-126h251v-251h126v251h251v126H543v251H417v-251Z"/></svg>
-            </button>
+            <md-filled-icon-button class="add-btn" id="blacklist-add">
+                <md-icon><svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960" width="22px"><path d="M417-417H166v-126h251v-251h126v251h251v126H543v251H417v-251Z"/></svg></md-icon>
+            </md-filled-icon-button>
         </div>
-        <ul id="blacklist-list"></ul>
+        <div id="blacklist-list"></div>
     </div>
 
     <!-- Custom box -->
     <div class="box translucent">
-        <div>
+        <div class="box-header">
             <h2 data-i18n="custom_title"></h2>
-            <button class="help-btn" data-type="custom">
-                <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"><path d="M475-240q25 0 43-18t18-43.14q0-25.14-18-42.5T475-361q-25 0-43 17.36t-18 42.5Q414-276 432-258t43 18Zm-47-154h94q0-29 8-49t38-49q23-22 37.5-47.06 14.5-25.05 14.5-60.23 0-59.71-39-91.21-39-31.5-95-31.5-61 0-101.5 35T328-604l88 33q7-20 22-40t43-20q20 0 31 12.5t11 27.5q0 15-10.5 31T491-535q-40 37-51.5 60.5T428-394Zm52 348q-91 0-169.99-34.08-78.98-34.09-137.41-92.52-58.43-58.43-92.52-137.41Q46-389 46-480q0-91 34.08-169.99 34.09-78.98 92.52-137.41 58.43-58.43 137.41-92.52Q389-914 480-914q91 0 169.99 34.08 78.98 34.09 137.41 92.52 58.43 58.43 92.52 137.41Q914-571 914-480q0 91-34.08 169.99-34.09 78.98-92.52 137.41-58.43 58.43-137.41 92.52Q571-46 480-46Z"/></svg>
-            </button>
+            <md-outlined-icon-button class="help-btn" data-type="custom">
+                <md-icon><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M424-320q0-81 14.5-116.5T500-514q41-36 62.5-62.5T584-637q0-41-27.5-68T480-732q-51 0-77.5 31T365-638l-103-44q21-64 77-111t141-47q105 0 161.5 58.5T698-641q0 50-21.5 85.5T609-475q-49 47-59.5 71.5T539-320H424Zm56 240q-33 0-56.5-23.5T400-160q0-33 23.5-56.5T480-240q33 0 56.5 23.5T560-160q0 33-23.5 56.5T480-80Z"/></svg></md-icon>
+            </md-outlined-icon-button>
         </div>
         <div class="category-container">
             <div class="input-box-wrapper translucent">
                 <textarea autocapitalize="off" class="input-box" rows="1" id="custom-input" type="text" placeholder="93.184.215.14 example.com"></textarea>
             </div>
-            <button class="add-btn ripple-element" id="custom-add">
-                <svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960" width="22px"><path d="M417-417H166v-126h251v-251h126v251h251v126H543v251H417v-251Z"/></svg>
-            </button>
+            <md-filled-icon-button class="add-btn" id="custom-add">
+                <md-icon><svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960" width="22px"><path d="M417-417H166v-126h251v-251h126v251h251v126H543v251H417v-251Z"/></svg></md-icon>
+            </md-filled-icon-button>
         </div>
-        <ul id="custom-list"></ul>
+        <div id="custom-list"></div>
     </div>
 
     <!-- Import custom hosts -->
     <div class="box translucent">
-        <div>
+        <div class="box-header import">
             <h2 data-i18n="import_custom_title"></h2>
-            <button class="help-btn" data-type="import_custom">
-                <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"><path d="M475-240q25 0 43-18t18-43.14q0-25.14-18-42.5T475-361q-25 0-43 17.36t-18 42.5Q414-276 432-258t43 18Zm-47-154h94q0-29 8-49t38-49q23-22 37.5-47.06 14.5-25.05 14.5-60.23 0-59.71-39-91.21-39-31.5-95-31.5-61 0-101.5 35T328-604l88 33q7-20 22-40t43-20q20 0 31 12.5t11 27.5q0 15-10.5 31T491-535q-40 37-51.5 60.5T428-394Zm52 348q-91 0-169.99-34.08-78.98-34.09-137.41-92.52-58.43-58.43-92.52-137.41Q46-389 46-480q0-91 34.08-169.99 34.09-78.98 92.52-137.41 58.43-58.43 137.41-92.52Q389-914 480-914q91 0 169.99 34.08 78.98 34.09 137.41 92.52 58.43 58.43 92.52 137.41Q914-571 914-480q0 91-34.08 169.99-34.09 78.98-92.52 137.41-58.43 58.43-137.41 92.52Q571-46 480-46Z"/></svg>
-            </button>
+            <md-outlined-icon-button class="help-btn" data-type="import_custom">
+                <md-icon><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M424-320q0-81 14.5-116.5T500-514q41-36 62.5-62.5T584-637q0-41-27.5-68T480-732q-51 0-77.5 31T365-638l-103-44q21-64 77-111t141-47q105 0 161.5 58.5T698-641q0 50-21.5 85.5T609-475q-49 47-59.5 71.5T539-320H424Zm56 240q-33 0-56.5-23.5T400-160q0-33 23.5-56.5T480-240q33 0 56.5 23.5T560-160q0 33-23.5 56.5T480-80Z"/></svg></md-icon>
+            </md-outlined-icon-button>
         </div>
-        <ul id="import_custom-list"></ul>
-        <div class="import-button-container">
-            <button class="import-button ripple-element" id="import-custom-button">
-                <svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960" width="22px" fill="#ffffff"><path d="M417-417H166v-126h251v-251h126v251h251v126H543v251H417v-251Z"/></svg>
-            </button>
-        </div>
+        <div id="import_custom-list"></div>
+        <md-filled-icon-button class="import-button" id="import-custom-button">
+            <md-icon><svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960" width="22px"><path d="M417-417H166v-126h251v-251h126v251h251v126H543v251H417v-251Z"/></svg></md-icon>
+        </md-filled-icon-button>
     </div>
 
     <!-- Safe inset -->

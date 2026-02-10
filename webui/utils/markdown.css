@@ -1,26 +1,20 @@
-#copy-link {
-    margin: 0;
-    display: inline-block;
-    vertical-align: top;
-    color: var(--btn-primary);
-    background-color: var(--bg-primary);
-    width: fit-content;
+.copy-link {
+    color: var(--md-sys-color-primary);
     border-radius: 5px;
-    word-break: break-all;
     position: relative;
-    overflow: hidden;
     user-select: none;
+    width: fit-content;
+    word-break: break-all;
 }
 
-.docs-content #copy-link {
-    background-color: var(--bg-secondary);
+.documents h1 {
+    margin-top: 0;
+    margin-bottom: 24px;
 }
-
-.documents h1,
 .documents h2,
 .documents h3,
 .documents h4 {
-    margin-bottom: 5px;
+    margin-bottom: 8px;
 }
 
 .documents img {
@@ -46,27 +40,32 @@
 }
 
 .documents a {
-    color: var(--text-primary);
+    color: inherit;
     cursor: none;
     transition: color 0.1s ease-out;
 }
 
 .documents a:active {
-    color: var(--btn-primary);
+    color: var(--md-sys-color-primary);
 }
 
 .documents pre {
-    background-color: var(--bg-secondary);
-    padding: 15px;
+    background-color: var(--md-sys-color-tonal-surface);
+    padding: 16px;
     border-radius: 5px;
     overflow-x: auto;
 }
 
 .documents code {
     font-family: monospace;
-    color: var(--text-primary);
-    background-color: var(--bg-secondary);
+    color: var(--md-sys-color-on-surface);
+    background-color: var(--md-sys-color-tonal-surface);
     border-radius: 5px;
     padding: 1px;
     user-select: auto;
+}
+
+.documents hr {
+    margin: 16px 0;
+    border-color: var(--md-sys-color-outline);
 }

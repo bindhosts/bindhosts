@@ -1,17 +1,30 @@
-import { exec } from 'kernelsu-alt';
-import { applyRippleEffect, checkMMRL } from './utils/util.js';
+import { initializeLogCatcher } from './utils/log_catcher.js';
+import { checkMMRL, setupSlideMenu, moduleDirectory } from './utils/util.js';
 import { loadTranslations } from './utils/language.js';
 import { router } from './route.js';
+import { exec } from 'kernelsu-alt';
 import { WXEventHandler } from "webuix";
+import '@material/web/checkbox/checkbox.js';
+import '@material/web/radio/radio.js';
+import '@material/web/ripple/ripple.js';
+import '@material/web/switch/switch.js';
+import '@material/web/dialog/dialog.js';
+import '@material/web/button/text-button.js';
+import '@material/web/button/filled-button.js';
+import '@material/web/icon/icon.js';
+import '@material/web/iconbutton/icon-button.js';
+import '@material/web/iconbutton/filled-icon-button.js';
+import '@material/web/iconbutton/outlined-icon-button.js';
+import '@material/web/fab/fab.js';
 
 window.wx = new WXEventHandler();
 
 /**
  * Setup navigation
  */
-document.querySelectorAll('.footer-btn').forEach(btn => {
-    const page = btn.getAttribute('page');
-    btn.addEventListener('click', () => router.navigate(page));
+document.querySelectorAll('.bottom-bar-item').forEach(item => {
+    const page = item.getAttribute('page');
+    item.addEventListener('click', () => router.navigate(page));
 });
 
 /**
@@ -36,7 +49,7 @@ function setupRickRoll() {
 
     // Make sure this won't be triggered in a row for user experience
     if (shouldRickRoll && lastRickRoll !== '1') {
-        openOverlay();
+        rickRollOverlay.classList.add('show');
         let countdownValue = 5;
         countDown.textContent = countdownValue;
         const countdownInterval = setInterval(() => {
@@ -59,13 +72,13 @@ function setupRickRoll() {
 
     rickRollOverlay.addEventListener('dblclick', (e) => {
         if (e.target === rickRollOverlay) {
-            closeOverlay();
+            rickRollOverlay.classList.remove('show');
             redirect = false;
         }
     });
 
     function redirectRr() {
-        closeOverlay();
+        rickRollOverlay.classList.remove('show');
         // bilibili (China) or YouTube
         exec(`
             if pm path tv.danmaku.bili > /dev/null 2>&1; then
@@ -74,16 +87,6 @@ function setupRickRoll() {
                 am start -a android.intent.action.VIEW -d "https://youtu.be/dQw4w9WgXcQ"
             fi
         `);
-    }
-
-    function openOverlay() {
-        rickRollOverlay.style.display = 'flex';
-        setTimeout(() => rickRollOverlay.style.opacity = '1', 10);
-    }
-
-    function closeOverlay() {
-        rickRollOverlay.style.opacity = '0';
-        setTimeout(() => rickRollOverlay.style.display = 'none', 200);
     }
 }
 
@@ -105,44 +108,52 @@ async function setupUserCustomization() {
     // custom background
     const bgContainer = document.getElementById("custom-bg");
     const bgImage = document.getElementById("custom-bg-img");
-    const bgPaths = [
-        "link/PERSISTENT_DIR/.webui_config/custom_background.webp",
-        "link/PERSISTENT_DIR/.webui_config/custom_background.jpg",
-        "link/PERSISTENT_DIR/.webui_config/custom_background.png"
-    ];
+    const bgPath = "link/PERSISTENT_DIR/.webui_config/custom_background.";
+    const supportedExt = ["webp", "jpg", "png"];
 
-    for (const path of bgPaths) {
-        try {
-            const response = await fetch(path, { method: "HEAD" });
-            if (response.ok) {
-                bgImage.src = path;
-                bgContainer.style.display = "flex";
-                break;
-            }
-        } catch (error) {
-            console.log(error);
+    for (const ext of supportedExt) {
+        const fullPath = bgPath + ext;
+        const exists = await new Promise((resolve) => {
+            const img = new Image();
+            img.onload = () => resolve(true);
+            img.onerror = () => resolve(false);
+            img.src = fullPath;
+        });
+
+        if (exists) {
+            bgImage.src = fullPath;
+            bgImage.style.display = "block";
+            bgContainer.style.display = "flex";
+            break;
         }
     }
 }
 
+/**
+ * Prevents invalid characters in file names
+ * @param {HTMLInputElement} input - Input element to process
+ * @returns {void}
+ */
+window.replaceSpaces = function(input) {
+    const cursorPosition = input.selectionStart;
+    input.value = input.value.replace(/ /g, '_').replace(/[\/\0*?[\]{}|&$`"'\\<>]/g, '');
+    input.setSelectionRange(cursorPosition, cursorPosition);
+}
+
 wx.on(window, 'back', () => {
     const backBtn = document.querySelector('.back-button');
-    const overlays = document.querySelectorAll('.overlay');
+    const dialog = document.querySelectorAll('md-dialog');
 
     // Close side menu
     if (backBtn && backBtn.classList.contains('show')) {
         backBtn.click();
         return;
-    // Close overlay
-    } else if (overlays.length > 0) {
-        for (const overlay of overlays) {
-            if (overlay.style.display === 'flex') {
-                const closeBtn = overlay.querySelector('.close-btn');
-                if (closeBtn) {
-                    closeBtn.click();
-                    return;
-                }
-                break;
+    // Close dialog
+    } else if (dialog.length > 0) {
+        for (const dlg of dialog) {
+            if (dlg.open) {
+                dlg.close();
+                return;
             }
         }
     }
@@ -160,10 +171,62 @@ wx.on(window, 'back', () => {
  * @returns {void}
  */
 document.addEventListener('DOMContentLoaded', async () => {
+    initializeLogCatcher();
+    await Promise.all([loadTranslations(), exec(`sh ${moduleDirectory}/bindhosts.sh --setup-link`)]);
+    document.querySelectorAll('[unresolved]').forEach(el => el.removeAttribute('unresolved'));
     checkMMRL();
+    setupSlideMenu();
     router.navigate('home');
-    loadTranslations();
     setupUserCustomization();
-    applyRippleEffect();
     setupRickRoll();
+});
+
+// Overwrite default dialog animation
+document.querySelectorAll('md-dialog').forEach(dialog => {
+    const defaultOpenAnim = dialog.getOpenAnimation;
+    const defaultCloseAnim = dialog.getCloseAnimation;
+
+    dialog.getOpenAnimation = () => {
+        const defaultAnim = defaultOpenAnim.call(dialog);
+        const customAnim = {};
+        Object.keys(defaultAnim).forEach(key => customAnim[key] = defaultAnim[key]);
+
+        customAnim.dialog = [
+            [
+                [{ opacity: 0, transform: 'translateY(50px)' }, { opacity: 1, transform: 'translateY(0)' }],
+                { duration: 300, easing: 'ease' }
+            ]
+        ];
+        customAnim.scrim = [
+            [
+                [{'opacity': 0}, {'opacity': 0.32}],
+                {duration: 300, easing: 'linear'},
+            ],
+        ];
+        customAnim.container = [];
+
+        return customAnim;
+    };
+
+    dialog.getCloseAnimation = () => {
+        const defaultAnim = defaultCloseAnim.call(dialog);
+        const customAnim = {};
+        Object.keys(defaultAnim).forEach(key => customAnim[key] = defaultAnim[key]);
+
+        customAnim.dialog = [
+            [
+                [{ opacity: 1, transform: 'translateY(0)' }, { opacity: 0, transform: 'translateY(-50px)' }],
+                { duration: 300, easing: 'ease' }
+            ]
+        ];
+        customAnim.scrim = [
+            [
+                [{'opacity': 0.32}, {'opacity': 0}],
+                {duration: 300, easing: 'linear'},
+            ],
+        ];
+        customAnim.container = [];
+
+        return customAnim;
+    };
 });

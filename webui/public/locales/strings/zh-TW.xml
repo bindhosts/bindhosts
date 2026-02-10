@@ -9,7 +9,6 @@
     <string name="global_reboot_now">重啟生效</string>
     <string name="global_reboot">重啟</string>
     <string name="global_rebooting">正在重啟...</string>
-    <string name="global_save">儲存</string>
     <string name="global_saved">文件已儲存至 %s</string>
     <string name="global_save_fail">文件儲存失敗</string>
     <string name="global_file_too_large">文件編輯不支援大文件</string>
@@ -78,7 +77,7 @@
     <string name="sources_whitelist_example">例如：</string>
     <string name="sources_whitelist_prompt_fail">%s 已存在於白名單集內</string>
     <!-- Mode -->
-    <string name="mode_button">模式</string>
+    <string name="mode_button">模式 %s</string>
     <string name="mode_title">工作模式</string>
     <string name="mode_detail">了解更多</string>
     <string name="mode_reset">重設（自動）</string>
