@@ -1,61 +1,31 @@
-.file-selector {
-    width: 90%;
-    max-width: 600px;
-    height: 60vh;
-    background-color: var(--bg-secondary);
-    color: var(--text-primary);
-    border-radius: 15px;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    overflow: hidden;
+#file-selector-dialog {
+    width: calc(100% - 32px);
+    height: 80%;
 }
 
 .file-selector-header {
     display: flex;
     align-items: center;
-    padding: 10px;
-    border-bottom: 2px solid var(--border-color);
-}
-
-[dir="rtl"] .file-selector-header {
-    direction: ltr !important;
 }
 
 .current-path .separator {
-    color: var(--text-muted);
+    color: var(--md-sys-color-outline);
     padding: 0 4px;
-}
-
-.file-selector-back-button {
-    background: none;
-    border: none;
-    fill: var(--text-muted);
-    user-select: none;
 }
 
 .current-path {
     flex-grow: 1;
-    font-size: 1em;
+    font-size: 16px;
     overflow: scroll;
     white-space: nowrap;
-}
-
-.close-selector {
-    position: static !important;
-    background: none;
-    border: none;
-    font-size: 1.25em;
-    color: #ccc;
-    padding: 0 5px;
     user-select: none;
 }
 
 .file-list {
     flex-grow: 1;
     overflow-y: auto;
-    padding: 10px;
-    transition: transform 0.3s ease, opacity 0.3s ease;
+    padding: 10px 0;
+    transition: all 0.3s ease;
 }
 
 .file-list.switching {
@@ -71,15 +41,14 @@
     position: relative;
     overflow: hidden;
     user-select: none;
-
-    svg {
-        flex-shrink: 0;
-        margin-right: 10px;
-        fill: var(--text-muted);
-    }
+    color: var(--md-sys-color-on-surface);
 }
 
-[dir="rtl"] .file-item svg {
+.file-item md-icon {
+    margin-right: 10px;
+}
+
+[dir="rtl"] .file-item md-icon {
     margin-right: unset;
     margin-left: 10px;
 }

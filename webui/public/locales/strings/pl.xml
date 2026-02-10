@@ -6,7 +6,6 @@
     <!-- Global -->
     <string name="global_dev_opt">Włączono Opcje programisty</string>
     <string name="global_dev_opt_true">Opcje programisty są już włączone</string>
-    <string name="global_save">Zapisz</string>
     <string name="global_saved">Plik zapisany w %s</string>
     <string name="global_save_fail">Nie udało się zapisać pliku</string>
     <string name="global_file_too_large">Edycja pliku nie jest obsługiwana w przypadku dużych plików</string>
@@ -75,7 +74,7 @@
     <string name="sources_whitelist_example">Przykład:</string>
     <string name="sources_whitelist_prompt_fail">%s jest już na białej liście źródeł</string>
     <!-- Mode -->
-    <string name="mode_button">Tryb</string>
+    <string name="mode_button">Tryb %s</string>
     <string name="mode_title">Tryb działania</string>
     <string name="mode_detail">Dowiedz się więcej</string>
     <string name="mode_reset">Resetuj (automatycznie)</string>

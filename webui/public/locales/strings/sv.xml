@@ -6,7 +6,6 @@
     <!-- Global -->
     <string name="global_dev_opt">Utvecklaralternativ aktiverat</string>
     <string name="global_dev_opt_true">Utvecklaralternativet är redan aktiverat</string>
-    <string name="global_save">Spara</string>
     <string name="global_saved">Filen sparad till %s</string>
     <string name="global_save_fail">Det gick inte att spara filen</string>
     <string name="global_file_too_large">Filredigering stöds inte på stora filer</string>
@@ -75,7 +74,7 @@
     <string name="sources_whitelist_example">Exempel:</string>
     <string name="sources_whitelist_prompt_fail">%s finns redan i vitlistkällan</string>
     <!-- Mode -->
-    <string name="mode_button">Läge</string>
+    <string name="mode_button">Läge %s</string>
     <string name="mode_title">Driftläge</string>
     <string name="mode_detail">Lär dig mer</string>
     <string name="mode_reset">Återställ (automatiskt)</string>

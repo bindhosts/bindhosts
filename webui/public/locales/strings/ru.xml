@@ -9,7 +9,6 @@
     <string name="global_reboot_now">Для применения изменений необходима перезагрузка</string>
     <string name="global_reboot">Перезагрузка</string>
     <string name="global_rebooting">Перезагрузка...</string>
-    <string name="global_save">Сохранить</string>
     <string name="global_saved">Файл сохранён в %s</string>
     <string name="global_save_fail">Ошибка сохранения файла</string>
     <string name="global_file_too_large">Редактирование файлов не поддерживается на больших файлах</string>
@@ -78,7 +77,7 @@
     <string name="sources_whitelist_example">Пример:</string>
     <string name="sources_whitelist_prompt_fail">%s уже в источнике белого списка</string>
     <!-- Mode -->
-    <string name="mode_button">Режим</string>
+    <string name="mode_button">Режим %s</string>
     <string name="mode_title">Режим работы</string>
     <string name="mode_detail">Узнать больше</string>
     <string name="mode_reset">Сброс (автоматический)</string>
