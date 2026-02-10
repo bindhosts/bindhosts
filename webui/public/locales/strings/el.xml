@@ -9,7 +9,6 @@
     <string name="global_reboot_now">Επανεκκίνηση για να τεθεί σε ισχύ</string>
     <string name="global_reboot">Επανεκκίνηση</string>
     <string name="global_rebooting">Επανεκκίνηση…</string>
-    <string name="global_save">Αποθήκευση</string>
     <string name="global_saved">Το αρχείο αποθηκεύτηκε σε %s</string>
     <string name="global_save_fail">Αποτυχία αποθήκευσης αρχείου</string>
     <string name="global_file_too_large">Η επεξεργασία αρχείου δεν υποστηρίζεται σε μεγάλο αρχείο</string>
@@ -78,7 +77,7 @@
     <string name="sources_whitelist_example">Παράδειγμα:</string>
     <string name="sources_whitelist_prompt_fail">%s είναι ήδη στις πηγές λευκής λίστας</string>
     <!-- Mode -->
-    <string name="mode_button">Λειτουργία</string>
+    <string name="mode_button">Λειτουργία %s</string>
     <string name="mode_title">Τρόπος Λειτουργίας</string>
     <string name="mode_detail">Μάθετε Περισσότερα</string>
     <string name="mode_reset">Επαναφορά (αυτόματη)</string>

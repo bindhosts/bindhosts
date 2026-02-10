@@ -10,27 +10,27 @@
 </head>
 <body>
     <!-- Header -->
-    <div class="header blur-box">
-        <div class="back-button ripple-element fixed-ripple">
-            <svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960" width="22px"><path d="M640-80 240-480l400-400 71 71-329 329 329 329-71 71Z"/></svg>
-        </div>
+    <div class="header blur-box" unresolved>
+        <md-icon-button class="back-button">
+            <md-icon flip-icon-in-rtl="true">
+                <svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960" width="22px"><path d="M640-80 240-480l400-400 71 71-329 329 329 329-71 71Z"/></svg>
+            </md-icon>
+        </md-icon-button>
         <div class="title-container">
             <div>
                 <span id="title">bindhosts </span>
                 <span id="version-text"></span>
-                <div class="file-name-editor">
-                    <span>custom</span>
-                    <input type="text" id="file-name-input" autocapitalize="off" oninput="window.replaceSpaces(this)">
-                    <span>.txt</span>
-                </div>
+            </div>
+            <div class="file-name-editor">
+                <span>custom</span>
+                <input type="text" id="file-name-input" autocapitalize="off" oninput="replaceSpaces(this)">
+                <span>.txt</span>
             </div>
         </div>
-        <button class="docs-btn ripple-element fixed-ripple" id="mode-btn" data-type="modes">
-            <span data-i18n="mode_button"></span><span id="mode-text">X</span>
-        </button>
-        <button class="ripple-element fixed-ripple" id="edit-save-btn">
-            <span data-i18n="global_save"></span>
-        </button>
+        <md-filled-button class="docs-btn header-btn" id="mode-btn" data-type="modes"></md-filled-button>
+        <md-icon-button class="header-btn" id="save-btn">
+            <md-icon><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M840-680v480q0 33-23.5 56.5T760-120H200q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h480l160 160Zm-80 34L646-760H200v560h560v-446ZM565-275q35-35 35-85t-35-85q-35-35-85-35t-85 35q-35 35-35 85t35 85q35 35 85 35t85-35ZM240-560h360v-160H240v160Zm-40-86v446-560 114Z"/></svg></md-icon>
+        </md-icon-button>
     </div>
 
     <!-- Content -->
@@ -40,25 +40,11 @@
 
     <!-- Custom background -->
     <div class="custom-bg" id="custom-bg">
-        <img id="custom-bg-img" src="" alt="Custom Background">
-    </div>
-
-    <!-- File selector overlay -->
-    <div class="file-selector-overlay overlay">
-        <div class="file-selector translucent-menu blur-box">
-            <div class="file-selector-header">
-                <button class="file-selector-back-button">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="40 -1050 900 960" width="22px"><path d="M400-93.85 13.85-480 400-866.15l56.77 56.77L127.38-480l329.39 329.38L400-93.85Z"/></svg>
-                </button>
-                <div class="current-path">/storage/emulated/0/Download</div>
-                <button class="close-selector close-btn">&#x2715;</button>
-            </div>
-            <div class="file-list"></div>
-        </div>
+        <img id="custom-bg-img" src="" alt="">
     </div>
 
     <!-- Rick Roll overlay (1st April Easter egg) -->
-    <div class="overlay" id="rick-roll">
+    <div class="overlay" id="rick-roll" unresolved>
         <div class="rr-content">
             <div class="rr-image-box">
                 <div class="youtube-spinner"></div>
@@ -73,296 +59,359 @@
     </div>
 
     <!-- Prompt -->
-    <div class="prompt-container">
+    <div class="prompt-container" unresolved>
         <div class="prompt" id="prompt">
             <span class="prompt-text"></span>
-            <button class="prompt-btn ripple-element"></button>
+            <md-text-button class="prompt-btn"></md-text-button>
         </div>
     </div>
 
-    <!-- Footer -->
-    <div class="footer blur-box">
-        <button class="footer-btn" id="home" page="home">
-            <div class="footer-btn-icon ripple-element">
-                <svg class="active" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M160-120v-480l320-240 320 240v480H560v-280H400v280H160Z"/></svg>
-                <svg class="inactive" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z"/></svg>
-            </div>
-            <div class="footer-btn-text">
+    <!-- Bottom Bar -->
+    <div class="bottom-bar blur-box" unresolved>
+        <div class="bottom-bar-item" id="home" page="home" selected>
+            <md-icon><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z"/></svg></md-icon>
+            <md-icon slot="selected"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M160-120v-480l320-240 320 240v480H560v-280H400v280H160Z"/></svg></md-icon>
+            <div class="bottom-bar-item-text">
                 <span data-i18n="footer_home"></span>
             </div>
-        </button>
-        <button class="footer-btn" id="hosts" page="hosts">
-            <div class="footer-btn-icon ripple-element">
-                <svg class="active" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M160-120q-33 0-56.5-23.5T80-200v-560q0-33 23.5-56.5T160-840h200q33 0 56.5 23.5T440-760v560q0 33-23.5 56.5T360-120H160Zm440 0q-33 0-56.5-23.5T520-200v-560q0-33 23.5-56.5T600-840h200q33 0 56.5 23.5T880-760v560q0 33-23.5 56.5T800-120H600ZM200-360h120v-80H200v80Zm440 0h120v-80H640v80ZM200-480h120v-80H200v80Zm440 0h120v-80H640v80ZM200-600h120v-80H200v80Zm440 0h120v-80H640v80Z"/></svg>
-                <svg class="inactive" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M160-120q-33 0-56.5-23.5T80-200v-560q0-33 23.5-56.5T160-840h200q33 0 56.5 23.5T440-760v560q0 33-23.5 56.5T360-120H160Zm440 0q-33 0-56.5-23.5T520-200v-560q0-33 23.5-56.5T600-840h200q33 0 56.5 23.5T880-760v560q0 33-23.5 56.5T800-120H600Zm-440-80h200v-560H160v560Zm440 0h200v-560H600v560ZM200-360h120v-80H200v80Zm440 0h120v-80H640v80ZM200-480h120v-80H200v80Zm440 0h120v-80H640v80ZM200-600h120v-80H200v80Zm440 0h120v-80H640v80ZM160-200h200-200Zm440 0h200-200Z"/></svg>
-            </div>
-            <div class="footer-btn-text">
+        </div>
+        <div class="bottom-bar-item" id="hosts" page="hosts">
+            <md-icon><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M160-120q-33 0-56.5-23.5T80-200v-560q0-33 23.5-56.5T160-840h200q33 0 56.5 23.5T440-760v560q0 33-23.5 56.5T360-120H160Zm440 0q-33 0-56.5-23.5T520-200v-560q0-33 23.5-56.5T600-840h200q33 0 56.5 23.5T880-760v560q0 33-23.5 56.5T800-120H600Zm-440-80h200v-560H160v560Zm440 0h200v-560H600v560ZM200-360h120v-80H200v80Zm440 0h120v-80H640v80ZM200-480h120v-80H200v80Zm440 0h120v-80H640v80ZM200-600h120v-80H200v80Zm440 0h120v-80H640v80ZM160-200h200-200Zm440 0h200-200Z"/></svg></md-icon>
+            <md-icon slot="selected"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M160-120q-33 0-56.5-23.5T80-200v-560q0-33 23.5-56.5T160-840h200q33 0 56.5 23.5T440-760v560q0 33-23.5 56.5T360-120H160Zm440 0q-33 0-56.5-23.5T520-200v-560q0-33 23.5-56.5T600-840h200q33 0 56.5 23.5T880-760v560q0 33-23.5 56.5T800-120H600ZM200-360h120v-80H200v80Zm440 0h120v-80H640v80ZM200-480h120v-80H200v80Zm440 0h120v-80H640v80ZM200-600h120v-80H200v80Zm440 0h120v-80H640v80Z"/></svg></md-icon>
+            <div class="bottom-bar-item-text">
                 <span data-i18n="footer_hosts"></span>
             </div>
-        </button>
-        <button class="footer-btn" id="more" page="more">
-            <div class="footer-btn-icon ripple-element">
-                <svg class="active" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M440-280h80v-240h-80v240Zm40-320q17 0 28.5-11.5T520-640q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640q0 17 11.5 28.5T480-600Zm0 520q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z"/></svg>
-                <svg class="inactive" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M440-280h80v-240h-80v240Zm40-320q17 0 28.5-11.5T520-640q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640q0 17 11.5 28.5T480-600Zm0 520q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>
-            </div>
-            <div class="footer-btn-text">
+        </div>
+        <div class="bottom-bar-item" id="more" page="more">
+            <md-icon><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M440-280h80v-240h-80v240Zm40-320q17 0 28.5-11.5T520-640q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640q0 17 11.5 28.5T480-600Zm0 520q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg></md-icon>
+            <md-icon slot="selected"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M440-280h80v-240h-80v240Zm40-320q17 0 28.5-11.5T520-640q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640q0 17 11.5 28.5T480-600Zm0 520q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z"/></svg></md-icon>
+            <div class="bottom-bar-item-text">
                 <span data-i18n="footer_more"></span>
             </div>
-        </button>
+        </div>
     </div>
 
-    <!-- UI Components Stack -->
-    <div class="document-cover translucent constant-height blur-box"></div>
-    
     <!-- Terminals and Editors -->
     <div class="constant-height slide-menu" id="edit-content">
+        <div id="active-line-bar" class="active-line"></div>
         <div class="line-numbers"></div>
         <textarea class="edit-input blur-box" id="edit-input"></textarea>
     </div>
 
     <div class="constant-height blur-box slide-menu" id="action-terminal">
         <div class="terminal" id="action-terminal-content"></div>
+        <div class="slide-menu-bottom-padding"></div>
     </div>
 
     <div class="constant-height blur-box slide-menu" id="tcpdump-terminal">
         <div class="terminal" id="tcpdump-terminal-content"></div>
+        <div class="slide-menu-bottom-padding"></div>
+    </div>
+
+    <div class="constant-height blur-box slide-menu" id="logs-terminal">
+        <div class="terminal" id="logs-terminal-content"></div>
+        <div class="slide-menu-bottom-padding"></div>
     </div>
 
     <div class="document-content blur-box constant-height slide-menu" id="about-document">
         <div class="documents" id="about-document-content"></div>
         <div class="credit-marked">Markdown Parser by markedjs/marked</div>
+        <div class="slide-menu-bottom-padding"></div>
     </div>
 
     <!-- Floating Action Buttons -->
-    <div class="float action-container">
+    <div class="fab-container action-container" unresolved>
         <div class="action-group">
-            <button id="force-update-btn" class="force-update-button ripple-element">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="m296-224-56-56 240-240 240 240-56 56-184-183-184 183Zm0-240-56-56 240-240 240 240-56 56-184-183-184 183Z"/></svg>
-            </button>
+            <md-fab variant="primary" size="small" id="force-update-btn" class="force-update-button">
+                <md-icon slot="icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="m296-224-56-56 240-240 240 240-56 56-184-183-184 183Zm0-240-56-56 240-240 240 240-56 56-184-183-184 183Z"/></svg>
+                </md-icon>
+            </md-fab>
             <div class="action-stack">
-                <button id="action-btn" class="action-button ripple-element">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="34px" viewBox="0 -960 960 960" width="34px"><path d="M320-200v-560l440 280-440 280Z"/></svg>
-                </button>
-                <button id="close-terminal" class="action-button ripple-element">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="34px" viewBox="0 -960 960 960" width="34px"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
-                </button>
+                <md-fab variant="primary" id="action-btn" class="action-button">
+                    <md-icon slot="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="34px" viewBox="0 -960 960 960" width="34px"><path d="M320-200v-560l440 280-440 280Z"/></svg>
+                    </md-icon>
+                </md-fab>
+                <md-fab variant="primary" id="close-terminal" class="action-button" variant="secondary">
+                    <md-icon slot="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="34px" viewBox="0 -960 960 960" width="34px"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+                    </md-icon>
+                </md-fab>
             </div>
         </div>
     </div>
 
-    <div class="float tcpdump-btn">
+    <div class="fab-container tcpdump-btn">
         <div class="action-stack">
-            <button id="stop-tcpdump" class="action-button ripple-element">
-                <svg xmlns="http://www.w3.org/2000/svg" height="34px" viewBox="0 -960 960 960" width="34px"><path d="M240-240v-480h480v480H240Z"/></svg>
-            </button>
-            <button id="scroll-top" class="action-button ripple-element">
-                <svg xmlns="http://www.w3.org/2000/svg" height="34px" viewBox="0 -960 960 960" width="34px"><path d="m296-345-56-56 240-240 240 240-56 56-184-183-184 183Z"/></svg>
-            </button>
+            <md-fab variant="primary" id="stop-tcpdump" class="action-button">
+                <md-icon slot="icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="34px" viewBox="0 -960 960 960" width="34px"><path d="M240-240v-480h480v480H240Z"/></svg>
+                </md-icon>
+            </md-fab>
+            <md-fab size="small" id="scroll-top" class="action-button" variant="secondary">
+                <md-icon slot="icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="34px" viewBox="0 -960 960 960" width="34px"><path d="m296-345-56-56 240-240 240 240-56 56-184-183-184 183Z"/></svg>
+                </md-icon>
+            </md-fab>
         </div>
     </div>
 
-    <!-- Help & Info Overlays -->
-    <div id="sources-help" class="overlay">
-        <div class="overlay-content blur-box">
-            <button class="close-btn">&#x2715;</button>
-            <h2 data-i18n="source_title"></h2>
-            <ul>
-                <li data-i18n="source_guide1"></li>
-                <li>
-                    <p data-i18n="source_format"></p>
-                    <p class="format">127.0.0.1 some.ads.site</p>
-                    <p class="format">0.0.0.0 some.ads.site</p>
-                </li>
-                <li>
-                    <p data-i18n="source_example"></p>
-                    <p>https://adaway.org/hosts.txt</p>
-                    <p>https://raw.githubusercontent.com/r-a-y/mobile-hosts/master/AdguardDNS.txt</p>
-                </li>
-                <br>
-                <li data-i18n="source_guide2"></li>
-                <li>
-                    <p data-i18n="source_format"></p>
-                    <p class="format">186.2.163.20 nyaa.si</p>
-                </li>
-                <li>
-                    <p data-i18n="source_example"></p>
-                    <p>https://raw.githubusercontent.com/bebasid/bebasid/refs/heads/master/releases/hosts</p>
-                </li>
-            </ul>
-            <div class="source-btn-wrapper">
-                <button class="docs-btn ripple-element" id="source-btn" data-type="source" data-i18n="source_source_page"></button>
+    <!-- Dialogs -->
+    <div class="dialog-wrapper" unresolved>
+        <!-- Help & Info Overlays -->
+        <md-dialog id="sources-help">
+            <div slot="headline" data-i18n="source_title"></div>
+            <div slot="content">
+                <ul>
+                    <li data-i18n="source_guide1"></li>
+                    <li>
+                        <p data-i18n="source_format"></p>
+                        <p class="format">127.0.0.1 some.ads.site</p>
+                        <p class="format">0.0.0.0 some.ads.site</p>
+                    </li>
+                    <li>
+                        <p data-i18n="source_example"></p>
+                        <p>https://adaway.org/hosts.txt</p>
+                        <p>https://raw.githubusercontent.com/r-a-y/mobile-hosts/master/AdguardDNS.txt</p>
+                    </li>
+                    <br>
+                    <li data-i18n="source_guide2"></li>
+                    <li>
+                        <p data-i18n="source_format"></p>
+                        <p class="format">186.2.163.20 nyaa.si</p>
+                    </li>
+                    <li>
+                        <p data-i18n="source_example"></p>
+                        <p>https://raw.githubusercontent.com/bebasid/bebasid/refs/heads/master/releases/hosts</p>
+                    </li>
+                </ul>
             </div>
-        </div>
-    </div>
+            <div slot="actions">
+                <md-text-button class="docs-btn" id="source-btn" data-type="source" data-i18n="source_source_page"></md-text-button>
+                <md-text-button class="close-btn" data-i18n="global_close"></md-text-button>
+            </div>
+        </md-dialog>
 
-    <div id="sources_whitelist-help" class="overlay">
-        <div class="overlay-content blur-box">
-            <button class="close-btn">&#x2715;</button>
-            <h2 data-i18n="sources_whitelist_title"></h2>
-            <ul>
-                <li data-i18n="sources_whitelist_guide1"></li>
-                <li>
-                    <p data-i18n="sources_whitelist_format"></p>
-                    <p>some.site.one</p>
-                    <p>some.site.two</p>
-                </li>
-            </ul>
-        </div>
-    </div>
+        <md-dialog id="sources_whitelist-help">
+            <div slot="headline" data-i18n="sources_whitelist_title"></div>
+            <div slot="content">
+                <ul>
+                    <li data-i18n="sources_whitelist_guide1"></li>
+                    <li>
+                        <p data-i18n="sources_whitelist_format"></p>
+                        <p>some.site.one</p>
+                        <p>some.site.two</p>
+                    </li>
+                </ul>
+            </div>
+            <div slot="actions">
+                <md-text-button class="close-btn" data-i18n="global_close"></md-text-button>
+            </div>
+        </md-dialog>
 
-    <div id="whitelist-help" class="overlay">
-        <div class="overlay-content blur-box">
-            <button class="close-btn">&#x2715;</button>
-            <h2 data-i18n="whitelist_title"></h2>
-            <ul>
-                <li data-i18n="whitelist_guide1"></li>
-                <li>
-                    <p data-i18n="whitelist_example"></p>
-                    <p>host.not.to.block</p>
-                </li>
-            </ul>
-        </div>
-    </div>
+        <md-dialog id="whitelist-help">
+            <div slot="headline" data-i18n="whitelist_title"></div>
+            <div slot="content">
+                <ul>
+                    <li data-i18n="whitelist_guide1"></li>
+                    <li>
+                        <p data-i18n="whitelist_example"></p>
+                        <p>host.not.to.block</p>
+                    </li>
+                </ul>
+            </div>
+            <div slot="actions">
+                <md-text-button class="close-btn" data-i18n="global_close"></md-text-button>
+            </div>
+        </md-dialog>
 
-    <div id="blacklist-help" class="overlay">
-        <div class="overlay-content blur-box">
-            <button class="close-btn">&#x2715;</button>
-            <h2 data-i18n="blacklist_title"></h2>
-            <ul>
-                <li data-i18n="blacklist_guide1"></li>
-                <li>
-                    <p data-i18n="blacklist_example"></p>
-                    <p>host.to.block</p>
-                </li>
-            </ul>
-        </div>
-    </div>
+        <md-dialog id="blacklist-help">
+            <div slot="headline" data-i18n="blacklist_title"></div>
+            <div slot="content">
+                <ul>
+                    <li data-i18n="blacklist_guide1"></li>
+                    <li>
+                        <p data-i18n="blacklist_example"></p>
+                        <p>host.to.block</p>
+                    </li>
+                </ul>
+            </div>
+            <div slot="actions">
+                <md-text-button class="close-btn" data-i18n="global_close"></md-text-button>
+            </div>
+        </md-dialog>
 
-    <div id="import_custom-help" class="overlay">
-        <div class="overlay-content blur-box">
-            <button class="close-btn">&#x2715;</button>
-            <h2 data-i18n="import_custom_title"></h2>
-            <ul>
-                <li data-i18n="custom_guide1"></li>
-                <li>
-                    <p data-i18n="custom_format"></p>
-                    <p class="format">1.1.1.1 one.one.one.one</p>
-                </li>
-                <li data-i18n="custom_warning"></li>
-            </ul>
-        </div>
-    </div>
+        <md-dialog id="import_custom-help">
+            <div slot="headline" data-i18n="import_custom_title"></div>
+            <div slot="content">
+                <ul>
+                    <li data-i18n="custom_guide1"></li>
+                    <li>
+                        <p data-i18n="custom_format"></p>
+                        <p class="format">1.1.1.1 one.one.one.one</p>
+                    </li>
+                    <li data-i18n="custom_warning"></li>
+                </ul>
+            </div>
+            <div slot="actions">
+                <md-text-button class="close-btn" data-i18n="global_close"></md-text-button>
+            </div>
+        </md-dialog>
 
-    <div id="custom-help" class="overlay">
-        <div class="overlay-content blur-box">
-            <button class="close-btn">&#x2715;</button>
-            <h2 data-i18n="custom_title"></h2>
-            <ul>
-                <li data-i18n="custom_guide1"></li>
-                <li>
-                    <p data-i18n="custom_example"></p>
-                    <p class="format">1.1.1.1 one.one.one.one</p>
-                    <p class="format">93.184.215.14 example.com</p>
-                </li>
-                <li data-i18n="custom_warning"></li>
-            </ul>
-        </div>
-    </div>
+        <md-dialog id="custom-help">
+            <div slot="headline" data-i18n="custom_title"></div>
+            <div slot="content">
+                <ul>
+                    <li data-i18n="custom_guide1"></li>
+                    <li>
+                        <p data-i18n="custom_example"></p>
+                        <p class="format">1.1.1.1 one.one.one.one</p>
+                        <p class="format">93.184.215.14 example.com</p>
+                    </li>
+                    <li data-i18n="custom_warning"></li>
+                </ul>
+            </div>
+            <div slot="actions">
+                <md-text-button class="close-btn" data-i18n="global_close"></md-text-button>
+            </div>
+        </md-dialog>
 
-    <div id="mode-menu" class="overlay">
-        <div class="overlay-content blur-box">
-            <button class="close-btn">&#x2715;</button>
-            <h2 data-i18n="mode_title"></h2>
-            <form id="mode-options"></form>
-            <div class="reference-reset">
-                <button class="docs-btn ripple-element" id="learn-btn" data-type="modes" data-i18n="mode_detail"></button>
-                <button class="ripple-element" id="reset-mode" data-i18n="mode_reset"></button>
+        <!-- Mode Menu -->
+        <md-dialog id="mode-menu">
+            <div slot="headline">
+                <div class="mode-title-text" data-i18n="mode_title"></div>
+                <md-outlined-icon-button class="docs-btn" data-type="modes">
+                    <md-icon><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M424-320q0-81 14.5-116.5T500-514q41-36 62.5-62.5T584-637q0-41-27.5-68T480-732q-51 0-77.5 31T365-638l-103-44q21-64 77-111t141-47q105 0 161.5 58.5T698-641q0 50-21.5 85.5T609-475q-49 47-59.5 71.5T539-320H424Zm56 240q-33 0-56.5-23.5T400-160q0-33 23.5-56.5T480-240q33 0 56.5 23.5T560-160q0 33-23.5 56.5T480-80Z"/></svg></md-icon>
+                </md-outlined-icon-button>
             </div>
-        </div>
-    </div>
+            <div slot="content">
+                <form id="mode-options"></form>
+            </div>
+            <div slot="actions">
+                <md-text-button id="reset-mode" data-i18n="mode_reset"></md-text-button>
+            </div>
+        </md-dialog>
 
-    <div id="language-overlay" class="overlay">
-        <div class="overlay-content blur-box">
-            <div>
-                <h2 data-i18n="control_panel_language"></h2>
-                <button class="close-btn">&#x2715;</button>
+        <!-- Language -->
+        <md-dialog id="language-overlay">
+            <div slot="headline" data-i18n="control_panel_language"></div>
+            <div slot="content">
+                <form id="language-form" method="dialog"></form>
             </div>
-            <div class="language-content">
-                <div class="language-menu"></div>
-                <button class="docs-btn ripple-element" id="translate-btn" data-type="translate">
-                    <div class="language-improve" id="bad-translation" data-i18n="control_panel_bad_translation"></div>
-                    <div class="language-improve" id="add-language" data-i18n="control_panel_add_language"></div>
-                </button>
+            <div slot="actions">
+                <md-text-button class="docs-btn" id="translate-btn" data-type="translate" data-i18n="control_panel_add_language"></md-text-button>
+                <md-text-button class="close-btn" value="cancel" data-i18n="global_close"></md-text-button>
             </div>
-        </div>
-    </div>
+        </md-dialog>
 
-    <div id="confirmation-overlay" class="overlay">
-        <div class="overlay-content blur-box">
-            <button class="close-btn" id="close-confirmation"></button>
-            <h2 data-i18n="confirmation_title"></h2>
-            <p><span data-i18n="confirmation_message"></span> <span id="confirmation-file-name"></span></p>
-            <div class="confirm-btn-container">
-                <button class="confirm-btn ripple-element" id="cancel-btn" data-i18n="confirmation_cancel"></button>
-                <button class="confirm-btn ripple-element" id="remove-btn" data-i18n="confirmation_remove"></button>
+        <md-dialog id="confirmation-dialog">
+            <div slot="headline" data-i18n="confirmation_title"></div>
+            <div slot="content">
+                <span data-i18n="confirmation_message"></span> <span id="confirmation-file-name"></span>
             </div>
-        </div>
-    </div>
+            <div slot="actions">
+                <md-text-button id="dialog-cancel-btn" data-i18n="confirmation_cancel"></md-text-button>
+                <md-text-button id="dialog-remove-btn" data-i18n="confirmation_remove"></md-text-button>
+            </div>
+        </md-dialog>
 
-    <!-- Documentation Overlays -->
-    <div id="source-docs" class="docs overlay">
-        <div class="docs-content blur-box">
-            <button class="close-btn">&#x2715;</button>
-            <div class="documents">
-                <div id="source-content">Loading...</div>
-                <div class="credit-marked">Markdown Parser by markedjs/marked</div>
+        <!-- File Selector Dialog -->
+        <md-dialog id="file-selector-dialog">
+            <div slot="headline" class="file-selector-header">
+                <md-icon-button class="file-selector-back-button">
+                    <md-icon flip-icon-in-rtl="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960" width="22px"><path d="M640-80 240-480l400-400 71 71-329 329 329 329-71 71Z"/></svg>
+                    </md-icon>
+                </md-icon-button>
+                <div class="current-path">/storage/emulated/0/Download</div>
             </div>
-        </div>
-    </div>
-    <div id="translate-docs" class="docs overlay">
-        <div class="docs-content blur-box">
-            <button class="close-btn">&#x2715;</button>
-            <div class="documents">
-                <div id="translate-content">Loading...</div>
-                <div class="credit-marked">Markdown Parser by markedjs/marked</div>
+            <div slot="content">
+                <div class="file-list"></div>
             </div>
-        </div>
-    </div>
-    <div id="modes-docs" class="docs overlay">
-        <div class="docs-content blur-box">
-            <button class="close-btn">&#x2715;</button>
-            <div class="documents">
-                <div id="modes-content">Loading...</div>
-                <div class="credit-marked">Markdown Parser by markedjs/marked</div>
+            <div slot="actions">
+                <md-text-button class="close-selector" data-i18n="global_close"></md-text-button>
             </div>
-        </div>
-    </div>
-    <div id="usage-docs" class="docs overlay">
-        <div class="docs-content blur-box">
-            <button class="close-btn">&#x2715;</button>
-            <div class="documents">
-                <div id="usage-content">Loading...</div>
-                <div class="credit-marked">Markdown Parser by markedjs/marked</div>
+        </md-dialog>
+
+        <!-- Documentation Overlays -->
+        <md-dialog id="source-docs" class="docs">
+            <div slot="headline" data-i18n="source_title"></div>
+            <div slot="content">
+                <div class="documents">
+                    <div id="source-content">Loading...</div>
+                    <div class="credit-marked">Markdown Parser by markedjs/marked</div>
+                </div>
             </div>
-        </div>
-    </div>
-    <div id="hiding-docs" class="docs overlay">
-        <div class="docs-content blur-box">
-            <button class="close-btn">&#x2715;</button>
-            <div class="documents">
-                <div id="hiding-content">Loading...</div>
-                <div class="credit-marked">Markdown Parser by markedjs/marked</div>
+            <div slot="actions">
+                <md-text-button class="close-btn" data-i18n="global_close"></md-text-button>
             </div>
-        </div>
-    </div>
-    <div id="faq-docs" class="docs overlay">
-        <div class="docs-content blur-box">
-            <button class="close-btn">&#x2715;</button>
-            <div class="documents">
-                <div id="faq-content">Loading...</div>
-                <div class="credit-marked">Markdown Parser by markedjs/marked</div>
+        </md-dialog>
+
+        <md-dialog id="translate-docs" class="docs">
+            <div slot="headline" data-i18n="control_panel_add_language"></div>
+            <div slot="content">
+                <div class="documents">
+                    <div id="translate-content">Loading...</div>
+                    <div class="credit-marked">Markdown Parser by markedjs/marked</div>
+                </div>
             </div>
-        </div>
+            <div slot="actions">
+                <md-text-button class="close-btn" data-i18n="global_close"></md-text-button>
+            </div>
+        </md-dialog>
+
+        <md-dialog id="modes-docs" class="docs">
+            <div slot="headline" data-i18n="more_modes"></div>
+            <div slot="content">
+                <div class="documents">
+                    <div id="modes-content">Loading...</div>
+                    <div class="credit-marked">Markdown Parser by markedjs/marked</div>
+                </div>
+            </div>
+            <div slot="actions">
+                <md-text-button class="close-btn" data-i18n="global_close"></md-text-button>
+            </div>
+        </md-dialog>
+
+        <md-dialog id="usage-docs" class="docs">
+            <div slot="headline" data-i18n="more_usage"></div>
+            <div slot="content">
+                <div class="documents">
+                    <div id="usage-content">Loading...</div>
+                    <div class="credit-marked">Markdown Parser by markedjs/marked</div>
+                </div>
+            </div>
+            <div slot="actions">
+                <md-text-button class="close-btn" data-i18n="global_close"></md-text-button>
+            </div>
+        </md-dialog>
+
+        <md-dialog id="hiding-docs" class="docs">
+            <div slot="headline" data-i18n="more_hiding"></div>
+            <div slot="content">
+                <div class="documents">
+                    <div id="hiding-content">Loading...</div>
+                    <div class="credit-marked">Markdown Parser by markedjs/marked</div>
+                </div>
+            </div>
+            <div slot="actions">
+                <md-text-button class="close-btn" data-i18n="global_close"></md-text-button>
+            </div>
+        </md-dialog>
+
+        <md-dialog id="faq-docs" class="docs">
+            <div slot="headline" data-i18n="more_faq"></div>
+            <div slot="content">
+                <div class="documents">
+                    <div id="faq-content">Loading...</div>
+                    <div class="credit-marked">Markdown Parser by markedjs/marked</div>
+                </div>
+            </div>
+            <div slot="actions">
+                <md-text-button class="close-btn" data-i18n="global_close"></md-text-button>
+            </div>
+        </md-dialog>
     </div>
 </body>
 </html>

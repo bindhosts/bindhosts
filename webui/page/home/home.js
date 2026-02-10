@@ -1,5 +1,5 @@
 import { exec } from 'kernelsu-alt';
-import { showPrompt, basePath, moduleDirectory, setLearnMore, setDeveloperOption, developerOption } from '../../utils/util.js';
+import { showPrompt, reboot, basePath, moduleDirectory, setDeveloperOption, developerOption, fetchText, updateUIVisibility } from '../../utils/util.js';
 import { setupDocsMenu } from '../../utils/docs.js';
 import { getString } from '../../utils/language.js';
 import modes from './modes.json';
@@ -15,26 +15,20 @@ function updateStatus() {
     const status = [
         { element: 'status-text', key: 'description', file: 'module.prop' },
         { element: 'version-text', key: 'version', file: 'module.prop' },
-        { element: 'mode-text', key: 'mode', file: 'mode.sh' },
+        { element: 'mode-btn', key: 'mode', file: 'mode.sh' },
     ]
 
     const fetchStatus = async (item) => {
         try {
-            const response = await fetch("link/MODDIR/" + item.file);
-            if (!response.ok) throw new Error(`File not found: ${item.file}`);
-            const data = await response.text();
-            const value = data.match(new RegExp(`${item.key}=(.*)`))[1].replace('status: ', '');
+            const data = await fetchText("link/MODDIR/" + item.file, `${moduleDirectory}/${item.file}`);
+            let value = data.match(new RegExp(`${item.key}=(.*)`))[1].replace('status: ', '');
+            if (item.element === 'mode-btn') {
+                value = getString("mode_button", value);
+            }
             document.getElementById(item.element).textContent = value;
         } catch (error) {
-            exec(`cat ${basePath}/${item.file}`, (result) => {
-                let value;
-                if (result.errno !== 0) {
-                    value = 'Unknown';
-                } else {
-                    value = result.trim().match(new RegExp(`${item.key}=(.*)`))[1].replace('status: ', '');
-                }
-                document.getElementById(item.element).textContent = value;
-            });
+            console.error(`Error fetching status for ${item.element}:`, error);
+            document.getElementById(item.element).textContent = 'Unknown';
         }
     };
 
@@ -53,7 +47,7 @@ function updateStatus() {
  */
 function setupDevOtp() {
     const statusBox = document.getElementById("status-box");
-    statusBox.addEventListener('click', async () => {
+    statusBox.onclick = async () => {
         clickCount++;
         clearTimeout(clickTimeout);
         clickTimeout = setTimeout(() => {
@@ -68,10 +62,8 @@ function setupDevOtp() {
                 showPrompt(getString('global_dev_opt_true'));
             }
         }
-    });
+    };
 }
-
-let setupModeMenu = false
 
 /**
  * Check if developer option is enabled
@@ -80,114 +72,85 @@ let setupModeMenu = false
  */
 async function checkDevOption() {
     if (developerOption) return;
-    const response = await fetch('link/PERSISTENT_DIR/mode_override.sh');
-    setDeveloperOption(response.ok ? true : false);
+    try {
+        await fetchText('link/PERSISTENT_DIR/mode_override.sh', `${basePath}/mode_override.sh`);
+        setDeveloperOption(true);
+    } catch {
+        setDeveloperOption(false);
+    }
+}
+
+/**
+ * Update radio button state based on current mode
+ * @returns {Promise<void>}
+ */
+async function updateModeSelection() {
+    let currentMode;
+    const result = await exec(`cat ${basePath}/mode_override.sh`);
+    if (result.errno === 0) {
+        currentMode = result.stdout.trim().match(/mode=(\d+)/)?.[1] || null;
+    } else {
+        currentMode = null;
+    }
+    document.querySelectorAll("#mode-options md-radio").forEach((radio) => {
+        radio.checked = radio.value === currentMode;
+    });
+}
+
+/**
+ * Save mode option
+ * @param {string} mode - Mode to save
+ * @returns {Promise<void>}
+ */
+async function saveModeSelection(mode) {
+    let command;
+    if (mode === "reset") {
+        command = `rm -f ${basePath}/mode_override.sh`;
+    } else {
+        command = `echo "mode=${mode}" > ${basePath}/mode_override.sh`;
+    }
+    const result = await exec(command);
+    if (result.errno === 0) {
+        document.getElementById("mode-menu").close();
+        showPrompt(getString('global_reboot_now'), true, 5000, getString('global_reboot'), reboot);
+        await updateModeSelection();
+    } else {
+        console.error("Error saving mode selection:", result.stderr);
+    }
 }
 
 // Open mode menu if developer option is enabled
 function setupModeBtn() {
     const modeBtn = document.getElementById("mode-btn");
     const modeMenu = document.getElementById("mode-menu");
-    const overlayContent = document.querySelector(".overlay-content");
+    const modeOptions = document.getElementById("mode-options");
 
-    function createModeOptions() {
-        const modeOptionsForm = document.getElementById("mode-options");
-        modeOptionsForm.innerHTML = '';
-        modes.forEach(mode => {
-            const label = document.createElement('label');
-            label.className = 'custom-radio';
-            label.innerHTML = `
-                <input type="radio" name="mode" value="${mode.value}">
-                <span class="radio-circle"></span>
-                <div class="radio-label">
-                    <div class="radio-label-title">
-                        <span>${getString('mode_button')}</span>
-                        <span>${mode.value}</span>
-                    </div>
-                    <small>${mode.description}</small>
+    modes.forEach(mode => {
+        const label = document.createElement('label');
+        label.className = 'custom-radio';
+        label.innerHTML = `
+            <md-radio name="mode" value="${mode.value}"></md-radio>
+            <div class="radio-label">
+                <div class="radio-label-title">
+                    <span>${getString("mode_button", mode.value)}</span>
                 </div>
-            `;
-            modeOptionsForm.appendChild(label);
-        });
-    }
+                <small>${mode.description}</small>
+            </div>
+        `;
+        modeOptions.appendChild(label);
+    });
 
-    modeBtn.addEventListener('click', async () => {
-        if (developerOption) {
-            modeMenu.style.display = "flex";
-            setTimeout(() => {
-                modeMenu.style.opacity = "1";
-                setLearnMore(true);
-            }, 10);
-        }
+    modeOptions.addEventListener('change', (event) => {
+        saveModeSelection(event.target.value);
+    });
 
-        const closeOverlay = () => {
-            modeMenu.style.opacity = "0";
-            setTimeout(() => {
-                modeMenu.style.display = "none";
-            }, 200);
-            setLearnMore(false);
-        }
+    document.getElementById("reset-mode").onclick = () => saveModeSelection("reset");
 
-        /**
-         * Save mode option
-         * @param {string} mode - Mode to save
-         * @returns {Promise<void>}
-         */
-        async function saveModeSelection(mode) {
-            let command;
-            if (mode === "reset") {
-                command = `rm -f ${basePath}/mode_override.sh`;
-            } else {
-                command = `echo "mode=${mode}" > ${basePath}/mode_override.sh`;
-            }
-            const result = await exec(command);
-            if (result.errno === 0) {
-                if (mode === "reset") {
-                    closeOverlay();
-                    setLearnMore(false);
-                }
-                showPrompt(getString('global_reboot_now'), true, 5000, getString('global_reboot'), reboot);
-                await updateModeSelection();
-            } else {
-                console.error("Error saving mode selection:", result.stderr);
-            }
-        }
-
-        /**
-         * Update radio button state based on current mode
-         * @returns {Promise<void>}
-         */
-        async function updateModeSelection() {
-            let currentMode;
-            const result = await exec(`cat ${basePath}/mode_override.sh`);
-            if (result.errno === 0) {
-                currentMode = result.trim().match(/mode=(\d+)/)?.[1] || null;
-            } else {
-                currentMode = null;
-            }
-            document.querySelectorAll("#mode-options input").forEach((input) => {
-                input.checked = input.value === currentMode;
-            });
-        }
-
-        if (!setupModeMenu) {
-            setupModeMenu = true;
-            createModeOptions();
-            modeMenu.querySelector(".close-btn").onclick = closeOverlay;
-            modeMenu.addEventListener('click', (event) => {
-                if (!overlayContent.contains(event.target)) closeOverlay();
-            });
-            // Attach event listeners for mode options
-            const modeOption = document.getElementById("mode-options");
-            modeOption.addEventListener('change', (event) => {
-                const selectedMode = event.target.value;
-                saveModeSelection(selectedMode);
-            });
-            // Attach event listener for reset button
-            document.getElementById("reset-mode").onclick = () => saveModeSelection("reset");
-        }
-
-        await updateModeSelection();
+    modeBtn.addEventListener('click', (e) => {
+        if (!developerOption) return;
+        e.stopImmediatePropagation();
+        modeMenu.show();
+        updateModeSelection();
     });
 }
 
@@ -198,7 +161,6 @@ function setupModeBtn() {
  */
 let hostLines = [], originalHostLines = [], currentIndex = 0, initialHeight = 0;
 const batchSize = 30;
-let setupLinkRetries = 0;
 
 /**
  * Get hosts from hosts.txt and display them in the UI
@@ -208,61 +170,44 @@ async function getHosts() {
     const hostList = document.querySelector('.host-list-item');
     hostList.innerHTML = '';
 
-    try {
-        const response = await fetch('link/hosts.txt');
-        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-        const hostsText = await response.text();
-        setupLinkRetries = 0;
-
-        hostLines = hostsText
-            .trim()
-            .split('\n')
-            .filter(line => line.trim() && !line.startsWith('#')) // Remove empty/comment lines
-            .map(line => line.trim().split(/\s+/))
-            .filter(parts => parts.length >= 2); // Ensure valid entries
-
-        // Store the original data
-        originalHostLines = [...hostLines];
-
-        currentIndex = 0;
-        loadMoreHosts(() => {
-            initialHeight = hostList.offsetHeight;
-        });
-
-        // Scroll down to load more
-        hostList.addEventListener('scroll', () => {
-            // Reset position
-            document.querySelectorAll('.scrollable-list').forEach(el => {
-                el.scrollTo({ left: 0, behavior: 'smooth' });
-            });
-
-            // Existing scroll to load more functionality
-            const scrollTop = hostList.scrollTop;
-            const hostListHeight = hostList.clientHeight;
-            const scrollHeight = hostList.scrollHeight;
-
-            if (scrollTop + hostListHeight >= scrollHeight - initialHeight) {
-                loadMoreHosts();
-            }
-        });
-    } catch (error) {
-        if (setupLinkRetries > 2) {
-            console.error("Failed to setup link after multiple retries");
-            return;
-        }
-        setupLink();
-        setupLinkRetries++;
-        await getHosts();
+    const response = await fetch('link/hosts.txt');
+    if (!response.ok) {
+        hostList.innerHTML = getString('global_unsupported');
+        return;
     }
-}
+    const hostsText = await response.text();
 
-/**
- * Link necessary file to the webroot if not found
- * @returns {void}
- */
-function setupLink() {
-    // backend required due to different target host file
-    exec(`sh ${moduleDirectory}/bindhosts.sh --setup-link`);
+    hostLines = hostsText
+        .trim()
+        .split('\n')
+        .filter(line => line.trim() && !line.startsWith('#')) // Remove empty/comment lines
+        .map(line => line.trim().split(/\s+/))
+        .filter(parts => parts.length >= 2); // Ensure valid entries
+
+    // Store the original data
+    originalHostLines = [...hostLines];
+
+    currentIndex = 0;
+    loadMoreHosts(() => {
+        initialHeight = hostList.offsetHeight;
+    });
+
+    // Scroll down to load more
+    hostList.onscroll = () => {
+        // Reset position
+        document.querySelectorAll('.scrollable-list').forEach(el => {
+            el.scrollTo({ left: 0, behavior: 'smooth' });
+        });
+
+        // Existing scroll to load more functionality
+        const scrollTop = hostList.scrollTop;
+        const hostListHeight = hostList.clientHeight;
+        const scrollHeight = hostList.scrollHeight;
+
+        if (scrollTop + hostListHeight >= scrollHeight - initialHeight) {
+            loadMoreHosts();
+        }
+    };
 }
 
 /**
@@ -286,25 +231,26 @@ function loadMoreHosts(callback) {
                 <div class="host-domain">${domains.join(' ')}</div>
             </div>
             ${dataType !== 'custom' ? `
-            <button class="remove-btn ripple-element">
-                <svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960" width="22px"><path d="M277.37-111.87q-37.78 0-64.39-26.61t-26.61-64.39v-514.5h-45.5v-91H354.5v-45.5h250.52v45.5h214.11v91h-45.5v514.5q0 37.78-26.61 64.39t-64.39 26.61H277.37Zm78.33-168.37h85.5v-360h-85.5v360Zm163.1 0h85.5v-360h-85.5v360Z"/></svg>
-            </button>
+            <md-filled-icon-button class="remove-btn">
+                <md-icon><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M277.37-111.87q-37.78 0-64.39-26.61t-26.61-64.39v-514.5h-45.5v-91H354.5v-45.5h250.52v45.5h214.11v91h-45.5v514.5q0 37.78-26.61 64.39t-64.39 26.61H277.37Zm78.33-168.37h85.5v-360h-85.5v360Zm163.1 0h85.5v-360h-85.5v360Z"/></svg></md-icon>
+            </md-filled-icon-button>
             ` : ''}
         `;
 
         // Add event listener to remove button if it exists
         if (dataType !== 'custom') {
             const removeBtn = hostItem.querySelector('.remove-btn');
-            removeBtn.addEventListener('click', (e) => handleRemove(e, domains));
+            removeBtn.onclick = (e) => handleRemove(e, domains);
         }
-        hostItem.addEventListener('click', () => {
+        hostItem.onclick = () => {
             const isRTL = document.documentElement.getAttribute('dir') === 'rtl';
             hostItem.scrollTo({
                 left: isRTL ? -hostItem.scrollWidth : hostItem.scrollWidth,
                 behavior: 'smooth'
             });
-        });
+        };
         hostList.appendChild(hostItem);
+        hostList.appendChild(document.createElement("md-divider"));
     }
 
     if (callback) requestAnimationFrame(callback);
@@ -344,7 +290,7 @@ function setupQueryInput() {
     const clearBtn = document.querySelector('.clear-btn');
 
     // Search functionality
-    searchBtn.addEventListener('click', () => {
+    searchBtn.onclick = () => {
         const query = inputBox.value.trim().toLowerCase();
         if (!query) getHosts();
 
@@ -359,24 +305,24 @@ function setupQueryInput() {
         currentIndex = 0;
         hostLines = filteredHosts;
         loadMoreHosts();
-    });
+    };
 
     // Search on enter
-    inputBox.addEventListener('keypress', (event) => {
+    inputBox.onkeypress = (event) => {
         if (event.key === 'Enter') searchBtn.click();
-    })
+    };
 
     // Update clear button visibility on any input change
-    inputBox.addEventListener('input', () => {
+    inputBox.oninput = () => {
         clearBtn.style.display = inputBox.value.length > 0 ? 'flex' : 'none';
-    })
+    };
 
     // Clear search functionality
-    clearBtn.addEventListener('click', async () => {
+    clearBtn.onclick = async () => {
         inputBox.value = '';
         clearBtn.style.display = 'none';
         await getHosts();
-    })
+    };
 }
 
 // Lifecycle: Initial mount to DOM
@@ -389,7 +335,7 @@ export function mount() {
 
 // Lifecycle: Each time page becomes visible
 export function onShow() {
-    document.getElementById('title').textContent = 'bindhosts ';
+    updateUIVisibility();
     document.getElementById('mode-btn').classList.add('show');
     updateStatus();
     getHosts();
@@ -399,4 +345,5 @@ export function onShow() {
 // Lifecycle: Each time page is hidden
 export function onHide() {
     document.getElementById('mode-btn').classList.remove('show');
+    document.querySelectorAll('.fab-container').forEach(c => c.classList.remove('show', 'inTerminal'));
 }

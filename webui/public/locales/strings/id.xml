@@ -9,7 +9,6 @@
     <string name="global_reboot_now">Mulai ulang untuk menerapkan</string>
     <string name="global_reboot">Mulai ulang</string>
     <string name="global_rebooting">Memulai ulang...</string>
-    <string name="global_save">Simpan</string>
     <string name="global_saved">File disimpan ke %s</string>
     <string name="global_save_fail">Gagal menyimpan file</string>
     <string name="global_file_too_large">Hanya edit file yang diizinkan pada file besar</string>
@@ -78,7 +77,7 @@
     <string name="sources_whitelist_example">Contoh:</string>
     <string name="sources_whitelist_prompt_fail">%s sudah ada di sumber daftar putih</string>
     <!-- Mode -->
-    <string name="mode_button">Mode</string>
+    <string name="mode_button">Mode %s</string>
     <string name="mode_title">Mode Operasi</string>
     <string name="mode_detail">Pelajari lebih lanjut</string>
     <string name="mode_reset">Atur ulang (auto)</string>

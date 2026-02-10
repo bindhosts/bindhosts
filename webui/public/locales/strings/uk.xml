@@ -6,7 +6,6 @@
     <!-- Global -->
     <string name="global_dev_opt">Налаштування розробника ввімкнено</string>
     <string name="global_dev_opt_true">Налаштування розробника вже ввімкнено</string>
-    <string name="global_save">Зберегти</string>
     <string name="global_saved">Файл збережено в %s</string>
     <string name="global_save_fail">Помилка збереження файлу</string>
     <string name="global_file_too_large">Редагування файлів не підтримується на великих файлах</string>
@@ -75,7 +74,7 @@
     <string name="sources_whitelist_example">Приклад:</string>
     <string name="sources_whitelist_prompt_fail">%s вже в джерелі білого списку</string>
     <!-- Mode -->
-    <string name="mode_button">Режим</string>
+    <string name="mode_button">Режим %s</string>
     <string name="mode_title">Режим роботи</string>
     <string name="mode_detail">Дізнатися більше</string>
     <string name="mode_reset">Скинути (автоматично)</string>

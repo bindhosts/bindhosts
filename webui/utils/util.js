@@ -3,11 +3,7 @@ import { WebUI, Intent } from 'webuix'
 import { getString } from './language.js';
 
 export let developerOption = false;
-export let learnMore = false;
-let footerClick = false;
-
 export function setDeveloperOption(value) { developerOption = value; }
-export function setLearnMore(value) { learnMore = value; }
 
 export const filePaths = {
     custom: 'custom.txt',
@@ -20,6 +16,26 @@ export const filePaths = {
 
 export const basePath = "/data/adb/bindhosts";
 export const moduleDirectory = "/data/adb/modules/bindhosts";
+
+/**
+ * Fetch a file and return its content as text, with a fallback to `exec cat`.
+ * @param {string} url - The URL to fetch
+ * @param {string} fallbackPath - The path to use with `exec cat` if fetch fails
+ * @returns {Promise<string>}
+ */
+export async function fetchText(url, fallbackPath) {
+    try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+        return await response.text();
+    } catch {
+        const result = await exec(`cat "${fallbackPath}"`);
+        if (result.errno === 0) {
+            return result.stdout;
+        }
+        throw new Error(`Failed to fetch ${url} and fallback exec failed: ${result.stderr}`);
+    }
+}
 
 /**
  * Redirect to a link with am command
@@ -44,89 +60,6 @@ export function linkRedirect(link) {
                 });
         }
     }, 100);
-}
-
-/**
- * Simulate MD3 ripple animation
- * Usage: class="ripple-element" style="position: relative; overflow: hidden;"
- * Note: Require background-color to work properly
- * @return {void}
- */
-export function applyRippleEffect() {
-    document.querySelectorAll('.ripple-element').forEach(element => {
-        if (element.dataset.rippleListener !== "true") {
-            element.addEventListener("pointerdown", async (event) => {
-                // Pointer up event
-                const handlePointerUp = () => {
-                    ripple.classList.add("end");
-                    setTimeout(() => {
-                        ripple.classList.remove("end");
-                        ripple.remove();
-                    }, duration * 1000);
-                    element.removeEventListener("pointerup", handlePointerUp);
-                    element.removeEventListener("pointercancel", handlePointerUp);
-                };
-                element.addEventListener("pointerup", () => setTimeout(handlePointerUp, 80));
-                element.addEventListener("pointercancel", () => setTimeout(handlePointerUp, 80));
-
-                const ripple = document.createElement("span");
-                ripple.classList.add("ripple");
-
-                // Calculate ripple size and position
-                const rect = element.getBoundingClientRect();
-                const width = rect.width;
-                const size = Math.max(rect.width, rect.height);
-                const x = event.clientX - rect.left - size / 2;
-                const y = event.clientY - rect.top - size / 2;
-
-                // Determine animation duration
-                let duration = 0.2 + (width / 800) * 0.4;
-                duration = Math.min(0.8, Math.max(0.2, duration));
-
-                // Set ripple styles
-                ripple.style.width = ripple.style.height = `${size}px`;
-                ripple.style.left = `${x}px`;
-                ripple.style.top = `${y}px`;
-                ripple.style.animationDuration = `${duration}s`;
-                ripple.style.transition = `opacity ${duration}s ease`;
-
-                // Get effective background color (traverse up if transparent)
-                const getEffectiveBackgroundColor = (el) => {
-                    while (el && el !== document.documentElement) {
-                        const bg = window.getComputedStyle(el).backgroundColor;
-                        if (bg && bg !== "rgba(0, 0, 0, 0)" && bg !== "transparent") {
-                            return bg;
-                        }
-                        el = el.parentElement;
-                    }
-                    return "rgba(255, 255, 255, 1)";
-                };
-
-                const bgColor = getEffectiveBackgroundColor(element);
-                const isDarkColor = (color) => {
-                    const rgb = color.match(/\d+/g);
-                    if (!rgb) return false;
-                    const [r, g, b] = rgb.map(Number);
-                    return (r * 0.299 + g * 0.587 + b * 0.114) < 96; // Luma formula
-                };
-                ripple.style.backgroundColor = isDarkColor(bgColor) ? "rgba(255, 255, 255, 0.2)" : "rgba(0, 0, 0, 0.2)";
-
-                // Append ripple if not scrolling
-                await new Promise(resolve => setTimeout(resolve, 80));
-                if (isScrolling || footerClick) return;
-                element.appendChild(ripple);
-            });
-            element.dataset.rippleListener = "true";
-        }
-    });
-}
-
-/**
- * set status of global vairable: footerClick
- * @param {boolean} status 
- */
-export function setFooterClick(status) {
-    footerClick = status;
 }
 
 /**
@@ -187,16 +120,17 @@ export async function checkMMRL() {
 /**
  * Setup swipe to close for slide-in panels
  * @param {HTMLElement} element - Element to swipe
- * @param {HTMLElement} cover - Cover element
  * @returns {void}
  */
-export function setupSwipeToClose(element, cover) {
-    let startX = 0, currentX = 0, startY = 0, isDragging = false, isScrolling = false;
-    const bodyContent = document.querySelector('.body-content');
+export function setupSwipeToClose(element) {
+    let startX = 0, currentX = 0, startY = 0, isDragging = false;
     const backButton = document.querySelector('.back-button');
+    const isRTL = document.documentElement.getAttribute('dir') === 'rtl';
+    const multiplier = isRTL ? -1 : 1;
 
     const handleStart = (e) => {
         const preElements = document.querySelectorAll('.documents *');
+        const bodyContent = document.querySelector('.body-content[data-active="true"]');
 
         // Get client coordinates from either touch or mouse event
         const clientX = e.touches ? e.touches[0].clientX : e.clientX;
@@ -216,24 +150,20 @@ export function setupSwipeToClose(element, cover) {
         isScrolling = false;
         startX = clientX;
         startY = clientY;
-        element.style.transition = 'none';
-        bodyContent.style.transition = 'none';
-        cover.style.transition = 'none';
+        element.classList.remove('animation');
+        bodyContent.classList.remove('animation');
         e.stopPropagation();
     };
 
     const handleMove = (e) => {
         if (!isDragging) return;
-        
+
         // Get client coordinates from either touch or mouse event
         const clientX = e.touches ? e.touches[0].clientX : e.clientX;
         const clientY = e.touches ? e.touches[0].clientY : e.clientY;
         
-        const deltaX = clientX - startX;
+        const deltaX = (clientX - startX) * multiplier;
         const deltaY = clientY - startY;
-        
-        // Disable right-to-left swipe
-        if (deltaX < 0) return;
         
         // If vertical movement is greater than horizontal, assume scrolling
         if (Math.abs(deltaY) > Math.abs(deltaX)) {
@@ -241,47 +171,80 @@ export function setupSwipeToClose(element, cover) {
             return;
         }
         if (isScrolling) return;
+        
         currentX = clientX - startX;
-        if (currentX < 0) return;
-        if (currentX > 50) {
-            const adjustedX = currentX - 50; // 50px trigger threshold 
-            element.style.transform = `translateX(${Math.max(adjustedX, -window.innerWidth)}px)`;
-            bodyContent.style.transform = `translateX(calc(${Math.max(adjustedX, -window.innerWidth)}px / 5 - 20vw))`;
-            // Calculate opacity based on position
-            const opacity = 1 - (adjustedX / window.innerWidth);
-            cover.style.opacity = Math.max(0, Math.min(1, opacity));
-        }
+        const distance = Math.max(0, deltaX - 50);
+        const adjustedX = distance * multiplier;
+
+        const bodyContent = document.querySelector('.body-content[data-active="true"]');
+        element.style.transform = `translateX(${adjustedX}px)`;
+        bodyContent.style.transform = `translateX(calc(${adjustedX}px / 5 ${isRTL ? '+' : '-'} 20vw))`;
+        // Calculate opacity based on position
+        const progress = Math.min(1, Math.abs(adjustedX) / window.innerWidth);
+        bodyContent.style.opacity = progress;
         e.stopPropagation();
     };
 
     const handleEnd = () => {
         if (!isDragging) return;
+        const bodyContent = document.querySelector('.body-content[data-active="true"]');
+
         isDragging = false;
-        element.style.transition = 'transform 0.3s ease';
-        cover.style.transition = 'opacity 0.3s ease';
-        bodyContent.style.transition = 'transform 0.3s ease';
+        element.classList.add('animation');
+        bodyContent.classList.add('animation');
 
         const threshold = window.innerWidth * 0.25 + 50;
-        if (Math.abs(currentX) > threshold) {
+        element.style.transform = '';
+        bodyContent.style.transform = '';
+        bodyContent.style.opacity = '';
+        if (currentX * multiplier > threshold) {
             backButton.click();
-        } else {
-            element.style.transform = 'translateX(0)';
-            bodyContent.style.transform = 'translateX(-20vw)';
-            cover.style.opacity = '1';
         }
         startX = 0;
         currentX = 0;
     };
 
     // Touch events
-    element.addEventListener('touchstart', handleStart);
-    element.addEventListener('touchmove', handleMove);
-    element.addEventListener('touchend', handleEnd);
+    element.ontouchstart = handleStart;
+    element.ontouchmove = handleMove;
+    element.ontouchend = handleEnd;
     
     // Mouse events
-    element.addEventListener('mousedown', handleStart);
-    element.addEventListener('mousemove', handleMove);
-    element.addEventListener('mouseup', handleEnd);
+    element.onmousedown = handleStart;
+    element.onmousemove = handleMove;
+    element.onmouseup = handleEnd;
+}
+
+/**
+ * Setup slide-in menu
+ * @returns {void}
+ */
+export function setupSlideMenu() {
+    const slideMenus = document.querySelectorAll('.slide-menu');
+
+    slideMenus.forEach(menu => {
+        menu.open = () => {
+            const bodyContent = document.querySelector('.body-content[data-active="true"]');
+            menu.classList.add('animation');
+            bodyContent.classList.add('animation');
+
+            menu.classList.add('open');
+            bodyContent.classList.add('menu-open');
+            updateUIVisibility(menu.id, true);
+        };
+
+        menu.close = () => {
+            const bodyContent = document.querySelector('.body-content[data-active="true"]');
+            menu.classList.add('animation');
+            bodyContent.classList.add('animation');
+
+            menu.classList.remove('open');
+            bodyContent.classList.remove('menu-open');
+            updateUIVisibility(menu.id, false);
+        };
+
+        setupSwipeToClose(menu);
+    });
 }
 
 let isScrolling = false;
@@ -289,44 +252,151 @@ let lastScrollY = 0;
 let scrollTimeout;
 const scrollThreshold = 25;
 
+/**
+ * Configuration for different pages and their associated UI components.
+ */
+export const PAGE_CONFIG = {
+    'page-hosts': {
+        container: '.action-container',
+        main: ['#action-btn', '#force-update-btn'],
+        terminals: {
+            'action-terminal': {
+                buttons: ['#close-terminal'],
+                title: 'global_action'
+            },
+            'edit-content': {
+                buttons: ['#save-btn'],
+                title: ''
+            }
+        },
+        title: 'footer_hosts'
+    },
+    'page-more': {
+        container: '.tcpdump-btn',
+        main: [],
+        terminals: {
+            'tcpdump-terminal': {
+                buttons: ['#stop-tcpdump'],
+                title: 'control_panel_monitor_network_activity'
+            },
+            'logs-terminal': {
+                buttons: ['#save-btn'],
+                title: 'more_support_view_webui_log'
+            }
+        },
+        title: 'footer_more'
+    },
+    'default': {
+        container: null,
+        main: [],
+        title: 'footer_home'
+    }
+};
+
+/**
+ * Update UI visibility for buttons and titles based on the active terminal.
+ * @param {string} [terminalId=null] - ID of the active terminal
+ * @param {boolean} [isOpen=false] - Whether the terminal is open
+ */
+export function updateUIVisibility(terminalId = null, isOpen = false) {
+    const activePage = document.querySelector('.body-content[data-active="true"]');
+    if (!activePage) return;
+    
+    const pageId = activePage.id;
+    const config = PAGE_CONFIG[pageId] || PAGE_CONFIG['default'];
+    const container = document.querySelector(config.container);
+    const titleControl = document.getElementById('title');
+    const backBtn = document.querySelector('.back-button');
+
+    // Hide ALL terminal buttons first to prevent "leaks"
+    const allTerminalButtons = new Set();
+    Object.values(PAGE_CONFIG).forEach(c => {
+        if (c.terminals) {
+            Object.values(c.terminals).forEach(t => {
+                t.buttons?.forEach(b => allTerminalButtons.add(b));
+            });
+        }
+    });
+    allTerminalButtons.forEach(selector => {
+        document.querySelector(selector)?.classList.remove('show');
+    });
+
+    if (isOpen && terminalId) {
+        // Hiding all FAB containers
+        document.querySelectorAll('.fab-container').forEach(c => c.classList.remove('show', 'inTerminal'));
+        
+        // Show correct container in terminal mode
+        if (container) {
+            container.classList.add('show', 'inTerminal');
+        }
+
+        // Hide main buttons
+        (config.main || []).forEach(id => document.querySelector(id)?.classList.remove('show'));
+
+        // Show terminal specific buttons from the current page config
+        const terminalConfig = config.terminals?.[terminalId];
+        if (terminalConfig) {
+            terminalConfig.buttons?.forEach(id => document.querySelector(id)?.classList.add('show'));
+            if (terminalConfig.title) {
+                titleControl.textContent = getString(terminalConfig.title);
+            }
+        }
+        if (backBtn) backBtn.classList.add('show');
+    } else {
+        // Closing terminal or Switching page
+        document.querySelectorAll('.fab-container').forEach(c => c.classList.remove('show', 'inTerminal'));
+        
+        if (container) {
+            container.classList.add('show');
+        }
+
+        // Show main buttons
+        (config.main || []).forEach(id => document.querySelector(id)?.classList.add('show'));
+
+        // Restore title
+        if (config.title) {
+            if (config.title === 'footer_home') {
+                titleControl.textContent = 'bindhosts ';
+            } else {
+                titleControl.textContent = getString(config.title);
+            }
+        }
+        if (backBtn) backBtn.classList.remove('show');
+    }
+}
+
 // Scroll event
 export function setupScrollEvent(content) {
     if (!content) return;
     
-    // Reset scroll state for the new current content
-    lastScrollY = content.scrollTop;
+    // Find the actual scrollable element
+    const scrollTarget = content.querySelector('.constant-height') || content;
+    lastScrollY = scrollTarget.scrollTop;
 
-    // Only attach listener once
-    if (content.dataset.scrollListener === 'true') return;
-    content.dataset.scrollListener = 'true';
+    const config = PAGE_CONFIG[content.id] || PAGE_CONFIG['default'];
+    const floatBtn = document.querySelector(config.container);
 
-    const floatBtn = content.id === 'page-hosts' ? document.querySelector('.action-container') : document.querySelector('.tcpdump-btn');
-    const actionBtn = content.id === 'page-hosts' ? document.getElementById('action-btn') : null;
-    const forceUpdateButton = document.getElementById('force-update-btn');
-
-    content.addEventListener('scroll', () => {
+    scrollTarget.onscroll = () => {
         if (!floatBtn) return;
-        const isNotTcpBtn = !floatBtn.classList.contains('tcpdump-btn');
         isScrolling = true;
         clearTimeout(scrollTimeout);
         scrollTimeout = setTimeout(() => {
             isScrolling = false;
         }, 200);
 
-        // Scroll down
-        if (content.scrollTop > lastScrollY && content.scrollTop > scrollThreshold) {
-            if (isNotTcpBtn) {
-                floatBtn.classList.remove('show');
-                actionBtn?.classList.remove('show');
-            }
-            forceUpdateButton?.classList.remove('show');
-        // Scroll up
-        } else if (content.scrollTop < lastScrollY) {
-            if (isNotTcpBtn) {
-                floatBtn.classList.add('show');
-                actionBtn?.classList.add('show');
-            }
-            setTimeout(() => forceUpdateButton?.classList.add('show'), 200);
+        const isScrollDown = scrollTarget.scrollTop > lastScrollY && scrollTarget.scrollTop > scrollThreshold;
+        const isScrollUp = scrollTarget.scrollTop < lastScrollY;
+
+        if (isScrollDown) {
+            floatBtn.classList.remove('show');
+            (config.main || []).forEach(selector => {
+                document.querySelector(selector)?.classList.remove('show');
+            });
+        } else if (isScrollUp) {
+            floatBtn.classList.add('show');
+            (config.main || []).forEach(selector => {
+                document.querySelector(selector)?.classList.add('show');
+            });
         }
 
         // Hide remove button on scroll
@@ -334,33 +404,28 @@ export function setupScrollEvent(content) {
             el.scrollTo({ left: 0, behavior: 'smooth' });
         });
 
-        lastScrollY = content.scrollTop;
-    });
+        lastScrollY = scrollTarget.scrollTop;
+    };
 
-    if (!floatBtn) return;
+    // Terminal/SlideMenu scroll logic
+    const slideMenus = document.querySelectorAll('.slide-menu');
+    slideMenus.forEach(slideMenu => {
+        slideMenu.onscroll = () => {
+             const activePage = document.querySelector('.body-content[data-active="true"]');
+             if (!activePage) return;
+             
+             // Scroll top button handling for tcpdump
+             if (slideMenu.id === 'tcpdump-terminal') {
+                 const scrollTopBtn = document.getElementById('scroll-top');
+                 if (slideMenu.scrollTop === 0) {
+                     scrollTopBtn?.classList.remove('show');
+                 } else if (slideMenu.scrollHeight > 1.5 * slideMenu.clientHeight) {
+                     scrollTopBtn?.classList.add('show');
+                 }
+             }
 
-    document.querySelectorAll('.terminal').forEach(terminal => {
-        terminal.addEventListener('scroll', () => {
-            isScrolling = true;
-            clearTimeout(scrollTimeout);
-            scrollTimeout = setTimeout(() => {
-                isScrolling = false;
-            }, 200);
-
-            if (!floatBtn.classList.contains('inTerminal')) return;
-
-            // At top
-            if (terminal.scrollTop === 0 && floatBtn.classList.contains('tcpdump-btn')) {
-                const scrollTopBtn = document.getElementById('scroll-top');
-                if (scrollTopBtn) setTimeout(() => scrollTopBtn.classList.remove('show'), 100);
-            } else if (floatBtn.classList.contains('tcpdump-btn')) {
-                const scrollTopBtn = document.getElementById('scroll-top');
-                if (scrollTopBtn) scrollTopBtn.classList.add('show');
-            } else {
-                floatBtn.classList.add('show'); // Show button on scroll
-            }
-            lastScrollY = terminal.scrollTop;
-        });
+             lastScrollY = slideMenu.scrollTop;
+        };
     });
 }
 

@@ -1,10 +1,10 @@
 import { exec } from 'kernelsu-alt';
-import { applyRippleEffect } from './util.js';
+
 
 let fileType;
 
 // File selector
-const fileSelector = document.querySelector('.file-selector-overlay');
+const fileSelectorDialog = document.getElementById('file-selector-dialog');
 let currentPath = '/storage/emulated/0/Download';
 
 /**
@@ -35,7 +35,7 @@ function updateCurrentPath() {
  * @returns {Promise<void>}
  */
 async function listFiles(path, skipAnimation = false) {
-    const fileList = document.querySelector('.file-list');
+    const fileList = fileSelectorDialog.querySelector('.file-list');
     if (!skipAnimation) {
         fileList.classList.add('switching');
         await new Promise(resolve => setTimeout(resolve, 150));
@@ -55,16 +55,17 @@ async function listFiles(path, skipAnimation = false) {
         // Add back button item if not in root directory
         if (currentPath !== '/storage/emulated/0') {
             const backItem = document.createElement('div');
-            backItem.className = 'file-item ripple-element';
+            backItem.className = 'file-item';
             backItem.innerHTML = `
-                <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
-                    <path d="M141-160q-24 0-42-18.5T81-220v-520q0-23 18-41.5t42-18.5h280l60 60h340q23 0 41.5 18.5T881-680v460q0 23-18.5 41.5T821-160H141Z"/>
-                </svg>
+                <md-ripple></md-ripple>
+                <md-icon>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M141-160q-24 0-42-18.5T81-220v-520q0-23 18-41.5t42-18.5h280l60 60h340q23 0 41.5 18.5T881-680v460q0 23-18.5 41.5T821-160H141Z"/></svg>
+                </md-icon>
                 <span>..</span>
             `;
-            backItem.addEventListener('click', () => {
-                document.querySelector('.file-selector-back-button').click();
-            });
+            backItem.onclick = () => {
+                fileSelectorDialog.querySelector('.file-selector-back-button').click();
+            };
             fileList.appendChild(backItem);
         }
 
@@ -79,16 +80,19 @@ async function listFiles(path, skipAnimation = false) {
 
         processedItems.forEach(item => {
             const itemElement = document.createElement('div');
-            itemElement.className = 'file-item ripple-element';
+            itemElement.className = 'file-item';
             itemElement.innerHTML = `
-                <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
-                    ${item.isDirectory ? 
-                        '<path d="M141-160q-24 0-42-18.5T81-220v-520q0-23 18-41.5t42-18.5h280l60 60h340q23 0 41.5 18.5T881-680v460q0 23-18.5 41.5T821-160H141Z"/>' :
-                        '<path d="M320-240h320v-80H320v80Zm0-160h320v-80H320v80ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z"/>'}
-                </svg>
+                <md-ripple></md-ripple>
+                <md-icon>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
+                        ${item.isDirectory ? 
+                            '<path d="M141-160q-24 0-42-18.5T81-220v-520q0-23 18-41.5t42-18.5h280l60 60h340q23 0 41.5 18.5T881-680v460q0 23-18.5 41.5T821-160H141Z"/>' :
+                            '<path d="M320-240h320v-80H320v80Zm0-160h320v-80H320v80ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z"/>'}
+                    </svg>
+                </md-icon>
                 <span>${item.name}</span>
             `;
-            itemElement.addEventListener('click', async () => {
+            itemElement.onclick = async () => {
                 if (item.isDirectory) {
                     currentPath = item.path;
                     updateCurrentPath();
@@ -100,7 +104,7 @@ async function listFiles(path, skipAnimation = false) {
                         closeFileSelector();
                     }
                 }
-            });
+            };
             fileList.appendChild(itemElement);
         });
         
@@ -113,7 +117,6 @@ async function listFiles(path, skipAnimation = false) {
             fileList.classList.remove('switching');
         }
     }
-    applyRippleEffect();
     updateCurrentPath();
 }
 
@@ -127,63 +130,49 @@ function setupListeners() {
     if (listenersSetup) return;
     listenersSetup = true;
 
-    const currentPathElement = document.querySelector('.current-path');
-    if (currentPathElement) {
-        currentPathElement.addEventListener('click', async (event) => {
-            const segment = event.target.closest('.path-segment');
-            if (!segment) return;
+    const currentPathElement = fileSelectorDialog.querySelector('.current-path');
+    currentPathElement.onclick = async (event) => {
+        const segment = event.target.closest('.path-segment');
+        if (!segment) return;
 
-            const targetPath = segment.dataset.path;
-            if (!targetPath || targetPath === currentPath) return;
+        const targetPath = segment.dataset.path;
+        if (!targetPath || targetPath === currentPath) return;
 
-            // Return if already at /storage/emulated/0
-            const clickedSegment = segment.textContent;
-            if ((clickedSegment === 'storage' || clickedSegment === 'emulated') && 
-                currentPath === '/storage/emulated/0') {
-                return;
-            }
+        // Return if already at /storage/emulated/0
+        const clickedSegment = segment.textContent;
+        if ((clickedSegment === 'storage' || clickedSegment === 'emulated') && 
+            currentPath === '/storage/emulated/0') {
+            return;
+        }
 
-            // Always stay within /storage/emulated/0
-            if (targetPath.split('/').length <= 3) {
-                currentPath = '/storage/emulated/0';
-            } else {
-                currentPath = targetPath;
-            }
-            updateCurrentPath();
-            await listFiles(currentPath);
-        });
-    }
+        // Always stay within /storage/emulated/0
+        if (targetPath.split('/').length <= 3) {
+            currentPath = '/storage/emulated/0';
+        } else {
+            currentPath = targetPath;
+        }
+        updateCurrentPath();
+        await listFiles(currentPath);
+    };
 
     // Back button
-    const backButton = document.querySelector('.file-selector-back-button');
-    if (backButton) {
-        backButton.addEventListener('click', async () => {
-            if (currentPath === '/storage/emulated/0') return;
-            currentPath = currentPath.split('/').slice(0, -1).join('/');
-            if (currentPath === '') currentPath = '/storage/emulated/0';
-            const currentPathElement = document.querySelector('.current-path');
-            if (currentPathElement) {
-                currentPathElement.innerHTML = currentPath.split('/').filter(Boolean).join('<span class="separator">›</span>');
-                currentPathElement.scrollTo({ 
-                    left: currentPathElement.scrollWidth,
-                    behavior: 'smooth'
-                });
-            }
-            await listFiles(currentPath);
-        });
-    }
+    fileSelectorDialog.querySelector('.file-selector-back-button').onclick = async () => {
+        if (currentPath === '/storage/emulated/0') return;
+        currentPath = currentPath.split('/').slice(0, -1).join('/');
+        if (currentPath === '') currentPath = '/storage/emulated/0';
+        const currentPathElement = document.querySelector('.current-path');
+        if (currentPathElement) {
+            currentPathElement.innerHTML = currentPath.split('/').filter(Boolean).join('<span class="separator">›</span>');
+            currentPathElement.scrollTo({ 
+                left: currentPathElement.scrollWidth,
+                behavior: 'smooth'
+            });
+        }
+        await listFiles(currentPath);
+    };
 
-    // Close file selector overlay
-    const closeBtn = document.querySelector('.close-selector');
-    if (closeBtn) {
-        closeBtn.addEventListener('click', () => closeFileSelector());
-    }
-    
-    if (fileSelector) {
-        fileSelector.addEventListener('click', (event) => {
-            if (event.target === fileSelector) closeFileSelector();
-        });
-    }
+    // Close button
+    fileSelectorDialog.querySelector('.close-selector').onclick = () => closeFileSelector();
 }
 
 /**
@@ -191,11 +180,7 @@ function setupListeners() {
  * @returns {void}
  */
 function closeFileSelector() {
-    fileSelector.style.opacity = '0';
-    document.body.classList.remove("no-scroll");
-    setTimeout(() => {
-        fileSelector.style.display = 'none';
-    }, 300);
+    fileSelectorDialog.close();
     if (window.fileSelectorResolve) {
         window.fileSelectorResolve(null);
         window.fileSelectorResolve = null;
@@ -217,10 +202,7 @@ export const FileSelector = {
         currentPath = '/storage/emulated/0/Download';
 
         // Show file selector overlay
-        fileSelector.style.display = 'flex';
-        fileSelector.offsetHeight;
-        fileSelector.style.opacity = '1';
-        document.body.classList.add("no-scroll");
+        fileSelectorDialog.show();
         setupListeners();
 
         const currentPathElement = document.querySelector('.current-path');

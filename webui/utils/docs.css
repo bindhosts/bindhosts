@@ -1,33 +1,6 @@
-.document-content {
-    position: fixed;
-    padding-bottom: calc(var(--bottom-inset) + 80px);
-    width: 100%;
-    background-color: var(--bg-primary);
-    overflow-y: auto;
-    transform: translateX(100%);
-    transition: transform 0.3s ease;
-    touch-action: pan-y;
-    z-index: var(--z-index-slide-menu);
-}
-
-.document-content.show {
-    transform: translateX(0);
-}
-
-.document-cover {
-    background-color: rgba(0, 0, 0, 0.5);
-    opacity: 0;
-    pointer-events: none;
-    z-index: var(--z-index-document-cover);
-    transition: opacity 0.3s ease;
-}
-
 #about-document-content {
-    max-height: none;
-    overflow-y: visible;
     width: 100%;
     padding: 0 20px;
-    padding-bottom: calc(var(--bottom-inset) + 80px);
     box-sizing: border-box;
 }
 
@@ -35,36 +8,29 @@
     display: none;
     font-weight: normal;
     pointer-events: auto;
+    direction: ltr !important;
+}
+
+body.editor-active .file-name-editor {
+    display: flex;
 }
 
 .file-name-editor input {
     min-width: 2em;
     background-color: transparent;
     color: inherit;
-    font-size: 1em;
+    font-size: 0.9em;
     border: none;
     outline: none;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.slide-menu {
-    background-color: var(--bg-primary);
-    transform: translateX(100%);
-    transition: transform 0.2s ease;
-    touch-action: pan-y;
-    z-index: var(--z-index-slide-menu);
+    border-bottom: 1px solid var(--md-sys-color-outline);
 }
 
 .terminal {
     font-size: 0.8em;
     width: 100%;
-    height: calc(100% - 64px);
     padding: 10px;
-    padding-bottom: calc(80px + 10px);
     box-sizing: border-box;
     word-wrap: break-word;
-    overflow-y: auto;
-    mask-image: linear-gradient(black 0%, black calc(100% - 16px), transparent 100%);
 }
 
 .tcpdump-search {
@@ -85,7 +51,7 @@
     gap: 5px;
     padding: 5px 0;
     align-items: center;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--md-sys-color-outline);
 }
 
 .tcpdump-line-header {
@@ -99,7 +65,7 @@
 }
 
 .tcpdump-domain {
-    background-color: var(--bg-secondary) !important;
+    background-color: var(--md-sys-color-tonal-surface) !important;
 }
 
 .action-terminal-output {

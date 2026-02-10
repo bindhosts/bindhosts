@@ -9,7 +9,6 @@
     <string name="global_reboot_now">Etkinleşmesi için yeniden başlat</string>
     <string name="global_reboot">Yeniden Başlat</string>
     <string name="global_rebooting">Yeniden başlatılıyor...</string>
-    <string name="global_save">Kaydet</string>
     <string name="global_saved">Dosya kaydedildi %s</string>
     <string name="global_save_fail">Dosya kaydedilemedi</string>
     <string name="global_file_too_large">Dosya düzenleme desteği yok</string>
@@ -78,7 +77,7 @@
     <string name="sources_whitelist_example">Örnek:</string>
     <string name="sources_whitelist_prompt_fail">%s Zaten beyaz liste kaynağında mevcut</string>
     <!-- Mode -->
-    <string name="mode_button">Mod</string>
+    <string name="mode_button">Mod %s</string>
     <string name="mode_title">Çalışma Modu</string>
     <string name="mode_detail">Daha fazla bilgi edin</string>
     <string name="mode_reset">Sıfırla (otomatik)</string>

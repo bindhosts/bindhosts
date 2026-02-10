@@ -1,5 +1,5 @@
 import { exec, spawn } from 'kernelsu-alt';
-import { showPrompt, applyRippleEffect, basePath, setupSwipeToClose, moduleDirectory, filePaths } from '../../utils/util.js';
+import { showPrompt, basePath, moduleDirectory, filePaths, fetchText, updateUIVisibility } from '../../utils/util.js';
 import { getString } from '../../utils/language.js';
 import { FileSelector } from '../../utils/file_selector.js';
 import { setupDocsMenu } from '../../utils/docs.js';
@@ -12,7 +12,7 @@ import { setupDocsMenu } from '../../utils/docs.js';
  * @returns {Promise<void>}
  */
 async function loadFile(fileType) {
-    const content = await fetch('link/PERSISTENT_DIR/' + filePaths[fileType]).then(response => response.text());
+    const content = await fetchText('link/PERSISTENT_DIR/' + filePaths[fileType], `${basePath}/${filePaths[fileType]}`).catch(() => "");
     const lines = content
         .split("\n")
         .map(line => line)
@@ -45,12 +45,12 @@ function displayHostsList(lines, fileType) {
         try {
             if (!domain.startsWith("http")) domain = "http://" + domain;
             domain = new URL(domain).hostname;
-        } catch (e) {
+        } catch {
             domain = domain.split(/[/:?#]/)[0];
         }
         const faviconUrl = `https://twenty-icons.com/${domain}`;
 
-        const listItem = document.createElement("li");
+        const listItem = document.createElement("div");
         listItem.className = 'scrollable-list';
         listItem.innerHTML = `
             <!-- Favicon and link text -->
@@ -62,28 +62,22 @@ function displayHostsList(lines, fileType) {
                 <div class="link-text">${line.replace(/^disabled\|/, '')}</div>
 
                 <!-- Checkbox (custom hosts only) -->
-                ${fileType === "custom" ? `<div class="checkbox-wrapper">
-                    <input type="checkbox" class="checkbox" id="checkbox1" disabled />
-                    <label for="checkbox1" class="custom-checkbox">
-                        <span class="tick-symbol">
-                            <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 -3 26 26" width="16px" height="16px" fill="#fff"><path d="M 22.566406 4.730469 L 20.773438 3.511719 C 20.277344 3.175781 19.597656 3.304688 19.265625 3.796875 L 10.476563 16.757813 L 6.4375 12.71875 C 6.015625 12.296875 5.328125 12.296875 4.90625 12.71875 L 3.371094 14.253906 C 2.949219 14.675781 2.949219 15.363281 3.371094 15.789063 L 9.582031 22 C 9.929688 22.347656 10.476563 22.613281 10.96875 22.613281 C 11.460938 22.613281 11.957031 22.304688 12.277344 21.839844 L 22.855469 6.234375 C 23.191406 5.742188 23.0625 5.066406 22.566406 4.730469 Z"/></svg>
-                        </span>
-                    </label>
-                </div>` : ''}
+                ${fileType === "custom" ? `<md-checkbox></md-checkbox>` : ''}
             </div>
 
             <!-- Edit and delete buttons -->
-            ${fileType === "import_custom" ? `<button class="edit-btn ripple-element">
-                <svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960" width="22px" fill="#ffffff"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg>
-            </button>` : ""}
-            <button class="delete-btn ripple-element" id="${fileType === "import_custom" ? "file-delete" : "line-delete"}">
-                <svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960" width="22px" fill="#ffffff"><path d="M277.37-111.87q-37.78 0-64.39-26.61t-26.61-64.39v-514.5h-45.5v-91H354.5v-45.5h250.52v45.5h214.11v91h-45.5v514.5q0 37.78-26.61 64.39t-64.39 26.61H277.37Zm78.33-168.37h85.5v-360h-85.5v360Zm163.1 0h85.5v-360h-85.5v360Z"/></svg>
-            </button>
+            <div class="link-button">
+                ${fileType === "import_custom" ? `<md-filled-icon-button class="edit-btn">
+                    <md-icon><svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960" width="22px" fill="#ffffff"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg></md-icon>
+                </md-filled-icon-button>` : ""}
+                <md-filled-icon-button class="delete-btn" id="${fileType === "import_custom" ? "file-delete" : "line-delete"}">
+                    <md-icon><svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960" width="22px" fill="#ffffff"><path d="M277.37-111.87q-37.78 0-64.39-26.61t-26.61-64.39v-514.5h-45.5v-91H354.5v-45.5h250.52v45.5h214.11v91h-45.5v514.5q0 37.78-26.61 64.39t-64.39 26.61H277.37Zm78.33-168.37h85.5v-360h-85.5v360Zm163.1 0h85.5v-360h-85.5v360Z"/></svg></md-icon>
+                </md-filled-icon-button>
+            </div>
         `;
         // Click to show remove button
         listElement.appendChild(listItem);
-        listItem.addEventListener('click', (e) => {
-            if (e.target.classList.contains("checkbox-wrapper")) return;
+        listItem.addEventListener('click', () => {
             const isRTL = document.documentElement.getAttribute('dir') === 'rtl';
             listItem.scrollTo({ 
                 left: isRTL ? -listItem.scrollWidth : listItem.scrollWidth,
@@ -107,66 +101,88 @@ function displayHostsList(lines, fileType) {
             };
         }
         // Checkbox functionality for custom hosts
-        const checkbox = listItem.querySelector(".checkbox");
+        const checkbox = listItem.querySelector("md-checkbox");
         if (checkbox) {
             checkbox.checked = !line.startsWith('disabled|');
-            const checkboxWrapper = listItem.querySelector('.checkbox-wrapper');
-            if (checkboxWrapper) {
-                checkboxWrapper.addEventListener('click', () => {
-                    const command = line.startsWith('disabled|') ? `s/${line}/${line.replace(/^disabled\|/, '')}/` : `s/^${line}/disabled|${line}/`;
-                    exec(`sed -i '${command}' ${basePath}/${filePaths[fileType]}`);
-                    loadFile(fileType);
-                });
-            }
+            checkbox.addEventListener('change', () => {
+                const command = line.startsWith('disabled|') ? `s/${line}/${line.replace(/^disabled\|/, '')}/` : `s/^${line}/disabled|${line}/`;
+                exec(`sed -i '${command}' ${basePath}/${filePaths[fileType]}`);
+                loadFile(fileType);
+            });
         }
+        const removeEntry = () => {
+            const next = listItem.nextElementSibling;
+            if (next && next.tagName === 'MD-DIVIDER') {
+                next.remove();
+            } else {
+                const prev = listItem.previousElementSibling;
+                if (prev && prev.tagName === 'MD-DIVIDER') {
+                    prev.remove();
+                }
+            }
+            listItem.remove();
+        };
+
         // Remove line from file
         if (deleteLine) {
-            deleteLine.addEventListener('click', async () => {
+            deleteLine.onclick = async () => {
                 await exec(`
                     filtered=$(grep -vxF '${line}' ${basePath}/${filePaths[fileType]})
                     echo "$filtered" > ${basePath}/${filePaths[fileType]}
                 `);
-                listElement.removeChild(listItem);
-            });
+                removeEntry();
+            };
         }
         // Remove file
         if (deleteFile) {
-            deleteFile.addEventListener('click', async () => {
+            deleteFile.onclick = async () => {
                 const fileName = listItem.querySelector(".link-text").textContent;
                 const remove = await removeCustomHostsFile(fileName);
                 if (remove) {
                     await exec(`rm -f "${basePath}/${fileName}"`);
-                    listElement.removeChild(listItem);
+                    removeEntry();
                 }
-            });
+            };
         }
         // Edit file
         if (editFile) {
-            editFile.addEventListener('click', () => {
+            editFile.onclick = () => {
                 const line = listItem.querySelector(".link-text").textContent;
                 fileNameEditor(line);
-            });
+            };
         }
         return listItem;
     };
 
     // Display initial items
-    initialLines.forEach(line => createListItem(line));
+    initialLines.forEach((line, index) => {
+        createListItem(line);
+        if (index < initialLines.length - 1) {
+            listElement.appendChild(document.createElement("md-divider"));
+        }
+    });
+
     // Add "Show More" button
     if (hasMoreItems) {
-        const showMoreItem = document.createElement("li");
+        listElement.appendChild(document.createElement("md-divider"));
+        const showMoreItem = document.createElement("div");
         showMoreItem.className = "show-more-item";
         // Special styling to make it visually distinct
-        showMoreItem.innerHTML = `<span>${getString('global_show_all', lines.length - showInitialLimit)}</span>`;
+        showMoreItem.innerHTML = getString('global_show_all', lines.length - showInitialLimit);
         listElement.appendChild(showMoreItem);
         // Remove the "Show More" button and show remaining items
-        showMoreItem.addEventListener('click', () => {
+        showMoreItem.onclick = () => {
             listElement.removeChild(showMoreItem);
-            lines.slice(showInitialLimit).forEach(line => createListItem(line));
-            applyRippleEffect();
-        });
+            const remainingLines = lines.slice(showInitialLimit);
+            remainingLines.forEach((line, index) => {
+                createListItem(line);
+                if (index < remainingLines.length - 1) {
+                    listElement.appendChild(document.createElement("md-divider"));
+                }
+            });
+        };
     }
-    applyRippleEffect();
+
 }
 
 /**
@@ -182,7 +198,7 @@ async function handleAdd(fileType, prompt) {
     if (inputValue === "") return;
     const inputLines = inputValue.split('\n').map(line => line.trim()).filter(line => line !== "");
     try {
-        const fileContent = await fetch('link/PERSISTENT_DIR/' + filePaths[fileType]).then(response => response.text());
+        const fileContent = await fetchText('link/PERSISTENT_DIR/' + filePaths[fileType], `${basePath}/${filePaths[fileType]}`).catch(() => "");
         const existingLines = fileContent.split('\n').map(line => line.trim()).filter(line => line !== "");
 
         for (const line of inputLines) {
@@ -194,7 +210,7 @@ async function handleAdd(fileType, prompt) {
         }
         inputElement.value = ""; // Clear input if add successful
         loadFile(fileType);
-    } catch (error) {
+    } catch(error) {
         console.error(`Failed to process input for ${fileType}: ${error}`);
     }
 }
@@ -205,39 +221,28 @@ async function handleAdd(fileType, prompt) {
  * @returns {Promise<boolean>}
  */
 function removeCustomHostsFile(fileName) {
-    const confirmationOverlay = document.getElementById("confirmation-overlay");
-    const cancelButton = document.getElementById("cancel-btn");
-    const removeButton = document.getElementById("remove-btn");
-    const closeBtn = document.getElementById('close-confirmation');
+    const dialog = document.getElementById("confirmation-dialog");
+    const cancelButton = document.getElementById("dialog-cancel-btn");
+    const removeButton = document.getElementById("dialog-remove-btn");
 
     document.getElementById("confirmation-file-name").textContent = fileName;
 
-    // Open confirmation dialog
-    confirmationOverlay.style.display = "flex";
-    setTimeout(() => {
-        confirmationOverlay.style.opacity = "1";
-    }, 10);
-
-    const closeConfirmationOverlay = () => {
-        confirmationOverlay.style.opacity = "0";
-        setTimeout(() => {
-            confirmationOverlay.style.display = "none";
-        }, 200);
-    }
+    // Show dialog
+    dialog.show();
 
     return new Promise((resolve) => {
-        closeBtn.onclick = () => {
-            closeConfirmationOverlay();
-            resolve(false);
-        }
-        cancelButton.onclick = () => closeBtn.click();
-        confirmationOverlay.addEventListener('click', (e) => {
-            if (e.target === confirmationOverlay) closeBtn.click();
-        });
-        // Confirm file removal
+        dialog.onclose = () => {
+            resolve(dialog.returnValue === 'remove');
+            dialog.onclose = null;
+        };
+
+        cancelButton.onclick = () => {
+            dialog.returnValue = 'cancel';
+            dialog.close();
+        };
         removeButton.onclick = () => {
-            closeConfirmationOverlay();
-            resolve(true);
+            dialog.returnValue = 'remove';
+            dialog.close();
         }
     });
 }
@@ -255,7 +260,16 @@ function setupHelpMenu() {
         button.onclick = () => {
             const type = button.dataset.type;
             const overlay = document.getElementById(`${type}-help`);
-            if (overlay) openOverlay(overlay);
+            if (overlay) {
+                if (overlay.tagName === 'MD-DIALOG') {
+                    overlay.show();
+                    // Setup close button inside dialog
+                    const closeBtn = overlay.querySelector('.close-btn');
+                    if (closeBtn) closeBtn.onclick = () => overlay.close();
+                } else {
+                    openOverlay(overlay);
+                }
+            }
         };
     });
     overlays.forEach(overlay => {
@@ -333,6 +347,16 @@ function setupInputEvent() {
             const nearestLine = Math.round(scrollTop / lineHeight) * lineHeight;
             inputBox.scrollTo({ top: nearestLine, behavior: 'smooth' });
         });
+        inputBox.addEventListener('focus', () => {
+            const wrapper = inputBox.closest('.input-box-wrapper');
+            wrapper.classList.add('focus');
+            inputBox.style.padding = '0 9px';
+        });
+        inputBox.addEventListener('blur', () => {
+            const wrapper = inputBox.closest('.input-box-wrapper');
+            wrapper.classList.remove('focus');
+            inputBox.style.paddingLeft = '10px';
+        });
     });
 }
 
@@ -362,7 +386,7 @@ function attachAddButtonListeners() {
     });
 }
 
-let actionRunning = false, setupActionTerminal = false, isTerminalOpen = false;
+let actionRunning = false, isTerminalOpen = false;
 
 /**
  * Run bindhosts.sh with and display output in fake terminal
@@ -370,24 +394,14 @@ let actionRunning = false, setupActionTerminal = false, isTerminalOpen = false;
  * @returns {Promise<void>}
  */
 function runBindhosts(args) {
-    const cover = document.querySelector('.document-cover');
     const terminal = document.getElementById('action-terminal');
     const terminalContent = document.getElementById('action-terminal-content');
-    const header = document.querySelector('.title-container');
-    const title = document.getElementById('title');
     const backButton = document.querySelector('.back-button');
-    const bodyContent = document.getElementById('page-hosts');
     const FabContainer = document.querySelector('.action-container');
-    const actionBtn = document.getElementById('action-btn');
     const closeBtn = document.getElementById('close-terminal');
-    const forceUpdateButton = document.getElementById('force-update-btn');
 
-    if (!setupActionTerminal) {
-        setupSwipeToClose(terminal, cover);
-        closeBtn.addEventListener('click', () => closeTerminal());
-        backButton.addEventListener('click', () => closeTerminal());
-        setupActionTerminal = true;
-    }
+    closeBtn.onclick = () => closeTerminal();
+    backButton.onclick = () => closeTerminal();
 
     if (!actionRunning) {
         actionRunning = true;
@@ -410,21 +424,12 @@ function runBindhosts(args) {
         p.className = 'action-terminal-output';
         p.textContent = output;
         terminalContent.appendChild(p);
+        terminal.scrollTo({ top: terminal.scrollHeight, behavior: 'smooth' });
     };
 
     const closeTerminal = () => {
         if (!isTerminalOpen) return;
-        terminal.style.transform = 'translateX(100%)';
-        bodyContent.style.transform = 'translateX(0)';
-        cover.style.opacity = '0';
-        backButton.classList.remove('show');
-        FabContainer.classList.add('show');
-        actionBtn.classList.add('show');
-        FabContainer.classList.remove('inTerminal');
-        forceUpdateButton.classList.add('show');
-        closeBtn.classList.remove('show');
-        header.classList.remove('back');
-        title.textContent = getString('footer_hosts');
+        terminal.close();
         setTimeout(() => {
             isTerminalOpen = false;
         }, 100);
@@ -433,16 +438,8 @@ function runBindhosts(args) {
     // Open output terminal
     setTimeout(() => {
         isTerminalOpen = true;
-        terminal.style.transform = 'translateX(0)';
-        bodyContent.style.transform = 'translateX(-20vw)';
-        cover.style.opacity = '1';
-        header.classList.add('back');
-        backButton.classList.add('show');
-        FabContainer.classList.remove('show');
-        actionBtn.classList.remove('show');
-        FabContainer.classList.add('inTerminal');
-        forceUpdateButton.classList.remove('show');
-        title.textContent = getString('global_action');
+        terminal.open();
+        backButton.onclick = () => closeTerminal();
     }, 50);
 }
 
@@ -451,7 +448,7 @@ function runBindhosts(args) {
  * @returns {void}
  */
 function getCustomHostsList() {
-    exec(`ls ${basePath} | grep "^custom.*\.txt$" | grep -vx "custom.txt"`)
+    exec(`ls ${basePath} | grep "^custom.*\\.txt$" | grep -vx "custom.txt"`)
         .then(({ stdout, errno }) => {
             if (errno !== 0) return;
             const lines = stdout.split("\n");
@@ -484,6 +481,32 @@ async function importCustomHost() {
 }
 
 /**
+ * Setup dev editor for system files
+ * @returns {void}
+ */
+function setupDevEditor() {
+    const header = document.querySelector('.box-header.import');
+    const helpBtn = header.querySelector('.help-btn');
+    if (!helpBtn) return;
+
+    const editBtn = document.createElement('md-outlined-icon-button');
+    editBtn.className = 'dev-edit-btn';
+    editBtn.innerHTML = `
+        <md-icon><svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960" width="22px"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg></md-icon>
+    `;
+    editBtn.onclick = async () => {
+        const fileName = "_demo";
+        const content = await fetchText(`link/PERSISTENT_DIR/${fileName}`, `${basePath}/${fileName}`).catch(() => "");
+        const editorInput = document.getElementById("edit-input");
+        const fileNameInput = document.getElementById('file-name-input');
+        editorInput.value = content;
+        fileNameInput.value = fileName;
+        openFileEditor(fileName);
+    };
+    header.insertBefore(editBtn, helpBtn);
+}
+
+/**
  * Open file name editor
  * @param {string} fileName - Current file name
  * @returns {Promise<void>}
@@ -496,7 +519,7 @@ async function fileNameEditor(fileName) {
     // Editor support for file smaller than 128KB
     const result = await exec(`[ $(wc -c < ${basePath}/${fileName}) -lt 131072 ] || exit 1`);
     if (result.errno === 0) {
-        const content = await fetch(`link/PERSISTENT_DIR/${fileName}`).then(response => response.text());
+        const content = await fetchText(`link/PERSISTENT_DIR/${fileName}`, `${basePath}/${fileName}`).catch(() => "");
         editorInput.value = content;
         openFileEditor(fileName);
     } else {
@@ -506,7 +529,7 @@ async function fileNameEditor(fileName) {
     }
 }
 
-let setupEditor = false, isSwipeToCloseSetup = false;
+let setupEditor = false;
 /**
  * Open file editor
  * @param {string} lastFileName - Name of the last file edited
@@ -514,141 +537,112 @@ let setupEditor = false, isSwipeToCloseSetup = false;
  * @returns {void}
  */
 function openFileEditor(lastFileName, openEditor = true) {
-    const header = document.querySelector('.title-container');
-    const title = document.getElementById('title');
-    const fileName = document.querySelector('.file-name-editor');
     const backButton = document.querySelector('.back-button');
-    const saveButton = document.getElementById('edit-save-btn');
-    const FabContainer = document.querySelector('.action-container');
-    const actionBtn = document.getElementById('action-btn');
-    const editorCover = document.querySelector('.document-cover');
+    const saveButton = document.getElementById('save-btn');
     const editor = document.getElementById('edit-content');
     const lineNumbers = document.querySelector('.line-numbers');
     const bodyContent = document.getElementById('page-hosts');
-    const forceUpdateButton = document.getElementById('force-update-btn');
     const editorInput = document.getElementById("edit-input");
     const fileNameInput = document.getElementById('file-name-input');
 
     if (!setupEditor) {
         setupEditor = true;
         fileNameInput.addEventListener('input', adjustFileNameWidth);
-        saveButton.addEventListener('click', saveFile);
-        editorInput.addEventListener('input', scrollSafeInset);
-        editorInput.addEventListener('blur', () => {
-            editorInput.style.paddingBottom = '30px';
-            lineNumbers.style.paddingBottom = '30px';
-        });
-        // Set line numbers
-        editorInput.addEventListener('input', () => {
+        saveButton.onclick = saveFile;
+        editorInput.oninput = () => {
+            // Set line numbers
             const lines = editorInput.value.split('\n').length;
             lineNumbers.innerHTML = Array.from({ length: lines }, (_, index) => 
                 `<div>${(index + 1).toString().padStart(2, ' ')}</div>`
             ).join('');
             // Sync scroll position
             lineNumbers.scrollTop = editorInput.scrollTop;
-        });
-        editorInput.addEventListener('scroll', () => {
+        };
+        editorInput.onblur = () => {
+            editorInput.style.paddingBottom = '30px';
+            lineNumbers.style.paddingBottom = '30px';
+        };
+        editorInput.onscroll = () => {
             lineNumbers.style.top = `-${editorInput.scrollTop}px`;
-            // Sync scroll position
             lineNumbers.scrollTop = editorInput.scrollTop;
-        });
-        editorInput.dispatchEvent(new Event('input'));
-        backButton.addEventListener('click', () => closeEditor());
+        };
+
+        const updateActiveLine = () => {
+            const cursorPosition = editorInput.selectionStart;
+            const textBeforeCursor = editorInput.value.substring(0, cursorPosition);
+            const currentLine = textBeforeCursor.split('\n').length;
+            
+            // Highlight line number
+            const lines = lineNumbers.children;
+            for (let i = 0; i < lines.length; i++) {
+                lines[i].classList.toggle('active', i + 1 === currentLine);
+            }
+
+            // Move highlight bar
+            const activeLineBar = document.getElementById('active-line-bar');
+            if (activeLineBar) {
+                const lineHeight = parseFloat(window.getComputedStyle(editorInput).lineHeight);
+                const top = 5 + (currentLine - 1) * lineHeight - editorInput.scrollTop;
+                activeLineBar.style.top = `${top}px`;
+            }
+        };
+
+        editorInput.addEventListener('scroll', updateActiveLine);
+        editorInput.addEventListener('input', updateActiveLine);
+        editorInput.addEventListener('click', updateActiveLine);
+        editorInput.addEventListener('keyup', updateActiveLine);
     }
 
-    // Adjust width of fileName according to the length of text in input
+    editorInput.dispatchEvent(new Event('input'));
+
+    // Adjust width of fileName dynamically
     function adjustFileNameWidth() {
-        const tempSpan = document.createElement('span');
-        tempSpan.style.visibility = 'hidden';
-        tempSpan.style.whiteSpace = 'nowrap';
-        tempSpan.style.fontSize = '21px';
-        tempSpan.textContent = fileNameInput.value;
-        document.body.appendChild(tempSpan);
-        if (tempSpan.offsetWidth <= window.innerWidth * 0.8 - 150) {
-            fileNameInput.style.width = `${tempSpan.offsetWidth}px`;
-        } else {
-            fileNameInput.style.width = window.innerWidth * 0.8 - 150 + 'px';
-        }
-        document.body.removeChild(tempSpan);
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        ctx.font = window.getComputedStyle(fileNameInput).font;
+        const textWidth = ctx.measureText(fileNameInput.value).width;
+        const maxWidth = window.innerWidth * 0.8 - 150;
+        fileNameInput.style.width = `${Math.min(Math.ceil(textWidth) + 2, maxWidth)}px`;
     }
     adjustFileNameWidth();
 
     // Show editor
-    editorCover.style.opacity = '1';
-    editorCover.style.pointerEvents = 'auto';
-    header.classList.add('back', 'save');
-    backButton.classList.add('show');
-    saveButton.classList.add('show');
-    FabContainer.classList.remove('show');
-    actionBtn.classList.remove('show');
-    forceUpdateButton.classList.remove('show');
-    title.style.display = 'none';
-    fileName.style.display = 'flex';
+    document.body.classList.add('editor-active');
     bodyContent.style.overflowY = 'hidden';
-    lineNumbers.style.display = 'block'; // Added line
+    lineNumbers.style.display = 'block';
 
     // Open file editor
     if (openEditor) {
-        editor.style.transform = 'translateX(0)';
-        bodyContent.style.transform = 'translateX(-20vw)';
+        editor.open();
+        backButton.onclick = () => closeEditor();
+
+        // Handle system file editor UI
+        const isSystemFile = Object.values(filePaths).includes(lastFileName);
+        const fileNameEditor = document.querySelector('.file-name-editor');
+        const spans = fileNameEditor.querySelectorAll('span');
+        if (isSystemFile) {
+            spans.forEach(span => span.style.display = 'none');
+            fileNameInput.readOnly = true;
+            fileNameInput.style.width = 'auto';
+        } else {
+            spans.forEach(span => span.style.display = 'inline');
+            fileNameInput.readOnly = false;
+            adjustFileNameWidth();
+        }
     } else {
         setTimeout(() => fileNameInput.focus(), 1000);
-    }
-
-    // Scroll to avoid keyboard blocking input box
-    function scrollSafeInset() {
-        editorInput.style.paddingBottom = '55vh';
-        lineNumbers.style.paddingBottom = '55vh';
-        setTimeout(() => {
-            // Get cursor position
-            const cursorPosition = editorInput.selectionStart;
-            const textBeforeCursor = editorInput.value.substring(0, cursorPosition);
-            const linesBeforeCursor = textBeforeCursor.split('\n').length;
-
-            // Calculate cursor position using line height
-            const lineHeight = parseFloat(window.getComputedStyle(editorInput).lineHeight);
-            const cursorBottom = linesBeforeCursor * lineHeight;
-            const viewportHeight = window.innerHeight;
-            const keyboardHeight = viewportHeight * 0.6;
-            const safeArea = 20;
-            if (cursorBottom > (viewportHeight - keyboardHeight)) {
-                const scrollAmount = cursorBottom - (viewportHeight - keyboardHeight) + safeArea;
-                editorInput.scrollTo({
-                    top: scrollAmount,
-                    behavior: 'smooth'
-                });
-            }
-        }, 100);
-    }
-
-    // Setup swipe to close if not set it yet
-    if (!isSwipeToCloseSetup) {
-        setupSwipeToClose(editor, editorCover);
-        isSwipeToCloseSetup = true;
     }
 
     // Alternative way to close about docs with back button
     const closeEditor = () => {
         // Check if editor is actually active
-        if (editor.style.transform !== 'translateX(0)' && fileName.style.display === 'none') return;
+        if (!editor.classList.contains('open') && !document.body.classList.contains('editor-active')) return;
         
         const lineNumbers = document.querySelector('.line-numbers');
         if (lineNumbers) lineNumbers.style.display = 'none';
-        if (openEditor) { editor.style.transform = 'translateX(100%)'; }
-        editorCover.style.opacity = '0';
-        editorCover.style.pointerEvents = 'none';
-        backButton.classList.remove('show');
-        fileName.style.display = 'none';
-        saveButton.classList.remove('show');
-        header.classList.remove('back', 'save');
-        title.style.display = 'inline';
-        FabContainer.classList.add('show');
-        actionBtn.classList.add('show');
-        setTimeout(() => {
-            forceUpdateButton.classList.add('show');
-        }, 200);
+        editor.close();
+        document.body.classList.remove('editor-active');
         bodyContent.style.overflowY = 'auto';
-        bodyContent.style.transform = 'translateX(0)';
         document.querySelectorAll('.box li').forEach(li => {
             li.scrollTo({ left: 0, behavior: 'smooth' });
         });
@@ -664,8 +658,16 @@ function openFileEditor(lastFileName, openEditor = true) {
             return;
         }
         let command;
-        if (openEditor) {
-            // Save file
+        const isSystemFile = Object.values(filePaths).includes(lastFileName);
+        if (isSystemFile) {
+            // Save system file directly
+            command = `
+                cat << 'HostEditorEOF' > ${basePath}/${lastFileName}
+${content}
+HostEditorEOF
+                chmod 644 ${basePath}/${lastFileName}`;
+        } else if (openEditor) {
+            // Save custom file
             command = `
                 [ ! -f ${basePath}/${lastFileName} ] || rm -f ${basePath}/${lastFileName}
                 cat << 'HostEditorEOF' > ${basePath}/custom${newFileName}.txt
@@ -688,59 +690,33 @@ HostEditorEOF
     }
 }
 
-/**
- * Prevents invalid characters in file names
- * @param {HTMLInputElement} input - Input element to process
- * @returns {void}
- */
-window.replaceSpaces = function(input) {
-    const cursorPosition = input.selectionStart;
-    input.value = input.value.replace(/ /g, '_').replace(/[\/\0*?[\]{}|&$`"'\\<>]/g, '');
-    input.setSelectionRange(cursorPosition, cursorPosition);
-}
-
 // Lifecycle: Initial mount to DOM
 export function mount() {
     attachAddButtonListeners();
     setupHelpMenu();
     setupDocsMenu();
     setupInputEvent();
-    
-    // One-time load of data
-    ["custom", "sources", "blacklist", "whitelist", "sources_whitelist"].forEach(loadFile);
-    getCustomHostsList();
+    if (import.meta.env.DEV) setupDevEditor();
 
     // Event listeners for action buttons
     const actionBtn = document.getElementById("action-btn");
     const forceUpdateButton = document.getElementById('force-update-btn');
     const importBtn = document.getElementById("import-custom-button");
 
-    actionBtn.addEventListener('click', () => runBindhosts("--action"));
-    forceUpdateButton.addEventListener('click', () => runBindhosts("--force-update"));
-    importBtn.addEventListener('click', () => importCustomHost());
+    actionBtn.onclick = () => runBindhosts("--action");
+    forceUpdateButton.onclick = () => runBindhosts("--force-update");
+    importBtn.onclick = () => importCustomHost();
 }
 
 // Lifecycle: Each time page becomes visible
 export function onShow() {
-    document.getElementById('title').textContent = getString('footer_hosts');
-    const actionContainer = document.querySelector('.action-container');
-    const actionBtn = document.getElementById('action-btn');
-    const forceUpdateButton = document.getElementById('force-update-btn');
-    
-    actionContainer?.classList.add('show');
-    actionBtn?.classList.add('show');
-    setTimeout(() => forceUpdateButton?.classList.add('show'), 200);
+    updateUIVisibility();
+    ["custom", "sources", "blacklist", "whitelist", "sources_whitelist"].forEach(loadFile);
+    getCustomHostsList();
 }
 
 // Lifecycle: Each time page is hidden
 export function onHide() {
-    const actionContainer = document.querySelector('.action-container');
-    const actionBtn = document.getElementById('action-btn');
-    const forceUpdateButton = document.getElementById('force-update-btn');
-    const saveBtn = document.getElementById('edit-save-btn');
-
-    actionContainer?.classList.remove('show');
-    actionBtn?.classList.remove('show');
-    forceUpdateButton?.classList.remove('show');
-    saveBtn?.classList.remove('show');
+    document.querySelectorAll('.fab-container').forEach(c => c.classList.remove('show', 'inTerminal'));
+    document.getElementById('save-btn')?.classList.remove('show');
 }

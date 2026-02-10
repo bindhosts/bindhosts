@@ -1,8 +1,9 @@
 import { exec, spawn } from 'kernelsu-alt';
-import { showPrompt, reboot, applyRippleEffect, basePath, moduleDirectory, linkRedirect, filePaths, setupSwipeToClose } from '../../utils/util.js';
-import { getString, generateLanguageMenu } from '../../utils/language.js';
+import { showPrompt, reboot, basePath, moduleDirectory, linkRedirect, filePaths, fetchText, updateUIVisibility } from '../../utils/util.js';
+import { getString } from '../../utils/language.js';
 import { FileSelector } from '../../utils/file_selector.js';
 import { addCopyToClipboardListeners, setupDocsMenu } from '../../utils/docs.js';
+import { formatCapturedLogs, capturedLogs } from '../../utils/log_catcher.js';
 let isDownloading = false;
 
 /**
@@ -53,12 +54,14 @@ function installBindhostsApp() {
  */
 function checkUpdateStatus() {
     const toggleVersion = document.getElementById('toggle-version');
-    fetch(`link/MODDIR/module.prop`)
-        .then(response => response.text())
-        .then(data => {
-            const lines = data.split('\n');
-            toggleVersion.checked = lines.some(line => line.trim().startsWith("updateJson="));
+    fetchText(`link/MODDIR/module.prop`, `${moduleDirectory}/module.prop`)
+        .then(text => {
+            const lines = text.split('\n');
+            toggleVersion.selected = lines.some(line => line.trim().startsWith("updateJson="));
         })
+        .catch(() => {
+            toggleVersion.selected = true;
+        });
 }
 
 /**
@@ -106,11 +109,11 @@ function checkMagisk() {
 async function toggleActionRedirectWebui() {
     const actionRedirectStatus = document.getElementById('action-redirect');
     const result = await exec(`
-        echo "magisk_webui_redirect=${actionRedirectStatus.checked ? 0 : 1}" > ${basePath}/webui_setting.sh
+        echo "magisk_webui_redirect=${actionRedirectStatus.selected ? 0 : 1}" > ${basePath}/webui_setting.sh
         chmod 755 ${basePath}/webui_setting.sh || true
     `);
     if (result.errno === 0) {
-        if (actionRedirectStatus.checked) {
+        if (actionRedirectStatus.selected) {
             showPrompt(getString('control_panel_action_prompt_false'), false);
         } else {
             showPrompt(getString('control_panel_action_prompt_true'));
@@ -128,17 +131,13 @@ async function toggleActionRedirectWebui() {
 function checkRedirectStatus() {
     const actionRedirectStatus = document.getElementById('action-redirect');
 
-    fetch(`link/PERSISTENT_DIR/webui_setting.sh`)
-        .then(response => {
-            if (!response.ok) throw new Error('File not found');
-            return response.text();
-        })
+    fetchText(`link/PERSISTENT_DIR/webui_setting.sh`, `${basePath}/webui_setting.sh`)
         .then(data => {
             const redirectStatus = data.match(/magisk_webui_redirect=(\d)/)[1];
-            actionRedirectStatus.checked = redirectStatus === "1";
+            actionRedirectStatus.selected = redirectStatus === "1";
         })
-        .catch(error => {
-            actionRedirectStatus.checked = true;
+        .catch(() => {
+            actionRedirectStatus.selected = true;
         });
 }
 
@@ -151,15 +150,14 @@ function checkCronStatus() {
     const cronToggle = document.getElementById('toggle-cron');
 
     // Hide cron toggle when using AdAway
-    fetch('link/MODDIR/module.prop')
-        .then(response => response.text())
+    fetchText('link/MODDIR/module.prop', `${moduleDirectory}/module.prop`)
         .then(text => {
             if (text.includes('AdAway')) {
                 document.getElementById('cron-toggle-container').style.display = 'none';
             } else {
                 exec(`grep -q bindhosts.sh ${basePath}/crontabs/root`)
                     .then(({ errno }) => {
-                        cronToggle.checked = errno === 0 ? true : false;
+                        cronToggle.selected = errno === 0 ? true : false;
                     });
             }
         })
@@ -175,7 +173,7 @@ function checkCronStatus() {
  */
 async function toggleCron() {
     const cronToggle = document.getElementById('toggle-cron');
-    const result = await exec(`sh ${moduleDirectory}/bindhosts.sh --${cronToggle.checked ? "disable" : "enable"}-cron`);
+    const result = await exec(`sh ${moduleDirectory}/bindhosts.sh --${cronToggle.selected ? "disable" : "enable"}-cron`);
     if (result.errno === 0) {
         const lines = result.stdout.split("\n");
         lines.forEach(line => {
@@ -258,7 +256,7 @@ function localesUpdate() {
                 });
             }
         })
-        .catch(error => {
+        .catch(() => {
             showPrompt(getString('more_support_update_locales_failed'), false);
             isDownloading = false;
         });
@@ -274,27 +272,12 @@ function openLanguageMenu() {
     const languageOverlay = document.getElementById('language-overlay');
 
     // Open menu
-    languageOverlay.style.display = 'flex';
-    setTimeout(() => {
-        languageOverlay.style.opacity = '1';
-    }, 10);
-
-    const closeOverlay = () => {
-        languageOverlay.style.opacity = '0';
-        setTimeout(() => {
-            languageOverlay.style.display = 'none';
-        }, 200);
-    };
+    languageOverlay.show();
 
     if (!languageMenuListener) {
         languageMenuListener = true;
-        const closeBtn = document.querySelector('.close-btn');
-        const infoBtn = document.getElementById('translate-btn');
-
-        closeBtn.onclick = () => closeOverlay();
-        languageOverlay.addEventListener('click', (event) => {
-            if (event.target === languageOverlay) closeOverlay();
-        });
+        const closeBtn = languageOverlay.querySelector('.close-btn');
+        closeBtn.onclick = () => languageOverlay.close();
     }
 }
 
@@ -318,14 +301,9 @@ let setupTcpdumpTerminal = false, contentBox = false;
  * @see controlPanelEventlistener - Calling this function
  */
 function openTcpdumpTerminal() {
-    const cover = document.querySelector('.document-cover');
     const terminal = document.getElementById('tcpdump-terminal');
     const terminalContent = document.getElementById('tcpdump-terminal-content');
-    const header = document.querySelector('.title-container');
-    const title = document.getElementById('title');
     const backButton = document.querySelector('.back-button');
-    const bodyContent = document.getElementById('page-more');
-    const floatBtn = document.querySelector('.tcpdump-btn');
     const stopBtn = document.getElementById('stop-tcpdump');
     const scrollTopBtn = document.getElementById('scroll-top');
 
@@ -338,7 +316,6 @@ function openTcpdumpTerminal() {
     `;
 
     if (!setupTcpdumpTerminal) {
-        setupSwipeToClose(terminal, cover);
         stopBtn.addEventListener('click', () => stopTcpdump());
         backButton.addEventListener('click', () => closeTcpdumpTerminal());
         const searchInput = document.getElementById('tcpdump-search-input');
@@ -352,7 +329,7 @@ function openTcpdumpTerminal() {
             });
         });
         scrollTopBtn.addEventListener('click', () => {
-            terminalContent.scrollTo({ top: 0, behavior: 'smooth' });
+            terminal.scrollTo({ top: 0, behavior: 'smooth' });
         });
         setupTcpdumpTerminal = true;
     }
@@ -370,12 +347,14 @@ function openTcpdumpTerminal() {
                 div.className = 'tcpdump-line';
                 div.innerHTML = `
                     <div class="tcpdump-type">${type}</div>
-                    <div class="tcpdump-domain tcpdump-result ripple-element" id="copy-link">${domain}</div>
+                    <div class="tcpdump-domain tcpdump-result copy-link">
+                        ${domain}
+                        <md-ripple></md-ripple>
+                    </div>
                 `;
                 document.querySelector('.tcpdump-content').appendChild(div);
-                terminalContent.scrollTop = terminalContent.scrollHeight;
+                terminal.scrollTop = terminal.scrollHeight;
                 addCopyToClipboardListeners();
-                applyRippleEffect();
             }
         } else {
             appendVerbose(data);
@@ -414,37 +393,19 @@ function openTcpdumpTerminal() {
             document.getElementById('tcpdump-search').style.display = 'block';
         }
         stopBtn.classList.remove('show');
-        if (terminalContent.scrollHeight > 1.5 * terminal.clientHeight) {
+        if (terminal.scrollHeight > 1.5 * terminal.clientHeight) {
             scrollTopBtn.classList.add('show');
-            floatBtn.classList.add('show');
-            setTimeout(() => floatBtn.classList.add('inTerminal'), 100);
         }
     };
 
     const closeTcpdumpTerminal = () => {
         stopTcpdump();
-        floatBtn.classList.remove('show');
-        floatBtn.classList.remove('inTerminal');
-        scrollTopBtn.classList.remove('show');
-        stopBtn.classList.remove('show');
-        terminal.style.transform = 'translateX(100%)';
-        bodyContent.style.transform = 'translateX(0)';
-        cover.style.opacity = '0';
-        backButton.classList.remove('show');
-        header.classList.remove('back');
-        title.textContent = getString('footer_more');
+        terminal.close();
     }
 
     // Open output terminal
     setTimeout(() => {
-        terminal.style.transform = 'translateX(0)';
-        bodyContent.style.transform = 'translateX(-20vw)';
-        cover.style.opacity = '1';
-        header.classList.add('back');
-        backButton.classList.add('show');
-        floatBtn.classList.add('show');
-        stopBtn.classList.add('show');
-        title.textContent = getString('control_panel_monitor_network_activity');
+        terminal.open();
         setTimeout(() => stopTcpdump(), 60000);
     }, 50);
 }
@@ -464,9 +425,7 @@ async function exportConfig() {
 
     // Fetch and process each file
     for (const [fileType, filePath] of Object.entries(filePaths)) {
-        const response = await fetch(`link/PERSISTENT_DIR/${filePath}`);
-        if (!response.ok) throw new Error(`Failed to fetch ${filePath}`);
-        const text = await response.text();
+        const text = await fetchText(`link/PERSISTENT_DIR/${filePath}`, `${basePath}/${filePath}`).catch(() => "");
         const lines = text.trim();
         config[fileType] = {
             path: filePath,
@@ -531,6 +490,71 @@ chmod 644 ${basePath}/${fileData.path} || true
 }
 
 /**
+ * Open the log viewer terminal.
+ * @returns {void}
+ */
+function openLogViewer() {
+    const terminal = document.getElementById('logs-terminal');
+    const backButton = document.querySelector('.back-button');
+    const saveButton = document.getElementById('save-btn');
+
+    refreshLogTerminal();
+
+    terminal.open();
+    saveButton.onclick = () => saveLogsToFile();
+
+    const closeLogViewer = () => {
+        terminal.close();
+    };
+
+    backButton.onclick = closeLogViewer;
+}
+
+/**
+ * Save captured logs to Download folder.
+ * @returns {Promise<void>}
+ */
+async function saveLogsToFile() {
+    const logs = formatCapturedLogs();
+    const fileName = `/storage/emulated/0/Download/bindhosts_logs_${new Date().toISOString().replace(/[:.]/g, '-')}.txt`;
+    const result = await exec(`
+cat << 'LOG_EOF' > "${fileName}"
+${logs}
+LOG_EOF
+`);
+
+    if (result.errno === 0) {
+        showPrompt(getString('global_saved', fileName));
+    } else {
+        showPrompt(getString('global_save_fail'), false);
+        console.error("Failed to save logs:", result.stderr);
+    }
+}
+
+/**
+ * Refresh the log terminal UI.
+ * @returns {void}
+ */
+function refreshLogTerminal() {
+    const terminalContent = document.getElementById('logs-terminal-content');
+    if (!terminalContent) return;
+
+    terminalContent.innerHTML = '';
+    capturedLogs.forEach(entry => {
+        const time = new Date(entry.timestamp).toLocaleTimeString();
+        const p = document.createElement('p');
+        p.className = 'action-terminal-output';
+        p.innerHTML = `<span class="log-time">[${time}]</span> <span class="log-level level-${entry.level.toLowerCase()}">[${entry.level}]</span> <span class="log-message">${entry.message}</span>${entry.detail ? ' <span class="log-detail">| ' + entry.detail + '</span>' : ''}`;
+        terminalContent.appendChild(p);
+    });
+
+    const terminal = document.getElementById('logs-terminal');
+    if (terminal) {
+        terminal.scrollTo({ top: terminal.scrollHeight, behavior: 'smooth' });
+    }
+}
+
+/**
  * Attach event listeners to control panel items
  * @returns {void}
  */
@@ -546,38 +570,14 @@ function controlPanelEventlistener(event) {
         "canary-update": canaryUpdate,
         "locales-update": localesUpdate,
         "export": exportConfig,
-        "restore": restoreConfig
+        "restore": restoreConfig,
+        "view-webui-log": openLogViewer
     };
 
     Object.entries(controlPanel).forEach(([element, functionName]) => {
         const el = document.getElementById(element);
         if (el) {
-            let touchMoved = false, isHandling = false;
-
-            // Handler for end events
-            const handleEndEvent = () => {
-                if (isHandling) return;
-                isHandling = true;
-                if (!touchMoved) {
-                    setTimeout(() => {
-                        functionName(event);
-                        isHandling = false;
-                    }, 50);
-                } else {
-                    isHandling = false;
-                }
-                touchMoved = false;
-            };
-
-            // Touch event
-            el.addEventListener('touchstart', () => touchMoved = false);
-            el.addEventListener('touchmove', () => touchMoved = true);
-            el.addEventListener('touchend', handleEndEvent);
-
-            // Mouse event
-            el.addEventListener('mousedown', () => touchMoved = false);
-            el.addEventListener('mousemove', () => touchMoved = true);
-            el.addEventListener('mouseup', handleEndEvent);
+            el.onclick = () => functionName(event);
         }
     });
 }
@@ -586,12 +586,11 @@ function controlPanelEventlistener(event) {
 export function mount() {
     controlPanelEventlistener();
     setupDocsMenu();
-    generateLanguageMenu();
 }
 
 // Lifecycle: Each time page becomes visible
 export function onShow() {
-    document.getElementById('title').textContent = getString('footer_more');
+    updateUIVisibility();
     checkUpdateStatus();
     checkBindhostsApp();
     checkMagisk();
@@ -601,7 +600,6 @@ export function onShow() {
 
 // Lifecycle: Each time page is hidden
 export function onHide() {
-    const floatBtn = document.querySelector('.tcpdump-btn');
-    floatBtn?.classList.remove('show');
-    floatBtn?.classList.remove('inTerminal');
+    document.querySelectorAll('.fab-container').forEach(c => c.classList.remove('show', 'inTerminal'));
+    document.getElementById('save-btn')?.classList.remove('show');
 }

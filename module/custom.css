@@ -1,111 +1,132 @@
 /* Custom css */
 
+/**
+ * You can build your own static material color scheme from:
+ * - Official Material Theme Builder: https://material-foundation.github.io/material-theme-builder/
+ * - Material Kolor Builder for more customization: https://materialkolor.com/
+ */
+
 /* Color scheme */
 :root {
-    /* Background colors */
-    /* --bg-primary: #fbf8ff; */
-    /* --bg-secondary: #f3f0f9; */
-    /* --bg-input: #fbf8ff; */
-
-    /* Text colors */
-    /* --text-constant: #1b1b21; */
-    /* --text-primary: #1b1b21; */
-    /* --text-muted: #757575; */
-
-    /* Border colors */
-    /* --border-color: #c7c5d0; */
-    /* --border-alt: #e1e0f9; */
-    /* --border-alt-text: #444559; */
-
-    /* Scroll bar colors */
-    /* --scroll-bar-color: #ddd; */
-
-    /* Button colors */
-    /* --btn-primary: #565992; */
-    /* --btn-primary-text: #fff; */
-    /* --btn-delete: #f26767; */
-    /* --btn-edit: #f6e052; */
-
-    /* Prompt colors */
-    /* --prompt-success: #4CAF50; */
-    /* --prompt-error: #f44336; */
-
-    /* Shadow colors */
-    /* --shadow-light: rgba(0, 0, 0, 0.2); */
-    /* --shadow-medium: rgba(0, 0, 0, 0.5); */
+    /* --md-sys-color-primary: #6750A4;
+    --md-sys-color-on-primary: #FFFFFF;
+    --md-sys-color-primary-container: #EADDFF;
+    --md-sys-color-on-primary-container: #4F378B;
+    --md-sys-color-secondary: #625B71;
+    --md-sys-color-on-secondary: #FFFFFF;
+    --md-sys-color-secondary-container: #E8DEF8;
+    --md-sys-color-on-secondary-container: #4A4458;
+    --md-sys-color-tertiary: #7D5260;
+    --md-sys-color-on-tertiary: #FFFFFF;
+    --md-sys-color-tertiary-container: #FFD8E4;
+    --md-sys-color-on-tertiary-container: #633B48;
+    --md-sys-color-error: #B3261E;
+    --md-sys-color-on-error: #FFFFFF;
+    --md-sys-color-error-container: #F9DEDC;
+    --md-sys-color-on-error-container: #8C1D18;
+    --md-sys-color-background: #FEF7FF;
+    --md-sys-color-on-background: #1D1B20;
+    --md-sys-color-tonal-surface: #F3EDF7;
+    --md-sys-color-surface: #FEF7FF;
+    --md-sys-color-on-surface: #1D1B20;
+    --md-sys-color-surface-variant: #E7E0EC;
+    --md-sys-color-on-surface-variant: #49454F;
+    --md-sys-color-outline: #79747E;
+    --md-sys-color-outline-variant: #CAC4D0;
+    --md-sys-color-shadow: #000000;
+    --md-sys-color-inverse-surface: #322F35;
+    --md-sys-color-inverse-on-surface: #F5EFF7;
+    --md-sys-color-inverse-primary: #D0BCFF;
+    --md-sys-color-surface-bright: #FEF7FF;
+    --md-sys-color-surface-dim: #DED8E1;
+    --md-sys-color-surface-container: #F3EDF7;
+    --md-sys-color-surface-container-lowest: #FFFFFF;
+    --md-sys-color-surface-container-low: #F7F2FA;
+    --md-sys-color-surface-container-high: #ECE6F0;
+    --md-sys-color-surface-container-highest: #E6E0E9; */
 }
 
 /* Device dark mode color scheme */
 @media (prefers-color-scheme: dark) {
     :root {
-        /* Background colors */
-        /* --bg-primary: #131318; */
-        /* --bg-secondary: #1c1c24; */
-        /* --bg-input: #2c2c30; */
-
-        /* Text colors */
-        /* --text-constant: #e4e1e9; */
-        /* --text-primary: #e4e1e9; */
-        /* --text-muted: #C2C2C2; */
-
-        /* Border colors */
-        /* --border-color: #46464f; */
-        /* --border-alt: #444559; */
-        /* --border-alt-text: #e1e0f9; */
-
-        /* Button colors */
-        /* --btn-primary: #bfc2ff; */
-        /* --btn-primary-text: #272b60; */
-
-        /* Scroll bar colors */
-        /* --scroll-bar-color: #666; */
+        /* --md-sys-color-primary: #D0BCFF;
+        --md-sys-color-on-primary: #381E72;
+        --md-sys-color-primary-container: #4F378B;
+        --md-sys-color-on-primary-container: #EADDFF;
+        --md-sys-color-secondary: #CCC2DC;
+        --md-sys-color-on-secondary: #332D41;
+        --md-sys-color-secondary-container: #4A4458;
+        --md-sys-color-on-secondary-container: #E8DEF8;
+        --md-sys-color-tertiary: #EFB8C8;
+        --md-sys-color-on-tertiary: #492532;
+        --md-sys-color-tertiary-container: #633B48;
+        --md-sys-color-on-tertiary-container: #FFD8E4;
+        --md-sys-color-error: #F2B8B5;
+        --md-sys-color-on-error: #601410;
+        --md-sys-color-error-container: #8C1D18;
+        --md-sys-color-on-error-container: #F9DEDC;
+        --md-sys-color-background: #141218;
+        --md-sys-color-on-background: #E6E0E9;
+        --md-sys-color-tonal-surface: #211F26;
+        --md-sys-color-surface: #141218;
+        --md-sys-color-on-surface: #E6E0E9;
+        --md-sys-color-surface-variant: #49454F;
+        --md-sys-color-on-surface-variant: #CAC4D0;
+        --md-sys-color-outline: #938F99;
+        --md-sys-color-outline-variant: #49454F;
+        --md-sys-color-shadow: #000000;
+        --md-sys-color-inverse-surface: #E6E0E9;
+        --md-sys-color-inverse-on-surface: #322F35;
+        --md-sys-color-inverse-primary: #6750A4;
+        --md-sys-color-surface-bright: #3B383E;
+        --md-sys-color-surface-dim: #141218;
+        --md-sys-color-surface-container: #211F26;
+        --md-sys-color-surface-container-lowest: #0F0D13;
+        --md-sys-color-surface-container-low: #1D1B20;
+        --md-sys-color-surface-container-high: #2B2930;
+        --md-sys-color-surface-container-highest: #36343B; */
     }
 }
 
 /* Enable following if you're using custom backgound */
-/* Choose blur color depends on your custom background color */
 :root {
-    /* Choose one based on you background color theme */
-    /* Dark background color scheme */
-    /*
-        --text-primary: #fff;
-        --text-muted: #C2C2C2;
-        --scroll-bar-color: #666;
-     */
+    /* Transparant background (Recommended) */
+    /* --md-sys-color-background: transparent; */
 
-    /* Light background color scheme */
-    /* 
-        --text-primary: #000;
-        --text-muted: #757575;
-        --scroll-bar-color: #ddd;
-     */
+    /* Translucent card color (Recommended) */
+    /* --md-sys-color-tonal-surface: rgba(0, 0, 0, 0.1); */
+
+    /* Static text color (adjust based on your background color) */
+    /* --md-sys-color-on-background: white; */
+    /* --md-sys-color-on-background: black; */
 }
 
-.footer-btn-icon.focus,
 .translucent {
-    /*
-        color: var(--text-primary) !important;
-        background-color: rgba(0, 0, 0, 0) !important;
-        border: 1px solid var(--border-color);
-     */
-
     /* Blur intensity (optional) */
     /* backdrop-filter: blur(3px); */
 }
 
 .blur-box {
-    /* color: var(--text-primary); */
-
-    /* Dark background effect */
-    /* background-color: rgba(0, 0, 0, 0.1); */
-
-    /* Light background effect */
-    /* background-color: rgba(255, 255, 255, 0.4); */
+    /* Disable blur (Recommended) */
+    /* backdrop-filter: none; */
 }
 
-.header,
-.footer,
-#copy-link {
-    /* Prevent conflict with translucent background */
-    /* background-color: transparent; */
+.query-input,
+.input-box-wrapper {
+    /* Transparent text box (Recommended) */
+    /* --md-sys-color-surface-container-low: transparent; */
+}
+
+.bottom-bar {
+    /* Transparent bottom bar (Recommended) */
+    /* --md-sys-color-surface-container: transparent; */
+
+    /* Adjust color if needed */
+    /* Focused icon color */
+    /* --md-sys-color-secondary-container: rgba(103, 80, 164, 0.4); */
+    /* --md-sys-color-on-secondary-container: white; */
+
+    /* Static text color (adjust based on your background color) */
+    /* --md-sys-color-on-surface: black; */
+    /* --md-sys-color-on-surface: white; */
 }

@@ -1,5 +1,5 @@
 import { toast } from 'kernelsu-alt';
-import { linkRedirect, applyRippleEffect, developerOption, learnMore, setLearnMore, setupSwipeToClose } from './util.js';
+import { linkRedirect } from './util.js';
 import { getString, lang } from './language.js';
 import { marked } from "marked";
 
@@ -23,7 +23,8 @@ async function getDocuments(element, link, fallback) {
         `${mirror}/${repo}/${branch}/${fallback}`
     ];
     let lastError = null;
-    for (const url of urls) {
+    for (let i = 0; i < urls.length; i++) {
+        const url = urls[i];
         try {
             const response = await fetch(url);
             if (response.ok) {
@@ -37,7 +38,7 @@ async function getDocuments(element, link, fallback) {
                             const text = token.text;
                             if (text === href) {
                                 token.type = "html";
-                                token.text = `<span><p class="ripple-element" id="copy-link">${text}</p></span>`;
+                                token.text = `<div class="copy-link">${text}<md-ripple></md-ripple></div>`;
                             } else {
                                 token.href = "javascript:void(0);";
                                 token.type = "html";
@@ -48,10 +49,14 @@ async function getDocuments(element, link, fallback) {
                 });
                 
                 const docsContent = document.getElementById(element);
+                if ((i === 1 || i === 3) && link !== fallback) {
+                    docsContent.setAttribute('dir', 'ltr');
+                } else {
+                    docsContent.removeAttribute('dir');
+                }
                 docsContent.innerHTML = marked.parse(data);
                 
                 addCopyToClipboardListeners();
-                applyRippleEffect();
                 return;
             }
             lastError = `Status ${response.status} from ${url}`;
@@ -71,10 +76,10 @@ async function getDocuments(element, link, fallback) {
  * @returns {void}
  */
 export function addCopyToClipboardListeners() {
-    const sourceLinks = document.querySelectorAll("#copy-link");
+    const sourceLinks = document.querySelectorAll(".copy-link");
     sourceLinks.forEach((element) => {
         if (element.dataset.copyListener !== "true") {
-            element.addEventListener('click', () => {
+            element.onclick = () => {
                 // Try the modern Clipboard API first
                 if (navigator.clipboard && navigator.clipboard.writeText) {
                     navigator.clipboard.writeText(element.innerText)
@@ -85,7 +90,7 @@ export function addCopyToClipboardListeners() {
                 } else {
                     fallbackCopyToClipboard(element);
                 }
-            });
+            };
             element.dataset.copyListener = "true";
         }
     });
@@ -115,9 +120,6 @@ function fallbackCopyToClipboard(element) {
         console.error("Failed to copy text: ", err);
     }
 }
-
-// Setup documents menu
-let activeDocs = null;
 
 /**
  * Setup documents menu event listeners to open and close document overlays
@@ -167,13 +169,11 @@ export async function setupDocsMenu() {
             button.onclick = () => {
                 const type = button.dataset.type;
                 const overlay = document.getElementById(`${type}-docs`);
-                if (type === 'modes' && developerOption && !learnMore) return;
 
                 // Close parent overlay if it exists
-                const parentOverlay = button.closest('.overlay');
+                const parentOverlay = button.closest('md-dialog');
                 if (parentOverlay) {
                     closeOverlay(parentOverlay);
-                    if (type === 'modes') setLearnMore(false);
                 }
 
                 openOverlay(overlay);
@@ -189,71 +189,31 @@ export async function setupDocsMenu() {
             if (closeButton) {
                 closeButton.onclick = () => closeOverlay(overlay);
             }
-            overlay.onclick = (e) => {
-                if (e.target === overlay) {
-                    closeOverlay(overlay);
-                }
-            };
         });
     }
 
     // For about content
     const aboutContent = document.querySelector('.document-content');
-    const documentCover = document.querySelector('.document-cover');
     const backButton = document.querySelector('.back-button');
+
     if (aboutContent) {
-        const header = document.querySelector('.title-container');
-        const title = document.getElementById('title');
-        const bodyContent = document.querySelector('.body-content');
-
-        setupSwipeToClose(aboutContent, documentCover);
-
         // Attach click event to all about docs buttons
         document.querySelectorAll('.about-docs').forEach(element => {
-            /** 
-             * Manually listen to touch event to replace click event
-             * Fix an issue caused by setupSwipeToClose
-             * It could be an issue caused by momentum scrolling but currently I dont have a better workaround
-            */
-            let touchMoved = false;
-            
-            element.addEventListener('mousedown', () => touchMoved = false);
-            element.addEventListener('touchstart', () => touchMoved = false);
-            element.addEventListener('mousemove', () => touchMoved = true);
-            element.addEventListener('touchmove', () => touchMoved = true);
-            element.addEventListener('mouseup', () => handleClick());
-            element.addEventListener('touchend', () => handleClick());
+            element.onclick = () => {
+                document.getElementById('about-document-content').innerHTML = '';
+                const { link, fallback } = docsData[element.dataset.type] || {};
+                getDocuments('about-document-content', link, fallback);
+                aboutContent.open();
+                const titleText = element.querySelector('.list-item-content').textContent;
+                document.getElementById('title').textContent = titleText;
 
-            function handleClick() {
-                if (!touchMoved) {
-                    document.getElementById('about-document-content').innerHTML = '';
-                    const { link, fallback } = docsData[element.dataset.type] || {};
-                    getDocuments('about-document-content', link, fallback);
-                    setTimeout(() => {
-                        aboutContent.style.transform = 'translateX(0)';
-                        bodyContent.style.transform = 'translateX(-20vw)';
-                        documentCover.style.opacity = '1';
-                        header.classList.add('back');
-                        backButton.classList.add('show');
-                        const titleText = element.querySelector('.document-title').textContent;
-                        title.textContent = titleText;
-                    }, 100);
-                }
-            }
-
-            // Alternative way to close about docs with back button
-            if (backButton) {
-                backButton.addEventListener('click', () => {
-                    aboutContent.style.transform = 'translateX(100%)';
-                    bodyContent.style.transform = 'translateX(0)';
-                    documentCover.style.opacity = '0';
-                    backButton.classList.remove('show');
-                    header.classList.remove('back');
-                    title.textContent = getString('footer_more');
-                });
-            }
+                backButton.onclick = () => {
+                    aboutContent.close();
+                    document.getElementById('title').textContent = getString('footer_more');
+                };
+            };
         });
-    } // End of about docs
+    }
 }
 
 /**
@@ -262,13 +222,14 @@ export async function setupDocsMenu() {
  * @returns {void}
  */
 function openOverlay(overlay) {
-    if (activeDocs) closeOverlay(activeDocs);
-    activeDocs = overlay;
-    document.body.style.overflow = "hidden";
-    overlay.style.display = "flex";
-    setTimeout(() => {
-        overlay.style.opacity = "1";
-    }, 10);
+    document.querySelectorAll('md-dialog').forEach(dialog => {
+        if (dialog.open) dialog.close();
+    });
+    const closeBtn = overlay.querySelector('.close-btn');
+    if (closeBtn) {
+        closeBtn.onclick = () => closeOverlay(overlay);
+    }
+    overlay.show();
 }
 
 /**
@@ -277,10 +238,5 @@ function openOverlay(overlay) {
  * @returns {void}
  */
 function closeOverlay(overlay) {
-    activeDocs = null;
-    document.body.style.overflow = "";
-    overlay.style.opacity = "0";
-    setTimeout(() => {
-        overlay.style.display = "none";
-    }, 200);
+    overlay.close();
 }

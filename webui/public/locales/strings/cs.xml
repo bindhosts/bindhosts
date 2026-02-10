@@ -6,7 +6,6 @@
     <!-- Global -->
     <string name="global_dev_opt">Možnost vývojáře povolena</string>
     <string name="global_dev_opt_true">Možnost vývojáře je již povolena</string>
-    <string name="global_save">Uložit</string>
     <string name="global_saved">Soubor uložen do %s</string>
     <string name="global_save_fail">Nepodařilo se uložit soubor</string>
     <string name="global_file_too_large">Jen přejmenování je podporováno na velkých souborech</string>
@@ -75,7 +74,7 @@
     <string name="sources_whitelist_example">Příklad:</string>
     <string name="sources_whitelist_prompt_fail">%s již existuje ve zdroji whitelistu</string>
     <!-- Mode -->
-    <string name="mode_button">Režim</string>
+    <string name="mode_button">Režim %s</string>
     <string name="mode_title">Provozní režim</string>
     <string name="mode_detail">Zjistit více</string>
     <string name="mode_reset">Reset (automatický)</string>

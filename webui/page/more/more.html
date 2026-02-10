@@ -5,53 +5,50 @@
             <h3 data-i18n="control_panel_title"></h3>
         </div>
         <div class="box-content">
-            <div class="toggle-list ripple-element" id="language-container">
-                <i class="more-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M480-100q-78.15 0-147.5-29.96t-120.96-81.58q-51.62-51.61-81.58-120.96T100-480q0-78.77 29.96-147.81t81.58-120.65q51.61-51.62 120.96-81.58T480-860q78.77 0 147.81 29.96t120.65 81.58q51.62 51.61 81.58 120.65T860-480q0 78.15-29.96 147.5t-81.58 120.96q-51.61 51.62-120.65 81.58T480-100Zm0-60.85q30.62-40.61 51.54-81.92 20.92-41.31 34.08-90.31H394.38q13.93 50.54 34.47 91.85 20.53 41.31 51.15 80.38Zm-77.46-11q-23-33-41.31-75.03-18.31-42.04-28.46-86.2H197.08q31.69 62.31 85 104.7 53.31 42.38 120.46 56.53Zm154.92 0q67.15-14.15 120.46-56.53 53.31-42.39 85-104.7H627.23q-12.08 44.54-30.39 86.58-18.3 42.04-39.38 74.65ZM171.92-393.08h148.7q-3.77-22.3-5.47-43.73-1.69-21.42-1.69-43.19 0-21.77 1.69-43.19 1.7-21.43 5.47-43.73h-148.7q-5.77 20.38-8.84 42.38-3.08 22-3.08 44.54t3.08 44.54q3.07 22 8.84 42.38Zm208.69 0h198.78q3.76-22.3 5.46-43.34 1.69-21.04 1.69-43.58t-1.69-43.58q-1.7-21.04-5.46-43.34H380.61q-3.76 22.3-5.46 43.34-1.69 21.04-1.69 43.58t1.69 43.58q1.7 21.04 5.46 43.34Zm258.77 0h148.7q5.77-20.38 8.84-42.38 3.08-22 3.08-44.54t-3.08-44.54q-3.07-22-8.84-42.38h-148.7q3.77 22.3 5.47 43.73 1.69 21.42 1.69 43.19 0 21.77-1.69 43.19-1.7 21.43-5.47 43.73Zm-12.15-233.84h135.69Q730.85-690 678.5-731.62q-52.35-41.61-121.04-56.92 23 34.92 40.92 76.39 17.93 41.46 28.85 85.23Zm-232.85 0h171.24q-13.93-50.16-35.04-92.43-21.12-42.27-50.58-79.8-29.46 37.53-50.58 79.8-21.11 42.27-35.04 92.43Zm-197.3 0h135.69q10.92-43.77 28.85-85.23 17.92-41.47 40.92-76.39-69.08 15.31-121.23 57.12-52.16 41.8-84.23 104.5Z"/></svg>
-                </i>
-                <span class="toggle-text" data-i18n="control_panel_language"></span>
+            <div class="list-item translucent" id="language-container">
+                <md-ripple></md-ripple>
+                <md-icon class="leading-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M480-100q-78.15 0-147.5-29.96t-120.96-81.58q-51.62-51.61-81.58-120.96T100-480q0-78.77 29.96-147.81t81.58-120.65q51.61-51.62 120.96-81.58T480-860q78.77 0 147.81 29.96t120.65 81.58q51.62 51.61 81.58 120.65T860-480q0 78.15-29.96 147.5t-81.58 120.96q-51.61 51.62-120.65 81.58T480-100Zm0-60.85q30.62-40.61 51.54-81.92 20.92-41.31 34.08-90.31H394.38q13.93 50.54 34.47 91.85 20.53 41.31 51.15 80.38Zm-77.46-11q-23-33-41.31-75.03-18.31-42.04-28.46-86.2H197.08q31.69 62.31 85 104.7 53.31 42.38 120.46 56.53Zm154.92 0q67.15-14.15 120.46-56.53 53.31-42.39 85-104.7H627.23q-12.08 44.54-30.39 86.58-18.3 42.04-39.38 74.65ZM171.92-393.08h148.7q-3.77-22.3-5.47-43.73-1.69-21.42-1.69-43.19 0-21.77 1.69-43.19 1.7-21.43 5.47-43.73h-148.7q-5.77 20.38-8.84 42.38-3.08 22-3.08 44.54t3.08 44.54q3.07 22 8.84-42.38Zm208.69 0h198.78q3.76-22.3 5.46-43.34 1.69-21.04 1.69-43.58t-1.69-43.58q-1.7-21.04-5.46-43.34H380.61q-3.76 22.3-5.46 43.34-1.69 21.04-1.69 43.58t1.69 43.58q1.7 21.04 5.46 43.34Zm258.77 0h148.7q5.77-20.38 8.84-42.38 3.08-22 3.08-44.54t-3.08-44.54q-3.07-22-8.84-42.38h-148.7q3.77 22.3 5.47 43.73 1.69 21.42 1.69 43.19 0 21.77-1.69 43.19-1.7 21.43-5.47 43.73Zm-12.15-233.84h135.69Q730.85-690 678.5-731.62q-52.35-41.61-121.04-56.92 23 34.92 40.92 76.39 17.93 41.46 28.85 85.23Zm-232.85 0h171.24q-13.93-50.16-35.04-92.43-21.12-42.27-50.58-79.8-29.46 37.53-50.58 79.8-21.11 42.27-35.04 92.43Zm-197.3 0h135.69q10.92-43.77 28.85-85.23 17.92-41.47 40.92-76.39-69.08 15.31-121.23 57.12-52.16 41.8-84.23 104.5Z"/></svg>
+                </md-icon>
+                <span class="list-item-content" data-i18n="control_panel_language"></span>
             </div>
-            <div class="toggle-list ripple-element" id="tcpdump-container">
-                <i class="more-icon">
+            <div class="list-item translucent" id="tcpdump-container">
+                <md-ripple></md-ripple>
+                <md-icon class="leading-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M212.31-140Q182-140 161-161q-21-21-21-51.31v-135.38Q140-378 161-399q21-21 51.31-21H610v-160h60v160h77.69Q778-420 799-399q21 21 21 51.31v135.38Q820-182 799-161q-21 21-51.31 21H212.31Zm0-60h535.38q5.39 0 8.85-3.46t3.46-8.85v-135.38q0-5.39-3.46-8.85t-8.85-3.46H212.31q-5.39 0-8.85 3.46t-3.46 8.85v135.38q0 5.39 3.46 8.85t8.85 3.46ZM280-244.62q15.08 0 25.23-10.15T315.38-280q0-15.08-10.15-25.23T280-315.38q-15.08 0-25.23 10.15T244.62-280q0 15.08 10.15 25.23T280-244.62Zm140 0q15.08 0 25.23-10.15T455.38-280q0-15.08-10.15-25.23T420-315.38q-15.08 0-25.23 10.15T384.62-280q0 15.08 10.15 25.23T420-244.62Zm140 0q15.08 0 25.23-10.15T595.38-280q0-15.08-10.15-25.23T560-315.38q-15.08 0-25.23 10.15T524.62-280q0 15.08 10.15 25.23T560-244.62Zm3.08-382.3-43.39-43.39q26-24 55.7-36.84Q605.08-720 640-720t64.61 12.85q29.7 12.84 55.7 36.84l-43.39 43.39q-15.53-15.54-34.57-24.31T640-660q-23.31 0-42.35 8.77-19.04 8.77-34.57 24.31Zm-100-100-42.16-42.16q42.85-42.84 98.73-66.88Q575.54-860 640-860t120.35 24.04q55.88 24.04 98.73 66.88l-42.16 42.16q-33-33-78.03-53.04Q693.85-800 640-800t-98.89 20.04q-45.03 20.04-78.03 53.04ZM200-200v-160 160Z"/></svg>
-                </i>
-                <span class="toggle-text" data-i18n="control_panel_monitor_network_activity"></span>
+                </md-icon>
+                <span class="list-item-content" data-i18n="control_panel_monitor_network_activity"></span>
             </div>
-            <div class="toggle-list ripple-element" id="tiles-container">
-                <i class="more-icon">
+            <div class="list-item translucent" id="tiles-container">
+                <md-ripple></md-ripple>
+                <md-icon class="leading-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M480.07-100q-78.84 0-148.21-29.92t-120.68-81.21q-51.31-51.29-81.25-120.63Q100-401.1 100-479.93q0-78.84 29.92-148.21t81.21-120.68q51.29-51.31 120.63-81.25Q401.1-860 479.93-860q78.84 0 148.21 29.92t120.68 81.21q51.31 51.29 81.25 120.63Q860-558.9 860-480.07q0 78.84-29.92 148.21t-81.21 120.68q-51.29 51.31-120.63 81.25Q558.9-100 480.07-100Zm-.07-60q56.29 0 108.42-19.04 52.12-19.04 95.27-55.11L234.15-683.69q-35.69 43.15-54.92 95.27Q160-536.29 160-480q0 134 93 227t227 93Zm245.85-116.31q36.07-43.15 55.11-95.27Q800-423.71 800-480q0-134-93-227t-227-93q-56.43 0-108.68 18.85-52.24 18.84-95.01 55.3l449.54 449.54Z"/></svg>
-                </i>
-                <span class="toggle-text" data-i18n="control_panel_get_tiles"></span>
+                </md-icon>
+                <span class="list-item-content" data-i18n="control_panel_get_tiles"></span>
             </div>
-            <div class="toggle-list ripple-element" id="action-redirect-container">
-                <i class="more-icon">
+            <div class="list-item translucent" id="action-redirect-container">
+                <md-ripple></md-ripple>
+                <md-icon class="leading-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M340-236.16v-487.68L723.07-480 340-236.16ZM400-480Zm0 134 210.77-134L400-614v268Z"/></svg>
-                </i>
-                <span class="toggle-text" data-i18n="control_panel_action_redirect"></span>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="action-redirect" disabled>
-                    <span class="slider round"></span>
-                </label>
+                </md-icon>
+                <span class="list-item-content" data-i18n="control_panel_action_redirect"></span>
+                <md-switch class="soft-disabled" id="action-redirect"></md-switch>
             </div>
-            <div class="toggle-list ripple-element" id="cron-toggle-container">
-                <i class="more-icon">
+            <div class="list-item translucent" id="cron-toggle-container">
+                <md-ripple></md-ripple>
+                <md-icon class="leading-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M480.38-140q-70.76 0-132.61-26.77-61.85-26.77-107.85-72.77-46-46-72.76-107.85-26.77-61.84-26.77-132.61 0-70.77 26.77-132.61 26.76-61.85 72.76-107.85 46-46 107.85-72.77Q409.62-820 480.38-820q75.47 0 143.39 31.73 67.92 31.73 116.61 89.19v-94.77h60v203.08H597.31v-60h104.61q-41.38-51-98.69-80.11Q545.92-760 480.38-760q-117 0-198.5 81.5T200.38-480q0 117 81.5 198.5t198.5 81.5q105 0 183.12-68.19T756.77-440H818q-14.62 128.92-111.15 214.46Q610.31-140 480.38-140Zm118.93-178.92L450.39-467.85V-680h59.99v187.85l131.08 131.07-42.15 42.16Z"/></svg>
-                </i>
-                <span class="toggle-text" data-i18n="control_panel_update_hosts_daily"></span>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="toggle-cron" disabled>
-                    <span class="slider round"></span>
-                </label>
+                </md-icon>
+                <span class="list-item-content" data-i18n="control_panel_update_hosts_daily"></span>
+                <md-switch class="soft-disabled" id="toggle-cron"></md-switch>
             </div>
-            <div class="toggle-list ripple-element" id="update-toggle-container">
-                <i class="more-icon">
+            <div class="list-item translucent" id="update-toggle-container">
+                <md-ripple></md-ripple>
+                <md-icon class="leading-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M480-328.46 309.23-499.23l42.16-43.38L450-444v-336h60v336l98.61-98.61 42.16 43.38L480-328.46ZM252.31-180Q222-180 201-201q-21-21-21-51.31v-108.46h60v108.46q0 4.62 3.85 8.46 3.84 3.85 8.46 3.85h455.38q4.62 0 8.46-3.85 3.85-3.84 3.85-8.46v-108.46h60v108.46Q780-222 759-201q-21 21-51.31 21H252.31Z"/></svg>
-                </i>
-                <span class="toggle-text" data-i18n="control_panel_module_update"></span>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="toggle-version" disabled>
-                    <span class="slider round"></span>
-                </label>
+                </md-icon>
+                <span class="list-item-content" data-i18n="control_panel_module_update"></span>
+                <md-switch class="soft-disabled" id="toggle-version"></md-switch>
             </div>
         </div>
     </div>
@@ -62,39 +59,44 @@
             <h3 data-i18n="more_documents"></h3>
         </div>
         <div class="box-content">
-            <div class="about-docs ripple-element" data-type="source">
-                <i class="more-icon">
+            <div class="list-item translucent about-docs" data-type="source">
+                <md-ripple></md-ripple>
+                <md-icon class="leading-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M432.31-298.46H281.54q-75.34 0-128.44-53.1Q100-404.65 100-479.98q0-75.33 53.1-128.44 53.1-53.12 128.44-53.12h150.77v60H281.54q-50.39 0-85.96 35.58Q160-530.38 160-480q0 50.38 35.58 85.96 35.57 35.58 85.96 35.58h150.77v60ZM330-450v-60h300v60H330Zm197.69 151.54v-60h150.77q50.39 0 85.96-35.58Q800-429.62 800-480q0-50.38-35.58-85.96-35.57-35.58-85.96-35.58H527.69v-60h150.77q75.34 0 128.44 53.1Q860-555.35 860-480.02q0 75.33-53.1 128.44-53.1 53.12-128.44 53.12H527.69Z"/></svg>
-                </i>
-                <span class="document-title" data-i18n="more_sources"></span>
+                </md-icon>
+                <span class="list-item-content" data-i18n="more_sources"></span>
             </div>
 
-            <div class="about-docs ripple-element" data-type="usage">
-                <i class="more-icon">
+            <div class="list-item translucent about-docs" data-type="usage">
+                <md-ripple></md-ripple>
+                <md-icon class="leading-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M212.31-140Q182-140 161-161q-21-21-21-51.31v-535.38Q140-778 161-799q21-21 51.31-21h535.38Q778-820 799-799q21 21 21 51.31v535.38Q820-182 799-161q-21 21-51.31 21H212.31ZM200-747.69v535.38q0 4.62 3.85 8.46 3.84 3.85 8.46 3.85h535.38q4.62 0 8.46-3.85 3.85-3.84 3.85-8.46v-535.38q0-4.62-3.85-8.46-3.84-3.85-8.46-3.85H670v262.31l-90-53.85-90 53.85V-760H212.31q-4.62 0-8.46 3.85-3.85 3.84-3.85 8.46ZM200-200v-560 560Z"/></svg>
-                </i>
-                <span class="document-title" data-i18n="more_usage"></span>
+                </md-icon>
+                <span class="list-item-content" data-i18n="more_usage"></span>
             </div>
 
-            <div class="about-docs ripple-element" data-type="modes">
-                <i class="more-icon">
+            <div class="list-item translucent about-docs" data-type="modes">
+                <md-ripple></md-ripple>
+                <md-icon class="leading-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M287.69-535.39 480-850.77l192.31 315.38H287.69ZM700-95.39q-68.85 0-116.73-47.88-47.88-47.88-47.88-116.73t47.88-116.73q47.88-47.88 116.73-47.88t116.73 47.88q47.88 47.88 47.88 116.73t-47.88 116.73Q768.85-95.39 700-95.39Zm-564.61-20v-289.22h289.22v289.22H135.39Zm564.6-39.99q43.93 0 74.28-30.34t30.35-74.27q0-43.93-30.34-74.28t-74.27-30.35q-43.93 0-74.28 30.34t-30.35 74.27q0 43.93 30.34 74.28t74.27 30.35Zm-504.61-20h169.24v-169.24H195.38v169.24Zm198.16-420h172.92L480-734.46l-86.46 139.08Zm86.46 0ZM364.62-344.62ZM700-260Z"/></svg>
-                </i>
-                <span class="document-title" data-i18n="more_modes"></span>
+                </md-icon>
+                <span class="list-item-content" data-i18n="more_modes"></span>
             </div>
 
-            <div class="about-docs ripple-element" data-type="hiding">
-                <i class="more-icon">
+            <div class="list-item translucent about-docs" data-type="hiding">
+                <md-ripple></md-ripple>
+                <md-icon class="leading-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M480-100.77q-129.77-35.39-214.88-152.77Q180-370.92 180-516v-230.15l300-112.31 300 112.31v190.77h-60V-705l-240-89.62L240-705v189q0 121 68 220t172 132q26-8 49.5-20.5T576-214l40.61 42.92q-31.46 24.31-64.76 41.81-33.31 17.5-71.85 28.5Zm345.37.77q-12.76 0-21.37-8.63-8.62-8.63-8.62-21.38 0-12.76 8.63-21.37 8.63-8.62 21.39-8.62 12.75 0 21.37 8.63 8.61 8.63 8.61 21.38 0 12.76-8.63 21.37-8.62 8.62-21.38 8.62Zm-29.99-147.69v-220h60v220h-60ZM480-480Zm0 80q33 0 56.5-23.5T560-480q0-33-23.5-56.5T480-560q-33 0-56.5 23.5T400-480q0 33 23.5 56.5T480-400Zm0 60q-57.75 0-98.87-41.13Q340-422.25 340-480q0-57.75 41.13-98.87Q422.25-620 480-620q57.75 0 98.87 41.13Q620-537.75 620-480q0 20.25-5.5 39.13-5.5 18.87-15.73 35.95l117.07 116.46-42.76 42.77-117.7-117.08q-16.46 11.38-35.8 17.08Q500.23-340 480-340Z"/></svg>
-                </i>
-                <span class="document-title" data-i18n="more_hiding"></span>
+                </md-icon>
+                <span class="list-item-content" data-i18n="more_hiding"></span>
             </div>
 
-            <div class="about-docs ripple-element" data-type="faq">
-                <i class="more-icon">
+            <div class="list-item translucent about-docs" data-type="faq">
+                <md-ripple></md-ripple>
+                <md-icon class="leading-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M477.92-295.77q17.16 0 28.96-11.81 11.81-11.81 11.81-28.96t-11.81-28.96q-11.8-11.81-28.96-11.81-17.15 0-28.96 11.81-11.81 11.81-11.81 28.96t11.81 28.96q11.81 11.81 28.96 11.81ZM449.62-439h56.3q.39-15.08 2.08-25.92 1.69-10.85 6.69-21.08 5-10.23 12.69-19.73 7.7-9.5 20.54-22.35 31.93-31.92 45.66-54.27 13.73-22.34 13.73-50.8 0-49.93-34.08-80.5-34.08-30.58-87.77-30.58-48.84 0-83.5 24.88-34.65 24.89-49.27 64.81l51.39 20.62q8.54-25.46 28.38-41.58 19.85-16.12 49.77-16.12 32.39 0 50.58 17.58Q551-656.46 551-631.31q0 18.54-11 36.39-11 17.84-33.92 38.54-15.85 14-26.35 27.11-10.5 13.12-17.5 26.96-7 13.85-9.81 28.81-2.8 14.96-2.8 34.5ZM480-68.46 368.46-180H212.31Q182-180 161-201q-21-21-21-51.31v-535.38Q140-818 161-839q21-21 51.31-21h535.38Q778-860 799-839q21 21 21 51.31v535.38Q820-222 799-201q-21 21-51.31 21H591.54L480-68.46ZM212.31-240h180.46L480-152.77 567.23-240h180.46q5.39 0 8.85-3.46t3.46-8.85v-535.38q0-5.39-3.46-8.85t-8.85-3.46H212.31q-5.39 0-8.85 3.46t-3.46 8.85v535.38q0 5.39 3.46 8.85t8.85 3.46ZM480-520Z"/></svg>
-                </i>
-                <span class="document-title" data-i18n="more_faq"></span>
+                </md-icon>
+                <span class="list-item-content" data-i18n="more_faq"></span>
             </div>
         </div>
     </div>
@@ -105,23 +107,33 @@
             <h3 data-i18n="more_support"></h3>
         </div>
         <div class="box-content">
-            <div class="support-list ripple-element" id="github-issues">
-                <i class="more-icon">
+            <div class="list-item translucent" id="github-issues">
+                <md-ripple></md-ripple>
+                <md-icon class="leading-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M480-380q41.92 0 70.96-29.04Q580-438.08 580-480q0-41.92-29.04-70.96Q521.92-580 480-580q-41.92 0-70.96 29.04Q380-521.92 380-480q0 41.92 29.04 70.96Q438.08-380 480-380Zm.07 280q-78.84 0-148.21-29.92t-120.68-81.21q-51.31-51.29-81.25-120.63Q100-401.1 100-479.93q0-78.84 29.92-148.21t81.21-120.68q51.29-51.31 120.63-81.25Q401.1-860 479.93-860q78.84 0 148.21 29.92t120.68 81.21q51.31 51.29 81.25 120.63Q860-558.9 860-480.07q0 78.84-29.92 148.21t-81.21 120.68q-51.29 51.31-120.63 81.25Q558.9-100 480.07-100Zm-.07-60q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>
-                </i>
-                <span class="support-title" data-i18n="more_support_issue"></span>
+                </md-icon>
+                <span class="list-item-content" data-i18n="more_support_issue"></span>
             </div>
-            <div class="support-list ripple-element" id="canary-update">
-                <i class="more-icon">
+            <div class="list-item translucent" id="canary-update">
+                <md-ripple></md-ripple>
+                <md-icon class="leading-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M200-140q-38.27 0-54.4-34.15-16.14-34.16 7.79-63.54L380-513.08V-760h-47.69q-12.75 0-21.38-8.63-8.62-8.63-8.62-21.38 0-12.76 8.62-21.37 8.63-8.62 21.38-8.62h295.38q12.75 0 21.38 8.63 8.62 8.63 8.62 21.38 0 12.76-8.62 21.37-8.63 8.62-21.38 8.62H580v246.92l226.61 275.39q23.93 29.38 7.79 63.54Q798.27-140 760-140H200Zm0-60h560L520-492v-268h-80v268L200-200Zm280-280Z"/></svg>
-                </i>
-                <span class="support-title" data-i18n="more_support_update_canary"></span>
+                </md-icon>
+                <span class="list-item-content" data-i18n="more_support_update_canary"></span>
             </div>
-            <div class="support-list ripple-element" id="locales-update">
-                <i class="more-icon">
+            <div class="list-item translucent" id="locales-update">
+                <md-ripple></md-ripple>
+                <md-icon class="leading-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="m476-80 182-480h84L924-80h-84l-43-122H603L560-80h-84ZM160-200l-56-56 202-202q-35-35-63.5-80T190-640h84q20 39 40 68t48 58q33-33 68.5-92.5T484-720H40v-80h280v-80h80v80h280v80H564q-21 72-63 148t-83 116l96 98-30 82-122-125-202 201Zm468-72h144l-72-204-72 204Z"/></svg>
-                </i>
-                <span class="support-title" data-i18n="more_support_update_locales"></span>
+                </md-icon>
+                <span class="list-item-content" data-i18n="more_support_update_locales"></span>
+            </div>
+            <div class="list-item translucent" id="view-webui-log">
+                <md-ripple></md-ripple>
+                <md-icon class="leading-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M280-280h280v-80H280v80Zm0-160h400v-80H280v80Zm0-160h400v-80H280v80Zm-80 480q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0-560v560-560Z"/></svg>
+                </md-icon>
+                <span class="list-item-content" data-i18n="more_support_view_webui_log"></span>
             </div>
         </div>
     </div>
@@ -132,18 +144,20 @@
             <h3 data-i18n="backup_restore_backup_and_restore"></h3>
         </div>
         <div class="box-content">
-            <div class="support-list ripple-element" id="export">
-                <i class="more-icon">
+            <div class="list-item translucent" id="export">
+                <md-ripple></md-ripple>
+                <md-icon class="leading-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M820-671.54v459.23Q820-182 799-161q-21 21-51.31 21H212.31Q182-140 161-161q-21-21-21-51.31v-535.38Q140-778 161-799q21-21 51.31-21h459.23L820-671.54ZM760-646 646-760H212.31q-5.39 0-8.85 3.46t-3.46 8.85v535.38q0 5.39 3.46 8.85t8.85 3.46h535.38q5.39 0 8.85-3.46t3.46-8.85V-646ZM480-269.23q41.54 0 70.77-29.23Q580-327.69 580-369.23q0-41.54-29.23-70.77-29.23-29.23-70.77-29.23-41.54 0-70.77 29.23Q380-410.77 380-369.23q0 41.54 29.23 70.77 29.23 29.23 70.77 29.23ZM255.39-564.62h328.45v-139.99H255.39v139.99ZM200-646v446-560 114Z"/></svg>
-                </i>
-                <span class="support-title" data-i18n="backup_restore_export"></span>
+                </md-icon>
+                <span class="list-item-content" data-i18n="backup_restore_export"></span>
             </div>
 
-            <div class="support-list ripple-element" id="restore">
-                <i class="more-icon">
+            <div class="list-item translucent" id="restore">
+                <md-ripple></md-ripple>
+                <md-icon class="leading-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M479.23-420q-24.54 0-42.27-17.73-17.73-17.73-17.73-42.27 0-24.54 17.73-42.27Q454.69-540 479.23-540q24.54 0 42.27 17.73 17.73 17.73 17.73 42.27 0 24.54-17.73 42.27Q503.77-420 479.23-420Zm0 280q-130.54 0-226.77-85.73Q156.23-311.46 141.62-440h61.23Q218-336.38 296.27-268.19T479.23-200q117 0 198.5-81.5t81.5-198.5q0-117-81.5-198.5T479.23-760q-65.54 0-122.84 29.12-57.31 29.11-98.7 80.11h104.62v60H159.23v-203.08h60v94.77q48.69-57.46 116.62-89.19Q403.77-820 479.23-820q70.8 0 132.63 26.77t107.83 72.77q46 46 72.77 107.82 26.77 61.83 26.77 132.62t-26.77 132.63q-26.77 61.85-72.77 107.85-46 46-107.83 72.77Q550.03-140 479.23-140Z"/></svg>
-                </i>
-                <span class="support-title" data-i18n="backup_restore_restore"></span>
+                </md-icon>
+                <span class="list-item-content" data-i18n="backup_restore_restore"></span>
             </div>
         </div>
     </div>
