@@ -28,7 +28,7 @@ export async function fetchText(url, fallbackPath) {
         const response = await fetch(url);
         if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
         return await response.text();
-    } catch (error) {
+    } catch {
         const result = await exec(`cat "${fallbackPath}"`);
         if (result.errno === 0) {
             return result.stdout;
@@ -123,7 +123,7 @@ export async function checkMMRL() {
  * @returns {void}
  */
 export function setupSwipeToClose(element) {
-    let startX = 0, currentX = 0, startY = 0, isDragging = false, isScrolling = false;
+    let startX = 0, currentX = 0, startY = 0, isDragging = false;
     const cover = document.querySelector('.document-cover');
     const backButton = document.querySelector('.back-button');
 
@@ -230,7 +230,6 @@ export function setupSwipeToClose(element) {
 export function setupSlideMenu() {
     const slideMenus = document.querySelectorAll('.slide-menu');
     const cover = document.querySelector('.document-cover');
-    const backButton = document.querySelector('.back-button');
 
     slideMenus.forEach(menu => {
         menu.open = () => {

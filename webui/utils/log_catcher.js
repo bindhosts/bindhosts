@@ -17,7 +17,7 @@ function capture(level, args) {
         detail: args.length > 1 ? args.slice(1).map(arg => {
             try {
                 return typeof arg === 'object' ? JSON.stringify(arg) : String(arg);
-            } catch (e) {
+            } catch {
                 return '[Un-stringifiable Object]';
             }
         }).join(' ') : ''

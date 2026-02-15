@@ -73,15 +73,11 @@ function setupDevOtp() {
 async function checkDevOption() {
     if (developerOption) return;
     try {
-        const response = await fetch('link/PERSISTENT_DIR/mode_override.sh');
-        if (response.ok) {
-            setDeveloperOption(true);
-            return;
-        }
-    } catch (e) { }
-
-    const result = await exec(`[ -f ${basePath}/mode_override.sh ]`);
-    setDeveloperOption(result.errno === 0);
+        await fetchText('link/PERSISTENT_DIR/mode_override.sh', `${basePath}/mode_override.sh`);
+        setDeveloperOption(true);
+    } catch {
+        setDeveloperOption(false);
+    }
 }
 
 /**

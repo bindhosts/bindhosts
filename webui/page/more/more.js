@@ -59,7 +59,7 @@ function checkUpdateStatus() {
             const lines = text.split('\n');
             toggleVersion.selected = lines.some(line => line.trim().startsWith("updateJson="));
         })
-        .catch(e => {
+        .catch(() => {
             toggleVersion.selected = true;
         });
 }
@@ -136,7 +136,7 @@ function checkRedirectStatus() {
             const redirectStatus = data.match(/magisk_webui_redirect=(\d)/)[1];
             actionRedirectStatus.selected = redirectStatus === "1";
         })
-        .catch(error => {
+        .catch(() => {
             actionRedirectStatus.selected = true;
         });
 }
@@ -256,7 +256,7 @@ function localesUpdate() {
                 });
             }
         })
-        .catch(error => {
+        .catch(() => {
             showPrompt(getString('more_support_update_locales_failed'), false);
             isDownloading = false;
         });
@@ -277,8 +277,6 @@ function openLanguageMenu() {
     if (!languageMenuListener) {
         languageMenuListener = true;
         const closeBtn = languageOverlay.querySelector('.close-btn');
-        const infoBtn = document.getElementById('translate-btn');
-
         closeBtn.onclick = () => languageOverlay.close();
     }
 }
@@ -305,9 +303,7 @@ let setupTcpdumpTerminal = false, contentBox = false;
 function openTcpdumpTerminal() {
     const terminal = document.getElementById('tcpdump-terminal');
     const terminalContent = document.getElementById('tcpdump-terminal-content');
-    const title = document.getElementById('title');
     const backButton = document.querySelector('.back-button');
-    const floatBtn = document.querySelector('.tcpdump-btn');
     const stopBtn = document.getElementById('stop-tcpdump');
     const scrollTopBtn = document.getElementById('scroll-top');
 

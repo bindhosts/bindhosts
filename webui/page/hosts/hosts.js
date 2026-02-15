@@ -45,7 +45,7 @@ function displayHostsList(lines, fileType) {
         try {
             if (!domain.startsWith("http")) domain = "http://" + domain;
             domain = new URL(domain).hostname;
-        } catch (e) {
+        } catch {
             domain = domain.split(/[/:?#]/)[0];
         }
         const faviconUrl = `https://twenty-icons.com/${domain}`;
@@ -77,7 +77,7 @@ function displayHostsList(lines, fileType) {
         `;
         // Click to show remove button
         listElement.appendChild(listItem);
-        listItem.addEventListener('click', (e) => {
+        listItem.addEventListener('click', () => {
             const isRTL = document.documentElement.getAttribute('dir') === 'rtl';
             listItem.scrollTo({ 
                 left: isRTL ? -listItem.scrollWidth : listItem.scrollWidth,
@@ -210,7 +210,7 @@ async function handleAdd(fileType, prompt) {
         }
         inputElement.value = ""; // Clear input if add successful
         loadFile(fileType);
-    } catch (error) {
+    } catch(error) {
         console.error(`Failed to process input for ${fileType}: ${error}`);
     }
 }
@@ -493,7 +493,6 @@ function setupDevEditor() {
     const header = document.querySelector('.box-header.import');
     const helpBtn = header.querySelector('.help-btn');
     if (!helpBtn) return;
-    const type = helpBtn.dataset.type;
 
     const editBtn = document.createElement('md-outlined-icon-button');
     editBtn.className = 'dev-edit-btn';
@@ -545,12 +544,9 @@ let setupEditor = false;
 function openFileEditor(lastFileName, openEditor = true) {
     const backButton = document.querySelector('.back-button');
     const saveButton = document.getElementById('save-btn');
-    const FabContainer = document.querySelector('.action-container');
-    const actionBtn = document.getElementById('action-btn');
     const editor = document.getElementById('edit-content');
     const lineNumbers = document.querySelector('.line-numbers');
     const bodyContent = document.getElementById('page-hosts');
-    const forceUpdateButton = document.getElementById('force-update-btn');
     const editorInput = document.getElementById("edit-input");
     const fileNameInput = document.getElementById('file-name-input');
 

@@ -1,5 +1,5 @@
 import { toast } from 'kernelsu-alt';
-import { linkRedirect, developerOption, setupSwipeToClose } from './util.js';
+import { linkRedirect, setupSwipeToClose } from './util.js';
 import { getString, lang } from './language.js';
 import { marked } from "marked";
 
@@ -121,9 +121,6 @@ function fallbackCopyToClipboard(element) {
     }
 }
 
-// Setup documents menu
-let activeDocs = null;
-
 /**
  * Setup documents menu event listeners to open and close document overlays
  * @returns {Promise<void>}
@@ -231,7 +228,6 @@ function openOverlay(overlay) {
     document.querySelectorAll('md-dialog').forEach(dialog => {
         if (dialog.open) dialog.close();
     });
-    activeDocs = overlay;
     const closeBtn = overlay.querySelector('.close-btn');
     if (closeBtn) {
         closeBtn.onclick = () => closeOverlay(overlay);
@@ -245,6 +241,5 @@ function openOverlay(overlay) {
  * @returns {void}
  */
 function closeOverlay(overlay) {
-    activeDocs = null;
     overlay.close();
 }
