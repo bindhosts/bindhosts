@@ -1,7 +1,7 @@
 # τρόποι λειτουργίας του bindhosts
 
 - Αυτές είναι οι καθορισμένες λειτουργίες που είτε ελέγχονται αυτόματα είτε είναι διαθέσιμες κατόπιν επιλογής.
-- Μπορείτε να αλλάξετε τον τρόπο λειτουργίας μεταβαίνοντας στην [επιλογή προγραμματιστή] (https://github.com/bindhosts/bindhosts/issues/10#issue-2703531116).
+- Μπορείτε να αλλάξετε τον τρόπο λειτουργίας μεταβαίνοντας στην [επιλογή προγραμματιστή](https://github.com/bindhosts/bindhosts/issues/10#issue-2703531116).
 
 #### Γλωσσάριο όρων
 
@@ -14,7 +14,7 @@
 
 ### προεπιλεγμένη λειτουργία
 
--
+- **APatch**
   - bind mount (magic mount)
   - Συμβατό με Adaway
   - Απόκρυψη: Εξαίρεση τροποποιήσεων + [ZygiskNext](https://github.com/Dr-TSNG/ZygiskNext)'s umount only
@@ -63,7 +63,7 @@
 - ανακατεύθυνση εντός πυρήνα του /system/etc/hosts για uid 0
 - Μόνο APatch, απαιτεί hosts_file_redirect KPM
   - [hosts_file_redirect](https://github.com/AndroidPatch/kpm/blob/main/src/hosts_file_redirect/)
-  - [Οδηγός Οδηγιών] (https://github.com/bindhosts/bindhosts/issues/3)
+  - [Οδηγός Οδηγιών](https://github.com/bindhosts/bindhosts/issues/3)
 - ΔΕΝ λειτουργεί σε όλες τις ρυθμίσεις, τυχαίνει να μην λειτουργεί
 - Όχι συμβατότητα με Adaway
 - Απόκρυψη: καλή μέθοδος αν λειτουργεί
