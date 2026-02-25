@@ -3,7 +3,7 @@
 ## Χρήση μέσω Τερματικού
 
 <img src="https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/screenshots/terminal_usage.png" 
-onerror="this.onerror=null;this.src='https://raw.gitmirror.com/bindhosts/bindhosts/master/Documentation/screenshots/terminal_usage.png';" 
+onerror="this.onerror=null;this.src='https://gh.sevencdn.com/https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/screenshots/terminal_usage.png';" 
 width="100%" alt="Terminal Usage Screenshot">
 
 Μπορείτε να αποκτήσετε πρόσβαση στις διάφορες επιλογές όπως φαίνεται στην εικόνα για το bindhosts Magisk/KernelSU/APatch
@@ -40,7 +40,7 @@ width="100%" alt="Terminal Usage Screenshot">
 πατήστε ενέργεια για εναλλαγή ενημέρωσης και επαναφοράς
 
 <img src="https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/screenshots/manager_action.gif" 
-onerror="this.onerror=null;this.src='https://raw.gitmirror.com/bindhosts/bindhosts/master/Documentation/screenshots/manager_action.gif';" 
+onerror="this.onerror=null;this.src='https://gh.sevencdn.com/https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/screenshots/manager_action.gif';" 
 width="100%" alt="Manager Action">
 
 ## WebUI
@@ -48,5 +48,5 @@ width="100%" alt="Manager Action">
 προσθέστε τους προσαρμοσμένους κανόνες, τις πηγές, τη λίστα επιτρεπόμενων ή τη λίστα αποκλεισμένων
 
 <img src="https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/screenshots/manager_webui.gif" 
-onerror="this.onerror=null;this.src='https://raw.gitmirror.com/bindhosts/bindhosts/master/Documentation/screenshots/manager_webui.gif';" 
+onerror="this.onerror=null;this.src='https://gh.sevencdn.com/https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/screenshots/manager_webui.gif';" 
 width="100%" alt="Manager WebUI">

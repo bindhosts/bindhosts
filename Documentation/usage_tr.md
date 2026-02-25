@@ -3,7 +3,7 @@
 ## Terminal Üzerinden Kullanım
 
 <img src="https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/screenshots/terminal_usage.png" 
-onerror="this.onerror=null;this.src='https://raw.gitmirror.com/bindhosts/bindhosts/master/Documentation/screenshots/terminal_usage.png';" 
+onerror="this.onerror=null;this.src='https://gh.sevencdn.com/https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/screenshots/terminal_usage.png';" 
 width="100%" alt="Terminal Usage Screenshot">
 
 Magisk/KernelSU/APatch için bindhosts’un çeşitli seçeneklerine aşağıdaki yöntemlerle erişebilirsiniz:
@@ -40,7 +40,7 @@ Magisk/KernelSU/APatch için bindhosts’un çeşitli seçeneklerine aşağıdak
 Güncelleme ve sıfırlama arasında geçiş yapmak için eyleme (action) basın
 
 <img src="https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/screenshots/manager_action.gif" 
-onerror="this.onerror=null;this.src='https://raw.gitmirror.com/bindhosts/bindhosts/master/Documentation/screenshots/manager_action.gif';" 
+onerror="this.onerror=null;this.src='https://gh.sevencdn.com/https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/screenshots/manager_action.gif';" 
 width="100%" alt="Manager Action">
 
 ## WebUI
@@ -48,5 +48,5 @@ width="100%" alt="Manager Action">
 Özel kurallarınızı, kaynaklarınızı, beyaz listenizi veya kara listenizi ekleyin
 
 <img src="https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/screenshots/manager_webui.gif" 
-onerror="this.onerror=null;this.src='https://raw.gitmirror.com/bindhosts/bindhosts/master/Documentation/screenshots/manager_webui.gif';" 
+onerror="this.onerror=null;this.src='https://gh.sevencdn.com/https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/screenshots/manager_webui.gif';" 
 width="100%" alt="Manager WebUI">

@@ -618,15 +618,15 @@ manager_install_zip() {
 }
 
 update_locales() {
-    link1="https://raw.githubusercontent.com/bindhosts/bindhosts/bot/locales.zip"
-	link2="https://raw.gitmirror.com/bindhosts/bindhosts/raw/bot/locales.zip"
-    error=0
+	link1="https://raw.githubusercontent.com/bindhosts/bindhosts/bot/locales.zip"
+	link2="https://gh.sevencdn.com/$link1"
+	error=0
 	echo "[+] downloading: $link1"
-    download "$link1" > "$rwdir/locales.zip" || download "$link2" > "$rwdir/locales.zip"
-    [ -s "$rwdir/locales.zip" ] || error=1
-    unzip -o "$rwdir/locales.zip" -d "$MODDIR/webroot/locales" || error=1
-    rm -f "$rwdir/locales.zip"
-    [ "$error" -eq 0 ] || exit 1
+	download "$link1" > "$rwdir/locales.zip" || download "$link2" > "$rwdir/locales.zip"
+	[ -s "$rwdir/locales.zip" ] || error=1
+	unzip -o "$rwdir/locales.zip" -d "$MODDIR/webroot/locales" || error=1
+	rm -f "$rwdir/locales.zip"
+	[ "$error" -eq 0 ] || exit 1
 }
 
 install_latest_artifact() {

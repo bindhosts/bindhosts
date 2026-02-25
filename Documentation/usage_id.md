@@ -3,7 +3,7 @@
 ## Penggunaan melalui Terminal
 
 <img src="https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/screenshots/terminal_usage.png" 
-onerror="this.onerror=null;this.src='https://raw.gitmirror.com/bindhosts/bindhosts/master/Documentation/screenshots/terminal_usage.png';" 
+onerror="this.onerror=null;this.src='https://gh.sevencdn.com/https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/screenshots/terminal_usage.png';" 
 width="100%" alt="Terminal Usage Screenshot">
 
 Anda dapat mengakses berbagai opsi seperti yang ditunjukkan pada gambar untuk bindhosts Magisk/KernelSU/APatch
@@ -40,7 +40,7 @@ Anda dapat mengakses berbagai opsi seperti yang ditunjukkan pada gambar untuk bi
 klik aksi/tindakan untuk mengaktifkan pembaruan dan pengaturan ulang
 
 <img src="https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/screenshots/manager_action.gif" 
-onerror="this.onerror=null;this.src='https://raw.gitmirror.com/bindhosts/bindhosts/master/Documentation/screenshots/manager_action.gif';" 
+onerror="this.onerror=null;this.src='https://gh.sevencdn.com/https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/screenshots/manager_action.gif';" 
 width="100%" alt="Manager Action">
 
 ## WebUI
@@ -48,5 +48,5 @@ width="100%" alt="Manager Action">
 tambahkan aturan kustom, sumber, daftar putih, atau daftar hitam anda
 
 <img src="https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/screenshots/manager_webui.gif" 
-onerror="this.onerror=null;this.src='https://raw.gitmirror.com/bindhosts/bindhosts/master/Documentation/screenshots/manager_webui.gif';" 
+onerror="this.onerror=null;this.src='https://gh.sevencdn.com/https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/screenshots/manager_webui.gif';" 
 width="100%" alt="Manager WebUI">

@@ -4,7 +4,7 @@ import { getString, lang } from './language.js';
 import { marked } from "marked";
 
 const main = "https://raw.githubusercontent.com";
-const mirror = "https://hub.gitmirror.com/raw.githubusercontent.com";
+const mirror = `https://gh.sevencdn.com/${main}`;
 const repo = "bindhosts/bindhosts";
 const branch = "crowdin_docs";
 

@@ -3,7 +3,7 @@
 ## Nutzung über Terminal
 
 <img src="https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/screenshots/terminal_usage.png" 
-onerror="this.onerror=null;this.src='https://raw.gitmirror.com/bindhosts/bindhosts/master/Documentation/screenshots/terminal_usage.png';" 
+onerror="this.onerror=null;this.src='https://gh.sevencdn.com/https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/screenshots/terminal_usage.png';" 
 width="100%" alt="Terminal Usage Screenshot">
 
 Sie können auf die verschiedenen Optionen zugreifen, wie in der Abbildung für bindhosts Magisk/KernelSU/APatch gezeigt
@@ -40,7 +40,7 @@ Sie können auf die verschiedenen Optionen zugreifen, wie in der Abbildung für 
 drücken Sie die Aktion zum Umschalten von Update und Zurücksetzen
 
 <img src="https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/screenshots/manager_action.gif" 
-onerror="this.onerror=null;this.src='https://raw.gitmirror.com/bindhosts/bindhosts/master/Documentation/screenshots/manager_action.gif';" 
+onerror="this.onerror=null;this.src='https://gh.sevencdn.com/https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/screenshots/manager_action.gif';" 
 width="100%" alt="Manager Action">
 
 ## WebUI
@@ -48,5 +48,5 @@ width="100%" alt="Manager Action">
 füge benutzerdefinierte Regeln, Quellen, Whitelist oder Blacklist hinzu
 
 <img src="https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/screenshots/manager_webui.gif" 
-onerror="this.onerror=null;this.src='https://raw.gitmirror.com/bindhosts/bindhosts/master/Documentation/screenshots/manager_webui.gif';" 
+onerror="this.onerror=null;this.src='https://gh.sevencdn.com/https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/screenshots/manager_webui.gif';" 
 width="100%" alt="Manager WebUI">

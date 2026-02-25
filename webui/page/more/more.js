@@ -225,13 +225,14 @@ function localesUpdate() {
     isDownloading = true;
 
     showPrompt(getString('more_support_checking_update'), true, 10000);
-    fetch("https://raw.githubusercontent.com/bindhosts/bindhosts/bot/locales_version")
+    const link = "https://raw.githubusercontent.com/bindhosts/bindhosts/bot/locales_version"
+    fetch(link)
         .then(response => {
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             return response.text();
         })
         .catch(async () => {
-            return fetch("https://hub.gitmirror.com/raw.githubusercontent.com/bindhosts/bindhosts/bot/locales_version")
+            return fetch(`https://gh.sevencdn.com/${link}`)
                 .then(response => {
                     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                     return response.text()
