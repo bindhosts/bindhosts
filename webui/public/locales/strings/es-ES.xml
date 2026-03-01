@@ -100,6 +100,7 @@
     <string name="more_support_no_update">Actualmente no hay ninguna actualización disponible</string>
     <string name="more_support_update_locales">Actualizar el paquete de traducción</string>
     <string name="more_support_update_locales_failed">Error al actualizar el paquete de traducción</string>
+    <string name="more_support_view_webui_log">Ver Log de WebUI</string>
     <!-- Confirmation -->
     <string name="confirmation_title">¿Confirmar eliminación?</string>
     <string name="confirmation_message">¿Está seguro de que desea eliminar</string>

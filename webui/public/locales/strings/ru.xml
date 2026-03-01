@@ -100,6 +100,7 @@
     <string name="more_support_no_update">Обновлений нет</string>
     <string name="more_support_update_locales">Обновить перевод</string>
     <string name="more_support_update_locales_failed">Не получилось обновить перевод</string>
+    <string name="more_support_view_webui_log">Просмотр журнала WebUI</string>
     <!-- Confirmation -->
     <string name="confirmation_title">Подтвердить удаление?</string>
     <string name="confirmation_message">Вы уверены, что хотите удалить</string>
