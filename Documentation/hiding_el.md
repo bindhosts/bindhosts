@@ -24,7 +24,7 @@
 
 Προτάσεις:
 
-- Εάν ο πυρήνας δεν είναι gki και ο πυρήνας δεν έχει path_umount, ζητήστε από τον προγραμματιστή του πυρήνα να [μεταφέρει αυτήν τη δυνατότητα] (https://github.com/tiann/KernelSU/pull/1464)
+- Εάν ο πυρήνας δεν είναι gki και ο πυρήνας δεν έχει path_umount, ζητήστε από τον προγραμματιστή του πυρήνα να [μεταφέρει αυτήν τη δυνατότητα](https://github.com/tiann/KernelSU/pull/1464)
 - Εγκαταστήστε το NeoZygisk ή το ReZygisk ως χειριστή denylist
 - Ή αν χρησιμοποιείτε το ZygiskNext, ενεργοποιήστε το umount only
 - εναλλακτικά, απλώς εγκαταστήστε το [ZN-hostsredirect](https://github.com/aviraxp/ZN-hostsredirect/releases)
@@ -50,9 +50,9 @@
 - Γιατί χρειάζεται αυτό;
   - Ορισμένες ανιχνεύσεις root περιλαμβάνουν πλέον και ελέγχουν για τροποποιημένο αρχείο hosts.
 - Πώς μπορώ να ελέγξω για ανιχνεύσεις;
-  - Διαβάστε [πώς να ελέγξετε για ανιχνεύσεις] (https://github.com/bindhosts/bindhosts/issues/4)
+  - Διαβάστε [πώς να ελέγξετε για ανιχνεύσεις](https://github.com/bindhosts/bindhosts/issues/4)
 - Πώς μπορώ να μεταβώ στο bind mount στο APatch;
-  - λήψη [τελευταία έκδοση] (https://github.com/bmax121/APatch/releases/latest)
+  - λήψη [τελευταία έκδοση](https://github.com/bmax121/APatch/releases/latest)
 
 ## Σύνδεσμοι
 

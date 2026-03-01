@@ -30,7 +30,7 @@ Entièrement autonome, mise à jour automatique.
 - [FAQ](Documentation/faq_fr.md)
 - [Faq](Documentation/usage.md)
 - [Hiding](Documentation/hiding.md)
-- [Mode d'opération] (Documentation/modes.md)
+- [Mode d'opération](Documentation/modes.md)
 
 ## Liens
 
