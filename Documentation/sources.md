@@ -32,9 +32,7 @@
   - Theres more, check them out!
 
 ### [1Hosts](https://github.com/badmojr/1Hosts)
-  - mini: https://raw.githubusercontent.com/badmojr/1Hosts/master/mini/hosts.txt
-  - Lite: https://raw.githubusercontent.com/badmojr/1Hosts/master/Lite/hosts.txt
-  - Pro: https://raw.githubusercontent.com/badmojr/1Hosts/master/Pro/hosts.txt
+  - https://raw.githubusercontent.com/badmojr/1Hosts/master/Lite/hosts.txt
 
 ### [turtlecute](https://github.com/Turtlecute33/toolz)
   - For easy pass on: [Ad Block Test](https://adblock.turtlecute.org/)
@@ -57,6 +55,9 @@
   - AdBlock: https://hosts.rem01gaming.dev/adblock
   - Root Detection bypass: https://hosts.rem01gaming.dev/bypassroot
   - [Report Issue](https://github.com/Rem01Gaming/hosts/issues)
+
+### [neodevhost](https://github.com/neodevpro/neodevhost)
+  - https://raw.githubusercontent.com/neodevpro/neodevhost/refs/heads/master/host
 
 ## Custom rulesets
 
