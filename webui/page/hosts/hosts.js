@@ -61,8 +61,8 @@ function displayHostsList(lines, fileType) {
                 </div>` : ""}
                 <div class="link-text">${line.replace(/^disabled\|/, '')}</div>
 
-                <!-- Checkbox (custom hosts only) -->
-                ${fileType === "custom" ? `<md-checkbox></md-checkbox>` : ''}
+                <!-- Checkbox (custom hosts and sources) -->
+                ${fileType === "custom" || fileType === "sources" ? `<md-checkbox></md-checkbox>` : ''}
             </div>
 
             <!-- Edit and delete buttons -->
