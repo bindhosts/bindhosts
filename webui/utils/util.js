@@ -99,7 +99,7 @@ export function showPrompt(message, isSuccess = true, duration = 2000, callbackN
  */
 export function reboot() {
     setTimeout(() => showPrompt(getString('global_rebooting')), 200);
-    setTimeout(() => exec("svc power reboot").catch(() => {}), 2000);
+    setTimeout(() => exec("svc power reboot || reboot").catch(() => {}), 2000);
 }
 
 /**
