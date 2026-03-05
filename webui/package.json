@@ -16,15 +16,15 @@
   "dependencies": {
     "@material/web": "^2.4.1",
     "kernelsu-alt": "^3.1.1",
-    "marked": "^17.0.2",
+    "marked": "^17.0.4",
     "webuix": "^0.0.18"
   },
   "devDependencies": {
     "@eslint/css": "^0.14.1",
     "@eslint/js": "^10.0.1",
     "@eslint/json": "^1.0.1",
-    "eslint": "^10.0.0",
-    "globals": "^17.3.0",
+    "eslint": "^10.0.2",
+    "globals": "^17.4.0",
     "vite": "^7.3.1"
   },
   "packageManager": "pnpm@10.28.2"
