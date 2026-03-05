@@ -333,7 +333,7 @@ adblock() {
 	illusion
 	# source processing start!
 	echo "[+] processing sources"
-	sources=$(sed '/#/d' $PERSISTENT_DIR/sources.txt | grep -v "^disabled" | grep http)
+	sources=$(sed 's/#.*//' $PERSISTENT_DIR/sources.txt | grep -v "^disabled" | grep http)
 	if [ -z "$sources" ]; then
 		echo "[x] no sources found 😭"
 		echo "[x] sources.txt needs correction 💢"
@@ -372,28 +372,28 @@ adblock() {
 	# localhost
 	printf "127.0.0.1 localhost\n::1 localhost\n" > $target_hostsfile
 	# always restore user's custom rules
-	sed '/#/d; s/^disabled|//g' $PERSISTENT_DIR/custom*.txt >> $target_hostsfile
+	sed 's/#.*//; /^$/d; s/^disabled|//g' $PERSISTENT_DIR/custom*.txt >> $target_hostsfile
 	# blacklist.txt
-	for i in $(sed '/#/d' $PERSISTENT_DIR/blacklist.txt ); do echo "0.0.0.0 $i" >> "$rwdir/temphosts"; done
+	for i in $(sed 's/#.*//' $PERSISTENT_DIR/blacklist.txt ); do echo "0.0.0.0 $i" >> "$rwdir/temphosts"; done
 	# whitelist.txt
 	echo "[+] processing whitelist"
 	# make sure tempwhitelist isnt empty
 	# or it will grep out nothingness from everything
 	# which actually greps out everything.
 	echo "256.256.256.256 bindhosts" > "$rwdir/tempwhitelist"
-	for url in $(sed '/#/d' $PERSISTENT_DIR/sources_whitelist.txt | grep http) ; do
+	for url in $(sed 's/#.*//' $PERSISTENT_DIR/sources_whitelist.txt | grep http) ; do
 		echo "[>] fetching $url"
 		download "$url" >> "$rwdir/remote_whitelist" || echo "[x] failed downloading $url"
 	done
 	# if there is a remote whitelist, we clean it up
 	if [ -f "$rwdir/remote_whitelist" ]; then
-		sed -i '/#/d; /!/d; s/  */ /g; /^$/d; s/\r$//' "$rwdir/remote_whitelist"
+		sed -i 's/#.*//; /!/d; s/  */ /g; /^$/d; s/\r$//' "$rwdir/remote_whitelist"
 		for i in $(sort -u "$rwdir/remote_whitelist" ); do echo "$i" ; done >> "$rwdir/tempwhitelist"
 	fi
-	for i in $(sed '/#/d' $PERSISTENT_DIR/whitelist.txt); do echo "$i" ; done >> "$rwdir/tempwhitelist"
+	for i in $(sed 's/#.*//' $PERSISTENT_DIR/whitelist.txt); do echo "$i" ; done >> "$rwdir/tempwhitelist"
 	# sed strip out everything with # and !, double space to single space, delete empty lines, dos2unix (CRLF), replace all 127.0.0.1 to 0.0.0.0
 	# then sort uniq, then grep out whitelist.txt from it
-	sed -i '/^#/d; /!/d; s/  */ /g; /^$/d; s/\r$//; s/127.0.0.1/0.0.0.0/g' "$rwdir/temphosts"
+	sed -i 's/#.*//; /!/d; s/  */ /g; /^$/d; s/\r$//; s/127.0.0.1/0.0.0.0/g' "$rwdir/temphosts"
 	# no need to -x on grep, allow wildmatches! bindhosts/issue #112
 	sort -u "$rwdir/temphosts" | grep -Fvf "$rwdir/tempwhitelist" >> $target_hostsfile
 	# mark it, will be read by service.sh to deduce
@@ -405,7 +405,7 @@ reset() {
 	# localhost
 	printf "127.0.0.1 localhost\n::1 localhost\n" > $target_hostsfile
 	# always restore user's custom rules
-	sed '/#/d; s/^disabled|//g' $PERSISTENT_DIR/custom*.txt >> $target_hostsfile
+	sed 's/#.*//; /^$/d; s/^disabled|//g' $PERSISTENT_DIR/custom*.txt >> $target_hostsfile
         string="description=status: reset 🤐 | $(date)"
         sed -i "s/^description=.*/$string/g" $MODDIR/module.prop
         echo "[+] hosts file reset!"
@@ -470,7 +470,7 @@ quick_reset_restore () {
 		# localhost
 		printf "127.0.0.1 localhost\n::1 localhost\n" > $target_hostsfile
 		# always restore user's custom rules
-		sed '/#/d; s/^disabled|//g' $PERSISTENT_DIR/custom*.txt >> $target_hostsfile
+		sed 's/#.*//; /^$/d; s/^disabled|//g' $PERSISTENT_DIR/custom*.txt >> $target_hostsfile
 		string="description=status: reset 🤐 | $(date)"
 		echo "[+] hosts file reset!"
 	fi
