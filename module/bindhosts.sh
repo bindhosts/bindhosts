@@ -333,7 +333,7 @@ adblock() {
 	illusion
 	# source processing start!
 	echo "[+] processing sources"
-	sources=$(sed '/#/d' $PERSISTENT_DIR/sources.txt | grep http)
+	sources=$(sed '/#/d' $PERSISTENT_DIR/sources.txt | grep -v "^disabled" | grep http)
 	if [ -z "$sources" ]; then
 		echo "[x] no sources found 😭"
 		echo "[x] sources.txt needs correction 💢"
