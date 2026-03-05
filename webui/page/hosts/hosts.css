@@ -246,3 +246,14 @@
     background-color: var(--md-sys-color-outline);
     border-radius: 5px;
 }
+
+#edit-hosts-dialog {
+    width: 100%;
+}
+
+#edit-hosts-dialog [slot="content"] {
+    padding-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}

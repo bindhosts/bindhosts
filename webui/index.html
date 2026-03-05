@@ -159,6 +159,19 @@
 
     <!-- Dialogs -->
     <div class="dialog-wrapper" unresolved>
+        <!-- Edit Hosts Dialog -->
+        <md-dialog id="edit-hosts-dialog" class="input-dialog">
+            <div slot="headline" data-i18n="edit_hosts_title">Edit Host</div>
+            <div slot="content">
+                <md-outlined-text-field id="edit-hosts-name" label="Name"></md-outlined-text-field>
+                <md-outlined-text-field id="edit-hosts-link" label="Link"></md-outlined-text-field>
+            </div>
+            <div slot="actions">
+                <md-text-button class="close-btn" data-i18n="global_cancel">Cancel</md-text-button>
+                <md-text-button id="edit-hosts-confirm" data-i18n="global_confirm">Confirm</md-text-button>
+            </div>
+        </md-dialog>
+
         <!-- Help & Info Overlays -->
         <md-dialog id="sources-help">
             <div slot="headline" data-i18n="source_title"></div>

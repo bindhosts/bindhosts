@@ -16,6 +16,7 @@
     <string name="global_show_all">Show All %d More</string>
     <string name="global_close">Close</string>
     <string name="global_cancel">Cancel</string>
+    <string name="global_confirm">Confirm</string>
     <string name="global_action">Action</string>
     <string name="global_unsupported">Unsupported</string>
     <!-- Query -->
@@ -105,6 +106,10 @@
     <string name="confirmation_title">Confirm Remove?</string>
     <string name="confirmation_message">Are you sure you want to remove</string>
     <string name="confirmation_remove">Remove</string>
+    <!-- Edit Hosts -->
+    <string name="edit_hosts_title">Edit Host</string>
+    <string name="edit_hosts_name">Name</string>
+    <string name="edit_hosts_link">Link</string>
     <!-- Footer -->
     <string name="footer_home">Home</string>
     <string name="footer_hosts">Hosts</string>

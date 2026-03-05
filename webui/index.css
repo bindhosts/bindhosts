@@ -560,6 +560,10 @@
         --md-outlined-icon-button-icon-size: 14px;
     }
 
+    md-dialog.input-dialog {
+        margin-top: calc(10% + var(--top-inset));
+    }
+
     [unresolved] {
         display: none !important;
     }

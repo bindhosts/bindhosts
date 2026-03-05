@@ -16,6 +16,7 @@ import '@material/web/iconbutton/icon-button.js';
 import '@material/web/iconbutton/filled-icon-button.js';
 import '@material/web/iconbutton/outlined-icon-button.js';
 import '@material/web/fab/fab.js';
+import '@material/web/textfield/outlined-text-field.js';
 
 window.wx = new WXEventHandler();
 

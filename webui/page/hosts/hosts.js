@@ -41,7 +41,12 @@ function displayHostsList(lines, fileType) {
     // Function to create list items
     const createListItem = (line) => {
         // Free favicon provided by GitHub@twentyhq/favicon
-        let domain = line.trim().split(/\s+/).pop();
+        const item = line.split('#');
+        const isDisabled = line.startsWith('disabled|');
+        const url = item[0].trim().replace(/^disabled\|/, '');
+        const name = item[1]?.trim() || '';
+
+        let domain = url.split(/\s+/).pop();
         try {
             if (!domain.startsWith("http")) domain = "http://" + domain;
             domain = new URL(domain).hostname;
@@ -59,7 +64,7 @@ function displayHostsList(lines, fileType) {
                     <div class="favicon-loader"></div>
                     <img class="favicon-img favicon" src="${faviconUrl}" />
                 </div>` : ""}
-                <div class="link-text">${line.replace(/^disabled\|/, '')}</div>
+                <div class="link-text">${name || url}</div>
 
                 <!-- Checkbox (custom hosts and sources) -->
                 ${fileType === "custom" || fileType === "sources" ? `<md-checkbox></md-checkbox>` : ''}
@@ -84,6 +89,20 @@ function displayHostsList(lines, fileType) {
                 behavior: 'smooth'
             });
         });
+
+        if (fileType !== "import_custom") {
+            listItem.addEventListener('contextmenu', (e) => {
+                e.preventDefault();
+                document.getElementById('edit-hosts-link').value = url;
+                document.getElementById('edit-hosts-name').value = name;
+
+                const dialog = document.getElementById('edit-hosts-dialog');
+                dialog.dataset.currentLine = line;
+                dialog.dataset.fileType = fileType;
+                dialog.dataset.isDisabled = isDisabled ? "true" : "false";
+                dialog.show();
+            });
+        }
         const deleteLine = listItem.querySelector("#line-delete");
         const deleteFile = listItem.querySelector("#file-delete");
         const editFile = listItem.querySelector(".edit-btn");
@@ -103,11 +122,12 @@ function displayHostsList(lines, fileType) {
         // Checkbox functionality for custom hosts
         const checkbox = listItem.querySelector("md-checkbox");
         if (checkbox) {
-            checkbox.checked = !line.startsWith('disabled|');
+            checkbox.checked = !isDisabled;
             checkbox.addEventListener('change', () => {
-                const command = line.startsWith('disabled|') ? `s/${line}/${line.replace(/^disabled\|/, '')}/` : `s/^${line}/disabled|${line}/`;
-                exec(`sed -i '${command}' ${basePath}/${filePaths[fileType]}`);
-                loadFile(fileType);
+                const command = isDisabled ? `s,${line},${line.replace(/^disabled\|/, '')},` : `s,${line},disabled|${line},`;
+                exec(`sed -i '${command}' ${basePath}/${filePaths[fileType]}`).then((result) => {
+                    loadFile(fileType);
+                });
             });
         }
         const removeEntry = () => {
@@ -690,12 +710,45 @@ HostEditorEOF
     }
 }
 
+/**
+ * Setup rename dialog
+ */
+function setupRenameDialog() {
+    const regex = /[$<>[\]{}`]/;
+    const renameDialog = document.getElementById('edit-hosts-dialog');
+    renameDialog.querySelectorAll('md-outlined-text-field').forEach(el => {
+        el.oninput = () => {
+            const value = el.value;
+            el.value = value.replace(regex, '');
+        }
+    });
+    renameDialog.querySelector('.close-btn').onclick = () => renameDialog.close();
+    document.getElementById('edit-hosts-confirm').onclick = () => {
+        const currentLine = renameDialog.dataset.currentLine;
+        const fileType = renameDialog.dataset.fileType;
+        const isDisabled = renameDialog.dataset.isDisabled === "true";
+
+        const newLink = renameDialog.querySelector('#edit-hosts-link').value;
+        const newName = renameDialog.querySelector('#edit-hosts-name').value;
+        let newLine = `${isDisabled ? 'disabled\|' : ''}${newLink}`;
+        if (newName) newLine += ` # ${newName}`;
+        const command = `s,${currentLine},${newLine},`;
+
+        exec(`sed -i '${command}' ${basePath}/${filePaths[fileType]}`).then(() => {
+            loadFile(fileType);
+        });
+        renameDialog.close();
+    };
+}
+
+
 // Lifecycle: Initial mount to DOM
 export function mount() {
     attachAddButtonListeners();
     setupHelpMenu();
     setupDocsMenu();
     setupInputEvent();
+    setupRenameDialog();
     if (import.meta.env.DEV) setupDevEditor();
 
     // Event listeners for action buttons
