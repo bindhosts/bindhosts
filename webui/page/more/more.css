@@ -32,6 +32,11 @@
     box-sizing: border-box;
     background-color: var(--md-sys-color-tonal-surface);
     position: relative;
+    transition: border-radius 0.2s ease;
+}
+
+.list-item:active {
+    border-radius: 20px;
 }
 
 #action-redirect-container {

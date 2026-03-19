@@ -459,6 +459,7 @@ function runBindhosts(args) {
     setTimeout(() => {
         isTerminalOpen = true;
         terminal.open();
+        closeBtn.classList.remove('show');
         backButton.onclick = () => closeTerminal();
     }, 50);
 }
