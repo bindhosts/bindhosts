@@ -91,7 +91,7 @@
 
     .fab-container {
         position: fixed;
-        bottom: calc(var(--bottom-inset) + 96px);
+        bottom: calc(var(--bottom-inset) + 80px);
         padding-inline-end: 16px;
         box-sizing: border-box;
         display: flex;
@@ -153,7 +153,7 @@
         flex-direction: column;
         align-items: center;
         width: 100%;
-        max-height: calc(100vh - 64px - 80px - var(--top-inset) - var(--bottom-inset));
+        max-height: calc(100vh - 64px - 64px - var(--top-inset) - var(--bottom-inset));
         overflow-y: auto;
         box-sizing: border-box;
     }
@@ -191,7 +191,7 @@
         width: 100%;
         position: absolute;
         top: 64px;
-        bottom: 80px;
+        bottom: 64px;
         left: 0;
         overflow-y: auto;
         overflow-x: hidden;
@@ -305,7 +305,7 @@
     .slide-menu {
         position: fixed;
         top: calc(var(--top-inset) + 64px);
-        bottom: calc(var(--bottom-inset) + 80px);
+        bottom: calc(var(--bottom-inset) + 64px);
         left: 0;
         width: 100%;
         z-index: var(--z-index-slide-menu);
@@ -454,9 +454,8 @@
         left: 0;
         position: fixed;
         width: 100%;
-        height: calc(80px + var(--bottom-inset));
+        height: calc(64px + var(--bottom-inset));
         display: flex;
-        justify-content: center;
         align-items: center;
         background-color: var(--md-sys-color-surface-container);
         color: var(--md-sys-color-on-surface);
@@ -467,12 +466,10 @@
 
     .bottom-bar-item {
         flex: 1;
-        height: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: flex-start;
-        padding-top: 12px;
         box-sizing: border-box;
         gap: 4px;
         position: relative;
@@ -482,7 +479,7 @@
     .bottom-bar-item::before {
         content: '';
         position: absolute;
-        top: 12px;
+        top: 0;
         left: 50%;
         width: 56px;
         height: 32px;
@@ -592,6 +589,8 @@
             width: 80px;
             height: 100%;
             flex-direction: column;
+            justify-content: center;
+            gap: 12px;
             background-color: var(--md-sys-color-background);
             box-shadow: none;
             z-index: var(--z-index-footer-desktop);
@@ -605,7 +604,7 @@
         .bottom-bar-item {
             flex: 0;
             max-height: min-content;
-            padding: 12px 16px;
+            padding: 0 16px;
         }
 
         .page-view,
