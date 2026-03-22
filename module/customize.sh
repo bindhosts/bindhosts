@@ -4,6 +4,9 @@ SUSFS_BIN=/data/adb/ksu/bin/ksu_susfs
 . $MODPATH/utils.sh
 PERSISTENT_DIR=/data/adb/bindhosts
 
+export MODULE_HOT_INSTALL_REQUEST="true"
+export MODULE_HOT_RUN_SCRIPT="hotinstall.sh"
+
 # grab own info (version)
 versionCode=$(grep versionCode "$MODPATH/module.prop" | sed 's/versionCode=//g' )
 
