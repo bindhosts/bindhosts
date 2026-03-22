@@ -16,6 +16,7 @@
     <string name="global_show_all">Mostrar todos %d más</string>
     <string name="global_close">Cerrar</string>
     <string name="global_cancel">Cancelar</string>
+    <string name="global_confirm">Confirmar</string>
     <string name="global_action">Action</string>
     <string name="global_unsupported">Sin soporte</string>
     <!-- Query -->
@@ -100,10 +101,15 @@
     <string name="more_support_no_update">Actualmente no hay ninguna actualización disponible</string>
     <string name="more_support_update_locales">Actualizar el paquete de traducción</string>
     <string name="more_support_update_locales_failed">Error al actualizar el paquete de traducción</string>
+    <string name="more_support_view_webui_log">Ver Log de WebUI</string>
     <!-- Confirmation -->
     <string name="confirmation_title">¿Confirmar eliminación?</string>
     <string name="confirmation_message">¿Está seguro de que desea eliminar</string>
     <string name="confirmation_remove">Eliminar</string>
+    <!-- Edit Hosts -->
+    <string name="edit_hosts_title">Editar host</string>
+    <string name="edit_hosts_name">Nombre</string>
+    <string name="edit_hosts_link">Link</string>
     <!-- Footer -->
     <string name="footer_home">Inicio</string>
     <string name="footer_hosts">Hosts</string>

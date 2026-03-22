@@ -94,6 +94,7 @@
     <string name="confirmation_title">Potwierdzić usunięcie?</string>
     <string name="confirmation_message">Czy na pewno chcesz usunąć?</string>
     <string name="confirmation_remove">Usuń</string>
+    <!-- Edit Hosts -->
     <!-- Footer -->
     <string name="footer_home">Strona główna</string>
     <string name="footer_hosts">Hosty</string>

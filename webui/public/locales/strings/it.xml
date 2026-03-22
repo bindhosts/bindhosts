@@ -103,6 +103,7 @@
     <string name="confirmation_title">Confermare la rimozione?</string>
     <string name="confirmation_message">Sei sicuro di voler rimuovere</string>
     <string name="confirmation_remove">Rimuovi</string>
+    <!-- Edit Hosts -->
     <!-- Footer -->
     <string name="footer_home">Home</string>
     <string name="footer_hosts">Hosts</string>

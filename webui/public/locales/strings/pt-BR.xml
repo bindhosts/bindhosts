@@ -75,6 +75,7 @@
     <string name="confirmation_title">Confirmar Remoção?</string>
     <string name="confirmation_message">Você tem certeza que quer remover</string>
     <string name="confirmation_remove">Remover</string>
+    <!-- Edit Hosts -->
     <!-- Footer -->
     <string name="footer_home">Início</string>
     <string name="footer_more">Mais</string>

@@ -94,6 +94,7 @@
     <string name="confirmation_title">Bekräfta ta bort?</string>
     <string name="confirmation_message">Är du säker på att du vill ta bort</string>
     <string name="confirmation_remove">Ta bort</string>
+    <!-- Edit Hosts -->
     <!-- Footer -->
     <string name="footer_home">Hem</string>
     <string name="footer_hosts">Hosts</string>

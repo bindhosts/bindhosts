@@ -16,6 +16,7 @@
     <string name="global_show_all">Показать все %d еще</string>
     <string name="global_close">Закрыть</string>
     <string name="global_cancel">Отмена</string>
+    <string name="global_confirm">Подтвердить</string>
     <string name="global_action">Action</string>
     <string name="global_unsupported">Не поддерживается</string>
     <!-- Query -->
@@ -100,10 +101,15 @@
     <string name="more_support_no_update">Обновлений нет</string>
     <string name="more_support_update_locales">Обновить перевод</string>
     <string name="more_support_update_locales_failed">Не получилось обновить перевод</string>
+    <string name="more_support_view_webui_log">Просмотр журнала WebUI</string>
     <!-- Confirmation -->
     <string name="confirmation_title">Подтвердить удаление?</string>
     <string name="confirmation_message">Вы уверены, что хотите удалить</string>
     <string name="confirmation_remove">Удалить</string>
+    <!-- Edit Hosts -->
+    <string name="edit_hosts_title">Изменить host</string>
+    <string name="edit_hosts_name">Название</string>
+    <string name="edit_hosts_link">Ссылка</string>
     <!-- Footer -->
     <string name="footer_home">Главная</string>
     <string name="footer_hosts">Hosts</string>
