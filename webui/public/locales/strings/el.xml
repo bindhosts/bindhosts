@@ -104,6 +104,7 @@
     <string name="confirmation_title">Επιβεβαίωση Αφαίρεσης?</string>
     <string name="confirmation_message">Είστε σίγουροι ότι θέλετε να αφαιρέσετε?</string>
     <string name="confirmation_remove">Αφαίρεση</string>
+    <!-- Edit Hosts -->
     <!-- Footer -->
     <string name="footer_home">Αρχική</string>
     <string name="footer_hosts">Hosts</string>

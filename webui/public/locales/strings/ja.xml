@@ -97,6 +97,7 @@
     <string name="confirmation_title">削除の確認</string>
     <string name="confirmation_message">本当に削除しますか？</string>
     <string name="confirmation_remove">削除</string>
+    <!-- Edit Hosts -->
     <!-- Footer -->
     <string name="footer_home">ホーム</string>
     <string name="footer_hosts">Hosts</string>

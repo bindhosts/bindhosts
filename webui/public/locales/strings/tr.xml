@@ -104,6 +104,7 @@
     <string name="confirmation_title">Kaldırmayı Onayla?</string>
     <string name="confirmation_message">Kaldırmak istediğinizden emin misiniz</string>
     <string name="confirmation_remove">Kaldır</string>
+    <!-- Edit Hosts -->
     <!-- Footer -->
     <string name="footer_home">Ana Sayfa</string>
     <string name="footer_hosts">Hosts</string>
