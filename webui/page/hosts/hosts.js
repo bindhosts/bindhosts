@@ -82,7 +82,8 @@ function displayHostsList(lines, fileType) {
         `;
         // Click to show remove button
         listElement.appendChild(listItem);
-        listItem.addEventListener('click', () => {
+        listItem.addEventListener('click', (e) => {
+            if (e.target.tagName === 'MD-CHECKBOX') return;
             const isRTL = document.documentElement.getAttribute('dir') === 'rtl';
             listItem.scrollTo({ 
                 left: isRTL ? -listItem.scrollWidth : listItem.scrollWidth,
