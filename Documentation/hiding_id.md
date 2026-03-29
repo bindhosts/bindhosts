@@ -2,31 +2,31 @@
 
 ## APatch
 
-Penyembunyian di APatch seharusnya berfungsi, asalkan anda menggunakan [rilis terbaru](https://github.com/bmax121/APatch/releases/latest)
+Penyembunyian di APatch seharusnya berfungsi, asalkan Anda menggunakan [rilis terbaru](https://github.com/bmax121/APatch/releases/latest)
 
-- 'Kecualikan Modifikasi' pada aplikasi yang root-nya ingin anda sembunyikan.
-- Pasang NeoZygisk atau ReZygisk sebagai penangan daftar tolak
-- ATAU jika anda menggunankan ZygiskNext, aktifan hanya unmount
+- 'Kecualikan Modifikasi' pada aplikasi yang root-nya ingin Anda sembunyikan.
+- Pasang salah satu dari NeoZygisk atau ReZygisk sebagai penangan denylist
+- ATAU jika Anda menggunankan ZygiskNext, aktifan hanya unmount
 
-APatch lama tidak direkomendasikan karena potensi masalah. Namun, anda dapat mencoba hal berikut ini:
+APatch Legacy tidak direkomendasikan karena potensi masalah. Namun, Anda dapat mencoba hal berikut ini:
 
-- kecualikan modifikasi ditambah salah satu dari NeoZygisk, ReZygisk ATAU milik ZygiskNext hanya unmount
-- ATAU anda dapat memasang NoHello atau Zygisk Assistant
-- meskipun ini tidak direkomendasikan lagi, anda masih dapat mencoba menggunakan kpm hosts_file_redirect. [Tutorial](https://github.com/bindhosts/bindhosts/issues/3)
+- kecualikan modifikasi + salah satu dari NeoZygisk, ReZygisk ATAU fitur hanya unmount milik ZygiskNext
+- ATAU Anda dapat memasang NoHello atau Zygisk Assistant
+- meskipun ini tidak direkomendasikan lagi, Anda masih dapat mencoba menggunakan kpm hosts_file_redirect. [Tutorial](https://github.com/bindhosts/bindhosts/issues/3)
 - jika hosts_file_redirect gagal, pasang [ZN-hostsredirect](https://github.com/aviraxp/ZN-hostsredirect/releases)
 
 ## KernelSU
 
 Penyembunyian di KernelSU seharusnya berfungsi, asalkan:
 
-1. anda memiliki path_umount (GKI, di-backport)
+1. Anda memiliki path_umount (GKI, di-backport)
 2. tidak ada modul yang saling bertentangan (misal Magical OverlayFS)
 
 Rekomendasi:
 
 - jika kernel non-gki dan kernel tidak memiliki path_umount, minta pengembang kernel untuk [mem-backport fitur ini](https://github.com/tiann/KernelSU/pull/1464)
-- Pasang NeoZygisk atau ReZygisk sebagai penangan daftar tolak
-- ATAU jika anda menggunakan ZygiskNext, aktifkan hanya unmount
+- Pasang antara NeoZygisk atau ReZygisk sebagai penangan denylist
+- ATAU jika Anda menggunakan ZygiskNext, aktifkan hanya unmount
 - alternatifnya, cukup pasang [ZN-hostsredirect](https://github.com/aviraxp/ZN-hostsredirect/releases)
 
 ### Varian (MKSU, KernelSU-NEXT)
@@ -42,13 +42,13 @@ Rekomendasi:
 
 Penyembunyian di Magisk (dan klon, Alpha, Kitsune) seharusnya berfungsi sebagaimana mestinya.
 
-- Tambahkan aplikasi yang ingin anda sembunyikan akses rootnya ke daftar tolak.
-- opsional anda juga dapat menggunakan Shamiko di Alpha
+- Tambahkan aplikasi yang ingin Anda sembunyikan akses rootnya ke denylist.
+- opsional Anda juga dapat menggunakan Shamiko di Alpha
 
 # Tanya Jawab
 
 - Mengapa ini dibutuhkan?
-  - beberapa deteksi root sekarang menyertakan dan memeriksa file host yang dimodifikasi.
+  - beberapa deteksi root sekarang menyertakan dan memeriksa berkas hosts yang dimodifikasi.
 - Bagaimana cara memeriksa deteksi nya?
   - Baca [cara memeriksa deteksi](https://github.com/bindhosts/bindhosts/issues/4)
 - Bagaimana cara saya berpindah ke bind mount pada APatch?

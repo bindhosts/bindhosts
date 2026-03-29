@@ -7,7 +7,7 @@
   1. Суперпользователь
   2. Chrome
   3. Пользовательский
-  4. отключить размонтирование модулей<br><img src="https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/screenshots/umount_chrome.png" 
+  4. Выключите "Размонтировать модули"<br><img src="https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/screenshots/umount_chrome.png" 
           onerror="this.onerror=null;this.src='https://gh.sevencdn.com/https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/screenshots/umount_chrome.png';"
           width="100%" alt="Disable umount modules screenshot">
 - Это также применимо к другим браузерам на основе Chrome и Chromium.
