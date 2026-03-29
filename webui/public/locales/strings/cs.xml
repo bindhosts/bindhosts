@@ -94,6 +94,7 @@
     <string name="confirmation_title">Potvrdit odstranění?</string>
     <string name="confirmation_message">Opravdu chcete odstranit</string>
     <string name="confirmation_remove">Odstranit</string>
+    <!-- Edit Hosts -->
     <!-- Footer -->
     <string name="footer_home">Domů</string>
     <string name="footer_hosts">Hosts</string>

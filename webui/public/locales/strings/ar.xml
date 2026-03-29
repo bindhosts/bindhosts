@@ -16,6 +16,7 @@
     <string name="global_show_all">عرض %d المزيد</string>
     <string name="global_close">غلق</string>
     <string name="global_cancel">إلغاء</string>
+    <string name="global_confirm">تأكيد</string>
     <string name="global_action">إجراء</string>
     <string name="global_unsupported">غير مدعوم</string>
     <!-- Query -->
@@ -100,10 +101,15 @@
     <string name="more_support_no_update">لا توجد تحديثات متوفرة حاليا</string>
     <string name="more_support_update_locales">تحديث حزمة ملفات الترجمة</string>
     <string name="more_support_update_locales_failed">فشل تحديث حزمة ملفات الترجمة</string>
+    <string name="more_support_view_webui_log">عرض سجل WebUI</string>
     <!-- Confirmation -->
     <string name="confirmation_title">تأكيد الحذف</string>
     <string name="confirmation_message">هل أنت متأكد أنك تريد حذف</string>
     <string name="confirmation_remove">حذف</string>
+    <!-- Edit Hosts -->
+    <string name="edit_hosts_title">تعديل المضيف</string>
+    <string name="edit_hosts_name">الاسم</string>
+    <string name="edit_hosts_link">الرابط</string>
     <!-- Footer -->
     <string name="footer_home">الرئيسية</string>
     <string name="footer_hosts">Hosts</string>
