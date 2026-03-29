@@ -96,6 +96,7 @@
     <string name="confirmation_title">Підтвердити видалення?</string>
     <string name="confirmation_message">Ви впевнені, що хочете видалити</string>
     <string name="confirmation_remove">Видалити</string>
+    <!-- Edit Hosts -->
     <!-- Footer -->
     <string name="footer_home">Головна</string>
     <string name="footer_hosts">Hosts</string>
