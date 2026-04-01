@@ -97,6 +97,7 @@
     <string name="confirmation_title">Löschen bestätigen?</string>
     <string name="confirmation_message">Sind Sie sicher, dass Sie entfernen möchten</string>
     <string name="confirmation_remove">Entfernen</string>
+    <!-- Edit Hosts -->
     <!-- Footer -->
     <string name="footer_home">Startseite</string>
     <string name="footer_hosts">Hosts</string>

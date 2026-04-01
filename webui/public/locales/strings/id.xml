@@ -9,14 +9,15 @@
     <string name="global_reboot_now">Mulai ulang untuk menerapkan</string>
     <string name="global_reboot">Mulai ulang</string>
     <string name="global_rebooting">Memulai ulang...</string>
-    <string name="global_saved">File disimpan ke %s</string>
-    <string name="global_save_fail">Gagal menyimpan file</string>
-    <string name="global_file_too_large">Hanya edit file yang diizinkan pada file besar</string>
-    <string name="global_file_name_empty">Nama file tidak boleh kosong</string>
-    <string name="global_show_all">Tampilkan semua %d lagi</string>
+    <string name="global_saved">Berkas disimpan ke %s</string>
+    <string name="global_save_fail">Gagal menyimpan berkas</string>
+    <string name="global_file_too_large">Pengeditan tidak didukung pada berkas berukuran besar</string>
+    <string name="global_file_name_empty">Nama berkas tidak boleh kosong</string>
+    <string name="global_show_all">Tampilkan %d lainnya</string>
     <string name="global_close">Tutup</string>
     <string name="global_cancel">Batal</string>
-    <string name="global_action">Action</string>
+    <string name="global_confirm">Konfirmasi</string>
+    <string name="global_action">Aksi</string>
     <string name="global_unsupported">Tidak Didukung</string>
     <!-- Query -->
     <string name="query_title">Kueri Host</string>
@@ -31,34 +32,34 @@
     <string name="control_panel_language">Bahasa</string>
     <string name="control_panel_bad_translation">Terjemahan Buruk</string>
     <string name="control_panel_add_language">Tambahkan Bahasa Lainnya</string>
-    <string name="control_panel_get_tiles">Dapatkan Tile QS</string>
+    <string name="control_panel_get_tiles">Dapatkan Ubin QS</string>
     <string name="control_panel_installing">Memasang...</string>
     <string name="control_panel_installed">Terpasang, silakan aktifkan izin SU untuk aplikasi bindhosts</string>
     <string name="control_panel_download_fail">Gagal mengunduh, silakan periksa koneksi internet anda</string>
-    <string name="control_panel_install_fail">Gagal memasang, silakan instal secara manual dari /sdcard/Download/bindhosts-app</string>
+    <string name="control_panel_install_fail">Gagal memasang, silakan pasang secara manual dari /sdcard/Download/bindhosts-app</string>
     <string name="control_panel_module_update">Pembaruan Modul</string>
     <string name="control_panel_update_true">Pembaruan Modul diaktifkan</string>
     <string name="control_panel_update_false">Pembaruan Modul dinonaktifkan</string>
-    <string name="control_panel_action_redirect">Alihkan Action</string>
-    <string name="control_panel_action_prompt_true">Pengalihan Magisk action ke WebUI diaktifkan</string>
-    <string name="control_panel_action_prompt_false">Pengalihan Magisk action ke WebUI dinonaktifkan</string>
+    <string name="control_panel_action_redirect">Pengalihan Aksi</string>
+    <string name="control_panel_action_prompt_true">Pengalihan aksi Magisk ke WebUI diaktifkan</string>
+    <string name="control_panel_action_prompt_false">Pengalihan aksi Magisk ke WebUI dinonaktifkan</string>
     <string name="control_panel_update_hosts_daily">Perbarui Host Setiap Hari</string>
     <string name="control_panel_cron_true">Entri Crontab ditambahkan</string>
     <string name="control_panel_cron_false">Entri Crontab dihapus</string>
     <string name="control_panel_monitor_network_activity">Pantau Aktivitas Jaringan</string>
     <!-- Custom -->
-    <string name="custom_title">Aturan kustom</string>
+    <string name="custom_title">Aturan khusus</string>
     <string name="custom_guide1">Tambahkan pengalihan khusus disini</string>
     <string name="custom_example">Contoh:</string>
     <string name="custom_format">Format:</string>
     <string name="custom_warning">PERINGATAN: Aturan khusus dimuat saat dijalankan dan disetel ulang!</string>
-    <string name="custom_prompt_fail">%s sudah ada di aturan kustom</string>
+    <string name="custom_prompt_fail">%s sudah ada di aturan khusus</string>
     <!-- Import -->
-    <string name="import_custom_title">Impor Aturan Kustom</string>
+    <string name="import_custom_title">Impor Aturan Khusus</string>
     <!-- Source -->
     <string name="source_title">Sumber</string>
     <string name="source_guide1">Sumber daftar hitam</string>
-    <string name="source_guide2">Sumber aturan kustom</string>
+    <string name="source_guide2">Sumber aturan khusus</string>
     <string name="source_format">Format:</string>
     <string name="source_example">Contoh:</string>
     <string name="source_source_page">Sumber lainnya</string>
@@ -94,16 +95,21 @@
     <string name="more_support">Dukungan</string>
     <string name="more_support_issue">Laporkan masalah</string>
     <string name="more_support_update_canary">Perbarui ke versi Canary terbaru</string>
-    <string name="more_support_update_success">Pembaruan berhasil, mulai ulang untuk menerapkan efeknya</string>
+    <string name="more_support_update_success">Pembaruan berhasil, mulai ulang untuk menerapkan perubahan</string>
     <string name="more_support_update_fail">Gagal memperbarui, tolong unduh dan pasang secara manual melalui GitHub</string>
     <string name="more_support_checking_update">Memeriksa pembaruan...</string>
     <string name="more_support_no_update">Saat ini tidak ada pembaruan yang tersedia</string>
     <string name="more_support_update_locales">Perbarui paket terjemahan</string>
     <string name="more_support_update_locales_failed">Gagal memperbarui paket terjemahan</string>
+    <string name="more_support_view_webui_log">Lihat Log WebUI</string>
     <!-- Confirmation -->
     <string name="confirmation_title">Konfirmasi Hapus?</string>
     <string name="confirmation_message">Apakah Anda yakin ingin menghapus</string>
     <string name="confirmation_remove">Hapus</string>
+    <!-- Edit Hosts -->
+    <string name="edit_hosts_title">Edit Host</string>
+    <string name="edit_hosts_name">Nama</string>
+    <string name="edit_hosts_link">Tautan</string>
     <!-- Footer -->
     <string name="footer_home">Beranda</string>
     <string name="footer_hosts">Hosts</string>

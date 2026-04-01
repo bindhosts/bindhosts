@@ -105,6 +105,7 @@
     <string name="confirmation_title">确认删除？</string>
     <string name="confirmation_message">确认删除</string>
     <string name="confirmation_remove">删除</string>
+    <!-- Edit Hosts -->
     <!-- Footer -->
     <string name="footer_home">首页</string>
     <string name="footer_hosts">Hosts</string>
