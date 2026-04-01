@@ -59,6 +59,10 @@
 ### [neodevhost](https://github.com/neodevpro/neodevhost)
   - https://raw.githubusercontent.com/neodevpro/neodevhost/refs/heads/master/host
 
+### [AWAvenue Ads Rule](https://github.com/TG-Twilight/AWAvenue-Ads-Rule?tab=readme-ov-file)
+  - Github Raw : https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-hosts.txt
+  - TMBy CFCDN Proxy : https://github.boki.moe/https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-hosts.txt
+
 ## Custom rulesets
 
 ### [bebasid](https://github.com/bebasid/bebasid)
@@ -75,3 +79,7 @@
    - Circumvents geo-blocks in Russia
    - Unblocks some foreign services, such as OpenAI, Grok, JetBrains
    - https://raw.githubusercontent.com/Internet-Helper/GeoHideDNS/refs/heads/main/hosts/hosts   
+
+### [FCM Hosts Next](https://github.com/Mice-Tailor-Infra/fcm-hosts-next)
+   - Ensuring stable connectivity for Google Firebase Cloud Messaging (FCM) in mainland China
+   - https://raw.githubusercontent.com/Mice-Tailor-Infra/fcm-hosts-next/refs/heads/main/fcm_dual.hosts
