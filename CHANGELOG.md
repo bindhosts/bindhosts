@@ -4,6 +4,17 @@ Systemless hosts for APatch, KernelSU and Magisk
 ---
 
 # Changelog
+### 2.1.2
+- webui/locales: new translations
+- webui: other small fixes
+- scripts: hot install support
+- webui: new list active styling, clean up close button
+- webui/hosts: add rename dialog
+- webui/hosts: support disable source
+- webui: migrate to material web component
+- webui: add formatting support to translation strings
+- webui: refactor routing, file selector
+
 ### 2.1.1
 - scripts/post-fs-data: reorder rules for ksun ksuv3 migration
 - scripts/bindhosts: ignore comments inline after entry
