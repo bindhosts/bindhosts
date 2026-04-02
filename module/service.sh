@@ -62,8 +62,10 @@ zn_hostsredirect() {
 	echo "bindhosts: service.sh - mode zn_hostsredirect" >> /dev/kmsg
 }
 
-ksu_susfs_open_redirect() { 
-	${SUSFS_BIN} add_open_redirect /system/etc/hosts "$MODDIR/system/etc/hosts"
+ksu_susfs_open_redirect() {
+	# Newer susfs v2.1.0 uses uid_scheme as a second argument
+	# 2 = Effective for non-su processes
+	${SUSFS_BIN} add_open_redirect /system/etc/hosts 2 "$MODDIR/system/etc/hosts" || ${SUSFS_BIN} add_open_redirect /system/etc/hosts "$MODDIR/system/etc/hosts"
 	echo "bindhosts: service.sh - mode ksu_susfs_open_redirect" >> /dev/kmsg
 }
 
