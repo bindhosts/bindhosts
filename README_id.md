@@ -8,7 +8,7 @@ Sepenuhnya mandiri, dapat memperbarui sendiri.
 
 ## Fitur
 
-- Kontrol WebUI dan tombol aksi
+- Kontrol WebUI dan tombol tindakan
 - Koeksistensi Adaway
 - Hosts systemless melalui mount manajer, bind mount, dan OverlayFS
 - Metode pengalihan: ZN-hostsredirect, hosts_file_redirect, open_redirect
@@ -40,6 +40,6 @@ Sepenuhnya mandiri, dapat memperbarui sendiri.
 
 ## Bantuan dan Dukungan
 
-Laporkan [disini](https://github.com/bindhosts/bindhosts/issues) jika anda menemui masalah apa pun.
+Laporkan [disini](https://github.com/bindhosts/bindhosts/issues) jika Anda menemui masalah apa pun.
 
 [Pull requests](https://github.com/bindhosts/bindhosts/pulls) selalu diterima.
