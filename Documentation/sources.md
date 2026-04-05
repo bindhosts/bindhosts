@@ -83,3 +83,7 @@
 ### [FCM Hosts Next](https://github.com/Mice-Tailor-Infra/fcm-hosts-next)
    - Ensuring stable connectivity for Google Firebase Cloud Messaging (FCM) in mainland China
    - https://raw.githubusercontent.com/Mice-Tailor-Infra/fcm-hosts-next/refs/heads/main/fcm_dual.hosts
+
+### [GitHub520](https://github.com/521xueweihan/GitHub520)
+   - Smooth access to GitHub in mainland China
+   - https://raw.githubusercontent.com/521xueweihan/GitHub520/refs/heads/main/hosts
