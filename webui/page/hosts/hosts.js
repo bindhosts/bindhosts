@@ -372,6 +372,9 @@ function setupInputEvent() {
             const wrapper = inputBox.closest('.input-box-wrapper');
             wrapper.classList.add('focus');
             inputBox.style.padding = '0 9px';
+            setTimeout(() => {
+                inputBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 300);
         });
         inputBox.addEventListener('blur', () => {
             const wrapper = inputBox.closest('.input-box-wrapper');
