@@ -143,9 +143,6 @@ if [ -z "$KSU" ] && [ -z "$APATCH" ]; then
 fi
 
 ##################
-until [ "$(getprop sys.boot_completed)" = "1" ]; do
-    sleep 1
-done
 
 # set description conditionally
 if [ -w $target_hostsfile ] ; then
@@ -170,9 +167,13 @@ else
 fi
 
 # update description
-sed "s/^description=.*/$string/g" $MODDIR/module.prop > $MODDIR/module.prop.tmp
-grep -q "^description=" $MODDIR/module.prop.tmp && cat $MODDIR/module.prop.tmp > $MODDIR/module.prop
-rm -f $MODDIR/module.prop.tmp
+cat "$MODDIR/module.prop" > "$MODDIR/module.prop.tmp"
+busybox sed -i "s/^description=.*/$string/g" "$MODDIR/module.prop.tmp"
+busybox mv -f "$MODDIR/module.prop.tmp" "$MODDIR/module.prop"
+
+until [ "$(getprop sys.boot_completed)" = "1" ]; do
+	sleep 1
+done
 
 # remove previous linked hosts file and link again
 # hosts location might be different after reboot when user flash znhr/hfr
