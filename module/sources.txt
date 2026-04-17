@@ -13,3 +13,4 @@
 #
 https://adaway.org/hosts.txt
 https://raw.githubusercontent.com/r-a-y/mobile-hosts/master/AdguardDNS.txt
+disabled|https://gitlab.com/andryou/block/raw/master/chibi
