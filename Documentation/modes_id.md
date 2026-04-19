@@ -25,7 +25,7 @@
 - **KernelSU**
   - OverlayFS + path_umount, (magic mount? segera?)
   - Tidak ada kompatibilitas Adaway
-  - Penyembunyian: umount modul (untuk non-GKI, tolong backport path_umount)
+  - Penyembunyian: umount modul (untuk non-GKI, harap backport path_umount)
 
 ---
 
@@ -34,8 +34,8 @@
 ### ksu_susfs_bind
 
 - mount --bind yang dibantu susfs
-- KernelSU saja
-- Memerlukan kernel yang ditambal susfs dan alat userspace
+- Hanya KernelSU
+- Memerlukan kernel yang ditambal susfs dan alat ruang pengguna
 - kompatibel dengan Adaway
 - Penyembunyian: SuSFS menangani unmount
 
@@ -93,9 +93,9 @@
 ### ksu_susfs_open_redirect
 
 - pengalihan berkas dalam kernel untuk uid di bawah 2000
-- KernelSU saja
-- **OPT-IN** saja
-- Memerlukan kernel yang ditambal susfs dan alat userspace
+- Hanya KernelSU
+- Hanya **OPT-IN**
+- Memerlukan kernel yang ditambal susfs dan alat ruang pengguna
 - penggunaan **tidak disarankan** oleh pengembang (simonpunk)
 
 > _"openredirect juga akan membutuhkan lebih banyak siklus CPU.."_ <div align="right"><em>-- simonpunk</em></div>
@@ -125,7 +125,7 @@
 
 - mount overlayfs rw generik
 - seharusnya berfungsi pada semua manajer
-- hanya tersedia **OPT-IN** karena kerentanan yang **sangat tinggi** terhadap deteksi
+- hanya **OPT-IN** karena kerentanan yang **sangat tinggi** terhadap deteksi
 - membocorkan mount overlayfs (dengan direktori atas /data/adb), membocorkan berkas hosts yang dimodifikasi secara global
 - kemungkinan TIDAK berfungsi pada APatch bind_mount / MKSU jika pengguna menggunakan casefolding /data f2fs bawaan
 - kompatibel dengan Adaway
@@ -138,8 +138,8 @@
 ### ksu_susfs_overlay
 
 - mount overlayfs rw dibantu susfs
-- KernelSU saja
-- Memerlukan kernel yang ditambal susfs dan alat userspace
+- Hanya KernelSU
+- Memerlukan kernel yang ditambal susfs dan alat ruang pengguna
 - kemungkinan TIDAK berfungsi pada APatch bind_mount / MKSU jika pengguna menggunakan casefolding /data f2fs bawaan
 - kompatibel dengan Adaway
 - Penyembunyiaan: metode yang bagus tetapi ksu_susfs_bind lebih mudah
@@ -151,9 +151,9 @@
 ### ksu_susfs_bind_kstat
 
 - mount --bind dibantu susfs + spoof kstat
-- KernelSU saja
-- Memerlukan kernel yang ditambal susfs dan alat userspace
-- Hanya tersedia **OPT-IN** karena bersifat khusus
+- Hanya KernelSU
+- Memerlukan kernel yang ditambal susfs dan alat ruang pengguna
+- Hanya **OPT-IN** karena bersifat khusus
 - kompatibel dengan Adaway
 - Penyembunyian: SuSFS menangani unmount
 
@@ -164,7 +164,7 @@
 ### ksud_kernel_umount
 
 - mount --bind + kernel dukungan umount
-- KernelSU saja
+- Hanya KernelSU
 - Membutuhkan KernelSU 22106+
 - kompatibel dengan Adaway
 - Penyembunyian: KernelSU menangani unmount.

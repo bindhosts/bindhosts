@@ -26,7 +26,7 @@ Anda dapat mengakses berbagai opsi seperti yang ditunjukkan pada gambar untuk bi
 ```
     bindhosts --action          Ini akan mensimulasikan aksi bindhosts untuk mengambil ip atau mengatur ulang berkas hosts, tergantung pada status bindhosts saat ini
     bindhosts --tcpdump         Akan melacak alamat ip aktif saat ini pada mode jaringan Anda (wifi atau data, memastikan tidak ada layanan DNS yang digunakan seperti cloudflare, dll.)
-    bindhosts --query <URL>          Periksa berkas hosts untuk pola tertentu
+    bindhosts --query <URL>     Periksa berkas hosts untuk pola tertentu
     bindhosts --force-update    Memaksa pembaruan
     bindhosts --force-reset     Akan memaksa atur ulang bindhosts, yang berarti mengatur ulang berkas hosts tanpa ip sama sekali
     bindhosts --custom-cron     Menentukan waktu tertentu dalam sehari untuk menjalankan tugas cronjob bindhosts

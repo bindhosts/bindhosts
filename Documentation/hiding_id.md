@@ -6,13 +6,13 @@ Penyembunyian di APatch seharusnya berfungsi, asalkan Anda menggunakan [rilis te
 
 - 'Kecualikan Modifikasi' pada aplikasi yang root-nya ingin Anda sembunyikan.
 - Pasang salah satu dari NeoZygisk atau ReZygisk sebagai penangan denylist
-- ATAU jika Anda menggunankan ZygiskNext, aktifan hanya unmount
+- ATAU jika Anda menggunakan ZygiskNext, aktifan hanya unmount
 
-APatch Legacy tidak direkomendasikan karena potensi masalah. Namun, Anda dapat mencoba hal berikut ini:
+APatch Legacy tidak disarankan karena potensi masalah. Namun, Anda dapat mencoba hal berikut ini:
 
 - kecualikan modifikasi + salah satu dari NeoZygisk, ReZygisk ATAU fitur hanya unmount milik ZygiskNext
 - ATAU Anda dapat memasang NoHello atau Zygisk Assistant
-- meskipun ini tidak direkomendasikan lagi, Anda masih dapat mencoba menggunakan kpm hosts_file_redirect. [Tutorial](https://github.com/bindhosts/bindhosts/issues/3)
+- meskipun ini tidak disarankan lagi, Anda masih dapat mencoba menggunakan kpm hosts_file_redirect. [Tutorial](https://github.com/bindhosts/bindhosts/issues/3)
 - jika hosts_file_redirect gagal, pasang [ZN-hostsredirect](https://github.com/aviraxp/ZN-hostsredirect/releases)
 
 ## KernelSU
@@ -22,7 +22,7 @@ Penyembunyian di KernelSU seharusnya berfungsi, asalkan:
 1. Anda memiliki path_umount (GKI, di-backport)
 2. tidak ada modul yang saling bertentangan (misal Magical OverlayFS)
 
-Rekomendasi:
+Saran:
 
 - jika kernel non-gki dan kernel tidak memiliki path_umount, minta pengembang kernel untuk [mem-backport fitur ini](https://github.com/tiann/KernelSU/pull/1464)
 - Pasang antara NeoZygisk atau ReZygisk sebagai penangan denylist
@@ -31,7 +31,7 @@ Rekomendasi:
 
 ### Varian (MKSU, KernelSU-NEXT)
 
-- Untuk MKSU, rekomendasi yang sama seperti KernelSU
+- Untuk MKSU, saran yang sama seperti KernelSU
 - Untuk KernelSU-NEXT, penyembunyian akan berfungsi (melalui mode 6)
 
 ### SuSFS
