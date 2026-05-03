@@ -1,6 +1,7 @@
 import { initializeLogCatcher } from './utils/log_catcher.js';
 import { checkMMRL, setupSlideMenu, moduleDirectory } from './utils/util.js';
 import { loadTranslations } from './utils/language.js';
+import { closeTopManagedLayer, hasManagedHistoryLayer, registerManagedDialog } from './utils/history.js';
 import { router } from './route.js';
 import { exec } from 'kernelsu-alt';
 import { WXEventHandler } from "webuix";
@@ -18,7 +19,7 @@ import '@material/web/iconbutton/outlined-icon-button.js';
 import '@material/web/fab/fab.js';
 import '@material/web/textfield/outlined-text-field.js';
 
-window.wx = new WXEventHandler();
+window.wx = typeof WXEventHandler === 'function' ? new WXEventHandler() : null;
 
 /**
  * Setup navigation
@@ -141,22 +142,16 @@ window.replaceSpaces = function(input) {
     input.setSelectionRange(cursorPosition, cursorPosition);
 }
 
-window.wx.on(window, 'back', () => {
-    const backBtn = document.querySelector('.back-button');
-    const dialog = document.querySelectorAll('md-dialog');
+window.wx?.on(window, 'back', () => {
+    if (hasManagedHistoryLayer()) {
+        closeTopManagedLayer();
+        return;
+    }
 
-    // Close side menu
+    const backBtn = document.querySelector('.back-button');
     if (backBtn && backBtn.classList.contains('show')) {
         backBtn.click();
         return;
-    // Close dialog
-    } else if (dialog.length > 0) {
-        for (const dlg of dialog) {
-            if (dlg.open) {
-                dlg.close();
-                return;
-            }
-        }
     }
     // Back to home page
     if (router.currentView !== 'home') {
@@ -186,6 +181,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 // Overwrite default dialog animation
 document.querySelectorAll('md-dialog').forEach(dialog => {
+    registerManagedDialog(dialog);
+
     const defaultOpenAnim = dialog.getOpenAnimation;
     const defaultCloseAnim = dialog.getCloseAnimation;
 

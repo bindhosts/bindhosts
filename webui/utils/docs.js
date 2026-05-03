@@ -1,6 +1,7 @@
 import { toast } from 'kernelsu-alt';
 import { linkRedirect } from './util.js';
 import { getString, lang } from './language.js';
+import { registerManagedPanel } from './history.js';
 import { marked } from "marked";
 
 const main = "https://raw.githubusercontent.com";
@@ -170,12 +171,6 @@ export async function setupDocsMenu() {
                 const type = button.dataset.type;
                 const overlay = document.getElementById(`${type}-docs`);
 
-                // Close parent overlay if it exists
-                const parentOverlay = button.closest('md-dialog');
-                if (parentOverlay) {
-                    closeOverlay(parentOverlay);
-                }
-
                 openOverlay(overlay);
                 const { link, fallback, element } = docsData[type] || {};
                 getDocuments(element, link, fallback);
@@ -197,6 +192,25 @@ export async function setupDocsMenu() {
     const backButton = document.querySelector('.back-button');
 
     if (aboutContent) {
+        registerManagedPanel(aboutContent, {
+            open: () => {
+                aboutContent.classList.add('animation');
+                document.querySelector('.body-content[data-active="true"]')?.classList.add('animation');
+                aboutContent.classList.add('open');
+                document.querySelector('.body-content[data-active="true"]')?.classList.add('menu-open');
+                backButton?.classList.add('show');
+            },
+            close: () => {
+                aboutContent.classList.add('animation');
+                document.querySelector('.body-content[data-active="true"]')?.classList.add('animation');
+                aboutContent.classList.remove('open');
+                document.querySelector('.body-content[data-active="true"]')?.classList.remove('menu-open');
+                backButton?.classList.remove('show');
+                document.getElementById('title').textContent = getString('footer_more');
+            },
+            isOpen: () => aboutContent.classList.contains('open'),
+        });
+
         // Attach click event to all about docs buttons
         document.querySelectorAll('.about-docs').forEach(element => {
             element.onclick = () => {
@@ -209,7 +223,6 @@ export async function setupDocsMenu() {
 
                 backButton.onclick = () => {
                     aboutContent.close();
-                    document.getElementById('title').textContent = getString('footer_more');
                 };
             };
         });
@@ -222,9 +235,6 @@ export async function setupDocsMenu() {
  * @returns {void}
  */
 function openOverlay(overlay) {
-    document.querySelectorAll('md-dialog').forEach(dialog => {
-        if (dialog.open) dialog.close();
-    });
     const closeBtn = overlay.querySelector('.close-btn');
     if (closeBtn) {
         closeBtn.onclick = () => closeOverlay(overlay);
