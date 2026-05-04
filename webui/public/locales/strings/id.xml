@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="system_default">Default Sistem</string>
+    <string name="system_default">Bawaan Sistem</string>
     <!-- Status -->
     <string name="status_title">Status</string>
     <!-- Global -->
-    <string name="global_dev_opt">Opsi pengembang diaktifkan</string>
-    <string name="global_dev_opt_true">Opsi pengembang telah di diaktifkan</string>
-    <string name="global_reboot_now">Mulai ulang untuk menerapkan</string>
+    <string name="global_dev_opt">Opsi pengembang aktif</string>
+    <string name="global_dev_opt_true">Opsi pengembang telah aktif</string>
+    <string name="global_reboot_now">Mulai ulang untuk menerapkan perubahan</string>
     <string name="global_reboot">Mulai ulang</string>
     <string name="global_rebooting">Memulai ulang...</string>
     <string name="global_saved">Berkas disimpan ke %s</string>
@@ -38,11 +38,11 @@
     <string name="control_panel_download_fail">Gagal mengunduh, silakan periksa koneksi internet anda</string>
     <string name="control_panel_install_fail">Gagal memasang, silakan pasang secara manual dari /sdcard/Download/bindhosts-app</string>
     <string name="control_panel_module_update">Pembaruan Modul</string>
-    <string name="control_panel_update_true">Pembaruan Modul diaktifkan</string>
-    <string name="control_panel_update_false">Pembaruan Modul dinonaktifkan</string>
+    <string name="control_panel_update_true">Pembaruan modul aktif</string>
+    <string name="control_panel_update_false">Pembaruan modul nonaktif</string>
     <string name="control_panel_action_redirect">Pengalihan Aksi</string>
-    <string name="control_panel_action_prompt_true">Pengalihan aksi Magisk ke WebUI diaktifkan</string>
-    <string name="control_panel_action_prompt_false">Pengalihan aksi Magisk ke WebUI dinonaktifkan</string>
+    <string name="control_panel_action_prompt_true">Mengaktifkan pengalihan aksi Magisk ke WebUI</string>
+    <string name="control_panel_action_prompt_false">Menonaktifkan pengalihan aksi Magisk ke WebUI</string>
     <string name="control_panel_update_hosts_daily">Perbarui Host Setiap Hari</string>
     <string name="control_panel_cron_true">Entri Crontab ditambahkan</string>
     <string name="control_panel_cron_false">Entri Crontab dihapus</string>
@@ -52,7 +52,7 @@
     <string name="custom_guide1">Tambahkan pengalihan khusus disini</string>
     <string name="custom_example">Contoh:</string>
     <string name="custom_format">Format:</string>
-    <string name="custom_warning">PERINGATAN: Aturan khusus dimuat saat dijalankan dan disetel ulang!</string>
+    <string name="custom_warning">PERINGATAN: Aturan khusus dimuat saat dijalankan dan diatur ulang!</string>
     <string name="custom_prompt_fail">%s sudah ada di aturan khusus</string>
     <!-- Import -->
     <string name="import_custom_title">Impor Aturan Khusus</string>
@@ -90,8 +90,8 @@
     <string name="more_sources">Sumber</string>
     <string name="more_usage">Penggunaan</string>
     <string name="more_modes">Mode</string>
-    <string name="more_hiding">Sembunyikan</string>
-    <string name="more_faq">FAQ</string>
+    <string name="more_hiding">Penyembunyian</string>
+    <string name="more_faq">Tanya Jawab</string>
     <string name="more_support">Dukungan</string>
     <string name="more_support_issue">Laporkan masalah</string>
     <string name="more_support_update_canary">Perbarui ke versi Canary terbaru</string>
@@ -116,11 +116,11 @@
     <string name="footer_more">Lainnya</string>
     <!-- Backup and Restore -->
     <string name="backup_restore_backup_and_restore">Cadangkan &amp; Pulihkan</string>
-    <string name="backup_restore_export">Ekspor konfigurasi</string>
-    <string name="backup_restore_restore">Pulihkan konfigurasi</string>
-    <string name="backup_restore_exported">Konfigurasi disimpan ke %s</string>
-    <string name="backup_restore_export_fail">Gagal mengekspor konfigurasi</string>
-    <string name="backup_restore_invalid_config">Konfigurasi bindhosts tidak valid</string>
-    <string name="backup_restore_restored">Konfigurasi berhasil dipulihkan</string>
-    <string name="backup_restore_restore_fail">Gagal memulihkan konfigurasi</string>
+    <string name="backup_restore_export">Ekspor konfig</string>
+    <string name="backup_restore_restore">Pulihkan konfig</string>
+    <string name="backup_restore_exported">Konfig disimpan ke %s</string>
+    <string name="backup_restore_export_fail">Gagal mengekspor konfig</string>
+    <string name="backup_restore_invalid_config">Konfig bindhosts tidak valid</string>
+    <string name="backup_restore_restored">Konfig berhasil dipulihkan</string>
+    <string name="backup_restore_restore_fail">Gagal memulihkan konfig</string>
 </resources>

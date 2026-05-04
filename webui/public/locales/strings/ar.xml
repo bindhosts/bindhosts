@@ -17,7 +17,7 @@
     <string name="global_close">غلق</string>
     <string name="global_cancel">إلغاء</string>
     <string name="global_confirm">تأكيد</string>
-    <string name="global_action">إجراء</string>
+    <string name="global_action">الإجراء</string>
     <string name="global_unsupported">غير مدعوم</string>
     <!-- Query -->
     <string name="query_title">استعلام المضيف</string>
@@ -40,9 +40,9 @@
     <string name="control_panel_module_update">تحديث الإضافة</string>
     <string name="control_panel_update_true">تم تفعيل تحديث الإضافة</string>
     <string name="control_panel_update_false">تم إيقاف تحديث الإضافة</string>
-    <string name="control_panel_action_redirect">اعادة تحويل Action</string>
-    <string name="control_panel_action_prompt_true">تم تفعيل إعادة تحويل Action إلي واجهة الويب</string>
-    <string name="control_panel_action_prompt_false">تم ايقاف إعادة تحويل Action إلي واجهة الويب</string>
+    <string name="control_panel_action_redirect">إعادة تحويل زر الإجراء</string>
+    <string name="control_panel_action_prompt_true">تم تفعيل إعادة تحويل الإجراء إلي واجهة الويب</string>
+    <string name="control_panel_action_prompt_false">تم إيقاف إعادة تحويل الإجراء إلي واجهة الويب</string>
     <string name="control_panel_update_hosts_daily">تحديث الhosts يوميا</string>
     <string name="control_panel_cron_true">تمت اضافة مدخل Crontab</string>
     <string name="control_panel_cron_false">تمت إزالة مدخل Crontab</string>
