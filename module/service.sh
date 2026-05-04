@@ -167,9 +167,11 @@ else
 fi
 
 # update description
-cat "$MODDIR/module.prop" > "$MODDIR/module.prop.tmp"
-busybox sed -i "s/^description=.*/$string/g" "$MODDIR/module.prop.tmp"
-busybox mv -f "$MODDIR/module.prop.tmp" "$MODDIR/module.prop"
+( sleep 3;
+	cat "$MODDIR/module.prop" > "$MODDIR/module.prop.tmp" ;
+	busybox sed -i "s/^description=.*/$string/g" "$MODDIR/module.prop.tmp" ;
+	busybox mv -f "$MODDIR/module.prop.tmp" "$MODDIR/module.prop"
+) & # fork in background
 
 until [ "$(getprop sys.boot_completed)" = "1" ]; do
 	sleep 1
