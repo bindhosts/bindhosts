@@ -173,12 +173,11 @@ fi
 	busybox mv -f "$MODDIR/module.prop.tmp" "$MODDIR/module.prop"
 ) & # fork in background
 
-until [ "$(getprop sys.boot_completed)" = "1" ]; do
-	sleep 1
-done
-
-# remove previous linked hosts file and link again
-# hosts location might be different after reboot when user flash znhr/hfr
-sh $MODDIR/bindhosts.sh --setup-link
+if [ ! "$APATCH" = true ] && [ ! "$KSU" = true ]; then
+	until [ "$(getprop sys.boot_completed)" = "1" ]; do
+		sleep 1
+	done
+	sh "$MODDIR/boot-completed.sh" &
+fi
 
 # EOF
