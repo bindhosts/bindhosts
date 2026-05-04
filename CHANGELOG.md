@@ -4,6 +4,12 @@ Systemless hosts for APatch, KernelSU and Magisk
 ---
 
 # Changelog
+### 2.1.3
+- scripts/post-fs-data: update ksu_susfs_open_redirect routine
+- webui: add scroll into view on input focus
+- scripts/service: rework module.prop description update
+- scripts: actually use boot-completed.sh
+
 ### 2.1.2
 - webui/locales: new translations
 - webui: other small fixes
