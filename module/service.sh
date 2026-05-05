@@ -144,10 +144,9 @@ fi
 
 ##################
 
-apply_description() {
-sleep 3		
-
 # set description conditionally
+apply_description() {
+sleep 3
 if [ -w $target_hostsfile ] ; then
 
 	blocked_count=$(grep -c "0.0.0.0" $target_hostsfile )
@@ -167,6 +166,13 @@ if [ -w $target_hostsfile ] ; then
 else
 	string="description=status: failed 😭 needs correction 💢"
 	touch $MODDIR/disable
+fi
+
+# do not bother updating if generated string is the same
+desc_current=$(grep "^description=" "$MODDIR/module.prop")
+if [ "$desc_current" = "$string" ]; then
+	# echo "bindhosts: same shit. skip update" >> /dev/kmsg
+	return
 fi
 
 cat "$MODDIR/module.prop" > "$MODDIR/module.prop.tmp"
