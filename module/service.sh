@@ -144,6 +144,9 @@ fi
 
 ##################
 
+apply_description() {
+sleep 3		
+
 # set description conditionally
 if [ -w $target_hostsfile ] ; then
 
@@ -166,12 +169,12 @@ else
 	touch $MODDIR/disable
 fi
 
-# update description
-( sleep 3;
-	cat "$MODDIR/module.prop" > "$MODDIR/module.prop.tmp" ;
-	busybox sed -i "s/^description=.*/$string/g" "$MODDIR/module.prop.tmp" ;
-	busybox mv -f "$MODDIR/module.prop.tmp" "$MODDIR/module.prop"
-) & # fork in background
+cat "$MODDIR/module.prop" > "$MODDIR/module.prop.tmp"
+busybox sed -i "s/^description=.*/$string/g" "$MODDIR/module.prop.tmp"
+busybox mv -f "$MODDIR/module.prop.tmp" "$MODDIR/module.prop"
+} # apply_description
+
+apply_description & #fork in background
 
 if [ ! "$APATCH" = true ] && [ ! "$KSU" = true ]; then
 	until [ "$(getprop sys.boot_completed)" = "1" ]; do
