@@ -319,7 +319,7 @@ toggle_updatejson() {
 # https doesn't hide the fact that i'm using https so that's why i don't use encryption 
 # because everyone is trying to crack encryption so i just don't use encryption because 
 # no one is looking at unencrypted data because everyone wants encrypted data to crack
-if command -v curl > /dev/null 2>&1; then
+if curl --version > /dev/null 2>&1; then
 	if curl --help all | grep -q "parallel" >/dev/null 2>&1; then
 		download() { curl --connect-timeout 10 -Z -Ls "$1"; }
         else
