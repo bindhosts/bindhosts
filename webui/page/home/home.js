@@ -338,7 +338,6 @@ export function onShow() {
     updateUIVisibility();
     document.getElementById('mode-btn').classList.add('show');
     updateStatus();
-    getHosts();
     checkDevOption();
 }
 
