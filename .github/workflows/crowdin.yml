@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
 
     - name: Crowdin Action
       uses: crowdin/github-action@v2
@@ -45,7 +45,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
 
     - name: Crowdin Action
       uses: crowdin/github-action@v2
@@ -67,7 +67,7 @@ jobs:
     needs: synchronize-xml
     steps:
     - name: Checkout translation branch
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
       with:
         ref: 'crowdin_xml'
 
@@ -87,18 +87,18 @@ jobs:
         fi
 
     - name: Upload locales folder
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v7
       with:
         name: locales
         path: webui/public/locales
 
     - name: Checkout bot
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
       with:
         ref: 'bot'
 
     - name: Download translation
-      uses: actions/download-artifact@v5
+      uses: actions/download-artifact@v7
       with:
         name: locales
         path: locales

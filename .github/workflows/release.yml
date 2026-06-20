@@ -33,14 +33,14 @@ jobs:
         fetch-depth: 2
 
     - name: Setup pnpm
-      uses: pnpm/action-setup@v4
+      uses: pnpm/action-setup@v6
       with:
         version: 'latest'
 
     - name: Setup Node
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v6
       with:
-        node-version: 'latest'
+        node-version: 'lts/*'
         cache: 'pnpm'
         cache-dependency-path: webui/pnpm-lock.yaml
 
@@ -48,7 +48,7 @@ jobs:
       run: |
         cd webui
         pnpm install --frozen-lockfile
-        pnpm run build
+        pnpm build
 
     - name: Set variables
       id: setup
@@ -73,14 +73,14 @@ jobs:
         fi
 
     - name: Upload artifact
-      uses: actions/upload-artifact@v6
+      uses: actions/upload-artifact@v7
       with:
         name: ${{ env.ZIP_NAME }}
         path: 'module'
 
     - name: Download artifact
       if: ${{ env.version_changed == 'true' || inputs.force_release }}
-      uses: actions/download-artifact@v7
+      uses: actions/download-artifact@v8
       with:
         name: ${{ env.ZIP_NAME }}
         path: ${{ env.MODULE_NAME }}
@@ -94,7 +94,7 @@ jobs:
 
     - name: Create new release
       if: ${{ env.version_changed == 'true' }}
-      uses: softprops/action-gh-release@v2
+      uses: softprops/action-gh-release@v3
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
@@ -107,7 +107,7 @@ jobs:
 
     - name: Force update latest release file
       if: ${{ inputs.force_release }}
-      uses: softprops/action-gh-release@v2
+      uses: softprops/action-gh-release@v3
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:

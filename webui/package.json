@@ -1,5 +1,5 @@
 {
-  "name": "webui",
+  "name": "bindhosts",
   "version": "1.0.0",
   "description": "",
   "scripts": {
@@ -7,25 +7,22 @@
     "build": "vite build --emptyOutDir",
     "lint": "eslint . --fix"
   },
-  "keywords": [
-    "bindhosts"
-  ],
   "author": "KOWX712",
   "license": "WTFPL-2.0",
   "type": "module",
   "dependencies": {
     "@material/web": "^2.4.1",
     "kernelsu-alt": "^3.1.1",
-    "marked": "^17.0.5",
+    "marked": "^18.0.5",
     "webuix": "^0.0.18"
   },
   "devDependencies": {
-    "@eslint/css": "^1.0.0",
+    "@eslint/css": "^1.3.0",
     "@eslint/js": "^10.0.1",
-    "@eslint/json": "^1.2.0",
-    "eslint": "^10.1.0",
-    "globals": "^17.4.0",
-    "vite": "^8.0.3"
+    "@eslint/json": "^2.0.0",
+    "eslint": "^10.5.0",
+    "globals": "^17.6.0",
+    "vite": "^8.0.16"
   },
-  "packageManager": "pnpm@10.28.2"
+  "packageManager": "pnpm@11.8.0"
 }
