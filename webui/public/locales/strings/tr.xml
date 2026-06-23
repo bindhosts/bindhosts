@@ -16,6 +16,7 @@
     <string name="global_show_all">Tümünü göster %d daha</string>
     <string name="global_close">Kapat</string>
     <string name="global_cancel">İptal</string>
+    <string name="global_confirm">Onayla</string>
     <string name="global_action">Action</string>
     <string name="global_unsupported">Desteklenmiyor</string>
     <!-- Query -->
@@ -100,11 +101,15 @@
     <string name="more_support_no_update">Şu anda güncelleme yok</string>
     <string name="more_support_update_locales">Çeviri paketini güncelle</string>
     <string name="more_support_update_locales_failed">Çeviri paketi güncellenemedi</string>
+    <string name="more_support_view_webui_log">WebUI Günlüğünü Görüntüle</string>
     <!-- Confirmation -->
     <string name="confirmation_title">Kaldırmayı Onayla?</string>
     <string name="confirmation_message">Kaldırmak istediğinizden emin misiniz</string>
     <string name="confirmation_remove">Kaldır</string>
     <!-- Edit Hosts -->
+    <string name="edit_hosts_title">Hostu Düzenle</string>
+    <string name="edit_hosts_name">Ad</string>
+    <string name="edit_hosts_link">Bağlantı</string>
     <!-- Footer -->
     <string name="footer_home">Ana Sayfa</string>
     <string name="footer_hosts">Hosts</string>

@@ -16,7 +16,9 @@
     <string name="global_show_all">Mostra tutti %d altro</string>
     <string name="global_close">Chiudi</string>
     <string name="global_cancel">Annulla</string>
+    <string name="global_confirm">Conferma</string>
     <string name="global_action">Action</string>
+    <string name="global_unsupported">Non supportato</string>
     <!-- Query -->
     <string name="query_title">Query Host</string>
     <string name="query_search">Cerca</string>
@@ -99,11 +101,15 @@
     <string name="more_support_no_update">Al momento non è disponibile alcun aggiornamento</string>
     <string name="more_support_update_locales">Aggiorna pacchetto di traduzione</string>
     <string name="more_support_update_locales_failed">Impossibile aggiornare pacchetto di traduzione</string>
+    <string name="more_support_view_webui_log">Visualizza Log WebUI</string>
     <!-- Confirmation -->
     <string name="confirmation_title">Confermare la rimozione?</string>
     <string name="confirmation_message">Sei sicuro di voler rimuovere</string>
     <string name="confirmation_remove">Rimuovi</string>
     <!-- Edit Hosts -->
+    <string name="edit_hosts_title">Modifica Host</string>
+    <string name="edit_hosts_name">Nome</string>
+    <string name="edit_hosts_link">Link</string>
     <!-- Footer -->
     <string name="footer_home">Home</string>
     <string name="footer_hosts">Hosts</string>
