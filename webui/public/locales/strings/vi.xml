@@ -1,19 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="system_default">Theo hệ thống</string>
     <!-- Status -->
+    <string name="status_title">Trạng thái</string>
     <!-- Global -->
+    <string name="global_dev_opt">Bật Tùy chọn nhà phát triển</string>
+    <string name="global_dev_opt_true">Tùy chọn nhà phát triển đã bật sẵn rồi</string>
+    <string name="global_reboot_now">Khởi động lại để có hiệu lực</string>
+    <string name="global_reboot">Khởi động lại</string>
+    <string name="global_rebooting">Đang khởi động lại...</string>
+    <string name="global_saved">Tệp đã lưu tại %s</string>
+    <string name="global_save_fail">Không thể lưu tệp</string>
+    <string name="global_file_too_large">Tệp quá lớn! Không thể chỉnh sửa</string>
+    <string name="global_file_name_empty">Tên tệp không được trống</string>
+    <string name="global_show_all">Hiện tất cả %d mục còn lại</string>
+    <string name="global_close">Đóng</string>
+    <string name="global_cancel">Hủy</string>
+    <string name="global_confirm">Xác nhận</string>
+    <string name="global_action">Hành động</string>
+    <string name="global_unsupported">Đã hết hỗ trợ</string>
     <!-- Query -->
+    <string name="query_title">Truy vấn máy chủ</string>
+    <string name="query_search">Tìm kiếm</string>
+    <string name="query_host_ip">IP</string>
+    <string name="query_host_type">Loại</string>
+    <string name="query_host_domain">Tên miền</string>
+    <string name="query_remove_prompt">%s đã được cho phép</string>
+    <string name="query_remove_error">Đã thất bại khi đang cho phép %s</string>
     <!-- Control Panel -->
+    <string name="control_panel_title">Bảng điều khiển</string>
+    <string name="control_panel_language">Ngôn ngữ</string>
+    <string name="control_panel_bad_translation">Dịch không tốt</string>
+    <string name="control_panel_add_language">Thêm ngôn ngữ</string>
+    <string name="control_panel_get_tiles">Lấy ô cài đặt nhanh</string>
+    <string name="control_panel_installing">Đang cài đặt...</string>
+    <string name="control_panel_installed">Đã cài xong, vui lòng bật quyền SU cho ứng dụng Bindhosts</string>
+    <string name="control_panel_download_fail">Tải xuống không thành công, Vui lòng kiểm tra kết nối mạng của bạn</string>
+    <string name="control_panel_install_fail">Không thể cài đặt, vui lòng cài thủ công tại thư mục /sdcard/Download/bindhosts-app</string>
+    <string name="control_panel_module_update">Cập nhật mô-đun</string>
+    <string name="control_panel_update_true">Đã bật cập nhật mô-đun</string>
+    <string name="control_panel_update_false">Đã tắt cập nhật mô-đun</string>
+    <string name="control_panel_action_redirect">Chuyển hướng hành động</string>
+    <string name="control_panel_action_prompt_true">Đã bật chuyển hướng hành động Magisk trên giao diện WebUI</string>
+    <string name="control_panel_action_prompt_false">Đã tắt chuyển hướng hành động Magisk trên giao diện WebUI</string>
+    <string name="control_panel_update_hosts_daily">Cập nhật máy chủ thường xuyên</string>
+    <string name="control_panel_cron_true">Đã thêm mục Crontab</string>
+    <string name="control_panel_cron_false">Đã loại bỏ mục Crontab</string>
+    <string name="control_panel_monitor_network_activity">Giám sát hoạt động mạng</string>
     <!-- Custom -->
+    <string name="custom_title">Quy tắc Tùy chỉnh</string>
+    <string name="custom_guide1">Thêm chuyển hướng tùy chỉnh ở đây</string>
+    <string name="custom_example">Ví dụ:</string>
+    <string name="custom_format">Định dạng:</string>
+    <string name="custom_warning">CẢNH BÁO: Các quy tắc tùy chỉnh sẽ được nạp vào kể cả khi chạy hoặc đặt lại!</string>
+    <string name="custom_prompt_fail">%s đã có sẵn trong quy tắc tùy chỉnh của bạn</string>
     <!-- Import -->
+    <string name="import_custom_title">Nhập Quy tắc Tùy chỉnh</string>
     <!-- Source -->
+    <string name="source_title">Nguồn</string>
+    <string name="source_guide1">Nguồn danh sách đen</string>
+    <string name="source_guide2">Quy tắc Tùy chỉnh</string>
+    <string name="source_format">Định dạng:</string>
+    <string name="source_example">Ví dụ:</string>
+    <string name="source_source_page">Nhiều nguồn hơn</string>
+    <string name="source_prompt_fail">%s đã có sẵn trong nguồn</string>
     <!-- Blacklist -->
+    <string name="blacklist_title">Danh sách đen</string>
+    <string name="blacklist_guide1">Tất cả những gì bạn thêm ở đây đều vào danh sách đen</string>
+    <string name="blacklist_example">Ví dụ:</string>
+    <string name="blacklist_prompt_fail">%s đã có sẵn trong danh sách đen</string>
     <!-- Whitelist -->
+    <string name="whitelist_title">Danh sách trắng</string>
+    <string name="whitelist_guide1">Tất cả mục được thêm vào đây sẽ không bị đưa vào danh sách đen</string>
+    <string name="whitelist_example">Ví dụ:</string>
+    <string name="whitelist_prompt_fail">%s đã có sẵn trong danh sách cho phép</string>
     <!-- Sources -->
+    <string name="sources_whitelist_title">Nguồn danh sách cho phép</string>
+    <string name="sources_whitelist_guide1">Thêm nguồn danh sách trắng ở đây</string>
+    <string name="sources_whitelist_format">Định dạng:</string>
+    <string name="sources_whitelist_example">Ví dụ:</string>
+    <string name="sources_whitelist_prompt_fail">%s đã có sẵn trong nguồn danh sách trắng</string>
     <!-- Mode -->
+    <string name="mode_button">Chế độ %s</string>
+    <string name="mode_title">Chế độ hoạt động</string>
+    <string name="mode_detail">Tìm hiểu thêm</string>
+    <string name="mode_reset">Đặt lại (tự động)</string>
     <!-- More -->
+    <string name="more_documents">Tài liệu</string>
+    <string name="more_sources">Nguồn</string>
+    <string name="more_usage">Sử dụng</string>
+    <string name="more_modes">Chế độ</string>
+    <string name="more_hiding">Đang ẩn</string>
+    <string name="more_faq">Câu hỏi thường gặp</string>
+    <string name="more_support">Hỗ Trợ</string>
+    <string name="more_support_issue">Báo cáo vấn đề</string>
+    <string name="more_support_update_canary">Cập nhật lên phiên bản Canary mới nhất</string>
+    <string name="more_support_update_success">Đã cập nhật xong, khởi động lại để có hiệu lực</string>
+    <string name="more_support_update_fail">Thất bại, vui lòng tải và cài đặt thủ công từ GitHub</string>
+    <string name="more_support_checking_update">Đang kiểm tra cập nhật...</string>
+    <string name="more_support_no_update">Hiện tại không có bản cập nhật khả dụng</string>
+    <string name="more_support_update_locales">Cập nhật gói dịch thuật</string>
+    <string name="more_support_update_locales_failed">Gói dịch thuật cập nhật thất bại</string>
+    <string name="more_support_view_webui_log">Xem nhật kí WebUI</string>
     <!-- Confirmation -->
+    <string name="confirmation_title">Xác nhận Xóa?</string>
+    <string name="confirmation_message">Bạn có chắc chắn muốn xóa không</string>
+    <string name="confirmation_remove">Xoá</string>
     <!-- Edit Hosts -->
+    <string name="edit_hosts_title">Chỉnh sửa máy chủ</string>
+    <string name="edit_hosts_name">Tên</string>
+    <string name="edit_hosts_link">Liên kết</string>
     <!-- Footer -->
+    <string name="footer_home">Trang chủ</string>
+    <string name="footer_hosts">Máy chủ</string>
+    <string name="footer_more">Thêm</string>
     <!-- Backup and Restore -->
+    <string name="backup_restore_backup_and_restore">Sao lưu &amp; Khôi phục</string>
+    <string name="backup_restore_export">Xuất cấu hình</string>
+    <string name="backup_restore_restore">Khôi phục cấu hình</string>
+    <string name="backup_restore_exported">Đã lưu cấu hình vào %s</string>
+    <string name="backup_restore_export_fail">Xuất cấu hình thất bại</string>
+    <string name="backup_restore_invalid_config">Cấu hình bindhosts này không hợp lệ</string>
+    <string name="backup_restore_restored">Đã khôi phục cấu hình</string>
+    <string name="backup_restore_restore_fail">Nhập cấu hình thất bại</string>
 </resources>

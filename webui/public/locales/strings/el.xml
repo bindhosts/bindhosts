@@ -16,6 +16,7 @@
     <string name="global_show_all">Εμφάνιση Όλων %d Περισσότερα</string>
     <string name="global_close">Κλείσιμο</string>
     <string name="global_cancel">Ακύρωση</string>
+    <string name="global_confirm">Επιβεβαίωση</string>
     <string name="global_action">Ενέργεια</string>
     <string name="global_unsupported">Δεν υποστηρίζεται</string>
     <!-- Query -->
@@ -100,11 +101,15 @@
     <string name="more_support_no_update">Δεν υπάρχει διαθέσιμη ενημέρωση αυτήν τη στιγμή</string>
     <string name="more_support_update_locales">Ενημέρωση πακέτου μεταφράσεων</string>
     <string name="more_support_update_locales_failed">Αποτυχία ενημέρωσης πακέτου μεταφράσεων</string>
+    <string name="more_support_view_webui_log">Προβολή αρχείου καταγραφής WebUI</string>
     <!-- Confirmation -->
     <string name="confirmation_title">Επιβεβαίωση Αφαίρεσης?</string>
     <string name="confirmation_message">Είστε σίγουροι ότι θέλετε να αφαιρέσετε?</string>
     <string name="confirmation_remove">Αφαίρεση</string>
     <!-- Edit Hosts -->
+    <string name="edit_hosts_title">Επεξεργασία Host</string>
+    <string name="edit_hosts_name">Όνομα</string>
+    <string name="edit_hosts_link">Σύνδεσμος</string>
     <!-- Footer -->
     <string name="footer_home">Αρχική</string>
     <string name="footer_hosts">Hosts</string>
