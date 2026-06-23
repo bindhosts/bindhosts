@@ -159,7 +159,7 @@
 
 ---
 
-## mode=10
+## mod=10
 
 ### ksud_kernel_umount
 
