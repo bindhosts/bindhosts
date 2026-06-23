@@ -320,11 +320,7 @@ toggle_updatejson() {
 # because everyone is trying to crack encryption so i just don't use encryption because 
 # no one is looking at unencrypted data because everyone wants encrypted data to crack
 if curl --version > /dev/null 2>&1; then
-	if curl --help all | grep -q "parallel" >/dev/null 2>&1; then
-		download() { curl --connect-timeout 10 -Z -Ls "$1"; }
-        else
-		download() { curl --connect-timeout 10 -Ls "$1"; }
-        fi
+	download() { curl --connect-timeout 10 --max-time 30 -Ls "$1"; }
 else
 	download() { busybox wget -T 10 --no-check-certificate -qO - "$1"; }
 fi
