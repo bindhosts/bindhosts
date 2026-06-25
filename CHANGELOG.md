@@ -4,6 +4,13 @@ Systemless hosts for APatch, KernelSU and Magisk
 ---
 
 # Changelog
+### 2.1.4
+- scripts/service: fix module.prop edit
+- scripts/bindhosts: handle bad curl env
+- webui: multiple host render on show (#206)
+- scripts/bindhosts: drop curl -Z usage
+- webui/locales: updates
+
 ### 2.1.3
 - scripts/post-fs-data: update ksu_susfs_open_redirect routine
 - webui: add scroll into view on input focus
