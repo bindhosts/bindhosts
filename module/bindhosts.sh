@@ -368,7 +368,7 @@ adblock() {
 	# localhost
 	printf "127.0.0.1 localhost\n::1 localhost\n" > $target_hostsfile
 	# always restore user's custom rules
-	sed 's/#.*//; /^$/d; s/^disabled|//g' $PERSISTENT_DIR/custom*.txt >> $target_hostsfile
+	sed 's/#.*//; /^$/d; s/\r$//; s/^disabled|//g' $PERSISTENT_DIR/custom*.txt >> $target_hostsfile
 	# blacklist.txt
 	for i in $(sed 's/#.*//' $PERSISTENT_DIR/blacklist.txt ); do echo "0.0.0.0 $i" >> "$rwdir/temphosts"; done
 	# whitelist.txt
@@ -563,22 +563,22 @@ hosts_query () {
 }
 
 instant_whitelist() {
-    # Backend for WebUI: whitelist domain instantly without re-run action
-    shift
-    [ -n "$1" ] || return
-    cp $target_hostsfile $rwdir/temphosts
-    sed "/0.0.0.0 $1/d" $rwdir/temphosts > $target_hostsfile
-    grep -qx "$1" "$PERSISTENT_DIR/whitelist.txt" || echo "$1" >> "$PERSISTENT_DIR/whitelist.txt"
-    rm $rwdir/temphosts
+	# Backend for WebUI: whitelist domain instantly without re-run action
+	shift
+	[ -n "$1" ] || return
+	cp $target_hostsfile $rwdir/temphosts
+	sed "/0.0.0.0 $1/d" $rwdir/temphosts > $target_hostsfile
+	grep -qx "$1" "$PERSISTENT_DIR/whitelist.txt" || echo "$1" >> "$PERSISTENT_DIR/whitelist.txt"
+	rm $rwdir/temphosts
 }
 
 setup_link() {
-    # Backend for WebUI: locate target hosts file for querying and file fetching
+	# Backend for WebUI: locate target hosts file for querying and file fetching
 	rm -rf $MODDIR/webroot/link
-    mkdir $MODDIR/webroot/link
-    ln -sf "$target_hostsfile" "$MODDIR/webroot/link/hosts.txt"
-    ln -s "$MODDIR" "$MODDIR/webroot/link/MODDIR"
-    ln -s "$PERSISTENT_DIR" "$MODDIR/webroot/link/PERSISTENT_DIR"
+	mkdir $MODDIR/webroot/link
+	ln -sf "$target_hostsfile" "$MODDIR/webroot/link/hosts.txt"
+	ln -s "$MODDIR" "$MODDIR/webroot/link/MODDIR"
+	ln -s "$PERSISTENT_DIR" "$MODDIR/webroot/link/PERSISTENT_DIR"
 }
 
 manager_install_zip() {
