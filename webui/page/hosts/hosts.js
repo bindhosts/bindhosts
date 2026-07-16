@@ -1,6 +1,9 @@
 import { exec, spawn } from 'kernelsu-alt';
 import { showPrompt, basePath, moduleDirectory, filePaths, fetchText, updateUIVisibility } from '../../utils/util.js';
 import { getString } from '../../utils/language.js';
+import { Compartment, EditorState } from '@codemirror/state';
+import { defaultKeymap, history, historyKeymap, indentWithTab } from '@codemirror/commands';
+import { EditorView, highlightActiveLineGutter, keymap, lineNumbers } from '@codemirror/view';
 import { FileSelector } from '../../utils/file_selector.js';
 import { setupDocsMenu } from '../../utils/docs.js';
 
@@ -521,10 +524,9 @@ function setupDevEditor() {
     `;
     editBtn.onclick = async () => {
         const fileName = "_demo";
-        const content = await fetchText(`link/PERSISTENT_DIR/${fileName}`, `${basePath}/${fileName}`).catch(() => "");
-        const editorInput = document.getElementById("edit-input");
+        const content = `::1 localhost ip6-localhost ip6-loopback\n0.0.0.0 test.com\n`;
         const fileNameInput = document.getElementById('file-name-input');
-        editorInput.value = content;
+        setEditorValue(content);
         fileNameInput.value = fileName;
         openFileEditor(fileName);
     };
@@ -537,7 +539,6 @@ function setupDevEditor() {
  * @returns {Promise<void>}
  */
 async function fileNameEditor(fileName) {
-    const editorInput = document.getElementById("edit-input");
     const fileNameInput = document.getElementById('file-name-input');
     const rawFileName = fileName.replace("custom", "").replace(".txt", "");
     fileNameInput.value = rawFileName;
@@ -545,7 +546,7 @@ async function fileNameEditor(fileName) {
     const result = await exec(`[ $(wc -c < ${basePath}/${fileName}) -lt 131072 ] || exit 1`);
     if (result.errno === 0) {
         const content = await fetchText(`link/PERSISTENT_DIR/${fileName}`, `${basePath}/${fileName}`).catch(() => "");
-        editorInput.value = content;
+        setEditorValue(content);
         openFileEditor(fileName);
     } else {
         // Only rename is supported for large files
@@ -555,6 +556,75 @@ async function fileNameEditor(fileName) {
 }
 
 let setupEditor = false;
+let codeEditor;
+let lineWrappingEnabled = false;
+const lineWrapping = new Compartment();
+
+const editorTheme = EditorView.theme({
+    '&': {
+        height: '100%',
+        width: '100%',
+        boxSizing: 'border-box',
+        direction: 'ltr',
+        color: 'var(--md-sys-color-on-surface)',
+        backgroundColor: 'var(--md-sys-color-surface-container-high)',
+    },
+    '.cm-gutters': {
+        color: 'var(--md-sys-color-outline)',
+        backgroundColor: 'var(--md-sys-color-surface-container-low)',
+        borderRight: '1px solid var(--md-sys-color-outline-variant)',
+    },
+    '.cm-activeLineGutter': {
+        color: 'var(--md-sys-color-on-surface)',
+        backgroundColor: 'var(--md-sys-color-surface-container)',
+    },
+    '.cm-scroller': {
+        width: '100%',
+        minWidth: '0',
+    },
+    '.cm-content': {
+        flex: '1 1 auto',
+        minWidth: '0',
+        caretColor: 'var(--md-sys-color-primary)',
+    },
+    '.cm-cursor, .cm-dropCursor': {
+        borderLeftColor: 'var(--md-sys-color-primary)',
+    },
+    '&.cm-focused .cm-selectionBackground, .cm-selectionBackground, ::selection': {
+        backgroundColor: 'var(--md-sys-color-secondary-container) !important',
+    },
+});
+
+/**
+ * Set the editor content before or after CodeMirror has been initialized.
+ * @param {string} content - File content to display
+ * @returns {void}
+ */
+function setEditorValue(content) {
+    if (codeEditor) {
+        codeEditor.dispatch({
+            changes: { from: 0, to: codeEditor.state.doc.length, insert: content },
+        });
+        return;
+    }
+    document.getElementById('edit-input').textContent = content;
+}
+
+/**
+ * Enable or disable CodeMirror's visual line wrapping.
+ * @param {boolean} enabled - Whether lines should wrap to the editor width
+ * @returns {void}
+ */
+function setLineWrapping(enabled) {
+    lineWrappingEnabled = enabled;
+    codeEditor.dispatch({
+        effects: lineWrapping.reconfigure(enabled ? EditorView.lineWrapping : []),
+    });
+
+    const lineWrapButton = document.getElementById('line-wrap-btn');
+    lineWrapButton.selected = enabled;
+    codeEditor.requestMeasure();
+}
 /**
  * Open file editor
  * @param {string} lastFileName - Name of the last file edited
@@ -564,8 +634,8 @@ let setupEditor = false;
 function openFileEditor(lastFileName, openEditor = true) {
     const backButton = document.querySelector('.back-button');
     const saveButton = document.getElementById('save-btn');
+    const lineWrapButton = document.getElementById('line-wrap-btn');
     const editor = document.getElementById('edit-content');
-    const lineNumbers = document.querySelector('.line-numbers');
     const bodyContent = document.getElementById('page-hosts');
     const editorInput = document.getElementById("edit-input");
     const fileNameInput = document.getElementById('file-name-input');
@@ -574,51 +644,24 @@ function openFileEditor(lastFileName, openEditor = true) {
         setupEditor = true;
         fileNameInput.addEventListener('input', adjustFileNameWidth);
         saveButton.onclick = saveFile;
-        editorInput.oninput = () => {
-            // Set line numbers
-            const lines = editorInput.value.split('\n').length;
-            lineNumbers.innerHTML = Array.from({ length: lines }, (_, index) => 
-                `<div>${(index + 1).toString().padStart(2, ' ')}</div>`
-            ).join('');
-            // Sync scroll position
-            lineNumbers.scrollTop = editorInput.scrollTop;
-        };
-        editorInput.onblur = () => {
-            editorInput.style.paddingBottom = '30px';
-            lineNumbers.style.paddingBottom = '30px';
-        };
-        editorInput.onscroll = () => {
-            lineNumbers.style.top = `-${editorInput.scrollTop}px`;
-            lineNumbers.scrollTop = editorInput.scrollTop;
-        };
-
-        const updateActiveLine = () => {
-            const cursorPosition = editorInput.selectionStart;
-            const textBeforeCursor = editorInput.value.substring(0, cursorPosition);
-            const currentLine = textBeforeCursor.split('\n').length;
-            
-            // Highlight line number
-            const lines = lineNumbers.children;
-            for (let i = 0; i < lines.length; i++) {
-                lines[i].classList.toggle('active', i + 1 === currentLine);
-            }
-
-            // Move highlight bar
-            const activeLineBar = document.getElementById('active-line-bar');
-            if (activeLineBar) {
-                const lineHeight = parseFloat(window.getComputedStyle(editorInput).lineHeight);
-                const top = 5 + (currentLine - 1) * lineHeight - editorInput.scrollTop;
-                activeLineBar.style.top = `${top}px`;
-            }
-        };
-
-        editorInput.addEventListener('scroll', updateActiveLine);
-        editorInput.addEventListener('input', updateActiveLine);
-        editorInput.addEventListener('click', updateActiveLine);
-        editorInput.addEventListener('keyup', updateActiveLine);
+        lineWrapButton.onclick = () => setLineWrapping(!lineWrappingEnabled);
+        const initialContent = editorInput.textContent;
+        editorInput.replaceChildren();
+        codeEditor = new EditorView({
+            state: EditorState.create({
+                doc: initialContent,
+                extensions: [
+                    lineNumbers(),
+                    highlightActiveLineGutter(),
+                    history(),
+                    keymap.of([...defaultKeymap, ...historyKeymap, indentWithTab]),
+                    lineWrapping.of([]),
+                    editorTheme,
+                ],
+            }),
+            parent: editorInput,
+        });
     }
-
-    editorInput.dispatchEvent(new Event('input'));
 
     // Adjust width of fileName dynamically
     function adjustFileNameWidth() {
@@ -634,11 +677,11 @@ function openFileEditor(lastFileName, openEditor = true) {
     // Show editor
     document.body.classList.add('editor-active');
     bodyContent.style.overflowY = 'hidden';
-    lineNumbers.style.display = 'block';
 
     // Open file editor
     if (openEditor) {
         editor.open();
+        requestAnimationFrame(() => codeEditor.requestMeasure());
         backButton.onclick = () => closeEditor();
 
         // Handle system file editor UI
@@ -663,21 +706,19 @@ function openFileEditor(lastFileName, openEditor = true) {
         // Check if editor is actually active
         if (!editor.classList.contains('open') && !document.body.classList.contains('editor-active')) return;
         
-        const lineNumbers = document.querySelector('.line-numbers');
-        if (lineNumbers) lineNumbers.style.display = 'none';
         editor.close();
         document.body.classList.remove('editor-active');
         bodyContent.style.overflowY = 'auto';
         document.querySelectorAll('.box li').forEach(li => {
             li.scrollTo({ left: 0, behavior: 'smooth' });
         });
-        editorInput.scrollTo(0, 0);
+        codeEditor.scrollTo(0, 0);
     }
 
     // Save file
     async function saveFile() {
         const newFileName = fileNameInput.value;
-        const content = editorInput.value.trim();
+        const content = codeEditor.state.doc.toString().trim();
         if (newFileName === "") {
             showPrompt(getString('global_file_name_empty'), false);
             return;
@@ -777,4 +818,5 @@ export function onShow() {
 export function onHide() {
     document.querySelectorAll('.fab-container').forEach(c => c.classList.remove('show', 'inTerminal'));
     document.getElementById('save-btn')?.classList.remove('show');
+    document.getElementById('line-wrap-btn')?.classList.remove('show');
 }

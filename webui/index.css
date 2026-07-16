@@ -148,6 +148,10 @@
         grid-area: 1/1;
     }
 
+    #stop-tcpdump.show + #scroll-top.show {
+        transform: scale(1) translateY(-66px) !important;
+    }
+
     .constant-height {
         display: flex;
         flex-direction: column;

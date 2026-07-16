@@ -27,6 +27,9 @@ export async function fetchText(url, fallbackPath) {
     try {
         const response = await fetch(url);
         if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+        if (response.headers.get('content-type')?.includes('text/html')) {
+            throw new Error(`Expected a text file but received HTML from ${url}`);
+        }
         return await response.text();
     } catch {
         const result = await exec(`cat "${fallbackPath}"`);
@@ -265,7 +268,7 @@ export const PAGE_CONFIG = {
                 title: 'global_action'
             },
             'edit-content': {
-                buttons: ['#save-btn'],
+                buttons: ['#line-wrap-btn', '#save-btn'],
                 title: ''
             }
         },
@@ -428,4 +431,3 @@ export function setupScrollEvent(content) {
         };
     });
 }
-

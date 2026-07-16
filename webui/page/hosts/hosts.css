@@ -168,80 +168,20 @@
     --md-filled-icon-button-container-width: 100%;
 }
 
-/* editor workpace */
-.editor-container {
-    position: relative;
+#edit-input {
     height: 100%;
     width: 100%;
 }
 
-.line-numbers {
-    display: none;
-    position: absolute;
-    left: 0;
-    top: 0;
-    min-height: 100%;
-    width: 30px;
-    z-index: calc(var(--z-index-base) + 1);
-    padding: 5px 3px 30px 0;
-    color: var(--md-sys-color-outline);
-    background-color: var(--md-sys-color-outline-variant);
-    text-align: right;
-    font-family: monospace;
-    font-size: 0.9em;
-    line-height: 1.5;
-    overflow-x: hidden;
-    transition: padding-bottom 0.2s ease;
-    user-select: none;
-}
-
-.active-line {
-    position: absolute;
-    left: 0;
-    width: 100%;
-    height: 1.5em;
-    background-color: var(--md-sys-color-outline);
-    opacity: 0.2;
-    pointer-events: none;
-    z-index: var(--z-index-base);
-}
-
-#edit-content {
-    background-color: var(--md-sys-color-surface-container-high);
-}
-
-.edit-input {
-    direction: ltr !important;
-    position: relative;
-    background-color: transparent;
-    height: 100%;
-    width: 100%;
-    color: inherit;
-    font-size: 0.9em;
-    line-height: 1.5;
-    border: none;
-    outline: none;
-    resize: none;
-    padding-left: 40px;
-    padding-top: 5px;
-    padding-bottom: 30px;
-    box-sizing: border-box;
-    transition: padding-bottom 0.2s ease;
-    overflow-y: auto;
-    white-space: nowrap;
-    scrollbar-color: var(--md-sys-color-outline) var(--md-sys-color-tonal-surface);
-}
-
-#edit-input::-webkit-scrollbar {
+.cm-scroller::-webkit-scrollbar {
     width: 25px;
-    transition: width 0.2s ease;
 }
 
-#edit-input::-webkit-scrollbar-track {
+.cm-scroller::-webkit-scrollbar-track {
     background-color: var(--md-sys-color-surface-container-low);
 }
 
-#edit-input::-webkit-scrollbar-thumb {
+.cm-scroller::-webkit-scrollbar-thumb {
     min-height: 40px;
     background-color: var(--md-sys-color-outline);
     border-radius: 5px;
