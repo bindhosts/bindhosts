@@ -85,6 +85,15 @@ if [ "$KSU" = true ] && [ -f ${SUSFS_BIN} ] &&
 	mode=1
 fi
 
+# for nomount metamodule, just use mode 0. it performs injection rather than mounts.
+# we dont care about umount and shit for this one. its up to the metamodule
+nomount_dir="/data/adb/modules/nomount"
+if { [ "$APATCH" = "true" ] || [ "$KSU" = "true" ]; } && [ -L "/data/adb/metamodule" ] &&
+	[ -d "$nomount_dir" ] && [ ! -f "$nomount_dir/disable" ] && [ ! -f "$nomount_dir/remove" ]; then
+	mode=0
+	echo "bindhosts: post-fs-data.sh - nomount metamodule found!" >> /dev/kmsg
+fi
+
 # hosts_file_redirect operating_mode
 # this method is APatch only
 # no other heuristic other than dmesg
@@ -98,7 +107,8 @@ fi
 # znhr starts at late service when we have to decide what to do NOW.
 # we can only assume that it is on a working state
 # here we unconditionally flag an operating_mode for it
-if [ -d "/data/adb/modules/hostsredirect" ] && [ ! -f "/data/adb/modules/hostsredirect/disable" ] && [ ! -f "/data/adb/modules/hostsredirect/remove" ] &&
+hostsredirect_dir="/data/adb/modules/hostsredirect"
+if [ -d "$hostsredirect_dir" ] && [ ! -f "$hostsredirect_dir/disable" ] && [ ! -f "$hostsredirect_dir/remove" ] &&
 	[ -d "$zygisksu_dir" ] && [ ! -f "$zygisksu_dir/disable" ] && [ ! -f "$zygisksu_dir/remove" ]; then
 	mode=4
 fi
