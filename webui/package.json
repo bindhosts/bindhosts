@@ -11,22 +11,22 @@
   "license": "WTFPL-2.0",
   "type": "module",
   "dependencies": {
-    "@codemirror/commands": "^6.10.4",
+    "@codemirror/commands": "^6.11.0",
     "@codemirror/state": "^6.7.1",
-    "@codemirror/view": "^6.43.6",
-    "@material/web": "^2.4.1",
+    "@codemirror/view": "^6.43.9",
+    "@material/web": "^2.5.0",
     "codemirror": "^6.0.2",
-    "kernelsu-alt": "^3.1.1",
-    "marked": "^18.0.6",
+    "kernelsu-alt": "^3.1.2",
+    "marked": "^18.0.10",
     "webuix": "^0.0.19"
   },
   "devDependencies": {
     "@eslint/css": "^1.4.0",
     "@eslint/js": "^10.0.1",
     "@eslint/json": "^2.0.1",
-    "eslint": "^10.7.0",
-    "globals": "^17.7.0",
-    "vite": "^8.1.4"
+    "eslint": "^10.9.0",
+    "globals": "^17.11.0",
+    "vite": "^8.2.2"
   },
-  "packageManager": "pnpm@11.13.0"
+  "packageManager": "pnpm@11.22.0"
 }
