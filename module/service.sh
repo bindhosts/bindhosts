@@ -39,7 +39,7 @@ bindhosts() {
 	echo "bindhosts: service.sh - mode plain bindhosts" >> /dev/kmsg 
 }
 
-apatch_hfr() {
+kernel_hostsredirect() {
 	target_hostsfile="/data/adb/hosts"
 	[ ! -f $target_hostsfile ] && {
 		cat /system/etc/hosts > $target_hostsfile
@@ -47,7 +47,7 @@ apatch_hfr() {
 		hosts_set_perm "$target_hostsfile"
 		}
 	helper_mode="| hosts_file_redirect 💉"
-	echo "bindhosts: service.sh - mode apatch_hfr" >> /dev/kmsg
+	echo "bindhosts: service.sh - mode kernel_hostsredirect" >> /dev/kmsg
 }
 
 zn_hostsredirect() {
@@ -108,7 +108,7 @@ case $operating_mode in
 	0) normal_mount ;;
 	1) ksu_susfs_bind ;;
 	2) bindhosts ;;
-	3) apatch_hfr ;;
+	3) kernel_hostsredirect ;;
 	4) zn_hostsredirect ;;
 	5) ksu_susfs_open_redirect ;;
 	6) ksu_source_mod ;;
