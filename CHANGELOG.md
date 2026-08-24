@@ -4,6 +4,11 @@ Systemless hosts for APatch, KernelSU and Magisk
 ---
 
 # Changelog
+### 2.1.5
+- webui: use codemirror editor
+- scripts: support KSU late load
+- scripts/post-fs-data: add nomount metamodule support
+
 ### 2.1.4
 - scripts/service: fix module.prop edit
 - scripts/bindhosts: handle bad curl env
