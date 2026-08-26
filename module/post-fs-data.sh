@@ -87,7 +87,9 @@ fi
 
 # for nomount metamodule, just use mode 0. it performs injection rather than mounts.
 # we dont care about umount and shit for this one. its up to the metamodule
-nomount_dir="/data/adb/modules/nomount"
+# resolve the symlink: not every metamodule is called "nomount"
+nomount_dir=$(readlink -f /data/adb/metamodule 2>/dev/null)
+[ -n "$nomount_dir" ] || nomount_dir="/data/adb/modules/nomount"
 if { [ "$APATCH" = "true" ] || [ "$KSU" = "true" ]; } && [ -L "/data/adb/metamodule" ] &&
 	[ -d "$nomount_dir" ] && [ ! -f "$nomount_dir/disable" ] && [ ! -f "$nomount_dir/remove" ]; then
 	mode=0
