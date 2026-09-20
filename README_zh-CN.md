@@ -35,7 +35,7 @@
 ## 链接
 
 - 点击 [此处](https://github.com/bindhosts/bindhosts/releases) 下载 bindhosts
-- 点击 [此处](Documentation/sources.md) 查看更多 hosts 规则源
+- 点击[此处](Documentation/sources.md) 查看更多 hosts 规则源
 - 点击 [此处](Documentation/localize.md) 了解 bindhosts 的本地化流程
 
 ## 帮助与支持
