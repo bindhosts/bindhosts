@@ -1,0 +1,20 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/KernelSU-Modules/tools/main/schemas/module.schema.json
+schemaVersion: 1
+id: bindhosts
+name: bindhosts
+summary: Systemless hosts for APatch, KernelSU and Magisk
+description: README.md
+license: WTFPL
+homepage: https://github.com/bindhosts/bindhosts
+support: https://github.com/bindhosts/bindhosts/issues
+tags: [system, hosts, adblock]
+icon: webui/public/icon.png
+
+authors:
+  - name: xx
+    url: https://github.com/backslashxx
+  - name: KOWX712
+    url: https://github.com/KOWX712
+
+release:
+  assetPattern: "bindhosts*.zip"

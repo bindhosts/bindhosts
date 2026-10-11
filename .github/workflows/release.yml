@@ -10,12 +10,6 @@ on:
       - 'webui/**'
       - 'update.json'
   workflow_dispatch:
-    inputs:
-      force_release:
-        description: 'Force change release file?'
-        required: true
-        type: boolean
-        default: false
 
 env:
   MODULE_NAME: 'bindhosts'
@@ -79,14 +73,14 @@ jobs:
         path: 'module'
 
     - name: Download artifact
-      if: ${{ env.version_changed == 'true' || inputs.force_release }}
+      if: ${{ env.version_changed == 'true' }}
       uses: actions/download-artifact@v8
       with:
         name: ${{ env.ZIP_NAME }}
         path: ${{ env.MODULE_NAME }}
 
     - name: Zip module for release
-      if: ${{ env.version_changed == 'true' || inputs.force_release }}
+      if: ${{ env.version_changed == 'true' }}
       run: |
         cd ${{ env.MODULE_NAME }}
         zip -r ../${{ env.MODULE_NAME }}.zip .
@@ -104,26 +98,3 @@ jobs:
         body: "${{ env.CHANGELOG }}"
         draft: false
         prerelease: false
-
-    - name: Force update latest release file
-      if: ${{ inputs.force_release }}
-      uses: softprops/action-gh-release@v3
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        files: "${{ env.MODULE_NAME }}.zip"
-        tag_name: "${{ env.VERSION }}"
-        name: "Release ${{ env.VERSION }}"
-
-  dispatch:
-    needs: release
-    if: ${{ needs.release.outputs.version_changed == 'true' }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Trigger workflow
-        uses: peter-evans/repository-dispatch@v4
-        with:
-          token: ${{ secrets.REPO_SYNC_PAT }}
-          repository: KernelSU-Modules-Repo/bindhosts
-          event-type: sync-release
-          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "version": "${{ needs.release.outputs.VERSION }}"}'
