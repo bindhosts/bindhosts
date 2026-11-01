@@ -8,7 +8,7 @@
 - 安装 NeoZygisk 或者 ReZygisk 来处理 denylist
 - 或者安装 ZygiskNext 并且使用仅还原挂载模式
 
-旧版 APatch 因潜在问题不再推荐， 但可尝试以下方案：
+旧版 APatch 因潜在问题不再推荐，但可尝试以下方案：
 
 - 排除修改并且安装 NeoZygisk 或者 ReZygisk 或者 ZygiskNext 并开启仅还原挂载
 - 或者使用 [NoHello](https://github.com/MhmRdd/NoHello) / [Zygisk Assistant](https://github.com/snake-4/Zygisk-Assistant)
