@@ -11,6 +11,9 @@ helper_mode=""
 
 # reusable functions
 mount_bind() { 
+	# skip if hosts file is already bound
+	grep -q "bindhosts/system/etc/hosts /system/etc/hosts " /proc/self/mountinfo > /dev/null 2>&1 && return 0
+
 	mount --bind "$MODDIR/system/etc/hosts" /system/etc/hosts
 }
 
@@ -127,13 +130,17 @@ fi
 
 # cronjobs
 # this is optional and opt-in
-# I don't plan to extend this myself
-# just check if crontabs exists
-# if it does then we enable crond
 [ -d $PERSISTENT_DIR/crontabs ] && {
-	echo "bindhosts: service.sh - enabling crond" >> /dev/kmsg
-	busybox crond -bc $PERSISTENT_DIR/crontabs -L /dev/null
+	# service can rerun on soft reboot so dont start another crond
+	crond_run=false
+	for i in $(busybox pidof busybox); do
+		grep -q "bindhosts/crontabs" "/proc/$i/cmdline" > /dev/null 2>&1 && crond_run=true
+    done
+	[ "$crond_run" = false ] && {
+		echo "bindhosts: service.sh - enabling crond" >> /dev/kmsg
+		busybox crond -bc $PERSISTENT_DIR/crontabs -L /dev/null
 	}
+}
 
 # symlink for magisk
 # this way it can be used on termux
