@@ -13,7 +13,7 @@
     <string name="global_save_fail">Errore nel salvataggio del file</string>
     <string name="global_file_too_large">Modifica file non supportata su file grandi</string>
     <string name="global_file_name_empty">Il nome del file non può essere vuoto</string>
-    <string name="global_show_all">Mostra tutti %d altro</string>
+    <string name="global_show_all">Mostra altri %d</string>
     <string name="global_close">Chiudi</string>
     <string name="global_cancel">Annulla</string>
     <string name="global_confirm">Conferma</string>
@@ -45,7 +45,7 @@
     <string name="control_panel_action_prompt_false">Disabilitato reindirizzamento azione Magisk WebUI</string>
     <string name="control_panel_update_hosts_daily">Aggiornamento Hosts Quotidiano</string>
     <string name="control_panel_cron_true">Aggiunta voce Crontab</string>
-    <string name="control_panel_cron_false">Rimossa vice Crontab</string>
+    <string name="control_panel_cron_false">Rimossa voce Crontab</string>
     <string name="control_panel_monitor_network_activity">Monitora attività di rete</string>
     <!-- Custom -->
     <string name="custom_title">Regole Personalizzate</string>
@@ -94,7 +94,7 @@
     <string name="more_faq">FAQ</string>
     <string name="more_support">Supporto</string>
     <string name="more_support_issue">Segnala un problema</string>
-    <string name="more_support_update_canary">Aggiorna all\'ultima versione canary</string>
+    <string name="more_support_update_canary">Aggiorna all&apos;ultima versione canary</string>
     <string name="more_support_update_success">Aggiornamento riuscito, riavvia per rendere effettivo</string>
     <string name="more_support_update_fail">Aggiornamento non riuscito, scaricare e installare manualmente da GitHub</string>
     <string name="more_support_checking_update">Ricerca aggiornamenti...</string>

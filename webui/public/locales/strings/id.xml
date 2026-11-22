@@ -31,11 +31,11 @@
     <string name="control_panel_title">Panel Kontrol</string>
     <string name="control_panel_language">Bahasa</string>
     <string name="control_panel_bad_translation">Terjemahan Buruk</string>
-    <string name="control_panel_add_language">Tambahkan Bahasa Lainnya</string>
+    <string name="control_panel_add_language">Tambahkan Bahasa</string>
     <string name="control_panel_get_tiles">Dapatkan Ubin QS</string>
     <string name="control_panel_installing">Memasang...</string>
     <string name="control_panel_installed">Terpasang, silakan aktifkan izin SU untuk aplikasi bindhosts</string>
-    <string name="control_panel_download_fail">Gagal mengunduh, silakan periksa koneksi internet anda</string>
+    <string name="control_panel_download_fail">Gagal mengunduh, silakan periksa koneksi internet Anda</string>
     <string name="control_panel_install_fail">Gagal memasang, silakan pasang secara manual dari /sdcard/Download/bindhosts-app</string>
     <string name="control_panel_module_update">Pembaruan Modul</string>
     <string name="control_panel_update_true">Pembaruan modul aktif</string>
@@ -48,25 +48,25 @@
     <string name="control_panel_cron_false">Entri Crontab dihapus</string>
     <string name="control_panel_monitor_network_activity">Pantau Aktivitas Jaringan</string>
     <!-- Custom -->
-    <string name="custom_title">Aturan khusus</string>
-    <string name="custom_guide1">Tambahkan pengalihan khusus disini</string>
+    <string name="custom_title">Aturan kustom</string>
+    <string name="custom_guide1">Tambahkan pengalihan kustom disini</string>
     <string name="custom_example">Contoh:</string>
     <string name="custom_format">Format:</string>
-    <string name="custom_warning">PERINGATAN: Aturan khusus dimuat saat dijalankan dan diatur ulang!</string>
-    <string name="custom_prompt_fail">%s sudah ada di aturan khusus</string>
+    <string name="custom_warning">PERINGATAN: Aturan kustom dimuat saat dijalankan dan diatur ulang!</string>
+    <string name="custom_prompt_fail">%s sudah ada di aturan kustom</string>
     <!-- Import -->
-    <string name="import_custom_title">Impor Aturan Khusus</string>
+    <string name="import_custom_title">Impor Aturan Kustom</string>
     <!-- Source -->
     <string name="source_title">Sumber</string>
     <string name="source_guide1">Sumber daftar hitam</string>
-    <string name="source_guide2">Sumber aturan khusus</string>
+    <string name="source_guide2">Sumber aturan kustom</string>
     <string name="source_format">Format:</string>
     <string name="source_example">Contoh:</string>
     <string name="source_source_page">Sumber lainnya</string>
     <string name="source_prompt_fail">%s sudah ada di sumber</string>
     <!-- Blacklist -->
     <string name="blacklist_title">Daftar hitam</string>
-    <string name="blacklist_guide1">Apapun yang anda tambahkan di sini akan masuk ke daftar hitam</string>
+    <string name="blacklist_guide1">Apapun yang Anda tambahkan di sini akan masuk ke daftar hitam</string>
     <string name="blacklist_example">Contoh:</string>
     <string name="blacklist_prompt_fail">%s sudah ada di daftar hitam</string>
     <!-- Whitelist -->
@@ -84,7 +84,7 @@
     <string name="mode_button">Mode %s</string>
     <string name="mode_title">Mode Operasi</string>
     <string name="mode_detail">Pelajari lebih lanjut</string>
-    <string name="mode_reset">Atur ulang (auto)</string>
+    <string name="mode_reset">Atur ulang (otomatis)</string>
     <!-- More -->
     <string name="more_documents">Dokumen</string>
     <string name="more_sources">Sumber</string>
