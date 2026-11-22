@@ -6,7 +6,7 @@
 - **KernelSU:**
   1. Superuser
   2. Chrome
-  3. Khusus
+  3. Kustom
   4. Nonaktifkan umount modul<br><img src="https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/screenshots/umount_chrome.png" 
           onerror="this.onerror=null;this.src='https://gh.sevencdn.com/https://raw.githubusercontent.com/bindhosts/bindhosts/master/Documentation/screenshots/umount_chrome.png';"
           width="100%" alt="Disable umount modules screenshot">
